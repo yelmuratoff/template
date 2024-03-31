@@ -57,7 +57,7 @@ class _RouterErrorView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
-                child: Text(context.l10n.go_to_home),
+                child: Text(context.l10n.back_to_home),
                 onPressed: () {
                   onGoHomePressed();
                 },

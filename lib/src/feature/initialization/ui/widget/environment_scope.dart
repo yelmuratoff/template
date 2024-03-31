@@ -23,7 +23,3 @@ class EnvironmentScope extends InheritedWidget {
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;
 }
-
-extension EnvironmentScopeExtension on BuildContext {
-  BaseConfig get config => EnvironmentScope.of(this);
-}

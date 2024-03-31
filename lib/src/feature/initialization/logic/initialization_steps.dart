@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/services/app_config.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_client_dio.dart';
+import 'package:base_starter/src/feature/auth/bloc/auth_bloc.dart';
+import 'package:base_starter/src/feature/auth/resource/data/data_auth_repository.dart';
+import 'package:base_starter/src/feature/auth/resource/domain/use_cases/auth_use_cases.dart';
 import 'package:base_starter/src/feature/initialization/model/environment.dart';
 import 'package:base_starter/src/feature/initialization/model/initialization_progress.dart';
 import 'package:base_starter/src/feature/settings/bloc/settings_bloc.dart';
@@ -48,7 +51,7 @@ mixin InitializationSteps {
         );
       }
     },
-    'Settings Repository': (progress) async {
+    'Settings Repository, BLoC': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;
       final localeRepository = LocaleRepositoryImpl(
         localeDataSource:
@@ -75,6 +78,20 @@ mixin InitializationSteps {
       );
 
       progress.dependencies.settingsBloc = settingsBloc;
+    },
+    'Rest Client': (progress) async {
+      final restClient = RestClientDio();
+      progress.dependencies.restClient = restClient;
+    },
+    'Auth Repository, BLoC': (progress) async {
+      final authRepository =
+          DataAuthRepository(restClient: progress.dependencies.restClient);
+
+      final authBloc = AuthBloc(
+        authUseCases: AuthUseCases(authRepository: authRepository),
+      );
+
+      progress.dependencies.authBloc = authBloc;
     },
   };
 }

@@ -119,7 +119,7 @@ class _TalkerDataCardState extends State<TalkerDataCards> {
                       : EdgeInsets.zero,
                   decoration: stackTrace != null
                       ? BoxDecoration(
-                          color: Colors.grey[900],
+                          border: Border.all(color: widget.color),
                           borderRadius: BorderRadius.circular(10),
                         )
                       : null,
@@ -150,8 +150,8 @@ class _TalkerDataCardState extends State<TalkerDataCards> {
                   margin: const EdgeInsets.only(top: 8),
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: Colors.grey[900],
                     borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: widget.color),
                   ),
                   child: Text(
                     stackTrace,

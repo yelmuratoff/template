@@ -150,7 +150,7 @@
    "rendered": "Rendered",
    "page_not_found": "Oops, the page on this path",
    "not_found": "not found",
-   "go_to_home": "Go back to the main page",
+   "back_to_home": "Go back to the main page",
    "refresh": "Refresh",
    "fix": "Report",
    "clear_cache": "Clear cache",
@@ -172,5 +172,9 @@
          "number": {}
       }
    },
-   "performance_tracker": "Performance tracking"
+   "performance_tracker": "Performance tracking",
+   "login": "Login",
+   "initialization_failed": "Initialization failed",
+   "error_type": "Error type",
+   "retry": "Retry"
 }

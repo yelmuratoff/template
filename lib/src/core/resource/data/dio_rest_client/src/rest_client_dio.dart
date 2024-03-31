@@ -4,6 +4,7 @@ import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
+import 'package:base_starter/src/core/resource/data/dio_rest_client/src/interceptor/dio_interceptor.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
@@ -60,7 +61,7 @@ final class RestClientDio extends RestClientBase {
           e.type == DioExceptionType.receiveTimeout) {
         Error.throwWithStackTrace(
           ConnectionException(
-            message: 'ConnectionException',
+            message: e.message ?? 'Connection exception',
             statusCode: e.response?.statusCode,
             cause: e,
           ),
@@ -77,7 +78,7 @@ final class RestClientDio extends RestClientBase {
       }
       Error.throwWithStackTrace(
         ClientException(
-          message: e.toString(),
+          message: e.message ?? 'Client exception',
           statusCode: e.response?.statusCode,
           cause: e,
         ),
@@ -191,9 +192,9 @@ class DioClient {
           if (e.response?.statusCode == 401) {
             // If a 401 response is received, refresh the access token
             final TokenPair? oldToken = await SecureStorageService.getToken();
-            final TokenPair? tokenModel = await dio.post(
+            final TokenPair? newToken = await dio.post(
               /// TODO: Add the refresh token endpoint
-              'auth/refresh',
+              'api/v1/auth/refresh-token',
               options: Options(
                 sendTimeout: const Duration(milliseconds: 30000),
                 receiveTimeout: const Duration(milliseconds: 60000),
@@ -210,8 +211,8 @@ class DioClient {
 
             // Update the request header with the new access token
             e.requestOptions.headers['Authorization'] =
-                'Bearer ${tokenModel?.access}';
-            await SecureStorageService.setToken(tokenModel);
+                'Bearer ${newToken?.access}';
+            await SecureStorageService.setToken(newToken);
 
             // Repeat the request with the updated header
             return handler.resolve(await dio.fetch(e.requestOptions));
@@ -232,5 +233,7 @@ class DioClient {
         ),
       ),
     );
+
+    dio.interceptors.add(ErrorInterceptor());
   }
 }

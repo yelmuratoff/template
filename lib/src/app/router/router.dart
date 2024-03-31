@@ -4,6 +4,7 @@ import 'package:base_starter/src/app/ui/page/root.dart';
 import 'package:base_starter/src/common/ui/pages/error_router_page.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
+import 'package:base_starter/src/feature/auth/ui/page/auth.dart';
 import 'package:base_starter/src/feature/home/ui/page/home.dart';
 import 'package:base_starter/src/feature/initialization/ui/page/splash.dart';
 import 'package:base_starter/src/feature/inspector/inspector_page.dart';
@@ -90,6 +91,13 @@ GoRouter createRouter() => GoRouter(
           path: SplashPage.routePath,
           pageBuilder: (context, pathParameters) => const CupertinoPage(
             child: SplashPage(),
+          ),
+        ),
+        GoRoute(
+          name: AuthPage.name,
+          path: AuthPage.routePath,
+          pageBuilder: (context, pathParameters) => const CupertinoPage(
+            child: AuthPage(),
           ),
         ),
         StatefulShellRoute.indexedStack(

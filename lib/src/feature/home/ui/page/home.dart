@@ -1,7 +1,6 @@
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/string_extension.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/feature/home/state/counter.dart';
 import 'package:base_starter/src/feature/inspector/inspector_page.dart';
 import 'package:base_starter/src/feature/settings/ui/settings.dart';
@@ -25,11 +24,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _init();
-  }
-
-  Future<void> _init() async {
-    fToast.init(navigatorKey.currentContext!);
   }
 
   @override

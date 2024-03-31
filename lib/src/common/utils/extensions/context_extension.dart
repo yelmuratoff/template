@@ -51,7 +51,7 @@ extension ContextExtension on BuildContext {
       ));
 
   /// `size` returns the current `MediaQuery` size of the `BuildContext`.
-  Size get size => MediaQuery.sizeOf(this);
+  Size get mediaSize => MediaQuery.sizeOf(this);
 
   /// `viewInsets` returns the current `MediaQuery` view insets of the `BuildContext`.
   EdgeInsets get viewInsets => MediaQuery.viewInsetsOf(this);

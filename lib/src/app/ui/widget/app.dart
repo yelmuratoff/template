@@ -10,6 +10,7 @@ import 'package:base_starter/src/feature/initialization/ui/widget/dependencies_s
 import 'package:base_starter/src/feature/initialization/ui/widget/environment_scope.dart';
 import 'package:base_starter/src/feature/settings/ui/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// [App] is an entry point to the application.
 ///
@@ -58,15 +59,23 @@ class _AppState extends State<App> {
   }
 
   @override
-  Widget build(BuildContext context) => EnvironmentScope(
-        config: configMap[_environmentKey] ?? configMap[Environment.prod]!,
-        child: DependenciesScope(
-          dependencies: widget.result.dependencies,
-          repositories: widget.result.repositories,
-          child: SettingsScope(
-            settingsBloc: widget.result.dependencies.settingsBloc,
-            child: MaterialContext(
-              routerConfig: _router,
+  Widget build(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => widget.result.dependencies.authBloc,
+          ),
+        ],
+        child: EnvironmentScope(
+          config:
+              configMap[_environmentKey] ?? configMap[Environment.prod.value]!,
+          child: DependenciesScope(
+            dependencies: widget.result.dependencies,
+            repositories: widget.result.repositories,
+            child: SettingsScope(
+              settingsBloc: widget.result.dependencies.settingsBloc,
+              child: MaterialContext(
+                routerConfig: _router,
+              ),
             ),
           ),
         ),

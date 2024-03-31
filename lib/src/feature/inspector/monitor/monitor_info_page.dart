@@ -1,6 +1,7 @@
 import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/feature/inspector/utils/get_data_color.dart';
+import 'package:base_starter/src/feature/inspector/widget/data_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:talker_flutter/talker_flutter.dart';
@@ -37,7 +38,7 @@ class TalkerMonitorLogsScreen extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
                   final data = exceptions[index];
-                  return TalkerDataCard(
+                  return TalkerDataCards(
                     data: data,
                     onCopyTap: () => _copyTalkerDataItemText(context, data),
                     color: getTypeColor(context: context, key: data.title),

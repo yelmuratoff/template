@@ -13,6 +13,7 @@ class TalkerSettingsBottomSheets extends ConsumerStatefulWidget {
   const TalkerSettingsBottomSheets({
     required this.talkerScreenTheme,
     required this.talker,
+    required this.isStandart,
     super.key,
   });
 
@@ -21,6 +22,8 @@ class TalkerSettingsBottomSheets extends ConsumerStatefulWidget {
 
   /// Talker implementation
   final ValueNotifier<Talker> talker;
+
+  final bool isStandart;
 
   @override
   ConsumerState<TalkerSettingsBottomSheets> createState() =>
@@ -79,20 +82,21 @@ class _TalkerSettingsBottomSheetState
           widget.talker.notifyListeners();
         },
       ),
-      TalkerSettingsCardItem(
-        canEdit: widget.talker.value.settings.enabled,
-        talkerScreenTheme: widget.talkerScreenTheme,
-        title: context.l10n.performance_tracker,
-        backgroundColor: widget.talkerScreenTheme.cardColor,
-        enabled: ref.watch(appConfigsProvider).isPerformanceTrackingEnabled,
-        onChanged: (enabled) {
-          ref.read(appConfigsProvider.notifier).setPerformanceTracking(
-                value: enabled,
-              );
-          widget.talker.notifyListeners();
-          // if (context.mounted) RestartWrapper.restartApp(context);
-        },
-      ),
+      if (!widget.isStandart)
+        TalkerSettingsCardItem(
+          canEdit: widget.talker.value.settings.enabled,
+          talkerScreenTheme: widget.talkerScreenTheme,
+          title: context.l10n.performance_tracker,
+          backgroundColor: widget.talkerScreenTheme.cardColor,
+          enabled: ref.watch(appConfigsProvider).isPerformanceTrackingEnabled,
+          onChanged: (enabled) {
+            ref.read(appConfigsProvider.notifier).setPerformanceTracking(
+                  value: enabled,
+                );
+            widget.talker.notifyListeners();
+            // if (context.mounted) RestartWrapper.restartApp(context);
+          },
+        ),
     ];
 
     return BaseBottomSheet(

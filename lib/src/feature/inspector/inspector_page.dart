@@ -19,6 +19,7 @@ class InspectorPage extends StatelessWidget {
     this.appBarTitle = 'Inspector',
     this.theme = const TalkerScreenTheme(),
     this.itemsBuilder,
+    this.isStandart = false,
   });
 
   static const String name = "Logger";
@@ -39,30 +40,42 @@ class InspectorPage extends StatelessWidget {
   /// log items cards in list
   final TalkerDataBuilder? itemsBuilder;
 
+  final bool isStandart;
+
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: theme.backgroundColor,
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            BetterFeedback.of(context).show((UserFeedback feedback) async {
-              final screenshotFilePath =
-                  await writeImageToStorage(feedback.screenshot);
+        floatingActionButton: isStandart
+            ? null
+            : FloatingActionButton.extended(
+                onPressed: () {
+                  BetterFeedback.of(context)
+                      .show((UserFeedback feedback) async {
+                    final screenshotFilePath =
+                        await writeImageToStorage(feedback.screenshot);
 
-              await Share.shareXFiles(
-                [screenshotFilePath],
-                text: feedback.text,
-              );
-            });
-          },
-          label: Text(context.l10n.fix),
-          icon: const Icon(Icons.camera_enhance_rounded),
-        ),
+                    await Share.shareXFiles(
+                      [screenshotFilePath],
+                      text: feedback.text,
+                    );
+                  });
+                },
+                label: Text(context.l10n.fix),
+                icon: const Icon(Icons.camera_enhance_rounded),
+              ),
         body: view.TalkerView(
           talker: talker,
           theme: theme,
           appBarTitle: appBarTitle,
+          isStandart: isStandart,
           appBarLeading: IconButton(
-            onPressed: () => context.pop(),
+            onPressed: () {
+              if (isStandart) {
+                Navigator.pop(context);
+              } else {
+                context.pop();
+              }
+            },
             icon: const Icon(
               Icons.arrow_back,
             ),

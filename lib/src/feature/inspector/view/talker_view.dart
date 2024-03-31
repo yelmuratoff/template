@@ -24,6 +24,7 @@ class TalkerView extends StatefulWidget {
     this.appBarTitle,
     this.itemsBuilder,
     this.appBarLeading,
+    this.isStandart = false,
   });
 
   /// Talker implementation
@@ -45,6 +46,8 @@ class TalkerView extends StatefulWidget {
   final TalkerViewController? controller;
 
   final ScrollController? scrollController;
+
+  final bool isStandart;
 
   @override
   State<TalkerView> createState() => _TalkerViewState();
@@ -86,8 +89,11 @@ class _TalkerViewState extends State<TalkerView> {
                   controller: _controller,
                   onMonitorTap: () => _openTalkerMonitor(context),
                   onActionsTap: () => _showActionsBottomSheet(context),
-                  onSettingsTap: () =>
-                      _openTalkerSettings(context, talkerTheme),
+                  onSettingsTap: () => _openTalkerSettings(
+                    context,
+                    talkerTheme,
+                    widget.isStandart,
+                  ),
                   onToggleTitle: _onToggleTitle,
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 8)),
@@ -135,7 +141,8 @@ class _TalkerViewState extends State<TalkerView> {
     return data;
   }
 
-  void _openTalkerSettings(BuildContext context, TalkerScreenTheme theme) {
+  void _openTalkerSettings(
+      BuildContext context, TalkerScreenTheme theme, bool isStandart) {
     final talker = ValueNotifier(widget.talker);
 
     showModalBottomSheet<void>(
@@ -144,6 +151,7 @@ class _TalkerViewState extends State<TalkerView> {
       builder: (context) => TalkerSettingsBottomSheets(
         talkerScreenTheme: theme,
         talker: talker,
+        isStandart: isStandart,
       ),
     );
   }

@@ -10,13 +10,13 @@ class TokenPair extends Equatable {
   });
 
   factory TokenPair.fromJson(Map<String, dynamic> json) => TokenPair(
-        access: json['access'] as String,
-        refresh: json['refresh'] as String,
+        access: json['access_token'] as String,
+        refresh: json['refresh_token'] as String,
       );
 
   Map<String, dynamic> toJson() => {
-        'access': access,
-        'refresh': refresh,
+        'access_token': access,
+        'refresh_token': refresh,
       };
 
   @override

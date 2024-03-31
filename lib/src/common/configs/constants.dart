@@ -6,7 +6,7 @@ final class AppConstants {
   static const String appIdentifier = 'kz.app.dummy_example';
 
   /// TODO: Change this to your API base url
-  static const String baseUrl = 'https://dummyjson.com/';
+  static const String baseUrl = 'https://api.escuelajs.co/';
 }
 
 final class Preferences {

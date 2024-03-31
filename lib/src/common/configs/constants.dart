@@ -3,7 +3,8 @@ final class AppConstants {
 }
 
 final class Preferences {
-  static const String theme = 'theme';
-  static const String language = 'language';
-  static const String environment = 'environment';
+  static const String theme = '${AppConstants.appName}.theme';
+  static const String language = '${AppConstants.appName}.language';
+  static const String environment = '${AppConstants.appName}.environment';
+  static const String tokenPair = '${AppConstants.appName}.tokenPair';
 }

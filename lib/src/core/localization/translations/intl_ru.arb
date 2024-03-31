@@ -1,0 +1,176 @@
+{
+   "@_Errors_messages": {},
+   "no_connection": "Отсутствует подключение к интернету",
+   "connection_timeout": "Время ожидания ответа от сервера истекло",
+   "no_data": "Нет данных",
+   "user_not_found": "Пользователь не найден",
+   "this_email_already_exist": "Пользователь с таким email уже существует",
+   "this_username_already_exist": "Пользователь с таким логином уже существует",
+   "password_not_correct": "Неверный пароль",
+   "status401": "У вас нет доступа к этим данным",
+   "status404": "Данные не найдены",
+   "status500": "Повторите попытку позже, возникла внутренняя проблема",
+   "bad_request": "Неверный запрос, проверьте правильность данных и попробуйте еще раз",
+   "@_LANG": {},
+   "@@locale": "ru",
+   "app_title": "base_starter",
+   "custom_colors": "Кастомные цветы",
+   "default_themes": "Стандартные темы",
+   "locales": "Языки",
+   "change_theme": "Изменить тему",
+   "talker_type_debug": "Отладка",
+   "talker_type_debug_count": "Количество отладочных логов: {text}",
+   "@talker_type_debug_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_type_good": "Хорошие",
+   "talker_type_good_count": "Количество хороших логов: {text}",
+   "@talker_type_good_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_type_provider": "Провайдеры",
+   "talker_type_provider_count": "Количество провайдер логов: {text}",
+   "@talker_type_provider_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_type_info": "Информативные",
+   "talker_type_info_count": "Количество информативных логов: {text}",
+   "@talker_type_info_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_type_warnings": "Предупреждения",
+   "talker_type_warnings_count": "Количество предупреждающих логов: {text}",
+   "@talker_type_warnings_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_type_exceptions": "Исключения",
+   "talker_type_exceptions_count": "Количество логов об исключениях: {text}",
+   "@talker_type_exceptions_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_type_errors": "Ошибки",
+   "talker_type_errors_count": "Количество логов об ошибках: {text}",
+   "@talker_type_errors_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_type_http": "HTTP запросы",
+   "talker_http_requests_count": "Количество HTTP запросов: {text}",
+   "@talker_http_requests_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_http_responses_count": "Количество HTTP ответов: {text}",
+   "@talker_http_responses_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_http_failues_count": "Количество HTTP ошибок: {text}",
+   "@talker_http_failues_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_type_bloc": "BLoC",
+   "talker_bloc_transition_count": "Количество BLoC transition: {text}",
+   "@talker_bloc_transition_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_bloc_events_count": "Количество BLoC ивентов: {text}",
+   "@talker_bloc_events_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_bloc_close_count": "Количество BLoC закрытий: {text}",
+   "@talker_bloc_close_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "talker_bloc_create_count": "Количество BLoC созданий: {text}",
+   "@talker_bloc_create_count": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "error": "Ошибка",
+   "status_code": "Код ответа",
+   "url": "Ссылка",
+   "method": "Метод отправки",
+   "no_values": "Нет значений",
+   "show_more": "Подробнее",
+   "idle_refresh": "Потяните вниз, чтобы обновить",
+   "let_for_update": "Отпустите для загрузки",
+   "loading": "Загрузка",
+   "updated": "Обновлено",
+   "no_data_to_download": "Нет данных для загрузки",
+   "last_update": "Последний раз обновлялось: {text}",
+   "@last_update": {
+      "placeholders": {
+         "text": {}
+      }
+   },
+   "field_is_required": "Это поле обязательно",
+   "request_success": "Запрос был выполнен успешно",
+   "nothing_found": "Ничего не найдено по этому запросу",
+   "actions": "Действия",
+   "reverse_logs": "Изменить порядок",
+   "copy_all_logs": "Скопировать все логи",
+   "collapse_logs": "Свернуть логи",
+   "expand_logs": "Развернуть логи",
+   "clean_history": "Очистить историю",
+   "share_logs_file": "Поделиться файлом логов",
+   "log_item_copied": "Элемент журнала скопирован в буфер обмена",
+   "basic_settings": "Базовые настройки",
+   "enabled": "Включено",
+   "use_console_logs": "Использовать логи в консоли",
+   "use_history": "Использовать историю",
+   "settings": "Настройки",
+   "search": "Поиск",
+   "all_logs_copied": "Все логи сохранены в буфер обмена",
+   "raw": "Необработанный",
+   "rendered": "Отрисовано",
+   "page_not_found": "Упс, страница по этому пути",
+   "not_found": "Не найдена",
+   "go_to_home": "Вернуться на главную",
+   "refresh": "Обновить",
+   "fix": "Зафиксировать",
+   "clear_cache": "Очистить кэш",
+   "cache_cleared": "Кэш очищен",
+   "error_cache_clearing": "Ошибка очистки кэша",
+   "app_version": "Версия приложения",
+   "build_version": "Версия сборки",
+   "change_environment": "Изменить текущую среду",
+   "go_to_logger": "Перейти на страницу логгера",
+   "environment_tap_number": "Для открытия диалога осталось: {number}",
+   "@environment_tap_number": {
+      "placeholders": {
+         "number": {}
+      }
+   },
+   "counter_times_text": "Количество нажатий на кнопку: {number}",
+   "@counter_times_text": {
+      "placeholders": {
+         "number": {}
+      }
+   },
+   "performance_tracker": "Отслеживание производительности"
+}

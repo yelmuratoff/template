@@ -1,0 +1,102 @@
+{
+   "version": "2.0.0",
+   "tasks": [
+       {
+           "label": "Get dependencies",
+           "type": "shell",
+           "command": [
+               "fvm flutter pub get"
+           ],
+           "group": {
+               "kind": "none",
+               "isDefault": true
+           },
+           "problemMatcher": []
+       },
+       {
+        "label": "Init bash commands",
+        "type": "shell",
+        "command": [
+            "chmod a+x bash/build_appbundle.sh && chmod a+x bash/build_ipa.sh && chmod a+x bash/enable_native.sh && chmod a+x bash/firebase_init.sh && chmod a+x bash/network_connect.sh && chmod a+x bash/update_android.sh && chmod a+x bash/update_ios.sh"
+        ],
+        "group": {
+            "kind": "none",
+            "isDefault": true
+        },
+        "problemMatcher": []
+    },
+       {
+        "label": "Build apk",
+        "type": "shell",
+        "command": [
+            "fvm flutter build appbundle --target lib/main.dart --obfuscate --split-debug-info=build --no-tree-shake-icons"
+        ],
+        "group": {
+            "kind": "none",
+            "isDefault": true
+        },
+        "problemMatcher": []
+    },
+    {
+     "label": "Build ipa",
+     "type": "shell",
+     "command": [
+         "fvm flutter build ipa --target lib/main.dart --obfuscate --split-debug-info=build --no-tree-shake-icons"
+     ],
+     "group": {
+         "kind": "none",
+         "isDefault": true
+     },
+     "problemMatcher": []
+ },
+ {
+  "label": "Build appbundle",
+  "type": "shell",
+  "command": [
+      "fvm flutter build appbundle --target lib/main.dart --obfuscate --split-debug-info=build --no-tree-shake-icons"
+  ],
+  "group": {
+      "kind": "none",
+      "isDefault": true
+  },
+  "problemMatcher": []
+},
+       {
+           "label": "Run codegen",
+           "type": "shell",
+           "command": [
+               "fvm dart run build_runner build --delete-conflicting-outputs"
+           ],
+           "group": {
+               "kind": "none",
+               "isDefault": true
+           },
+           "problemMatcher": []
+       },
+       {
+           "label": "Format",
+           "type": "shell",
+           "command": [
+               // do not include codegen files
+               "find lib test -name '*.dart' ! -name '*.g.dart' | xargs dart format --fix -l 80"
+           ],
+           "group": {
+               "kind": "none",
+               "isDefault": true
+           },
+           "problemMatcher": []
+       },
+       {
+           "label": "Run tests",
+           "type": "shell",
+           "command": [
+               "flutter test ."
+           ],
+           "group": {
+               "kind": "none",
+               "isDefault": true
+           },
+           "problemMatcher": []
+       }
+   ]
+}

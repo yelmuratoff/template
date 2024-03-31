@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/services/app_config.dart';
+import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/feature/initialization/model/environment.dart';
 import 'package:base_starter/src/feature/initialization/model/initialization_progress.dart';
 import 'package:base_starter/src/feature/settings/bloc/settings_bloc.dart';

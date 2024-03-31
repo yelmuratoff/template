@@ -2,13 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 @immutable
 abstract base class RestClientBase implements RestClient {
-  RestClientBase({required String baseUrl}) : baseUri = Uri.parse(baseUrl);
+  RestClientBase({String baseUrl = AppConstants.baseUrl})
+      : baseUri = Uri.parse(baseUrl);
 
   /// The base url for the client
   final Uri baseUri;

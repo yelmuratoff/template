@@ -1,12 +1,24 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
+import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/utils/global_variables.dart';
+import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
+import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
+import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
-/// Rest client that uses [Dio] as HTTP library.
+/// Rest client that uses `Dio` as HTTP library.
 final class RestClientDio extends RestClientBase {
-  RestClientDio({required super.baseUrl, required Dio dio}) : _dio = dio;
-
-  final Dio _dio;
+  final Dio? dio;
+  final String? baseUrl;
+  RestClientDio({
+    this.dio,
+    this.baseUrl,
+  });
 
   /// Send [Dio] request
   @protected
@@ -27,7 +39,8 @@ final class RestClientDio extends RestClientBase {
         responseType: ResponseType.json,
       );
 
-      final response = await _dio.request<T>(
+      final response =
+          await (dio ?? DioClient(baseUrl: baseUrl).dio).request<T>(
         uri.toString(),
         data: body,
         options: options,
@@ -148,4 +161,76 @@ final class RestClientDio extends RestClientBase {
         headers: headers,
         queryParams: queryParams,
       );
+}
+
+class DioClient {
+  static DioClient? _instance;
+  final Dio dio;
+
+  factory DioClient({String? baseUrl}) {
+    _instance ??= DioClient._internal(baseUrl ?? AppConstants.baseUrl);
+    return _instance!;
+  }
+
+  DioClient._internal(String baseUrl)
+      : dio = Dio(BaseOptions(baseUrl: baseUrl)) {
+    _initInterceptors();
+  }
+
+  void _initInterceptors() {
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final TokenPair? tokenModel = await SecureStorageService.getToken();
+          if (tokenModel != null) {
+            options.headers['Authorization'] = 'Bearer ${tokenModel.access}';
+          }
+          return handler.next(options);
+        },
+        onError: (DioException e, handler) async {
+          if (e.response?.statusCode == 401) {
+            // If a 401 response is received, refresh the access token
+            final TokenPair? oldToken = await SecureStorageService.getToken();
+            final TokenPair? tokenModel = await dio.post(
+              /// TODO: Add the refresh token endpoint
+              'auth/refresh',
+              options: Options(
+                sendTimeout: const Duration(milliseconds: 30000),
+                receiveTimeout: const Duration(milliseconds: 60000),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              ),
+              data: {
+                "refresh": oldToken?.refresh,
+              },
+            ).then(
+              (value) => TokenPair.fromJson(value.data as Map<String, dynamic>),
+            );
+
+            // Update the request header with the new access token
+            e.requestOptions.headers['Authorization'] =
+                'Bearer ${tokenModel?.access}';
+            await SecureStorageService.setToken(tokenModel);
+
+            // Repeat the request with the updated header
+            return handler.resolve(await dio.fetch(e.requestOptions));
+          }
+          return handler.next(e);
+        },
+      ),
+    );
+
+    /// Adds `TalkerDioLogger` to intercept Dio requests and responses and log them using Talker service.
+    dio.interceptors.add(
+      TalkerDioLogger(
+        talker: talker,
+        settings: TalkerDioLoggerSettings(
+          printRequestHeaders: true,
+          printResponseHeaders: true,
+          errorPen: AnsiPen()..red(bold: true),
+        ),
+      ),
+    );
+  }
 }

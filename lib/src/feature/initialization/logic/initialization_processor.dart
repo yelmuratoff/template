@@ -26,9 +26,6 @@ mixin InitializationProcessor {
 
     if (!kDebugMode) {}
     hook.onInit?.call();
-    // talker.info(
-    //   "🔉 ${config.appName} app started in ${config.flavor} mode",
-    // );
     try {
       await for (final step in Stream.fromIterable(steps.entries)) {
         stepCount++;

@@ -1,4 +1,5 @@
 import 'package:base_starter/src/common/utils/global_variables.dart';
+import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/feature/auth/resource/domain/use_cases/auth_use_cases.dart';
@@ -13,6 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.authUseCases}) : super(const InitialAuthState()) {
     on<LoginAuthEvent>(_onLogin);
     on<GetCurrentUserAuthEvent>(_onGetCurrentUser);
+    on<LogoutAuthEvent>(_onLogout);
   }
 
   Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) async {
@@ -26,6 +28,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await SecureStorageService.setToken(tokenPair);
         emit(const AuthState.authenticated());
       }
+    } on RestClientException catch (e) {
+      emit(AuthState.error(cause: e, message: e.message));
+    } on Object catch (e) {
+      emit(AuthState.error(cause: e, message: e.toString()));
+    }
+  }
+
+  Future<void> _onLogout(LogoutAuthEvent event, Emitter<AuthState> emit) async {
+    try {
+      emit(const AuthState.loading());
+      await AppUtils.removeToken();
+      emit(const AuthState.initial());
     } on RestClientException catch (e) {
       emit(AuthState.error(cause: e, message: e.message));
     } on Object catch (e) {
@@ -72,6 +86,8 @@ sealed class AuthEvent with _$AuthEvent {
   }) = LoginAuthEvent;
 
   const factory AuthEvent.getCurrentUser() = GetCurrentUserAuthEvent;
+
+  const factory AuthEvent.logout() = LogoutAuthEvent;
 }
 
 @freezed
@@ -84,6 +100,7 @@ sealed class AuthState with _$AuthState {
   /// Loading state for the [AuthBloc].
   const factory AuthState.loading() = LoadingAuthState;
 
+  /// Authenticated state for the [AuthBloc].
   const factory AuthState.authenticated() = AuthenticatedAuthState;
 
   /// Error state for the [AuthBloc].

@@ -1,12 +1,15 @@
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/string_extension.dart';
+import 'package:base_starter/src/feature/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/feature/home/state/counter.dart';
 import 'package:base_starter/src/feature/inspector/inspector_page.dart';
 import 'package:base_starter/src/feature/settings/ui/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
 part 'view/home_view.dart';
 

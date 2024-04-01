@@ -78,6 +78,14 @@ class HomeView extends ConsumerWidget {
                       ),
                     ),
                   ),
+                  OutlinedButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(const LogoutAuthEvent());
+                    },
+                    child: Text(
+                      context.l10n.logout,
+                    ),
+                  ),
                 ],
               ),
             ),

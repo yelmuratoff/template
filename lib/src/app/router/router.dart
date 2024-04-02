@@ -70,98 +70,95 @@ Page<dynamic> Function(BuildContext, GoRouterState) defaultPageBuilder<T>(
 
 /// [createRouter] is a factory function that creates a [GoRouter] instance with all routes.
 
-GoRouter createRouter() => GoRouter(
-      initialLocation: SplashPage.routePath,
-      navigatorKey: navigatorKey,
-      observers: [
-        TalkerRouteObserver(talker),
-        HeroController(),
-      ],
-      errorPageBuilder: (context, state) {
-        final error = state.matchedLocation;
+GoRouter createRouter = GoRouter(
+  initialLocation: SplashPage.routePath,
+  navigatorKey: navigatorKey,
+  observers: [
+    HeroController(),
+  ],
+  errorPageBuilder: (context, state) {
+    final error = state.matchedLocation;
+    return CupertinoPage(
+      child: RouterErrorPage(
+        error: error,
+      ),
+    );
+  },
+  routes: [
+    GoRoute(
+      name: SplashPage.name,
+      path: SplashPage.routePath,
+      pageBuilder: (context, pathParameters) => const CupertinoPage(
+        child: SplashPage(),
+      ),
+    ),
+    GoRoute(
+      name: AuthPage.name,
+      path: AuthPage.routePath,
+      pageBuilder: (context, pathParameters) => const CupertinoPage(
+        child: AuthPage(),
+      ),
+    ),
+    StatefulShellRoute.indexedStack(
+      pageBuilder: (
+        BuildContext context,
+        GoRouterState state,
+        StatefulNavigationShell navigationShell,
+      ) {
+        /// Return the widget that implements the custom shell (in this case
+        /// using a BottomNavigationBar). The StatefulNavigationShell is passed
+        /// to be able access the state of the shell and to navigate to other
+        /// branches in a stateful way.
         return CupertinoPage(
-          child: RouterErrorPage(
-            error: error,
-          ),
+          child: RootPage(navigationShell: navigationShell),
         );
       },
-      routes: [
-        GoRoute(
-          name: SplashPage.name,
-          path: SplashPage.routePath,
-          pageBuilder: (context, pathParameters) => const CupertinoPage(
-            child: SplashPage(),
-          ),
-        ),
-        GoRoute(
-          name: AuthPage.name,
-          path: AuthPage.routePath,
-          pageBuilder: (context, pathParameters) => const CupertinoPage(
-            child: AuthPage(),
-          ),
-        ),
-        StatefulShellRoute.indexedStack(
-          pageBuilder: (
-            BuildContext context,
-            GoRouterState state,
-            StatefulNavigationShell navigationShell,
-          ) {
-            /// Return the widget that implements the custom shell (in this case
-            /// using a BottomNavigationBar). The StatefulNavigationShell is passed
-            /// to be able access the state of the shell and to navigate to other
-            /// branches in a stateful way.
-            return CupertinoPage(
-              child: RootPage(navigationShell: navigationShell),
-            );
-          },
-          branches: [
-            StatefulShellBranch(
-              navigatorKey: rootPageNavigatorKey,
+      branches: [
+        StatefulShellBranch(
+          navigatorKey: rootPageNavigatorKey,
+          routes: [
+            GoRoute(
+              name: HomePage.name,
+              path: HomePage.routePath,
+              pageBuilder: (context, pathParameters) => const CupertinoPage(
+                child: HomePage(),
+              ),
               routes: [
                 GoRoute(
-                  name: HomePage.name,
-                  path: HomePage.routePath,
+                  name: SettingsPage.name,
+                  path: SettingsPage.routePath,
                   pageBuilder: (context, pathParameters) => const CupertinoPage(
-                    child: HomePage(),
+                    child: SettingsPage(),
                   ),
-                  routes: [
-                    GoRoute(
-                      name: SettingsPage.name,
-                      path: SettingsPage.routePath,
-                      pageBuilder: (context, pathParameters) =>
-                          const CupertinoPage(
-                        child: SettingsPage(),
+                ),
+                GoRoute(
+                  name: InspectorPage.name,
+                  path: InspectorPage.routePath,
+                  pageBuilder: (context, pathParameters) {
+                    final Map<String, dynamic>? args =
+                        pathParameters.extra as Map<String, dynamic>?;
+                    return CupertinoPage(
+                      child: InspectorPage(
+                        appBarTitle: args?[InspectorPage.paramTitle] as String?,
+                        theme: args?[InspectorPage.paramTheme]
+                                as TalkerScreenTheme? ??
+                            TalkerScreenTheme(
+                              backgroundColor:
+                                  context.theme.colorScheme.background,
+                              textColor: context.colors.text,
+                              cardColor: context.colors.card,
+                            ),
+                        itemsBuilder: args?[InspectorPage.paramItemBuilder]
+                            as Widget Function(BuildContext, TalkerData)?,
                       ),
-                    ),
-                    GoRoute(
-                      name: InspectorPage.name,
-                      path: InspectorPage.routePath,
-                      pageBuilder: (context, pathParameters) {
-                        final Map<String, dynamic>? args =
-                            pathParameters.extra as Map<String, dynamic>?;
-                        return CupertinoPage(
-                          child: InspectorPage(
-                            appBarTitle:
-                                args?[InspectorPage.paramTitle] as String?,
-                            theme: args?[InspectorPage.paramTheme]
-                                    as TalkerScreenTheme? ??
-                                TalkerScreenTheme(
-                                  backgroundColor:
-                                      context.theme.colorScheme.background,
-                                  textColor: context.colors.text,
-                                  cardColor: context.colors.card,
-                                ),
-                            itemsBuilder: args?[InspectorPage.paramItemBuilder]
-                                as Widget Function(BuildContext, TalkerData)?,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ],
             ),
           ],
         ),
       ],
-    );
+    ),
+  ],
+);

@@ -177,5 +177,6 @@
    "initialization_failed": "Initialization failed",
    "error_type": "Error type",
    "retry": "Retry",
-   "logout": "Log Out"
+   "logout": "Log Out",
+   "you_already_in_logger": "You are already in the logger page"
 }

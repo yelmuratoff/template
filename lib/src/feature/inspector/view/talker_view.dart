@@ -142,7 +142,10 @@ class _TalkerViewState extends State<TalkerView> {
   }
 
   void _openTalkerSettings(
-      BuildContext context, TalkerScreenTheme theme, bool isStandart) {
+    BuildContext context,
+    TalkerScreenTheme theme,
+    bool isStandart,
+  ) {
     final talker = ValueNotifier(widget.talker);
 
     showModalBottomSheet<void>(

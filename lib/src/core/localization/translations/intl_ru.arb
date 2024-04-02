@@ -177,5 +177,6 @@
    "initialization_failed": "Ошибка инициализации",
    "error_type": "Тип ошибки",
    "retry": "Повторить попытку",
-   "logout": "Выйти"
+   "logout": "Выйти",
+   "you_already_in_logger": "Вы уже находитесь на этой странице"
 }

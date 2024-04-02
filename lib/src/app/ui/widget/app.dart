@@ -1,6 +1,7 @@
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/app/ui/widget/material_context.dart';
 import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/services/router_service.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/common/utils/talker_logger.dart';
 import 'package:base_starter/src/feature/initialization/logic/base_config.dart';
@@ -41,15 +42,18 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    _router = createRouter();
+    _router = createRouter;
     talker.logTyped(GoodLog('📱 App started'));
     talker.logTyped(
       RouteLog(_router.configuration.debugKnownRoutes()),
     );
     _router.routerDelegate.addListener(() {
+      final String location =
+          _router.routerDelegate.currentConfiguration.last.matchedLocation;
+      routerService.setRoute(location);
       talker.logTyped(
         RouteLog(
-          _router.routerDelegate.currentConfiguration.last.matchedLocation,
+          location,
         ),
       );
     });

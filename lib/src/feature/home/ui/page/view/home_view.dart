@@ -48,13 +48,6 @@ class HomeView extends ConsumerWidget {
                         onPressed: () => onSettingsPressed(),
                         splashRadius: 8,
                       ),
-                      if (context.config.isDev) ...[
-                        IconButton.filledTonal(
-                          icon: const Icon(Icons.monitor_heart),
-                          onPressed: () => onLoggerPressed(),
-                          splashRadius: 8,
-                        ),
-                      ],
                     ],
                   ),
                 ],

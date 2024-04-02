@@ -19,6 +19,11 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = SettingsScope.of(context).theme;
     final locale = SettingsScope.of(context).locale;

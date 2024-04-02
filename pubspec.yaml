@@ -57,6 +57,7 @@ dependencies:
   equatable: ^2.0.5
   share_plus: ^7.2.2
   package_info_plus: ^5.0.1
+  device_info_plus: ^9.0.3
 
   # UI
   gap: ^3.0.1
@@ -65,6 +66,7 @@ dependencies:
   auto_size_text: ^3.0.0
   feedback_plus: ^0.1.0
   fluttertoast: ^8.2.4
+  inspector: ^2.1.0
 
   # Others
   provider: ^6.1.2

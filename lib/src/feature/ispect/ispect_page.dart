@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
-import 'package:base_starter/src/feature/inspector/view/talker_view.dart'
-    as view;
+import 'package:base_starter/src/feature/ispect/view/talker_view.dart' as view;
 import 'package:feedback_plus/feedback_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +12,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 /// UI view for output of all Talker logs and errors
-class InspectorPage extends StatelessWidget {
-  const InspectorPage({
+class ISpectPage extends StatelessWidget {
+  const ISpectPage({
     super.key,
     this.appBarTitle = 'Inspector',
     this.theme = const TalkerScreenTheme(),
@@ -22,7 +21,7 @@ class InspectorPage extends StatelessWidget {
     this.isStandart = false,
   });
 
-  static const String name = "Logger";
+  static const String name = "ISpect";
   static const String routePath = "logger";
 
   static const String paramTalker = "paramTalker";

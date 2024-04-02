@@ -7,7 +7,7 @@ import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/feature/auth/ui/page/auth.dart';
 import 'package:base_starter/src/feature/home/ui/page/home.dart';
 import 'package:base_starter/src/feature/initialization/ui/page/splash.dart';
-import 'package:base_starter/src/feature/inspector/inspector_page.dart';
+import 'package:base_starter/src/feature/ispect/ispect_page.dart';
 import 'package:base_starter/src/feature/settings/ui/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -132,15 +132,15 @@ GoRouter createRouter = GoRouter(
                   ),
                 ),
                 GoRoute(
-                  name: InspectorPage.name,
-                  path: InspectorPage.routePath,
+                  name: ISpectPage.name,
+                  path: ISpectPage.routePath,
                   pageBuilder: (context, pathParameters) {
                     final Map<String, dynamic>? args =
                         pathParameters.extra as Map<String, dynamic>?;
                     return CupertinoPage(
-                      child: InspectorPage(
-                        appBarTitle: args?[InspectorPage.paramTitle] as String?,
-                        theme: args?[InspectorPage.paramTheme]
+                      child: ISpectPage(
+                        appBarTitle: args?[ISpectPage.paramTitle] as String?,
+                        theme: args?[ISpectPage.paramTheme]
                                 as TalkerScreenTheme? ??
                             TalkerScreenTheme(
                               backgroundColor:
@@ -148,7 +148,7 @@ GoRouter createRouter = GoRouter(
                               textColor: context.colors.text,
                               cardColor: context.colors.card,
                             ),
-                        itemsBuilder: args?[InspectorPage.paramItemBuilder]
+                        itemsBuilder: args?[ISpectPage.paramItemBuilder]
                             as Widget Function(BuildContext, TalkerData)?,
                       ),
                     );

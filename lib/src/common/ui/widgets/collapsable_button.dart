@@ -5,7 +5,7 @@ import 'package:base_starter/src/common/services/router_service.dart';
 import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
-import 'package:base_starter/src/feature/inspector/inspector_page.dart';
+import 'package:base_starter/src/feature/ispect/ispect_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -220,7 +220,7 @@ class _InfospectInvokerState extends State<InfospectInvoker> {
         Toaster.showToast(context, title: context.l10n.you_already_in_logger);
         return;
       } else {
-        navigatorKey.currentContext?.pushNamed(InspectorPage.name);
+        navigatorKey.currentContext?.pushNamed(ISpectPage.name);
       }
     }
   }

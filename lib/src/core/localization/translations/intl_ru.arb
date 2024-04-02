@@ -178,5 +178,16 @@
    "error_type": "Тип ошибки",
    "retry": "Повторить попытку",
    "logout": "Выйти",
-   "you_already_in_logger": "Вы уже находитесь на этой странице"
+   "you_already_in_logger": "Вы уже находитесь на этой странице",
+   "turn_on_inspector": "Включить инспектор",
+   "turn_off_inspector": "Выключить инспектор",
+   "view_and_manage_data": "Просмотр данных приложения и управление ими",
+   "app_data": "Данные приложения",
+   "total_files_count": "Общее количество файлов: {number}",
+   "@total_files_count": {
+      "placeholders": {
+         "number": {}
+      }
+   },
+   "app_info": "Информация об устройстве"
 }

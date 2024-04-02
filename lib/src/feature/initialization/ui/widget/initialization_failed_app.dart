@@ -7,7 +7,7 @@ import 'package:base_starter/src/feature/initialization/model/dependencies.dart'
 import 'package:base_starter/src/feature/initialization/model/environment.dart';
 import 'package:base_starter/src/feature/initialization/ui/widget/dependencies_scope.dart';
 import 'package:base_starter/src/feature/initialization/ui/widget/environment_scope.dart';
-import 'package:base_starter/src/feature/inspector/inspector_page.dart';
+import 'package:base_starter/src/feature/ispect/ispect_page.dart';
 import 'package:base_starter/src/feature/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/feature/settings/data/locale/locale_datasource.dart';
 import 'package:base_starter/src/feature/settings/data/locale/locale_repository.dart';
@@ -176,7 +176,7 @@ class _View extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (context) => InspectorPage(
+                      builder: (context) => ISpectPage(
                         isStandart: true,
                         theme: TalkerScreenTheme(
                           backgroundColor: context.theme.colorScheme.background,

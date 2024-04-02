@@ -1,8 +1,8 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member, implementation_imports
 
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/feature/inspector/widget/base_bottom_sheet.dart';
-import 'package:base_starter/src/feature/inspector/widget/settings_card.dart';
+import 'package:base_starter/src/feature/ispect/widget/base_bottom_sheet.dart';
+import 'package:base_starter/src/feature/ispect/settings/settings_card.dart';
 import 'package:base_starter/src/feature/settings/state/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,9 +82,8 @@ class _TalkerSettingsBottomSheetState
           widget.talker.notifyListeners();
         },
       ),
-      if (!widget.isStandart)
+      if (!widget.isStandart) ...[
         TalkerSettingsCardItem(
-          canEdit: widget.talker.value.settings.enabled,
           talkerScreenTheme: widget.talkerScreenTheme,
           title: context.l10n.performance_tracker,
           backgroundColor: widget.talkerScreenTheme.cardColor,
@@ -94,9 +93,25 @@ class _TalkerSettingsBottomSheetState
                   value: enabled,
                 );
             widget.talker.notifyListeners();
-            // if (context.mounted) RestartWrapper.restartApp(context);
           },
         ),
+      ],
+      if (!widget.isStandart) ...[
+        TalkerSettingsCardItem(
+          talkerScreenTheme: widget.talkerScreenTheme,
+          title: ref.read(appConfigsProvider.notifier).isInspectorEnabled()
+              ? context.l10n.turn_off_inspector
+              : context.l10n.turn_on_inspector,
+          backgroundColor: widget.talkerScreenTheme.cardColor,
+          enabled: ref.watch(appConfigsProvider).isInspectorEnabled,
+          onChanged: (enabled) {
+            ref.read(appConfigsProvider.notifier).setInspector(
+                  value: enabled,
+                );
+            widget.talker.notifyListeners();
+          },
+        ),
+      ],
     ];
 
     return BaseBottomSheet(

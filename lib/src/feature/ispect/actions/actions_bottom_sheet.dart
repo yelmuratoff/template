@@ -1,5 +1,5 @@
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/feature/inspector/widget/base_bottom_sheet.dart';
+import 'package:base_starter/src/feature/ispect/widget/base_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 

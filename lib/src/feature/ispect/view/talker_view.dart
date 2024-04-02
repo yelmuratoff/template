@@ -2,12 +2,14 @@
 
 import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/feature/inspector/actions/actions_bottom_sheet.dart';
-import 'package:base_starter/src/feature/inspector/monitor/talker_monitor_page.dart';
-import 'package:base_starter/src/feature/inspector/utils/get_data_color.dart';
-import 'package:base_starter/src/feature/inspector/widget/data_card.dart';
-import 'package:base_starter/src/feature/inspector/widget/settings_bottom_sheet.dart';
-import 'package:base_starter/src/feature/inspector/widget/view_app_bar.dart';
+import 'package:base_starter/src/feature/ispect/actions/actions_bottom_sheet.dart';
+import 'package:base_starter/src/feature/ispect/app_data/app_data.dart';
+import 'package:base_starter/src/feature/ispect/monitor/talker_monitor_page.dart';
+import 'package:base_starter/src/feature/ispect/app_info/app.dart';
+import 'package:base_starter/src/feature/ispect/utils/get_data_color.dart';
+import 'package:base_starter/src/feature/ispect/widget/data_card.dart';
+import 'package:base_starter/src/feature/ispect/settings/settings_bottom_sheet.dart';
+import 'package:base_starter/src/feature/ispect/widget/view_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:group_button/group_button.dart';
@@ -216,6 +218,16 @@ class _TalkerViewState extends State<TalkerView> {
             title: context.l10n.share_logs_file,
             icon: Icons.ios_share_outlined,
           ),
+          TalkerActionItem(
+            onTap: _manageAppData,
+            title: context.l10n.view_and_manage_data,
+            icon: Icons.data_usage_sharp,
+          ),
+          TalkerActionItem(
+            onTap: _checkAppInfo,
+            title: context.l10n.app_info,
+            icon: Icons.info_outline_rounded,
+          ),
         ],
         talkerScreenTheme: widget.theme,
       ),
@@ -225,6 +237,20 @@ class _TalkerViewState extends State<TalkerView> {
   Future<void> _shareLogsInFile() async {
     await _controller.downloadLogsFile(
       widget.talker.history.text,
+    );
+  }
+
+  Future<void> _manageAppData() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute<dynamic>(builder: (context) => const AppDataPage()),
+    );
+  }
+
+  Future<void> _checkAppInfo() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute<dynamic>(builder: (context) => const AppInfoPage()),
     );
   }
 

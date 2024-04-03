@@ -14,7 +14,7 @@ final class Toaster {
   static Future<void> showToast(
     BuildContext context, {
     required String title,
-    Color backgroundColor = const Color(0xff3d3b3b),
+    Color backgroundColor = const Color.fromARGB(255, 43, 42, 42),
     Color textColor = Colors.white,
     bool hasImage = true,
     bool isDismissable = true,

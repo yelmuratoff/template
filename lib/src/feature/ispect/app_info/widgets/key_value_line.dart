@@ -1,5 +1,7 @@
+import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class KeyValueLine extends StatelessWidget {
   const KeyValueLine({
@@ -41,17 +43,27 @@ class KeyValueLine extends StatelessWidget {
             ),
             Flexible(
               flex: 2,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: context.colors.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Text(
-                    v,
-                    textAlign: TextAlign.end,
-                    style: context.theme.textTheme.bodyMedium,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: "$k $v"));
+                  Toaster.showToast(
+                    context,
+                    title: context.l10n.copied_to_clipboard,
+                  );
+                },
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: context.colors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Text(
+                      v,
+                      textAlign: TextAlign.end,
+                      style: context.theme.textTheme.bodyMedium,
+                    ),
                   ),
                 ),
               ),

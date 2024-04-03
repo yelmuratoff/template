@@ -11,6 +11,24 @@ class _AppInfoView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_rounded),
             onPressed: () => Navigator.of(context).pop(),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.copy_all_rounded),
+              onPressed: () async {
+                await Clipboard.setData(
+                  ClipboardData(
+                    text: await controller.allData(),
+                  ),
+                );
+                if (context.mounted) {
+                  await Toaster.showToast(
+                    context,
+                    title: context.l10n.copied_to_clipboard,
+                  );
+                }
+              },
+            ),
+          ],
         ),
         body: AnimatedBuilder(
           animation: controller,

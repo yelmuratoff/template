@@ -1,7 +1,10 @@
+import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
+import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/feature/ispect/app_info/controller/controller.dart';
 import 'package:base_starter/src/feature/ispect/app_info/widgets/device_info_body.dart';
 import 'package:base_starter/src/feature/ispect/app_info/widgets/package_info_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 part 'view/app_info_view.dart';
 

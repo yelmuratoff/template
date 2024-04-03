@@ -189,5 +189,6 @@
          "number": {}
       }
    },
-   "app_info": "Check device info & package info"
+   "app_info": "Check device info & package info",
+   "copied_to_clipboard": "Copied to clipboard"
 }

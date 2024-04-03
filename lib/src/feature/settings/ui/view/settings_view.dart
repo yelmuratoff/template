@@ -52,14 +52,6 @@ class SettingsView extends StatelessWidget {
                 ),
               ),
               const _ThemeSelector(Colors.primaries),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, top: 8),
-                child: Text(
-                  context.l10n.custom_colors,
-                  style: _titleMediumTextStyle,
-                ),
-              ),
-              const _ThemeSelector(Colors.accents),
               SwitchListTile(
                 title: Text(
                   context.l10n.change_theme,

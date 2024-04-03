@@ -15,7 +15,7 @@ final class AuthUseCases {
     required String password,
   }) async {
     try {
-      return _authRepository.login(email: email, password: password);
+      return await _authRepository.login(email: email, password: password);
     } catch (e, st) {
       talker.handle(e, st);
       rethrow;

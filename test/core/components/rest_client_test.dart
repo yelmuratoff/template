@@ -89,11 +89,11 @@ void main() {
         expect(result, throwsA(isA<WrongResponseTypeException>()));
       });
 
-      test('Return null when no data', () {
+      test('Is not empty', () {
         final restClient = _RestClientBase();
         const response = {'test': 'test'};
         final result = restClient.decodeResponse(response);
-        expect(result, completion(isNull));
+        expect(result, completion(isNotNull));
       });
 
       test('Return null when null response', () {

@@ -1,7 +1,4 @@
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/feature/ispect/app_info/widgets/key_value_line.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
+part of '../app.dart';
 
 class DeviceInfoBody extends StatelessWidget {
   const DeviceInfoBody({

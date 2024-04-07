@@ -33,6 +33,10 @@ class _RootPageState extends ConsumerState<RootPage> {
     final appConfigState = ref.watch(appConfigsProvider);
     return Inspector(
       isPanelVisible: appConfigState.isInspectorEnabled,
+      backgroundColor: theme.computeTheme().colorScheme.background,
+      selectedColor: theme.computeTheme().colorScheme.primaryContainer,
+      textColor: theme.computeTheme().colorScheme.onBackground,
+      selectedTextColor: theme.computeTheme().colorScheme.primaryContainer,
       child: BetterFeedback(
         themeMode: theme.mode,
         localizationsDelegates: Localization.localizationDelegates,

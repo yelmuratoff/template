@@ -1,10 +1,4 @@
-import 'dart:io';
-
-import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+part of '../app.dart';
 
 class AppInfoController extends ChangeNotifier {
   static final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();

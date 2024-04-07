@@ -1,4 +1,4 @@
-part of 'talker_monitor_page.dart';
+part of '../talker_monitor_page.dart';
 
 class _TalkerMonitorsCard extends StatelessWidget {
   const _TalkerMonitorsCard({

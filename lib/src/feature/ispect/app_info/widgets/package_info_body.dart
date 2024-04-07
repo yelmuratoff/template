@@ -1,7 +1,4 @@
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/feature/ispect/app_info/widgets/key_value_line.dart';
-import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+part of '../app.dart';
 
 class PackageInfoBody extends StatelessWidget {
   const PackageInfoBody({
@@ -51,25 +48,27 @@ class _PackageInfoBody extends StatelessWidget {
       return const SizedBox();
     }
     final pi = _packageInfo;
-    return Column(
-      children: [
-        KeyValueLine(
-          k: 'App name:',
-          v: pi.appName,
-        ),
-        KeyValueLine(
-          k: 'Version:',
-          v: pi.version,
-        ),
-        KeyValueLine(
-          k: 'Build number:',
-          v: pi.buildNumber,
-        ),
-        KeyValueLine(
-          k: 'Package name:',
-          v: pi.packageName,
-        ),
-      ],
-    );
+    return pi != null
+        ? Column(
+            children: [
+              KeyValueLine(
+                k: 'App name:',
+                v: pi.appName,
+              ),
+              KeyValueLine(
+                k: 'Version:',
+                v: pi.version,
+              ),
+              KeyValueLine(
+                k: 'Build number:',
+                v: pi.buildNumber,
+              ),
+              KeyValueLine(
+                k: 'Package name:',
+                v: pi.packageName,
+              ),
+            ],
+          )
+        : const SizedBox();
   }
 }

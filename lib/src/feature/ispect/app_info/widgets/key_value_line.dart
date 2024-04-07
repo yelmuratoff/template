@@ -1,7 +1,4 @@
-import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+part of '../app.dart';
 
 class KeyValueLine extends StatelessWidget {
   const KeyValueLine({

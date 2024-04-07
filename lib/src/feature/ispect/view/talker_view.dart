@@ -6,9 +6,9 @@ import 'package:base_starter/src/feature/ispect/actions/actions_bottom_sheet.dar
 import 'package:base_starter/src/feature/ispect/app_data/app_data.dart';
 import 'package:base_starter/src/feature/ispect/app_info/app.dart';
 import 'package:base_starter/src/feature/ispect/monitor/talker_monitor_page.dart';
-import 'package:base_starter/src/feature/ispect/settings/settings_bottom_sheet.dart';
 import 'package:base_starter/src/feature/ispect/utils/get_data_color.dart';
 import 'package:base_starter/src/feature/ispect/widget/data_card.dart';
+import 'package:base_starter/src/feature/ispect/widget/settings/settings_bottom_sheet.dart';
 import 'package:base_starter/src/feature/ispect/widget/view_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

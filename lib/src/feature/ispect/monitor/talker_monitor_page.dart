@@ -1,12 +1,13 @@
+// ignore_for_file: implementation_imports
+
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/feature/ispect/monitor/monitor_info_page.dart';
+import 'package:base_starter/src/feature/ispect/monitor/pages/monitor_info_page.dart';
 import 'package:base_starter/src/feature/ispect/utils/get_data_color.dart';
 import 'package:flutter/material.dart';
-// ignore: implementation_imports
 import 'package:talker_flutter/src/ui/widgets/base_card.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-part 'monitor_card.dart';
+part 'widgets/monitor_card.dart';
 
 class TalkerMonitorPage extends StatelessWidget {
   const TalkerMonitorPage({

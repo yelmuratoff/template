@@ -1,8 +1,8 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member, implementation_imports
 
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/feature/ispect/settings/settings_card.dart';
 import 'package:base_starter/src/feature/ispect/widget/base_bottom_sheet.dart';
+import 'package:base_starter/src/feature/ispect/widget/settings/settings_card.dart';
 import 'package:base_starter/src/feature/settings/state/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

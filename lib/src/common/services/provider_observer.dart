@@ -1,6 +1,5 @@
-import 'package:base_starter/src/common/utils/global_variables.dart';
-import 'package:base_starter/src/common/utils/talker_logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ispect/ispect.dart';
 
 class ProviderLoggerObserver extends ProviderObserver {
   @override
@@ -9,8 +8,8 @@ class ProviderLoggerObserver extends ProviderObserver {
     Object? value,
     ProviderContainer container,
   ) {
-    talker.logTyped(
-      ProviderLog('Provider ${provider.name} was initialized with $value'),
+    talkerWrapper.provider(
+      message: 'Provider ${provider.name} was initialized with $value',
     );
   }
 
@@ -19,8 +18,8 @@ class ProviderLoggerObserver extends ProviderObserver {
     ProviderBase<Object?> provider,
     ProviderContainer container,
   ) {
-    talker.logTyped(
-      ProviderLog('Provider ${provider.name} was disposed'),
+    talkerWrapper.provider(
+      message: 'Provider ${provider.name} was disposed',
     );
   }
 
@@ -31,10 +30,9 @@ class ProviderLoggerObserver extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    talker.logTyped(
-      ProviderLog(
-        'Provider ${provider.name} was updated from $previousValue to $newValue',
-      ),
+    talkerWrapper.provider(
+      message:
+          'Provider ${provider.name} was updated from $previousValue to $newValue',
     );
   }
 
@@ -45,10 +43,10 @@ class ProviderLoggerObserver extends ProviderObserver {
     StackTrace stackTrace,
     ProviderContainer container,
   ) {
-    talker.handle(
-      error,
-      stackTrace,
-      'Provider ${provider.name} failed with error $error',
+    talkerWrapper.handle(
+      exception: error,
+      stackTrace: stackTrace,
+      message: 'Provider ${provider.name} failed with error $error',
     );
   }
 }

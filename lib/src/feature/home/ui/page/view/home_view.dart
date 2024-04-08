@@ -2,10 +2,9 @@ part of '../home.dart';
 
 class HomeView extends ConsumerWidget {
   final void Function() onSettingsPressed;
-  final void Function() onLoggerPressed;
+
   const HomeView({
     required this.onSettingsPressed,
-    required this.onLoggerPressed,
     super.key,
   });
 

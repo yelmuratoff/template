@@ -2,16 +2,13 @@
 
 import 'package:base_starter/src/app/ui/page/root.dart';
 import 'package:base_starter/src/common/ui/pages/error_router_page.dart';
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/feature/auth/ui/page/auth.dart';
 import 'package:base_starter/src/feature/home/ui/page/home.dart';
 import 'package:base_starter/src/feature/initialization/ui/page/splash.dart';
-import 'package:base_starter/src/feature/ispect/ispect_page.dart';
 import 'package:base_starter/src/feature/settings/ui/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 
 export 'package:go_router/go_router.dart';
 
@@ -130,29 +127,6 @@ GoRouter createRouter = GoRouter(
                   pageBuilder: (context, pathParameters) => const CupertinoPage(
                     child: SettingsPage(),
                   ),
-                ),
-                GoRoute(
-                  name: ISpectPage.name,
-                  path: ISpectPage.routePath,
-                  pageBuilder: (context, pathParameters) {
-                    final Map<String, dynamic>? args =
-                        pathParameters.extra as Map<String, dynamic>?;
-                    return CupertinoPage(
-                      child: ISpectPage(
-                        appBarTitle: args?[ISpectPage.paramTitle] as String?,
-                        theme: args?[ISpectPage.paramTheme]
-                                as TalkerScreenTheme? ??
-                            TalkerScreenTheme(
-                              backgroundColor:
-                                  context.theme.colorScheme.background,
-                              textColor: context.colors.text,
-                              cardColor: context.colors.card,
-                            ),
-                        itemsBuilder: args?[ISpectPage.paramItemBuilder]
-                            as Widget Function(BuildContext, TalkerData)?,
-                      ),
-                    );
-                  },
                 ),
               ],
             ),

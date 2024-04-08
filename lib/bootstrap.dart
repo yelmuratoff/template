@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:base_starter/src/app/logic/app_runner.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
-import 'package:base_starter/src/common/utils/talker_logger.dart';
 import 'package:base_starter/src/feature/initialization/logic/initialization_processor.dart';
 import 'package:base_starter/src/feature/initialization/model/dependencies.dart';
 import 'package:base_starter/src/feature/initialization/model/initialization_hook.dart';
 import 'package:base_starter/src/feature/initialization/ui/widget/initialization_failed_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:ispect/ispect.dart';
 
 Future<void> bootstrap() async {
   InitializationHook? hook;
@@ -31,22 +31,27 @@ Future<void> bootstrap() async {
       hook!,
     ),
     (error, stackTrace) {
-      talker.handle(error, stackTrace);
+      talkerWrapper.handle(
+        message: error.toString(),
+        exception: error,
+        stackTrace: stackTrace,
+      );
     },
   );
 }
 
 void _onInitializing(InitializationStepInfo info) {
   final percentage = ((info.step / info.stepsCount) * 100).toInt();
-  talker.info(
-    '🌀 Inited ${info.stepName} in ${info.msSpent} ms | '
-    'Progress: $percentage%',
+  talkerWrapper.info(
+    message: '🌀 Inited ${info.stepName} in ${info.msSpent} ms | '
+        'Progress: $percentage%',
   );
 }
 
 void _onInitialized(InitializationResult result) {
-  talker
-      .logTyped(GoodLog('🎉 Initialization completed in ${result.msSpent} ms'));
+  talkerWrapper.good(
+    message: '🎉 Initialization completed in ${result.msSpent} ms',
+  );
 }
 
 void _onErrorFactory(
@@ -55,7 +60,9 @@ void _onErrorFactory(
   StackTrace stackTrace,
   InitializationHook hook,
 ) {
-  talker.error('❗️ Initialization failed on step $step with error: $error');
+  talkerWrapper.error(
+    message: '❗️ Initialization failed on step $step with error: $error',
+  );
   FlutterNativeSplash.remove();
   runApp(
     InitializationFailedApp(
@@ -67,5 +74,6 @@ void _onErrorFactory(
 }
 
 void _onInit() {
-  talker.info('🚀 Initialization started');
+  talkerWrapper.initHandling(talker: talker);
+  talkerWrapper.info(message: '🚀 Initialization started');
 }

@@ -5,6 +5,7 @@ import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:ispect/ispect.dart';
 
 /// `ErrorInterceptor` - This class is used to intercept `dio` errors.
 
@@ -53,8 +54,9 @@ class ErrorInterceptor extends Interceptor {
       );
     }
 
-    talker.error(
-      "====================ERROR - START====================\nERROR_TYPE: ${err.type}\nPATH: ${err.requestOptions.path}\n${err.message}\n${err.response?.data}\n====================ERROR - END====================",
+    talkerWrapper.error(
+      message:
+          "====================ERROR - START====================\nERROR_TYPE: ${err.type}\nPATH: ${err.requestOptions.path}\n${err.message}\n${err.response?.data}\n====================ERROR - END====================",
     );
 
     if (err.response != null &&

@@ -2,8 +2,6 @@ import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/app/ui/widget/material_context.dart';
 import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/services/router_service.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
-import 'package:base_starter/src/common/utils/talker_logger.dart';
 import 'package:base_starter/src/feature/initialization/logic/base_config.dart';
 import 'package:base_starter/src/feature/initialization/model/dependencies.dart';
 import 'package:base_starter/src/feature/initialization/model/environment.dart';
@@ -12,6 +10,7 @@ import 'package:base_starter/src/feature/initialization/ui/widget/environment_sc
 import 'package:base_starter/src/feature/settings/ui/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ispect/ispect.dart';
 
 /// [App] is an entry point to the application.
 ///
@@ -37,24 +36,23 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final ISpectController controller = ISpectController();
   late final GoRouter _router;
   String? _environmentKey;
 
   @override
   void initState() {
     _router = createRouter;
-    talker.logTyped(GoodLog('📱 App started'));
-    talker.logTyped(
-      RouteLog(_router.configuration.debugKnownRoutes()),
+    talkerWrapper.good(message: '📱 App started');
+    talkerWrapper.route(
+      message: _router.configuration.debugKnownRoutes(),
     );
     _router.routerDelegate.addListener(() {
       final String location =
           _router.routerDelegate.currentConfiguration.last.matchedLocation;
       routerService.setRoute(location);
-      talker.logTyped(
-        RouteLog(
-          location,
-        ),
+      talkerWrapper.route(
+        message: location,
       );
     });
     _environmentKey = widget.result.dependencies.sharedPreferences
@@ -79,6 +77,7 @@ class _AppState extends State<App> {
               settingsBloc: widget.result.dependencies.settingsBloc,
               child: MaterialContext(
                 routerConfig: _router,
+                controller: controller,
               ),
             ),
           ),

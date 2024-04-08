@@ -1,4 +1,3 @@
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
@@ -6,6 +5,7 @@ import 'package:base_starter/src/feature/auth/resource/domain/use_cases/auth_use
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:ispect/ispect.dart';
 
 part 'auth_bloc.freezed.dart';
 
@@ -57,7 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (user != null) {
         emit(const AuthState.authenticated());
       } else {
-        talker.error("Get current user failed: user is null");
+        talkerWrapper.error(message: "Get current user failed: user is null");
         emit(
           const AuthState.error(
             cause: "Get current user failed: user is null",
@@ -66,10 +66,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
       }
     } on DioException catch (e, st) {
-      talker.handle(e, st);
+      talkerWrapper.handle(exception: e, stackTrace: st, message: "Dio error");
       emit(AuthState.error(cause: e, message: e.message ?? e.toString()));
     } on Object catch (e, st) {
-      talker.handle(e, st);
+      talkerWrapper.handle(exception: e, stackTrace: st, message: "Error");
       emit(AuthState.error(cause: e, message: e.toString()));
     }
   }

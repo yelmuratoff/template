@@ -39,7 +39,38 @@ final class Localization {
   }
 
   /// Obtain [AppLocalizations] instance from [BuildContext].
-  static AppLocalizations of(BuildContext context) =>
-      AppLocalizations.of(context) ??
-      (throw ArgumentError('No Localization found in context'));
+  static AppLocalizations of(BuildContext context) {
+    debugCheckHasAppLocalizations(context);
+    return Localizations.of<AppLocalizations>(
+      context,
+      AppLocalizations,
+    )!;
+  }
+}
+
+bool debugCheckHasAppLocalizations(BuildContext context) {
+  assert(() {
+    if (Localizations.of<AppLocalizations>(
+          context,
+          AppLocalizations,
+        ) ==
+        null) {
+      throw FlutterError.fromParts(<DiagnosticsNode>[
+        ErrorSummary('No AppLocalizations found.'),
+        ErrorDescription(
+          '${context.widget.runtimeType} widgets require ISpectAppLocalizations '
+          'to be provided by a Localizations widget ancestor.',
+        ),
+        ErrorDescription(
+          'Localizations are used to generate many different messages, labels, '
+          'and abbreviations which are used by the feedback library.',
+        ),
+        ...context.describeMissingAncestor(
+          expectedAncestorType: AppLocalizations,
+        ),
+      ]);
+    }
+    return true;
+  }());
+  return true;
 }

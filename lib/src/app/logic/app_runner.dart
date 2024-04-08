@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:base_starter/src/app/ui/widget/app.dart';
 import 'package:base_starter/src/common/services/provider_observer.dart';
 import 'package:base_starter/src/common/ui/pages/restart_wrapper.dart';
-import 'package:base_starter/src/common/utils/talker_logger.dart';
 import 'package:base_starter/src/feature/initialization/logic/initialization_processor.dart';
 import 'package:base_starter/src/feature/initialization/logic/initialization_steps.dart';
 import 'package:base_starter/src/feature/initialization/model/initialization_hook.dart';
@@ -29,9 +28,6 @@ final class AppRunner
 
     // Preserve splash screen
     FlutterNativeSplash.preserve(widgetsBinding: binding);
-
-    // Override logging
-    await initHandling();
 
     // Setup bloc observer and transformer
     Bloc.transformer = bloc_concurrency.sequential();

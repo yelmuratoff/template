@@ -7,7 +7,6 @@ import 'package:base_starter/src/feature/initialization/model/dependencies.dart'
 import 'package:base_starter/src/feature/initialization/model/environment.dart';
 import 'package:base_starter/src/feature/initialization/ui/widget/dependencies_scope.dart';
 import 'package:base_starter/src/feature/initialization/ui/widget/environment_scope.dart';
-import 'package:base_starter/src/feature/ispect/ispect_page.dart';
 import 'package:base_starter/src/feature/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/feature/settings/data/locale/locale_datasource.dart';
 import 'package:base_starter/src/feature/settings/data/locale/locale_repository.dart';
@@ -17,6 +16,8 @@ import 'package:base_starter/src/feature/settings/data/theme/theme_repository.da
 import 'package:base_starter/src/feature/settings/ui/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:ispect/ispect.dart';
+import 'package:ispect/ispect_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -56,6 +57,10 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
   ThemeRepository? themeRepository;
 
   bool _isInitialized = false;
+
+  /// ISpect fields
+  final Talker talker = TalkerFlutter.init();
+  final ISpectController controller = ISpectController();
 
   @override
   void initState() {
@@ -128,6 +133,14 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
                       ? _retryInitialization
                       : null,
                   stackTrace: widget.stackTrace,
+                  talker: talker,
+                  themeMode: settingsState?.appTheme?.mode ?? ThemeMode.system,
+                  lightTheme:
+                      settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
+                  darkTheme:
+                      settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
+                  locale: settingsState?.locale ?? const Locale('en'),
+                  controller: controller,
                 ),
               ),
             ),
@@ -148,9 +161,21 @@ class _View extends StatelessWidget {
   final Object error;
   final Future<void> Function()? retryInitialization;
   final StackTrace stackTrace;
+  final Talker talker;
+  final ThemeMode themeMode;
+  final ThemeData lightTheme;
+  final ThemeData darkTheme;
+  final Locale locale;
+  final ISpectController controller;
   const _View({
     required this.error,
     required this.stackTrace,
+    required this.talker,
+    required this.themeMode,
+    required this.lightTheme,
+    required this.darkTheme,
+    required this.locale,
+    required this.controller,
     this.retryInitialization,
   });
 
@@ -177,11 +202,13 @@ class _View extends StatelessWidget {
                     context,
                     MaterialPageRoute<void>(
                       builder: (context) => ISpectPage(
-                        isStandart: true,
-                        theme: TalkerScreenTheme(
-                          backgroundColor: context.theme.colorScheme.background,
-                          textColor: context.colors.text,
-                          cardColor: context.colors.card,
+                        options: ISpectOptions(
+                          talker: talker,
+                          themeMode: themeMode,
+                          lightTheme: lightTheme,
+                          darkTheme: darkTheme,
+                          locale: locale,
+                          controller: controller,
                         ),
                       ),
                     ),

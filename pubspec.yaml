@@ -62,21 +62,14 @@ dependencies:
   group_button: ^5.3.4
   flutter_easyloading: ^3.0.5
   auto_size_text: ^3.0.0
-  feedback_plus: ^0.1.0
   fluttertoast: ^8.2.4
-  inspector:
-    git:
-      url: https://github.com/K1yoshiSho/inspector_custom.git
-      ref: master
-  ispect:
-    path: packages/ispect
+  ispect: ^0.0.7
 
   # Others
   provider: ^6.1.2
   flutter_riverpod: ^2.5.1
   riverpod_annotation: ^2.3.5
   go_router: ^13.2.1
-  performance: ^0.1.1
   flutter_secure_storage: ^9.0.0
   
 dev_dependencies:

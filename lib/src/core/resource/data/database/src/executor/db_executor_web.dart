@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/wasm.dart';
+import 'package:ispect/ispect.dart';
 
 QueryExecutor createExecutor() => DatabaseConnection.delayed(
       Future(() async {
@@ -12,9 +12,10 @@ QueryExecutor createExecutor() => DatabaseConnection.delayed(
         );
 
         if (result.missingFeatures.isNotEmpty) {
-          talker.warning(
-            'Using ${result.chosenImplementation} due to missing browser '
-            'features: ${result.missingFeatures}',
+          talkerWrapper.warning(
+            message:
+                'Using ${result.chosenImplementation} due to missing browser '
+                'features: ${result.missingFeatures}',
           );
         }
 

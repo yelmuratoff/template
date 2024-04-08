@@ -1,7 +1,7 @@
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
 import 'package:base_starter/src/feature/auth/resource/domain/models/user_model.dart';
 import 'package:base_starter/src/feature/auth/resource/domain/repositories/auth_repository.dart';
+import 'package:ispect/ispect.dart';
 
 final class AuthUseCases {
   final AuthRepository _authRepository;
@@ -17,7 +17,11 @@ final class AuthUseCases {
     try {
       return await _authRepository.login(email: email, password: password);
     } catch (e, st) {
-      talker.handle(e, st);
+      talkerWrapper.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Login failed',
+      );
       rethrow;
     }
   }
@@ -26,7 +30,11 @@ final class AuthUseCases {
     try {
       return _authRepository.getCurrentUser();
     } catch (e, st) {
-      talker.handle(e, st);
+      talkerWrapper.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Get current user failed',
+      );
       rethrow;
     }
   }

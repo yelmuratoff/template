@@ -5,13 +5,13 @@ import 'package:base_starter/src/common/ui/widgets/dialogs/change_environment.da
 import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/string_extension.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/feature/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/feature/settings/ui/view/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:ispect/ispect.dart';
 
 part 'controller/settings_scope.dart';
 part 'view/settings_view.dart';
@@ -56,9 +56,9 @@ class _SettingsPageState extends State<SettingsPage> {
               title: context.l10n.environment_tap_number(10 - _model.tapNumber),
             );
           } else if (_model.tapNumber == 10) {
-            talker.debug("Environment change dialog opened");
+            talkerWrapper.debug(message: "Environment change dialog opened");
             ChangeEnvironmentDialog.show(context).then((value) {
-              talker.debug("Environment change dialog closed");
+              talkerWrapper.debug(message: "Environment change dialog closed");
             });
             _model.tapNumber = 0;
           }

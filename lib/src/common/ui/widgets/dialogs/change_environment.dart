@@ -6,6 +6,7 @@ import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/feature/initialization/model/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:ispect/ispect.dart';
 
 final class ChangeEnvironmentDialog {
   const ChangeEnvironmentDialog();
@@ -54,11 +55,17 @@ final class ChangeEnvironmentDialog {
                           Preferences.environment,
                           env.value,
                         );
-                        talker.warning("Environment changed to ${env.name}");
+                        talkerWrapper.warning(
+                          message: "Environment changed to ${env.name}",
+                        );
                         Navigator.pop(context);
                         RestartWrapper.restartApp(navigatorKey.currentContext!);
                       } catch (e, st) {
-                        talker.handle(e, st);
+                        talkerWrapper.handle(
+                          exception: e,
+                          stackTrace: st,
+                          message: 'Error changing environment',
+                        );
                         Toaster.showErrorToast(
                           context,
                           title: context.l10n.error,

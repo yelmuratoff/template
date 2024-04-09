@@ -6,7 +6,6 @@ import 'package:base_starter/src/feature/initialization/ui/widget/dependencies_s
 import 'package:base_starter/src/feature/initialization/ui/widget/environment_scope.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 /// List of extensions for `BuildContext`

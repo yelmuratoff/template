@@ -38,7 +38,9 @@ class MaterialContext extends ConsumerWidget {
       theme: theme.lightTheme,
       darkTheme: theme.darkTheme,
       themeMode: theme.mode,
-      localizationsDelegates: Localization.localizationDelegates,
+      localizationsDelegates: ISpectLocalizations.localizationDelegates([
+        AppLocalizations.delegate,
+      ]),
       supportedLocales: Localization.supportedLocales,
       locale: locale,
       routerConfig: routerConfig,

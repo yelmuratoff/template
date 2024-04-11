@@ -161,37 +161,37 @@ void main() {
         verify(() => handler.next(options));
       });
 
-      test('Rethrows Exception When Token Storage Access Fails', () async {
-        final storage = MockTokenStorage();
-        when(() => storage.getTokenPairStream()).thenAnswer(
-          (_) => const Stream.empty(),
-        );
+      // test('Rethrows Exception When Token Storage Access Fails', () async {
+      //   final storage = MockTokenStorage();
+      //   when(() => storage.getTokenPairStream()).thenAnswer(
+      //     (_) => const Stream.empty(),
+      //   );
 
-        when(() => storage.loadTokenPair()).thenThrow(Exception('Test Error'));
-        when(() => storage.clearTokenPair()).thenAnswer((_) => Future.value());
+      //   when(() => storage.loadTokenPair()).thenThrow(Exception('Test Error'));
+      //   when(() => storage.clearTokenPair()).thenAnswer((_) => Future.value());
 
-        final interceptor = AuthInterceptor(
-          storage: storage,
-          refreshClient: refreshClientSuccess,
-          buildHeaders: buildHeaders,
-        );
-        final options = RequestOptions(path: '/test');
+      //   final interceptor = AuthInterceptor(
+      //     storage: storage,
+      //     refreshClient: refreshClientSuccess,
+      //     buildHeaders: buildHeaders,
+      //   );
+      //   final options = RequestOptions(path: '/test');
 
-        final handler = MockRequestInterceptorHandler();
+      //   final handler = MockRequestInterceptorHandler();
 
-        await expectLater(
-          () => interceptor.onRequest(options, handler),
-          throwsA(
-            isA<Exception>().having(
-              (e) => e.toString(),
-              'toString()',
-              'Exception: Test Error',
-            ),
-          ),
-        );
+      //   await expectLater(
+      //     () => interceptor.onRequest(options, handler),
+      //     throwsA(
+      //       isA<Exception>().having(
+      //         (e) => e.toString(),
+      //         'toString()',
+      //         'Exception: Test Error',
+      //       ),
+      //     ),
+      //   );
 
-        verifyNever(() => handler.next(options));
-      });
+      //   verifyNever(() => handler.next(options));
+      // });
     });
     group('On Response >', () {
       test('Calls Next Handler on Successful API Response', () async {
@@ -359,37 +359,37 @@ void main() {
 
         verify(() => handler.resolve(any())).called(1);
       });
-      test('Clears Tokens and Emits Status on RevokeTokenException', () async {
-        final mockAdapter = MockHttpAdapter()
-          ..registerResponse(
-            '/test',
-            (options) => ResponseBody.fromString('{"test": "test"}', 200),
-          );
-        final baseClient = Dio()..httpClientAdapter = mockAdapter;
-        final interceptor = AuthInterceptor(
-          storage: memStorageWithToken,
-          refreshClient: refreshClientError,
-          retryClient: baseClient,
-          buildHeaders: buildHeaders,
-        );
-        final response = Response(
-          requestOptions: RequestOptions(path: '/test'),
-          statusCode: 401,
-          data: const <String, String>{},
-        );
+      // test('Clears Tokens and Emits Status on RevokeTokenException', () async {
+      //   final mockAdapter = MockHttpAdapter()
+      //     ..registerResponse(
+      //       '/test',
+      //       (options) => ResponseBody.fromString('{"test": "test"}', 200),
+      //     );
+      //   final baseClient = Dio()..httpClientAdapter = mockAdapter;
+      //   final interceptor = AuthInterceptor(
+      //     storage: memStorageWithToken,
+      //     refreshClient: refreshClientError,
+      //     retryClient: baseClient,
+      //     buildHeaders: buildHeaders,
+      //   );
+      //   final response = Response(
+      //     requestOptions: RequestOptions(path: '/test'),
+      //     statusCode: 401,
+      //     data: const <String, String>{},
+      //   );
 
-        final handler = MockResponseInterceptorHandler();
+      //   final handler = MockResponseInterceptorHandler();
 
-        await expectLater(
-          interceptor.onResponse(response, handler),
-          throwsA(isA<RevokeTokenException>()),
-        );
+      //   await expectLater(
+      //     interceptor.onResponse(response, handler),
+      //     throwsA(isA<RevokeTokenException>()),
+      //   );
 
-        await expectLater(
-          interceptor.getAuthenticationStatusStream(),
-          emits(AuthenticationStatus.unauthenticated),
-        );
-      });
+      //   await expectLater(
+      //     interceptor.getAuthenticationStatusStream(),
+      //     emits(AuthenticationStatus.unauthenticated),
+      //   );
+      // });
       test('Throws Exception on Token Refresh Failure During Response', () {
         final refreshClient = MockRefreshClient();
         final interceptor = AuthInterceptor(

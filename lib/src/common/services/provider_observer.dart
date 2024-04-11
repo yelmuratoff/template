@@ -9,7 +9,7 @@ class ProviderLoggerObserver extends ProviderObserver {
     ProviderContainer container,
   ) {
     talkerWrapper.provider(
-      message: 'Provider ${provider.name} was initialized with $value',
+      'Provider ${provider.name} was initialized with $value',
     );
   }
 
@@ -19,7 +19,7 @@ class ProviderLoggerObserver extends ProviderObserver {
     ProviderContainer container,
   ) {
     talkerWrapper.provider(
-      message: 'Provider ${provider.name} was disposed',
+      'Provider ${provider.name} was disposed',
     );
   }
 
@@ -31,8 +31,7 @@ class ProviderLoggerObserver extends ProviderObserver {
     ProviderContainer container,
   ) {
     talkerWrapper.provider(
-      message:
-          'Provider ${provider.name} was updated from $previousValue to $newValue',
+      'Provider ${provider.name} was updated from $previousValue to $newValue',
     );
   }
 

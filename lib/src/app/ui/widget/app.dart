@@ -36,24 +36,19 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final ISpectController controller = ISpectController();
   late final GoRouter _router;
   String? _environmentKey;
 
   @override
   void initState() {
     _router = createRouter;
-    talkerWrapper.good(message: '📱 App started');
-    talkerWrapper.route(
-      message: _router.configuration.debugKnownRoutes(),
-    );
+    talkerWrapper.good('📱 App started');
+    talkerWrapper.route(_router.configuration.debugKnownRoutes());
     _router.routerDelegate.addListener(() {
       final String location =
           _router.routerDelegate.currentConfiguration.last.matchedLocation;
       routerService.setRoute(location);
-      talkerWrapper.route(
-        message: location,
-      );
+      talkerWrapper.route(location);
     });
     _environmentKey = widget.result.dependencies.sharedPreferences
         .getString(Preferences.environment);
@@ -77,7 +72,6 @@ class _AppState extends State<App> {
               settingsBloc: widget.result.dependencies.settingsBloc,
               child: MaterialContext(
                 routerConfig: _router,
-                controller: controller,
               ),
             ),
           ),

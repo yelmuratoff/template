@@ -60,7 +60,6 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 
   /// ISpect fields
   final Talker talker = TalkerFlutter.init();
-  final ISpectController controller = ISpectController();
 
   @override
   void initState() {
@@ -140,7 +139,6 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
                   darkTheme:
                       settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
                   locale: settingsState?.locale ?? const Locale('en'),
-                  controller: controller,
                 ),
               ),
             ),
@@ -166,7 +164,7 @@ class _View extends StatelessWidget {
   final ThemeData lightTheme;
   final ThemeData darkTheme;
   final Locale locale;
-  final ISpectController controller;
+
   const _View({
     required this.error,
     required this.stackTrace,
@@ -175,7 +173,6 @@ class _View extends StatelessWidget {
     required this.lightTheme,
     required this.darkTheme,
     required this.locale,
-    required this.controller,
     this.retryInitialization,
   });
 
@@ -185,7 +182,7 @@ class _View extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          context.l10n.initialization_failed,
+          context.l10n.initializationFailed,
           style: context.theme.textTheme.titleLarge?.copyWith(
             color: context.theme.colorScheme.error,
             fontWeight: FontWeight.w600,
@@ -208,7 +205,6 @@ class _View extends StatelessWidget {
                           lightTheme: lightTheme,
                           darkTheme: darkTheme,
                           locale: locale,
-                          controller: controller,
                         ),
                       ),
                     ),
@@ -229,7 +225,7 @@ class _View extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              '${context.l10n.error_type}: ${error.toString()}',
+              '${context.l10n.errorType}: ${error.toString()}',
               style: context.theme.textTheme.bodyLarge?.copyWith(
                 color: context.theme.colorScheme.error,
                 fontWeight: FontWeight.w500,

@@ -43,14 +43,14 @@ Future<void> bootstrap() async {
 void _onInitializing(InitializationStepInfo info) {
   final percentage = ((info.step / info.stepsCount) * 100).toInt();
   talkerWrapper.info(
-    message: '🌀 Inited ${info.stepName} in ${info.msSpent} ms | '
-        'Progress: $percentage%',
+    '🌀 Inited ${info.stepName} in ${info.msSpent} ms | '
+    'Progress: $percentage%',
   );
 }
 
 void _onInitialized(InitializationResult result) {
   talkerWrapper.good(
-    message: '🎉 Initialization completed in ${result.msSpent} ms',
+    '🎉 Initialization completed in ${result.msSpent} ms',
   );
 }
 
@@ -75,5 +75,5 @@ void _onErrorFactory(
 
 void _onInit() {
   talkerWrapper.initHandling(talker: talker);
-  talkerWrapper.info(message: '🚀 Initialization started');
+  talkerWrapper.info('🚀 Initialization started');
 }

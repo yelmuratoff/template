@@ -25,15 +25,14 @@ class _RouterErrorView extends StatelessWidget {
                   Expanded(
                     child: AutoSizeText.rich(
                       TextSpan(
-                        text: "${context.l10n.page_not_found}: ",
+                        text: "${context.l10n.pageNotFound}: ",
                         children: [
                           TextSpan(
                             text: error,
                             style: context.theme.textTheme.titleMedium,
                             children: [
                               TextSpan(
-                                text:
-                                    " ${context.l10n.not_found}".toLowerCase(),
+                                text: " ${context.l10n.notFound}".toLowerCase(),
                                 style: context.theme.textTheme.titleMedium
                                     ?.copyWith(
                                   color: context.colors.error,
@@ -57,7 +56,7 @@ class _RouterErrorView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
-                child: Text(context.l10n.back_to_home),
+                child: Text(context.l10n.backToHome),
                 onPressed: () {
                   onGoHomePressed();
                 },

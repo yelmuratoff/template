@@ -99,21 +99,21 @@ class ErrorInterceptor extends Interceptor {
     final appLocalizations = context.l10n;
     switch (key) {
       case ErrorsKeys.noConnection:
-        return appLocalizations.no_connection;
+        return appLocalizations.noConnection;
       case ErrorsKeys.connectionTimeout:
-        return appLocalizations.connection_timeout;
+        return appLocalizations.connectionTimeout;
       case ErrorsKeys.noData:
-        return appLocalizations.no_data;
+        return appLocalizations.noData;
       case ErrorsKeys.userNotFound:
-        return appLocalizations.user_not_found;
+        return appLocalizations.userNotFound;
       case ErrorsKeys.thisEmailAlreadyExist:
-        return appLocalizations.this_email_already_exist;
+        return appLocalizations.thisEmailAlreadyExist;
       case ErrorsKeys.thisUsernameAlreadyExist:
-        return appLocalizations.this_username_already_exist;
+        return appLocalizations.thisUsernameAlreadyExist;
       case ErrorsKeys.passwordNotCorrect:
-        return appLocalizations.password_not_correct;
+        return appLocalizations.passwordNotCorrect;
       case ErrorsKeys.badRequest:
-        return appLocalizations.bad_request;
+        return appLocalizations.badRequest;
       case ErrorsKeys.status401:
         return appLocalizations.status401;
       case ErrorsKeys.status404:

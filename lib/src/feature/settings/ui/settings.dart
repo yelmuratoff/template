@@ -53,12 +53,12 @@ class _SettingsPageState extends State<SettingsPage> {
           if (_model.tapNumber > 5 && _model.tapNumber < 10) {
             Toaster.showToast(
               context,
-              title: context.l10n.environment_tap_number(10 - _model.tapNumber),
+              title: context.l10n.environmentTapNumber(10 - _model.tapNumber),
             );
           } else if (_model.tapNumber == 10) {
-            talkerWrapper.debug(message: "Environment change dialog opened");
+            talkerWrapper.debug("Environment change dialog opened");
             ChangeEnvironmentDialog.show(context).then((value) {
-              talkerWrapper.debug(message: "Environment change dialog closed");
+              talkerWrapper.debug("Environment change dialog closed");
             });
             _model.tapNumber = 0;
           }

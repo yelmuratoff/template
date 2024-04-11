@@ -34,7 +34,7 @@ class HomeView extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    context.l10n.app_title.capitalize(),
+                    context.l10n.appTitle.capitalize(),
                     style: context.theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: context.theme.colorScheme.onBackground,
@@ -59,7 +59,7 @@ class HomeView extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Text(
-                      context.l10n.counter_times_text(
+                      context.l10n.counterTimesText(
                         ref.watch(counterProvider),
                       ),
                       textAlign: TextAlign.center,

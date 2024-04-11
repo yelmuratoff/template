@@ -77,7 +77,7 @@ final class AppDialogs {
       ..dismissOnTap = false;
     EasyLoading.dismiss();
     EasyLoading.showSuccess(
-      title ?? context.l10n.request_success,
+      title ?? context.l10n.requestSuccess,
       duration: const Duration(seconds: 1),
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: true,

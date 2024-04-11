@@ -13,9 +13,8 @@ QueryExecutor createExecutor() => DatabaseConnection.delayed(
 
         if (result.missingFeatures.isNotEmpty) {
           talkerWrapper.warning(
-            message:
-                'Using ${result.chosenImplementation} due to missing browser '
-                'features: ${result.missingFeatures}',
+            'Using ${result.chosenImplementation} due to missing browser '
+            'features: ${result.missingFeatures}',
           );
         }
 

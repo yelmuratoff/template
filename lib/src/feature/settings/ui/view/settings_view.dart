@@ -47,14 +47,14 @@ class SettingsView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  context.l10n.default_themes,
+                  context.l10n.defaultThemes,
                   style: _titleMediumTextStyle,
                 ),
               ),
               const _ThemeSelector(Colors.primaries),
               SwitchListTile(
                 title: Text(
-                  context.l10n.change_theme,
+                  context.l10n.changeTheme,
                   style: _titleMediumTextStyle,
                 ),
                 value: SettingsScope.themeOf(context).isDarkMode,
@@ -105,7 +105,7 @@ class SettingsView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${context.l10n.app_version}: ',
+                        '${context.l10n.appVersion}: ',
                         style: context.theme.textTheme.titleSmall?.copyWith(
                           color: _versionTextColor,
                         ),
@@ -123,7 +123,7 @@ class SettingsView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '${context.l10n.build_version}: ',
+                      '${context.l10n.buildVersion}: ',
                       style: context.theme.textTheme.titleSmall?.copyWith(
                         color: _versionTextColor,
                       ),

@@ -36,4 +36,6 @@ if [ -z "$ID_APPLICATION" ]; then
 else
     echo "Создание приложения для: $ID_APPLICATION"
     fvm flutter create . --org $ID_APPLICATION --platforms ios,android,web
+    dart pub run flutter_launcher_icons
+    dart run flutter_native_splash:create
 fi

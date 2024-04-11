@@ -16,7 +16,7 @@ final class ChangeEnvironmentDialog {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          context.l10n.change_environment,
+          context.l10n.changeEnvironment,
           style: context.theme.textTheme.titleMedium,
         ),
         content: Column(
@@ -56,8 +56,10 @@ final class ChangeEnvironmentDialog {
                           env.value,
                         );
                         talkerWrapper.warning(
-                          message: "Environment changed to ${env.name}",
+                          "Environment changed to ${env.name}",
                         );
+                        ISpect.read(context).setISpect =
+                            env.value == Environment.dev.value;
                         Navigator.pop(context);
                         RestartWrapper.restartApp(navigatorKey.currentContext!);
                       } catch (e, st) {

@@ -142,7 +142,7 @@ class AuthInterceptor<T> extends QueuedInterceptor
       // Continue the request
       handler.next(options);
     } on Object catch (e) {
-      talkerWrapper.warning(message: 'Clearing token pair due to error: $e');
+      talkerWrapper.warning('Clearing token pair due to error: $e');
 
       // We don't create a new exception here, just rethrow the original
       rethrow;
@@ -229,7 +229,7 @@ class AuthInterceptor<T> extends QueuedInterceptor
       newTokenPair = await refreshClient.refreshToken(token);
     } on RevokeTokenException {
       // Clear the token pair
-      talkerWrapper.info(message: 'Revoking token pair');
+      talkerWrapper.info('Revoking token pair');
       await clearTokenPair();
       rethrow;
     } on Object catch (_) {

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+///* `WrapBuilder` - This widget is designed to build a wrap layout with a specified number of child widgets,
+///which are generated dynamically based on an IndexedWidgetBuilder function.
 class WrapBuilder extends StatelessWidget {
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;

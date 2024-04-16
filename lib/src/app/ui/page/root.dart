@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 part 'view/root_view.dart';
 
+/// The root page of the application.
 class RootPage extends ConsumerStatefulWidget {
   const RootPage({required this.navigationShell, super.key});
 

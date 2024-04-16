@@ -1,6 +1,5 @@
 // ignore_for_file: inference_failure_on_function_return_type
 
-// import 'package:base_starter/src/core/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/services.dart';
 class OutlinedTextfield extends StatelessWidget {
   // These are the required input parameters for the widget.
   final String hintText;
+  final FocusNode? focusNode;
   final String? labelText;
   final bool? readOnly;
   final Function()? onTap;
@@ -33,6 +33,7 @@ class OutlinedTextfield extends StatelessWidget {
   const OutlinedTextfield({
     required this.textController,
     required this.hintText,
+    this.focusNode,
     super.key,
     this.readOnly,
     this.onTap,
@@ -63,6 +64,7 @@ class OutlinedTextfield extends StatelessWidget {
   Widget build(BuildContext context) => TextFormField(
         // These properties define the basic configuration of the text field.
         readOnly: readOnly ?? false,
+        focusNode: focusNode,
         controller: textController,
         onTap: onTap,
         enabled: enabled,

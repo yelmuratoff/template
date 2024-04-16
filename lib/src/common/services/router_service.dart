@@ -1,5 +1,6 @@
-RouterService routerService = RouterService.instance;
+final RouterService routerService = RouterService.instance;
 
+/// `RouterService` - This class is responsible for handling the app routing.
 final class RouterService {
   late String _currentRoute;
 

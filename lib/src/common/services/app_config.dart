@@ -2,7 +2,8 @@ import 'package:base_starter/src/feature/settings/data/configs/app_configs_data_
 import 'package:base_starter/src/feature/settings/data/configs/app_configs_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AppConfigsService {
+/// `AppConfigsService` - This class is responsible for handling the app configurations.
+final class AppConfigsService {
   static AppConfigsService? _instance;
   late final AppConfigsRepository _appConfigsRepository;
 

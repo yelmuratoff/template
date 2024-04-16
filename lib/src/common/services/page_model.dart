@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 /// [PageModel] - This class contains the basic structure of the model.
 /// PageModel need to initialize fields and dispose it. Add this, if your page is Stateful
-
 abstract class PageModel {
   // A private variable `_isInitialized` to keep track of whether the model has been initialized or not.
   bool _isInitialized = false;

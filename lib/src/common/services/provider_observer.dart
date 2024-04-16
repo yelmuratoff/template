@@ -1,6 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ispect/ispect.dart';
 
+/// TODO: Add providers to ignore
+const notTrackProviders = [""];
+
+/// `ProviderLoggerObserver` is a class that observes the state of the providers
 class ProviderLoggerObserver extends ProviderObserver {
   @override
   void didAddProvider(
@@ -30,6 +34,9 @@ class ProviderLoggerObserver extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
+    if (notTrackProviders.contains(provider.name)) {
+      return;
+    }
     talkerWrapper.provider(
       'Provider ${provider.name} was updated from $previousValue to $newValue',
     );

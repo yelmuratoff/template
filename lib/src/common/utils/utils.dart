@@ -16,6 +16,9 @@ final class AppUtils {
 
     /// Navigate to the LoginScreen and replace the current route with it, while passing the extra parameter indicating whether the logout is from the drawer or not.
     /// If [paramIsFromDrawer] is not null, use its value. Otherwise, use the default value of false.
-    navigatorKey.currentContext?.pushReplacementNamed(AuthPage.name);
+    final context = navigatorKey.currentContext;
+    if (context != null && context.mounted) {
+      navigatorKey.currentContext!.goNamed(AuthPage.name);
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'package:base_starter/src/common/configs/env/env.dart';
+
 final class AppConstants {
   /// TODO: Change this to your app name
   static const String appName = 'Base';
@@ -5,8 +7,7 @@ final class AppConstants {
   /// TODO: Change this to your app identifier
   static const String appIdentifier = 'kz.app.dummy_example';
 
-  /// TODO: Change this to your API base url
-  static const String baseUrl = 'https://api.escuelajs.co/';
+  static const String baseUrl = Env.apiUrl;
 }
 
 final class Preferences {

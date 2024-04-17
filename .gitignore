@@ -143,3 +143,6 @@ pubspec.lock
 
 # FVM Version Cache
 .fvm/
+
+#ENV config
+*.env

@@ -19,6 +19,24 @@ Based on the Sizzle Starter.
 
 ## How to guides
 
+### .env config
+1. You must add .env file to .gitignore
+2. Add you API url and other configs to .env file
+3. Add fields also to .env.example file
+4. Configure env in `lib/src/common/configs/env/env.dart`. Like this:
+```dart
+final class Env {
+ @EnviedField(varName: 'FIELD_NAME', useConstantCase: true)
+  static const String fieldName = _Env.fieldName;
+}
+```  
+
+And you can use it:
+```dart
+static const String fieldName = Env.fieldName;
+```
+
+
 ### How to run
 
 1. Click `Use this template` button

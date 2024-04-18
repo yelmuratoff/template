@@ -145,4 +145,5 @@ pubspec.lock
 .fvm/
 
 #ENV config
-*.env
+#TODO: Remove this line
+#*.env

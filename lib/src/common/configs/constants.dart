@@ -15,4 +15,7 @@ final class Preferences {
   static const String language = '${AppConstants.appIdentifier}.language';
   static const String environment = '${AppConstants.appIdentifier}.environment';
   static const String tokenPair = '${AppConstants.appIdentifier}.tokenPair';
+  static const String performanceTracking =
+      '${AppConstants.appIdentifier}.performanceTracking';
+  static const String firstRun = '${AppConstants.appIdentifier}.firstRun';
 }

@@ -1,13 +1,16 @@
+import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/utils/preferences_dao.dart';
 
 abstract interface class AppConfigsDataSource {
   /// `Getters`
 
-  bool isPerformanceTrackingEnabled();
+  bool get isPerformanceTrackingEnabled;
+  bool get isFirstRun;
 
   /// `Setters`
 
   Future<void> setPerformanceTracking({required bool value});
+  Future<void> setFirstRun({required bool value});
 }
 
 final class AppConfigsDataSourceLocal extends PreferencesDao
@@ -15,13 +18,23 @@ final class AppConfigsDataSourceLocal extends PreferencesDao
   const AppConfigsDataSourceLocal({required super.sharedPreferences});
 
   PreferencesEntry<bool> get _performanceTracking =>
-      boolEntry('app_configs.performance_tracking');
+      boolEntry(Preferences.performanceTracking);
+
+  PreferencesEntry<bool> get _firstRun => boolEntry(Preferences.firstRun);
 
   @override
-  bool isPerformanceTrackingEnabled() => _performanceTracking.read() ?? false;
+  bool get isPerformanceTrackingEnabled => _performanceTracking.read() ?? false;
+
+  @override
+  bool get isFirstRun => _firstRun.read() ?? true;
 
   @override
   Future<void> setPerformanceTracking({required bool value}) async {
     await _performanceTracking.set(value);
+  }
+
+  @override
+  Future<void> setFirstRun({required bool value}) async {
+    await _firstRun.set(value);
   }
 }

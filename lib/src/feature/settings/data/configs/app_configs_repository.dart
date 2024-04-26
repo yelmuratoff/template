@@ -2,10 +2,16 @@ import 'package:base_starter/src/feature/settings/data/configs/app_configs_data_
 
 abstract interface class AppConfigsRepository {
   /// Get performance tracking status
-  bool isPerformanceTrackingEnabled();
+  bool get isPerformanceTrackingEnabled;
+
+  /// Get is first run
+  bool get isFirstRun;
 
   /// Set performance tracking status
   Future<void> setPerformanceTracking({required bool value});
+
+  /// Set first run status
+  Future<void> setFirstRun({required bool value});
 }
 
 final class AppConfigsRepositoryImpl implements AppConfigsRepository {
@@ -15,10 +21,17 @@ final class AppConfigsRepositoryImpl implements AppConfigsRepository {
   final AppConfigsDataSource _appConfigs;
 
   @override
-  bool isPerformanceTrackingEnabled() =>
-      _appConfigs.isPerformanceTrackingEnabled();
+  bool get isPerformanceTrackingEnabled =>
+      _appConfigs.isPerformanceTrackingEnabled;
+
+  @override
+  bool get isFirstRun => _appConfigs.isFirstRun;
 
   @override
   Future<void> setPerformanceTracking({required bool value}) =>
       _appConfigs.setPerformanceTracking(value: value);
+
+  @override
+  Future<void> setFirstRun({required bool value}) =>
+      _appConfigs.setFirstRun(value: value);
 }

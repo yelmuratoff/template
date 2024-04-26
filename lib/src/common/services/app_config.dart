@@ -30,8 +30,13 @@ final class AppConfigsService {
   }
 
   static bool get isPerformanceTrackingEnabled =>
-      instance._appConfigsRepository.isPerformanceTrackingEnabled();
+      instance._appConfigsRepository.isPerformanceTrackingEnabled;
+
+  static bool get isFirstRun => instance._appConfigsRepository.isFirstRun;
 
   static Future<void> setPerformanceTracking({required bool value}) =>
       instance._appConfigsRepository.setPerformanceTracking(value: value);
+
+  static Future<void> setFirstRun({required bool value}) =>
+      instance._appConfigsRepository.setFirstRun(value: value);
 }

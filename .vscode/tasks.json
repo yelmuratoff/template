@@ -17,7 +17,7 @@
         "label": "Init bash commands",
         "type": "shell",
         "command": [
-            "chmod a+x bash/build_appbundle.sh && chmod a+x bash/build_ipa.sh && chmod a+x bash/enable_native.sh && chmod a+x bash/firebase_init.sh && chmod a+x bash/network_connect.sh && chmod a+x bash/update_android.sh && chmod a+x bash/update_ios.sh"
+            "chmod a+x bash/build_appbundle.sh && chmod a+x bash/build_ipa.sh && chmod a+x bash/generate_apps.sh && chmod a+x bash/firebase_init.sh && chmod a+x bash/network_connect.sh && chmod a+x bash/update_android.sh && chmod a+x bash/update_ios.sh"
         ],
         "group": {
             "kind": "none",

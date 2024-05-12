@@ -9,6 +9,7 @@ final class SecureStorageService {
   /// Here, we create a static const `FlutterSecureStorage` object, with `encryptedSharedPreferences` enabled for Android.
 
   static const FlutterSecureStorage storage = FlutterSecureStorage(
+    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
     aOptions: AndroidOptions(
       encryptedSharedPreferences: true,
     ),
@@ -16,16 +17,24 @@ final class SecureStorageService {
 
   /// Methods for settings and getting `kToken`
   static Future<TokenPair?> getToken() async {
-    final String? token = await storage.read(key: Preferences.tokenPair);
-    final Map<String, dynamic>? jsonObject =
-        token != null ? json.decode(token) as Map<String, dynamic>? : null;
-    return jsonObject != null ? TokenPair.fromJson(jsonObject) : null;
+    try {
+      final String? token = await storage.read(key: Preferences.tokenPair);
+      final Map<String, dynamic>? jsonObject =
+          token != null ? json.decode(token) as Map<String, dynamic>? : null;
+      return jsonObject != null ? TokenPair.fromJson(jsonObject) : null;
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<void> setToken(TokenPair? value) async {
-    await storage.write(
-      key: Preferences.tokenPair,
-      value: json.encode(value?.toJson()),
-    );
+    try {
+      await storage.write(
+        key: Preferences.tokenPair,
+        value: json.encode(value?.toJson()),
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 }

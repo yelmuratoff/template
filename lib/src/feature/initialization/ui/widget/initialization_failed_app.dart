@@ -200,7 +200,6 @@ class _View extends StatelessWidget {
                     MaterialPageRoute<void>(
                       builder: (context) => ISpectPage(
                         options: ISpectOptions(
-                          talker: talker,
                           themeMode: themeMode,
                           lightTheme: lightTheme,
                           darkTheme: darkTheme,

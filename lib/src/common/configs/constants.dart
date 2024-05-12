@@ -5,7 +5,7 @@ final class AppConstants {
   static const String appName = 'Base';
 
   /// TODO: Change this to your app identifier
-  static const String appIdentifier = 'kz.app.dummy_example';
+  static const String appIdentifier = 'kz.app.template';
 
   static const String baseUrl = Env.apiUrl;
 }

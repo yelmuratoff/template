@@ -31,7 +31,6 @@ class MaterialContext extends ConsumerWidget {
 
     return ISpectScopeWrapper(
       options: ISpectOptions(
-        talker: talker,
         themeMode: theme.mode,
         lightTheme: theme.lightTheme,
         darkTheme: theme.darkTheme,

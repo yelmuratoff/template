@@ -18,10 +18,10 @@ final class AppDialogs {
       ..radius = 16
       ..textStyle = context.theme.textTheme.bodyLarge
       ..progressColor = context.theme.primaryColor
-      ..backgroundColor = context.theme.colorScheme.background
+      ..backgroundColor = context.theme.colorScheme.surface
       ..indicatorColor = context.theme.primaryColor
       ..textColor = context.colors.text
-      ..maskColor = context.theme.colorScheme.background
+      ..maskColor = context.theme.colorScheme.surface
       ..userInteractions = true
       ..toastPosition = EasyLoadingToastPosition.bottom
       ..dismissOnTap = false;
@@ -46,7 +46,7 @@ final class AppDialogs {
       ..backgroundColor = context.theme.cardColor
       ..indicatorColor = context.theme.primaryColor
       ..textColor = context.colors.text
-      ..maskColor = context.theme.colorScheme.background
+      ..maskColor = context.theme.colorScheme.surface
       ..userInteractions = false
       ..toastPosition = EasyLoadingToastPosition.bottom
       ..dismissOnTap = false;
@@ -71,7 +71,7 @@ final class AppDialogs {
       ..backgroundColor = context.theme.cardColor
       ..indicatorColor = context.theme.primaryColor
       ..textColor = context.colors.text
-      ..maskColor = context.theme.colorScheme.background
+      ..maskColor = context.theme.colorScheme.surface
       ..userInteractions = true
       ..toastPosition = EasyLoadingToastPosition.bottom
       ..dismissOnTap = false;

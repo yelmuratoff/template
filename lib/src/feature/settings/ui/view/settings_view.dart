@@ -7,12 +7,12 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _versionTextColor =
-        context.theme.colorScheme.onBackground.withOpacity(0.5);
+        context.theme.colorScheme.onSurface.withOpacity(0.5);
     final _titleMediumTextStyle = context.theme.textTheme.titleMedium?.copyWith(
       fontWeight: FontWeight.bold,
     );
     return Scaffold(
-      backgroundColor: context.theme.colorScheme.background,
+      backgroundColor: context.theme.colorScheme.surface,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(

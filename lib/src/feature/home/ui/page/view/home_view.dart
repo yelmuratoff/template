@@ -10,7 +10,7 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-        backgroundColor: context.theme.colorScheme.background,
+        backgroundColor: context.theme.colorScheme.surface,
         floatingActionButton: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -37,7 +37,7 @@ class HomeView extends ConsumerWidget {
                     context.l10n.appTitle.capitalize(),
                     style: context.theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: context.theme.colorScheme.onBackground,
+                      color: context.theme.colorScheme.onSurface,
                     ),
                   ),
                   Row(
@@ -66,7 +66,7 @@ class HomeView extends ConsumerWidget {
                       style: context.theme.textTheme.titleMedium?.copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
-                        color: context.theme.colorScheme.onBackground,
+                        color: context.theme.colorScheme.onSurface,
                       ),
                     ),
                   ),

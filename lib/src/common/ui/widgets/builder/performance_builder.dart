@@ -24,7 +24,7 @@ class PerformanceOverlayBuilder extends StatelessWidget {
         child: CustomPerformanceOverlay(
           enabled: config.isDev && appConfigState.isPerformanceTrackingEnabled,
           alignment: Alignment.topCenter,
-          backgroundColor: theme.computeTheme().colorScheme.background,
+          backgroundColor: theme.computeTheme().colorScheme.surface,
           child: child,
         ),
       );

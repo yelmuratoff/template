@@ -3,10 +3,10 @@
 import 'package:base_starter/src/app/ui/page/root.dart';
 import 'package:base_starter/src/common/ui/pages/error_router_page.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
-import 'package:base_starter/src/feature/auth/ui/page/auth.dart';
-import 'package:base_starter/src/feature/home/ui/page/home.dart';
-import 'package:base_starter/src/feature/initialization/ui/page/splash.dart';
-import 'package:base_starter/src/feature/settings/ui/settings.dart';
+import 'package:base_starter/src/features/auth/ui/page/auth.dart';
+import 'package:base_starter/src/features/home/ui/page/home.dart';
+import 'package:base_starter/src/features/initialization/ui/page/splash.dart';
+import 'package:base_starter/src/features/settings/ui/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 

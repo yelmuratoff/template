@@ -1,6 +1,6 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:base_starter/src/feature/initialization/logic/base_config.dart';
-import 'package:base_starter/src/feature/settings/state/app_config.dart';
+import 'package:base_starter/src/features/initialization/logic/base_config.dart';
+import 'package:base_starter/src/features/settings/state/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:performance/performance.dart';
 

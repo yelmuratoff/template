@@ -1,8 +1,8 @@
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
-import 'package:base_starter/src/feature/initialization/ui/widget/environment_scope.dart';
-import 'package:base_starter/src/feature/settings/ui/settings.dart';
+import 'package:base_starter/src/features/initialization/ui/widget/environment_scope.dart';
+import 'package:base_starter/src/features/settings/ui/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

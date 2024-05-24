@@ -1,7 +1,7 @@
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
-import 'package:base_starter/src/feature/auth/ui/page/auth.dart';
+import 'package:base_starter/src/features/auth/ui/page/auth.dart';
 import 'package:ispect/ispect.dart';
 
 final class AppUtils {

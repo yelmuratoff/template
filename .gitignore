@@ -145,5 +145,11 @@ pubspec.lock
 .fvm/
 
 #ENV config
-#TODO: Remove this line
+
+#TODO: Uncomment this line
 #*.env
+
+#TODO: Remove this lines
+ios/
+android/
+web/

@@ -8,9 +8,9 @@ import 'package:base_starter/src/core/resource/data/dio_rest_client/src/intercep
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
 import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 
 /// Rest client that uses `Dio` as HTTP library.
 final class RestClientDio extends RestClientBase {

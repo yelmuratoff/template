@@ -33,10 +33,10 @@ dependencies:
   # Persisting
   shared_preferences: ^2.2.3
   drift: ^2.18.0
-  sqlite3_flutter_libs: ^0.5.21
+  sqlite3_flutter_libs: ^0.5.22
 
   # Logging
-  talker_flutter: ^4.2.2
+  talker: ^4.2.2
   talker_dio_logger: ^4.2.2
   talker_bloc_logger: ^4.2.2
   talker_riverpod_logger: ^1.0.2
@@ -58,7 +58,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   auto_size_text: ^3.0.0
   fluttertoast: ^8.2.5
-  ispect: ^1.1.5
+  ispect: ^1.1.6
 
   # Others
   provider: ^6.1.2

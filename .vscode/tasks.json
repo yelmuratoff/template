@@ -110,6 +110,18 @@
             "problemMatcher": []
         },
         {
+            "label": "Build WEB",
+            "type": "shell",
+            "command": [
+                "./bash/build_web.sh"
+            ],
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Init Flutterfire",
             "type": "shell",
             "command": [

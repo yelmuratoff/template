@@ -1,7 +1,7 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
+import 'package:base_starter/bootstrap.dart';
 import 'package:base_starter/src/common/configs/constants.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/interceptor/dio_interceptor.dart';

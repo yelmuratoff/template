@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 
+import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:talker/talker.dart';
 
@@ -27,7 +28,7 @@ extension TalkerFlutter on Talker {
     }
     if ([TargetPlatform.iOS, TargetPlatform.macOS]
         .contains(defaultTargetPlatform)) {
-      dev.log(message, name: 'ϟ');
+      dev.log(message, name: 'ϟ ${AppConstants.appName}');
       return;
     }
     debugPrint(message);

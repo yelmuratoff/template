@@ -2,7 +2,7 @@
 
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/services/app_config.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
+import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
 import 'package:base_starter/src/features/auth/ui/page/auth.dart';

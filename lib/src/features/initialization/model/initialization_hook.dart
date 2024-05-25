@@ -2,11 +2,15 @@ import 'package:base_starter/src/features/initialization/logic/initialization_pr
 import 'package:base_starter/src/features/initialization/model/dependencies.dart';
 
 /// A hook for the initialization process.
-/// The [onInit] is called before the initialization process starts.
-/// The [onInitializing] is called when the
+///
+/// The `onInit` is called before the initialization process starts.
+///
+/// The `onInitializing` is called when the
 /// initialization process is in progress.
-/// The [onInitialized] is called when the initialization process is finished.
-/// The [onError] is called when the initialization process is failed.
+///
+/// The `onInitialized` is called when the initialization process is finished.
+///
+/// The `onError` is called when the initialization process is failed.
 abstract interface class InitializationHook {
   InitializationHook({
     this.onInit,

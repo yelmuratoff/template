@@ -1,12 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 
 part 'toaster_body.dart';
+
+/// This line declares a global variable which is used to show toast messages.
+final FToast fToast = FToast();
 
 final class Toaster {
   const Toaster._();

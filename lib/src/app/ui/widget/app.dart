@@ -1,21 +1,21 @@
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/app/ui/widget/material_context.dart';
 import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/services/router_service.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
 import 'package:base_starter/src/features/initialization/model/dependencies.dart';
 import 'package:base_starter/src/features/initialization/model/environment.dart';
-import 'package:base_starter/src/features/initialization/ui/widget/dependencies_scope.dart';
 import 'package:base_starter/src/features/initialization/ui/widget/environment_scope.dart';
 import 'package:base_starter/src/features/settings/ui/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ispect/ispect.dart';
 
-/// [App] is an entry point to the application.
+/// `App` is an entry point to the application.
 ///
-/// Scopes that don't depend on widgets returned by [MaterialApp]
-/// ([Directionality], [MediaQuery], [Localizations]) should be placed here.
+/// Scopes that don't depend on widgets returned by `MaterialApp`
+/// (`Directionality`, `MediaQuery`, `Localizations`) should be placed here.
 
 class App extends StatefulWidget {
   const App({required this.result, super.key});
@@ -28,7 +28,7 @@ class App extends StatefulWidget {
   final InitializationResult result;
 
   /// Running this function will result in attaching
-  /// corresponding [RenderObject] to the root of the tree.
+  /// corresponding `RenderObject` to the root of the tree.
   void attach([VoidCallback? callback]) {
     callback?.call();
     runApp(this);
@@ -42,8 +42,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     _router = createRouter;
-    talkerWrapper.good('📱 App started');
-    talkerWrapper.route(_router.configuration.debugKnownRoutes());
+    talkerWrapper.route('📜 ${_router.configuration.debugKnownRoutes()}');
 
     _router.routerDelegate.addListener(_handleRouteInformation);
 

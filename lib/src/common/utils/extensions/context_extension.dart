@@ -1,8 +1,8 @@
+import 'package:base_starter/src/common/di/containers/dependencies.dart';
+import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/utils/extensions/colors_extension.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
-import 'package:base_starter/src/features/initialization/model/dependencies.dart';
-import 'package:base_starter/src/features/initialization/ui/widget/dependencies_scope.dart';
 import 'package:base_starter/src/features/initialization/ui/widget/environment_scope.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,8 @@
+import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/ui/pages/restart_wrapper.dart';
 import 'package:base_starter/src/common/ui/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/features/initialization/model/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

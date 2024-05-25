@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:base_starter/src/app/logic/app_runner.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
+import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/features/initialization/logic/initialization_processor.dart';
 import 'package:base_starter/src/features/initialization/model/dependencies.dart';
 import 'package:base_starter/src/features/initialization/model/initialization_hook.dart';
@@ -9,6 +9,19 @@ import 'package:base_starter/src/features/initialization/ui/widget/initializatio
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ispect/ispect.dart';
+import 'package:talker/talker.dart';
+
+// ==================== Entry fields ====================
+
+///  It is used to handle errors and log messages in the app.
+final talker = TalkerFlutter.init(
+  settings: TalkerSettings(),
+  logger: TalkerLogger(
+    settings: TalkerLoggerSettings(),
+  ),
+);
+
+// ==================== Bootstrap ====================
 
 /// `bootstrap` function is the entry point of the application.
 Future<void> bootstrap() async {
@@ -81,6 +94,7 @@ void _onErrorFactory(
 
 /// `_onInit` is a callback function that is called when the initialization process is started.
 void _onInit() {
+  talker.info('📱 App started');
   talkerWrapper.initHandling(talker: talker);
-  talkerWrapper.info('🚀 Initialization started');
+  talkerWrapper.info('🚀 App initialization started');
 }

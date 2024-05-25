@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-/// [PageModel] - This class contains the basic structure of the model.
+/// `PageLifecycleModel` - This class contains the basic structure of the model.
 /// PageModel need to initialize fields and dispose it. Add this, if your page is Stateful
-abstract class PageModel {
+abstract class PageLifecycleModel {
   // A private variable `_isInitialized` to keep track of whether the model has been initialized or not.
   bool _isInitialized = false;
 
@@ -41,7 +41,7 @@ abstract class PageModel {
   void onUpdate() => _updateOnChange ? _updateCallback() : () {};
 
   /// A method `setOnUpdate` sets `_updateCallback` and `_updateOnChange` with provided values and returns `this` for chaining purposes.
-  PageModel setOnUpdate({
+  PageLifecycleModel setOnUpdate({
     required VoidCallback onUpdate,
     bool updateOnChange = false,
   }) =>
@@ -57,7 +57,7 @@ abstract class PageModel {
 }
 
 /// A function `createModel` that creates and initializes a new instance of specified model using the context and default builder function.
-T createModel<T extends PageModel>(
+T createModel<T extends PageLifecycleModel>(
   BuildContext context,
   T Function() defaultBuilder,
 ) {

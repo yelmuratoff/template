@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/features/home/ui/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

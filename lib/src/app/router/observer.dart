@@ -8,7 +8,7 @@ class RouterObserver extends NavigatorObserver {
     super.didPush(route, previousRoute);
     if (route.settings.name != null) {
       talkerWrapper.route(
-        'Route action: didPush \n Route name: ${route.settings.name} \n Previous route name: ${previousRoute?.settings.name} \n Arguments ${route.settings.arguments}',
+        '🔀 Route action: didPush \n Route name: ${route.settings.name} \n Previous route name: ${previousRoute?.settings.name} \n Arguments ${route.settings.arguments}',
       );
     }
   }
@@ -18,7 +18,7 @@ class RouterObserver extends NavigatorObserver {
     super.didPop(route, previousRoute);
     if (route.settings.name != null) {
       talkerWrapper.route(
-        'Route action: didPop \n Route: ${previousRoute?.settings.name} \n Previous route name: ${route.settings.name}',
+        '🔀 Route action: didPop \n Route: ${previousRoute?.settings.name} \n Previous route name: ${route.settings.name}',
       );
     }
   }
@@ -27,7 +27,7 @@ class RouterObserver extends NavigatorObserver {
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didRemove(route, previousRoute);
     talkerWrapper.route(
-      'Route action: didRemove \n Removed route name: ${route.settings.name}',
+      '🔀 Route action: didRemove \n Removed route name: ${route.settings.name}',
     );
   }
 
@@ -35,7 +35,7 @@ class RouterObserver extends NavigatorObserver {
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
     talkerWrapper.route(
-      'Route action: didReplace \n Route: ${newRoute?.settings.name} \n Previous route name: ${oldRoute?.settings.name}',
+      '🔀 Route action: didReplace \n Route: ${newRoute?.settings.name} \n Previous route name: ${oldRoute?.settings.name}',
     );
   }
 
@@ -46,13 +46,13 @@ class RouterObserver extends NavigatorObserver {
   ) {
     super.didStartUserGesture(route, previousRoute);
     talkerWrapper.route(
-      'Route action: didStartUserGesture \n Route: ${route.settings.name} \n Previous route name: ${previousRoute?.settings.name}',
+      '🔀 Route action: didStartUserGesture \n Route: ${route.settings.name} \n Previous route name: ${previousRoute?.settings.name}',
     );
   }
 
   @override
   void didStopUserGesture() {
     super.didStopUserGesture();
-    talkerWrapper.route('Route action: didStopUserGesture');
+    talkerWrapper.route('🔀 Route action: didStopUserGesture');
   }
 }

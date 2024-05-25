@@ -4,7 +4,6 @@ import 'package:base_starter/src/app/router/extras.dart';
 import 'package:base_starter/src/app/router/observer.dart';
 import 'package:base_starter/src/app/ui/page/root.dart';
 import 'package:base_starter/src/common/ui/pages/error_router_page.dart';
-import 'package:base_starter/src/common/utils/global_variables.dart';
 import 'package:base_starter/src/features/auth/ui/page/auth.dart';
 import 'package:base_starter/src/features/home/ui/page/home.dart';
 import 'package:base_starter/src/features/initialization/ui/page/splash.dart';
@@ -13,6 +12,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 export 'package:go_router/go_router.dart';
+
+/// This line declares a global key variable which is used to access the `NavigatorState` object associated with a widget.
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+/// This line declares a global key variable which is used to access the `NavigatorState` object associated with the root page.
+final GlobalKey<NavigatorState> rootPageNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'rootPageNavigatorKey');
 
 /// This function returns a [CustomTransitionPage] widget with default fade animation.
 CustomTransitionPage<T> buildPageWithDefaultTransition<T>({
@@ -43,7 +49,6 @@ String? getCurrentPath() {
 }
 
 /// This function returns a [NoTransitionPage] widget with no animation.
-
 CustomTransitionPage<T> buildPageWithNoTransition<T>({
   required BuildContext context,
   required GoRouterState state,
@@ -56,7 +61,6 @@ CustomTransitionPage<T> buildPageWithNoTransition<T>({
 
 /// This function returns a dynamic [Page] widget based on the input parameters.
 /// It uses the '[buildPageWithDefaultTransition]' function to create a page with a default [fade animation].
-
 Page<dynamic> Function(BuildContext, GoRouterState) defaultPageBuilder<T>(
   Widget child,
 ) =>

@@ -1,12 +1,13 @@
 import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/di/containers/dependencies.dart';
+import 'package:base_starter/src/common/di/containers/repositories.dart';
+import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
-import 'package:base_starter/src/features/initialization/model/dependencies.dart';
 import 'package:base_starter/src/features/initialization/model/environment.dart';
-import 'package:base_starter/src/features/initialization/ui/widget/dependencies_scope.dart';
 import 'package:base_starter/src/features/initialization/ui/widget/environment_scope.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';

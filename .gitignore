@@ -146,8 +146,10 @@ pubspec.lock
 
 #ENV config
 
-#TODO: Remove this lines
+#TODO: Uncomment this line
 #*.env
+
+#TODO: Remove this lines
 ios/
 android/
 web/

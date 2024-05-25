@@ -1,5 +1,6 @@
 import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
@@ -19,7 +20,7 @@ import 'package:gap/gap.dart';
 import 'package:ispect/ispect.dart';
 import 'package:ispect/ispect_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:talker_flutter/talker_flutter.dart';
+import 'package:talker/talker.dart';
 
 /// InitializationFailedScreen widget
 class InitializationFailedApp extends StatefulWidget {

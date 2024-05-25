@@ -44,15 +44,18 @@ class _AppState extends State<App> {
     _router = createRouter;
     talkerWrapper.good('📱 App started');
     talkerWrapper.route(_router.configuration.debugKnownRoutes());
-    _router.routerDelegate.addListener(() {
-      final String location =
-          _router.routerDelegate.currentConfiguration.last.matchedLocation;
-      routerService.setRoute(location);
-      talkerWrapper.route(location);
-    });
+
+    _router.routerDelegate.addListener(_handleRouteInformation);
+
     _environmentKey = widget.result.dependencies.sharedPreferences
         .getString(Preferences.environment);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _router.routerDelegate.removeListener(_handleRouteInformation);
   }
 
   @override
@@ -77,4 +80,27 @@ class _AppState extends State<App> {
           ),
         ),
       );
+
+  /// Handles the route information and logs it
+  void _handleRouteInformation() {
+    final RouteMatchList routeMatchList =
+        _router.routerDelegate.currentConfiguration;
+
+    final RouteConfiguration configuration = _router.configuration;
+
+    final GoRouterState state =
+        routeMatchList.last.buildState(configuration, routeMatchList);
+
+    final screenName = routeMatchList.last.route.name;
+    final path = routeMatchList.last.matchedLocation;
+    final pathParams = routeMatchList.pathParameters;
+    final queryParams = state.uri.queryParameters;
+    final extra = state.extra;
+
+    RouterService.setRoute(path);
+
+    talkerWrapper.route(
+      "📍 Route: \n Name: $screenName \n Path: $path \n Path parameters: $pathParams \n Query parameters: $queryParams \n Extra params: $extra",
+    );
+  }
 }

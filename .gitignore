@@ -145,5 +145,9 @@ pubspec.lock
 .fvm/
 
 #ENV config
-#TODO: Remove this line
+
+#TODO: Remove this lines
 #*.env
+ios/
+android/
+web/

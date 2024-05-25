@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_expression_function_bodies
 
+import 'package:base_starter/src/app/router/extras.dart';
+import 'package:base_starter/src/app/router/observer.dart';
 import 'package:base_starter/src/app/ui/page/root.dart';
 import 'package:base_starter/src/common/ui/pages/error_router_page.dart';
 import 'package:base_starter/src/common/utils/global_variables.dart';
@@ -72,32 +74,27 @@ GoRouter createRouter = GoRouter(
   navigatorKey: navigatorKey,
   observers: [
     HeroController(),
+    RouterObserver(),
   ],
-  errorPageBuilder: (context, state) {
+  errorBuilder: (context, state) {
     final error = state.matchedLocation;
-    return CupertinoPage(
-      child: RouterErrorPage(
-        error: error,
-      ),
+    return RouterErrorPage(
+      error: error,
     );
   },
   routes: [
     GoRoute(
       name: SplashPage.name,
       path: SplashPage.routePath,
-      pageBuilder: (context, pathParameters) => const CupertinoPage(
-        child: SplashPage(),
-      ),
+      builder: (context, state) => const SplashPage(),
     ),
     GoRoute(
       name: AuthPage.name,
       path: AuthPage.routePath,
-      pageBuilder: (context, pathParameters) => const CupertinoPage(
-        child: AuthPage(),
-      ),
+      builder: (context, pathParameters) => const AuthPage(),
     ),
     StatefulShellRoute.indexedStack(
-      pageBuilder: (
+      builder: (
         BuildContext context,
         GoRouterState state,
         StatefulNavigationShell navigationShell,
@@ -106,27 +103,31 @@ GoRouter createRouter = GoRouter(
         /// using a BottomNavigationBar). The StatefulNavigationShell is passed
         /// to be able access the state of the shell and to navigate to other
         /// branches in a stateful way.
-        return CupertinoPage(
-          child: RootPage(navigationShell: navigationShell),
-        );
+        return RootPage(navigationShell: navigationShell);
       },
       branches: [
         StatefulShellBranch(
           navigatorKey: rootPageNavigatorKey,
+          observers: [
+            HeroController(),
+            RouterObserver(),
+          ],
           routes: [
             GoRoute(
               name: HomePage.name,
               path: HomePage.routePath,
-              pageBuilder: (context, pathParameters) => const CupertinoPage(
-                child: HomePage(),
-              ),
+              builder: (context, pathParameters) => const HomePage(),
               routes: [
                 GoRoute(
                   name: SettingsPage.name,
                   path: SettingsPage.routePath,
-                  pageBuilder: (context, pathParameters) => const CupertinoPage(
-                    child: SettingsPage(),
-                  ),
+                  builder: (context, state) {
+                    final Map<String, String> queryParameters =
+                        state.uri.queryParameters;
+                    return SettingsPage(
+                      title: queryParameters[ExtraKeys.title] ?? "Settings",
+                    );
+                  },
                 ),
               ],
             ),

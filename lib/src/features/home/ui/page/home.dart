@@ -1,3 +1,4 @@
+import 'package:base_starter/src/app/router/extras.dart';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/string_extension.dart';
@@ -31,7 +32,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) => HomeView(
         onSettingsPressed: () {
-          context.pushNamed(SettingsPage.name);
+          context.pushNamed(
+            SettingsPage.name,
+            queryParameters: {
+              ExtraKeys.title: context.l10n.settings,
+            },
+          );
         },
       );
 }

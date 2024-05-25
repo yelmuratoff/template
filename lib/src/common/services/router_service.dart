@@ -1,5 +1,3 @@
-final RouterService routerService = RouterService.instance;
-
 /// `RouterService` - This class is responsible for handling the app routing.
 final class RouterService {
   late String _currentRoute;
@@ -8,7 +6,7 @@ final class RouterService {
 
   static final RouterService instance = RouterService._privateConstructor();
 
-  Future<void> setRoute(String route) async {
+  static Future<void> setRoute(String route) async {
     instance._currentRoute = route;
   }
 

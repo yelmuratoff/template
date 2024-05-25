@@ -202,8 +202,6 @@ class _View extends StatelessWidget {
                       builder: (context) => ISpectPage(
                         options: ISpectOptions(
                           themeMode: themeMode,
-                          lightTheme: lightTheme,
-                          darkTheme: darkTheme,
                           locale: locale,
                         ),
                       ),

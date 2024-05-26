@@ -62,9 +62,6 @@ class SettingsView extends StatelessWidget {
                   SettingsScope.themeOf(context).setThemeMode(
                     value ? ThemeMode.dark : ThemeMode.light,
                   );
-                  ISpect.read(context).setThemeMode(
-                    value ? ThemeMode.dark : ThemeMode.light,
-                  );
                 },
               ),
             ]),

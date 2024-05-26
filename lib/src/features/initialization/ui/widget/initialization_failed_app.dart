@@ -202,7 +202,6 @@ class _View extends StatelessWidget {
                     MaterialPageRoute<void>(
                       builder: (context) => ISpectPage(
                         options: ISpectOptions(
-                          themeMode: themeMode,
                           locale: locale,
                         ),
                       ),

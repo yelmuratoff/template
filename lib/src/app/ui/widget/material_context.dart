@@ -30,7 +30,6 @@ class MaterialContext extends ConsumerWidget {
 
     return ISpectScopeWrapper(
       options: ISpectOptions(
-        themeMode: theme.mode,
         locale: locale,
       ),
       isISpectEnabled: config.isDev,

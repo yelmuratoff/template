@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:base_starter/src/app/ui/widget/app.dart';
-import 'package:base_starter/src/common/ui/pages/restart_wrapper.dart';
+import 'package:base_starter/src/app/presentation/widget/app.dart';
+import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart';
 import 'package:base_starter/src/features/initialization/logic/initialization_processor.dart';
 import 'package:base_starter/src/features/initialization/logic/initialization_steps.dart';
 import 'package:base_starter/src/features/initialization/model/initialization_hook.dart';

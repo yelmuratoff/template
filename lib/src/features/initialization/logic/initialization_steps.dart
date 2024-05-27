@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/configs/preferences.dart';
 import 'package:base_starter/src/common/services/app_config.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';

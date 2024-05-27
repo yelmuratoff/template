@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_expression_function_bodies
 
+import 'package:base_starter/src/app/presentation/page/root.dart';
 import 'package:base_starter/src/app/router/extras.dart';
 import 'package:base_starter/src/app/router/observer.dart';
-import 'package:base_starter/src/app/ui/page/root.dart';
-import 'package:base_starter/src/common/ui/pages/error_router_page.dart';
-import 'package:base_starter/src/features/auth/ui/page/auth.dart';
-import 'package:base_starter/src/features/home/ui/page/home.dart';
-import 'package:base_starter/src/features/initialization/ui/page/splash.dart';
-import 'package:base_starter/src/features/settings/ui/settings.dart';
+import 'package:base_starter/src/common/presentation/pages/error_router_page.dart';
+import 'package:base_starter/src/features/auth/presentation/page/auth.dart';
+import 'package:base_starter/src/features/home/presentation/page/home.dart';
+import 'package:base_starter/src/features/initialization/presentation/page/splash.dart';
+import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 

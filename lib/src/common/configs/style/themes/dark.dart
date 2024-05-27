@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 ThemeData getBaseDarkTheme({required Color seed}) {
   final ThemeData baseTheme = ThemeData.from(
     colorScheme: ColorScheme.fromSeed(
+      primary: seed,
       seedColor: seed,
       brightness: Brightness.dark,
     ),

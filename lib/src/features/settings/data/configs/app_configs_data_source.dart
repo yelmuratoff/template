@@ -1,4 +1,4 @@
-import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/configs/preferences.dart';
 import 'package:base_starter/src/common/utils/preferences_dao.dart';
 
 abstract interface class AppConfigsDataSource {

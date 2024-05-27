@@ -5,21 +5,15 @@ import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/features/initialization/logic/initialization_processor.dart';
 import 'package:base_starter/src/features/initialization/model/dependencies.dart';
 import 'package:base_starter/src/features/initialization/model/initialization_hook.dart';
-import 'package:base_starter/src/features/initialization/ui/widget/initialization_failed_app.dart';
+import 'package:base_starter/src/features/initialization/presentation/widget/initialization_failed_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ispect/ispect.dart';
-import 'package:talker/talker.dart';
 
 // ==================== Entry fields ====================
 
 ///  It is used to handle errors and log messages in the app.
-final talker = TalkerFlutter.init(
-  settings: TalkerSettings(),
-  logger: TalkerLogger(
-    settings: TalkerLoggerSettings(),
-  ),
-);
+final talker = TalkerFlutter.init();
 
 // ==================== Bootstrap ====================
 

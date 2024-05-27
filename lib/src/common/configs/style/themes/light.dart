@@ -1,15 +1,29 @@
 import 'package:base_starter/src/common/utils/extensions/colors_extension.dart';
+import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 /// `getBaseLightTheme` is a function that returns a Light `ThemeData` for the app.
 ThemeData getBaseLightTheme({required Color seed}) {
   final ThemeData baseTheme = ThemeData.from(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: seed,
+    colorScheme: ColorScheme.light(
+      primary: seed,
+      secondary: AppUtils.adjustColorBrightness(seed, 0.8),
     ),
   ).copyWith(
     appBarTheme: const AppBarTheme(
       scrolledUnderElevation: 0,
+    ),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.all<Color>(seed),
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return seed.withOpacity(0.8);
+        }
+        return seed.withOpacity(0.3);
+      }),
+      trackOutlineColor: WidgetStateProperty.all<Color>(
+        seed.withOpacity(0.1),
+      ),
     ),
   );
   return baseTheme.copyWith(

@@ -1,4 +1,4 @@
-# Starter template
+# Starter template for one module apps
 
 This is an immensely adaptable Flutter starter, crafted with an ideally predetermined layout and encompassing libraries that can be used across a vast array of applications.
 

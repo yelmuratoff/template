@@ -1,16 +1,18 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:base_starter/src/app/router/router.dart';
+import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ispect/ispect.dart';
 
-/// `ErrorInterceptor` - This class is used to intercept `dio` errors.
+/// `DioInterceptor` - This class is used to intercept `dio` errors.
 
-class ErrorInterceptor extends Interceptor {
-  ErrorInterceptor();
+class DioInterceptor extends Interceptor {
+  const DioInterceptor();
+
   @override
   Future<dynamic> onError(
     DioException err,
@@ -27,7 +29,7 @@ class ErrorInterceptor extends Interceptor {
 
       if (isHtml && hasContext) {
         // If the error is to be interpreted as HTML and we have a context.
-        computedMessage = ErrorInterceptor.getErrorMessage(
+        computedMessage = DioInterceptor.getErrorMessage(
           context: navigatorKey.currentContext!,
           key: errorMessage.toString(),
         );
@@ -36,7 +38,7 @@ class ErrorInterceptor extends Interceptor {
         computedMessage = err.response!.data["msg"].toString();
       } else if (hasContext) {
         // Fallback for any other case where we have a context.
-        computedMessage = ErrorInterceptor.getErrorMessage(
+        computedMessage = DioInterceptor.getErrorMessage(
           context: navigatorKey.currentContext!,
           key: errorMessage.toString(),
         );
@@ -124,19 +126,4 @@ class ErrorInterceptor extends Interceptor {
         return appLocalizations.error;
     }
   }
-}
-
-/// `ErrorsKeys` - This class contains error keys.
-final class ErrorsKeys {
-  static const String noConnection = 'noConnection';
-  static const String connectionTimeout = 'connectionTimeout';
-  static const String noData = 'noData';
-  static const String userNotFound = 'userNotFound';
-  static const String thisEmailAlreadyExist = 'thisEmailAlreadyExist';
-  static const String thisUsernameAlreadyExist = 'thisUsernameAlreadyExist';
-  static const String passwordNotCorrect = 'passwordNotCorrect';
-  static const String badRequest = 'badRequest';
-  static const String status401 = 'status401';
-  static const String status404 = 'status404';
-  static const String status500 = 'status500';
 }

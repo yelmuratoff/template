@@ -4,10 +4,10 @@ import 'package:base_starter/src/features/auth/resource/domain/models/user_model
 import 'package:base_starter/src/features/auth/resource/domain/repositories/auth_repository.dart';
 import 'package:ispect/ispect.dart';
 
-final class DataAuthRepository implements AuthRepository {
+final class AuthRepository implements IAuthRepository {
   final RestClientBase restClient;
 
-  DataAuthRepository({
+  AuthRepository({
     required this.restClient,
   });
 

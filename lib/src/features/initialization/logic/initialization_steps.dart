@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:base_starter/src/common/configs/preferences.dart';
-import 'package:base_starter/src/common/services/app_config.dart';
+import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
+import 'package:base_starter/src/common/configs/preferences/preferences.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/resource/data/data_auth_repository.dart';
@@ -38,7 +38,7 @@ mixin InitializationSteps {
     },
     'App Configs': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;
-      AppConfigsService.initialize(sharedPreferences);
+      AppConfigManager.initialize(sharedPreferences);
     },
     'Environment': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;
@@ -51,7 +51,7 @@ mixin InitializationSteps {
         );
       }
     },
-    'Settings Repository, BLoC': (progress) async {
+    'Settings BLoC': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;
       final localeRepository = LocaleRepositoryImpl(
         localeDataSource:
@@ -85,13 +85,14 @@ mixin InitializationSteps {
     },
     'Auth Repository, BLoC': (progress) async {
       final authRepository =
-          DataAuthRepository(restClient: progress.dependencies.restClient);
+          AuthRepository(restClient: progress.dependencies.restClient);
 
       final authBloc = AuthBloc(
         authUseCases: AuthUseCases(authRepository: authRepository),
       );
 
       progress.dependencies.authBloc = authBloc;
+      progress.repositories.authRepository = authRepository;
     },
   };
 }

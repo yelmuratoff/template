@@ -1,4 +1,4 @@
-import 'package:base_starter/src/common/presentation/widgets/app_loader_indicator.dart';
+import 'package:base_starter/src/common/presentation/widgets/app_loading_indicator.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -50,7 +50,7 @@ final class AppDialogs {
 
     EasyLoading.show(
       status: title ?? context.l10n.loading,
-      indicator: const AppLoaderIndicator(),
+      indicator: const AppLoadingIndicator(),
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: false,
     );

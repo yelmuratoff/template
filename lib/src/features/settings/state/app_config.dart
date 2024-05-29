@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:base_starter/src/common/services/app_config.dart';
+import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AppConfigsState {
@@ -29,12 +29,13 @@ class AppConfigs extends StateNotifier<AppConfigsState> {
   }
 
   Future<void> _init() async {
-    final isTrackingEnabled = AppConfigsService.isPerformanceTrackingEnabled;
+    final isTrackingEnabled =
+        AppConfigManager.instance.isPerformanceTrackingEnabled;
     state = state.copyWith(isPerformanceTrackingEnabled: isTrackingEnabled);
   }
 
   Future<void> setPerformanceTracking({required bool value}) async {
-    await AppConfigsService.setPerformanceTracking(value: value);
+    await AppConfigManager.instance.setPerformanceTracking(value: value);
     state = state.copyWith(isPerformanceTrackingEnabled: value);
   }
 

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:base_starter/src/common/utils/preferences_dao.dart';
+import 'package:base_starter/src/common/configs/preferences/preferences_dao.dart';
 
 /// [LocaleDataSource] is an entry point to the locale data layer.
 /// This is used to set and get locale.

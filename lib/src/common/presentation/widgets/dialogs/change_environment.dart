@@ -1,5 +1,5 @@
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/configs/preferences.dart';
+import 'package:base_starter/src/common/configs/preferences/preferences.dart';
 import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';

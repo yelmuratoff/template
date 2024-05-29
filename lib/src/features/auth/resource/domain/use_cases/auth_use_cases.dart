@@ -4,10 +4,10 @@ import 'package:base_starter/src/features/auth/resource/domain/repositories/auth
 import 'package:ispect/ispect.dart';
 
 final class AuthUseCases {
-  final AuthRepository _authRepository;
+  final IAuthRepository _authRepository;
 
   AuthUseCases({
-    required AuthRepository authRepository,
+    required IAuthRepository authRepository,
   }) : _authRepository = authRepository;
 
   Future<TokenPair?> login({

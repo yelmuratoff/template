@@ -1,11 +1,10 @@
 import 'dart:convert';
-
-import 'package:base_starter/src/common/configs/preferences.dart';
+import 'package:base_starter/src/common/configs/preferences/preferences.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// This class is called `SecureStorageService` for preserving user data in the secure storage.
-final class SecureStorageService {
+/// `SecureStorageManager` - A class to manage secure storage for preserving user data.
+final class SecureStorageManager {
   /// Here, we create a static const `FlutterSecureStorage` object, with `encryptedSharedPreferences` enabled for Android.
 
   static const FlutterSecureStorage storage = FlutterSecureStorage(
@@ -27,7 +26,9 @@ final class SecureStorageService {
     }
   }
 
-  static Future<void> setToken(TokenPair? value) async {
+  static Future<void> setToken({
+    required TokenPair? value,
+  }) async {
     try {
       await storage.write(
         key: Preferences.tokenPair,

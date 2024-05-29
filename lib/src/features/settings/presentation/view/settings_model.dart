@@ -1,4 +1,4 @@
-import 'package:base_starter/src/common/services/page_model.dart';
+import 'package:base_starter/src/common/services/page_lifecycle_model.dart';
 import 'package:flutter/material.dart';
 
 final class SettingsPageModel extends PageLifecycleModel {

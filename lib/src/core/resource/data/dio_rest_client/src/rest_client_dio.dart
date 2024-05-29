@@ -2,7 +2,7 @@
 
 import 'package:base_starter/bootstrap.dart';
 import 'package:base_starter/src/common/configs/constants.dart';
-import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
+import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/interceptor/dio_interceptor.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
@@ -182,7 +182,7 @@ class DioClient {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final TokenPair? tokenModel = await SecureStorageService.getToken();
+          final TokenPair? tokenModel = await SecureStorageManager.getToken();
           if (tokenModel != null) {
             options.headers['Authorization'] = 'Bearer ${tokenModel.access}';
           }
@@ -191,9 +191,10 @@ class DioClient {
         onError: (DioException e, handler) async {
           if (e.response?.statusCode == 401) {
             // If a 401 response is received, refresh the access token
-            final TokenPair? oldToken = await SecureStorageService.getToken();
+            final TokenPair? oldToken = await SecureStorageManager.getToken();
+
+            /// TODO: Add the refresh token endpoint
             final TokenPair? newToken = await dio.post(
-              /// TODO: Add the refresh token endpoint
               'api/v1/auth/refresh-token',
               options: Options(
                 sendTimeout: const Duration(milliseconds: 30000),
@@ -212,7 +213,7 @@ class DioClient {
             // Update the request header with the new access token
             e.requestOptions.headers['Authorization'] =
                 'Bearer ${newToken?.access}';
-            await SecureStorageService.setToken(newToken);
+            await SecureStorageManager.setToken(value: newToken);
 
             // Repeat the request with the updated header
             return handler.resolve(await dio.fetch(e.requestOptions));
@@ -234,6 +235,6 @@ class DioClient {
       ),
     );
 
-    dio.interceptors.add(ErrorInterceptor());
+    dio.interceptors.add(const DioInterceptor());
   }
 }

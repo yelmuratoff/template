@@ -5,5 +5,5 @@ base class Repositories {
   Repositories();
 
   /// Auth repository
-  late final AuthRepository authRepository;
+  late final IAuthRepository authRepository;
 }

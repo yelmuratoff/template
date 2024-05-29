@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/core/resource/data/database/src/secure_storage.dart';
+import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/features/auth/presentation/page/auth.dart';
 import 'package:ispect/ispect.dart';
 
@@ -13,7 +13,7 @@ final class AppUtils {
     talkerWrapper.warning('AppUtils: "remove token" called 🥴');
 
     // Set the token stored in secure storage to null using await
-    await SecureStorageService.setToken(null);
+    await SecureStorageManager.setToken(value: null);
 
     /// Navigate to the LoginScreen and replace the current route with it, while passing the extra parameter indicating whether the logout is from the drawer or not.
     /// If [paramIsFromDrawer] is not null, use its value. Otherwise, use the default value of false.

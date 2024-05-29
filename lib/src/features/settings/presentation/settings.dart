@@ -4,7 +4,7 @@ import 'package:base_starter/src/common/presentation/widgets/buttons/app_button.
 import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/change_environment.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
-import 'package:base_starter/src/common/services/page_model.dart';
+import 'package:base_starter/src/common/services/page_lifecycle_model.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';

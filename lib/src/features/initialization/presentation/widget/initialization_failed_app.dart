@@ -1,4 +1,4 @@
-import 'package:base_starter/src/common/configs/preferences.dart';
+import 'package:base_starter/src/common/configs/preferences/preferences.dart';
 import 'package:base_starter/src/common/di/containers/dependencies.dart';
 import 'package:base_starter/src/common/di/containers/repositories.dart';
 import 'package:base_starter/src/common/di/dependencies_scope.dart';

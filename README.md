@@ -1,21 +1,27 @@
 # Starter template for one module apps
 
-This is an immensely adaptable Flutter starter, crafted with an ideally predetermined layout and encompassing libraries that can be used across a vast array of applications.
+This is a highly adaptable Flutter starter kit, designed with an ideal layout and equipped with libraries that can be utilized in a wide variety of applications.
 
-To take advantage of this repository, simply click on the "Use this template" button. The subsequent instructions will guide you through the process of integrating and deploying this starter within your distinct projects.
+To utilize this repository, simply click on the "Use this template" button. The subsequent instructions will guide you through the process of integrating and deploying this starter within your projects.
 
-Based on the Sizzle Starter.
 
 ## Features
 
-- 🔥 Rapid installation process
-- 🧜 Designed to be flexible, easy to expand, and simple to maintain
-- 📦 Assortment of reliable and tested libraries
-- 🚛 GitHub Actions and GitLab CI pre-configured
-- 🚀 Cutting-edge, feature-oriented architecture
-- 📌 Comprehensive documentation and exciting roadmap ahead
-- 🐛 Bug reporting, error tracking and analytical capabilities
-- 😌 Themes and additional amenities...
+- 🔥 Included in the ISpect tool
+   - ✅ Draggable button for route to ISpect page, manage Inspector tools
+   - ✅ Localizations: ru, en. (I will add more translations in the future.)
+   - ✅ Talker logger implementation: BLoC, Dio, Routing, Provider
+   - ✅ Feedback builder
+   - ✅ Debug tools
+   - ✅ Cache manager
+   - ✅ Device and app info
+- 🧜 Flexible design, easy to expand, and simple to maintain
+- 📦 Collection of reliable and tested libraries
+- 🚛 Pre-configured GitHub Actions and GitLab CI
+- 🚀 State-of-the-art, feature-oriented architecture
+- 📌 Comprehensive documentation with an exciting roadmap ahead
+- 🐛 Bug reporting, error tracking, and analytical capabilities
+- 😌 Themes and additional amenities
 
 ## How to guides
 
@@ -36,6 +42,23 @@ And you can use it:
 static const String fieldName = Env.fieldName;
 ```
 
+### How to enable DEV mode
+
+1. Go to Settings page
+2. Tap on the project version 10 times
+3. You will see the toast modal with options to enable DEV/PROD mode
+
+### How to use ISpect
+
+Simple example of use `ISpect`<br>
+You can manage ISpect using `ISpect.read(context)`.
+Put this code in your project at an screen and learn how it works. 😊
+
+<div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start;">
+  <img src="https://github.com/K1yoshiSho/packages_assets/blob/main/assets/ispect/preview_usage.gif?raw=true"
+  alt="ISpect's example" width="250" style="margin-right: 10px;"/>
+</div>
+
 
 ### How to run
 
@@ -44,7 +67,7 @@ static const String fieldName = Env.fieldName;
 3. Run `fvm install`
 4. Run `fvm dart run build_runner build --delete-conflicting-outputs`
 5. Decide which platforms your app will be running on
-6. Run `chmod a+x bash/enable_native.sh && ./bash/enable_native.sh --id com.example.app`
+6. Run `chmod a+x bash/create_app.sh && ./bash/create_app.sh --id com.example.app`
 7. Run `fvm flutter pub get` to install all dependencies
 8. Run `fvm flutter run` to run your app
 9. For other tasks (like build bundle, ipa) use: `ctrl + shift + p` -> `Run Task`
@@ -53,11 +76,15 @@ static const String fieldName = Env.fieldName;
 
 **This section describes how to add a new dependency to your app.** Please, check the [initialization](#initialization) section before.
 
-1. Open `lib/src/feature/initialization/model/dependencies.dart`
-2. Add new dependency to `DependenciesMutable` and `DependenciesImmutable`
+1. Open `lib/src/common/di/containers/dependencies.dart`
+2. Add new dependency to `Dependencies` container
 3. Go to `lib/src/feature/initialization/logic/initialization_steps.dart`
-4. Add new entry to the map and write down all the logic needed to initialize your dependency and set it in the `DependenciesMutable` object
-5. Now, you can use the dependency in the app receiving it from context.
+4. Add new entry to the map and write down all the logic needed to initialize your dependency and set it in the `Dependencies` object
+5. Now, you can use the dependency in the app receiving it from context: `context.dependencies.name`
 
 ### How do add flavors correctly:
 You can use template from `very_good_cli``.
+
+---
+
+Based on the Sizzle Starter.

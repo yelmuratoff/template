@@ -38,9 +38,9 @@ class _SplashPageState extends State<SplashPage> {
       fToast.init(navigatorKey.currentContext!);
       final tokenPair = await SecureStorageManager.getToken();
       if (tokenPair != null && context.mounted) {
-        context.replaceNamed(HomePage.name);
+        context.goNamed(HomePage.name);
       } else {
-        context.replaceNamed(AuthPage.name);
+        context.goNamed(AuthPage.name);
       }
     });
   }

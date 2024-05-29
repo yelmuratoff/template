@@ -20,7 +20,12 @@ class SettingsView extends StatelessWidget {
             Icons.arrow_back,
           ),
         ),
-        title: Text(context.l10n.settings),
+        title: Text(
+          context.l10n.settings,
+          style: context.theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: CustomScrollView(
         slivers: [

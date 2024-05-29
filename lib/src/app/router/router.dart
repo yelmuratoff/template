@@ -7,6 +7,7 @@ import 'package:base_starter/src/common/presentation/pages/error_router_page.dar
 import 'package:base_starter/src/features/auth/presentation/page/auth.dart';
 import 'package:base_starter/src/features/home/presentation/page/home.dart';
 import 'package:base_starter/src/features/initialization/presentation/page/splash.dart';
+import 'package:base_starter/src/features/profile/presentation/page/profile.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -16,9 +17,12 @@ export 'package:go_router/go_router.dart';
 /// This line declares a global key variable which is used to access the `NavigatorState` object associated with a widget.
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-/// This line declares a global key variable which is used to access the `NavigatorState` object associated with the root page.
-final GlobalKey<NavigatorState> rootPageNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'rootPageNavigatorKey');
+/// This key is used to access the `NavigatorState` object associated with the home section of the app.
+final GlobalKey<NavigatorState> _homeSectionNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'homeSectionNavigatorKey');
+
+final GlobalKey<NavigatorState> _profileSectionNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'profileSectionNavigatorKey');
 
 /// This function returns a [CustomTransitionPage] widget with default fade animation.
 CustomTransitionPage<T> buildPageWithDefaultTransition<T>({
@@ -111,7 +115,7 @@ GoRouter createRouter = GoRouter(
       },
       branches: [
         StatefulShellBranch(
-          navigatorKey: rootPageNavigatorKey,
+          navigatorKey: _homeSectionNavigatorKey,
           observers: [
             HeroController(),
             RouterObserver(),
@@ -121,6 +125,16 @@ GoRouter createRouter = GoRouter(
               name: HomePage.name,
               path: HomePage.routePath,
               builder: (context, pathParameters) => const HomePage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: _profileSectionNavigatorKey,
+          routes: [
+            GoRoute(
+              name: ProfilePage.name,
+              path: ProfilePage.routePath,
+              builder: (context, state) => const ProfilePage(),
               routes: [
                 GoRoute(
                   name: SettingsPage.name,
@@ -135,6 +149,10 @@ GoRouter createRouter = GoRouter(
                 ),
               ],
             ),
+          ],
+          observers: [
+            HeroController(),
+            RouterObserver(),
           ],
         ),
       ],

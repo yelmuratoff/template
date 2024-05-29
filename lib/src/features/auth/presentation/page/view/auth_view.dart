@@ -13,7 +13,7 @@ class _AuthView extends StatelessWidget {
             InitialAuthState() => null,
             AuthenticatedAuthState() => {
                 AppDialogs.dismiss(),
-                context.pushReplacementNamed(HomePage.name),
+                context.goNamed(HomePage.name),
               },
             ErrorAuthState() => {
                 AppDialogs.dismiss(),

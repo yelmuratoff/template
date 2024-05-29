@@ -30,11 +30,6 @@
    "updated": "Обновлено",
    "noDataToDownload": "Нет данных для загрузки",
    "lastUpdate": "Последний раз обновлялось: {text}",
-   "@last_update": {
-      "placeholders": {
-         "text": {}
-      }
-   },
    "fieldIsRequired": "Это поле обязательно",
    "requestSuccess": "Запрос был выполнен успешно",
    "nothingFound": "Ничего не найдено по этому запросу",
@@ -56,20 +51,12 @@
    "changeEnvironment": "Изменить текущую среду",
    "goToLogger": "Перейти на страницу логгера",
    "environmentTapNumber": "Для открытия диалога осталось: {number}",
-   "@environmentTapNumber": {
-      "placeholders": {
-         "number": {}
-      }
-   },
    "counterTimesText": "Количество нажатий на кнопку: {number}",
-   "@counterTimesText": {
-      "placeholders": {
-         "number": {}
-      }
-   },
    "login": "Войти",
    "initializationFailed": "Ошибка инициализации",
    "errorType": "Тип ошибки",
    "retry": "Повторить попытку",
-   "logout": "Выйти"
+   "logout": "Выйти",
+   "home": "Главная",
+   "profile": "Профиль"
 }

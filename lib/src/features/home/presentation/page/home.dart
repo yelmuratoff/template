@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) => HomeView(
+  Widget build(BuildContext context) => _HomePageView(
         onSettingsPressed: () {
           context.pushNamed(
             SettingsPage.name,

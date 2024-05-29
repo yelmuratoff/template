@@ -21,21 +21,17 @@ dart_code_metrics:
     - avoid-duplicate-exports
     - avoid-dynamic
     - avoid-missing-enum-constant-in-map
-    # - avoid-passing-async-when-sync-expected
     - avoid-throw-in-catch-block
     - avoid-unused-parameters
-    # - avoid-unnecessary-type-assertions
     - avoid-unnecessary-type-casts
     - avoid-unrelated-type-assertions
     - avoid-unrelated-type-casts
     - no-empty-block
     - no-equal-then-else
     - prefer-correct-test-file-name
-    # - prefer-match-file-name
     - prefer-return-await
     - avoid-self-assignment
     - avoid-self-compare
-    # - avoid-shadowing
     - prefer-iterable-of
     - no-equal-switch-case
     - no-equal-conditions
@@ -45,11 +41,9 @@ dart_code_metrics:
     - avoid-unused-generics
     - function-always-returns-null
     - avoid-throw-objects-without-tostring
-    # - avoid-unsafe-collection-methods
     - prefer-wildcard-pattern
     - no-equal-switch-expression-cases
     - avoid-future-tostring
-    # - avoid-unassigned-late-fields-keyword
     - avoid-nested-futures
     - avoid-generics-shadowing
     - prefer-parentheses-with-if-null
@@ -60,7 +54,6 @@ dart_code_metrics:
     - avoid-map-keys-contains
     - prefer-correct-json-casts
     - avoid-duplicate-mixins
-    # - avoid-nullable-interpolation
     - avoid-unused-instances
     - prefer-correct-for-loop-increment
     - prefer-public-exception-classes
@@ -81,11 +74,10 @@ dart_code_metrics:
     - avoid-unnecessary-if
     - avoid-unconditional-break
     - avoid-referencing-discarded-variables
-    # Enable with the next release
-    # - avoid-unnecessary-late
-    # - avoid-wildcard-cases-with-enums
-    # - match-getter-setter-field-names
-    # - avoid-accessing-collections-by-constant-index
+    - avoid-unnecessary-late
+    - avoid-wildcard-cases-with-enums
+    - match-getter-setter-field-names
+    - avoid-accessing-collections-by-constant-index
 
     # Code simplification
     - avoid-redundant-async
@@ -106,8 +98,8 @@ dart_code_metrics:
     - prefer-dedicated-media-query-methods
     - avoid-unnecessary-overrides-in-state
     - move-variable-closer-to-its-usage
-    # - avoid-unnecessary-getter
-    # - avoid-nullable-parameters-with-default-values
+    - avoid-unnecessary-getter
+    - avoid-nullable-parameters-with-default-values
 
     # Style
     - prefer-trailing-comma

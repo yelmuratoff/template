@@ -1,16 +1,24 @@
 part of '../home.dart';
 
-class HomeView extends ConsumerWidget {
+class _HomePageView extends ConsumerWidget {
   final void Function() onSettingsPressed;
 
-  const HomeView({
+  const _HomePageView({
     required this.onSettingsPressed,
-    super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
         backgroundColor: context.theme.colorScheme.surface,
+        appBar: AppBar(
+          title: Text(
+            context.l10n.appTitle.capitalize(),
+            style: context.theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: false,
+        ),
         floatingActionButton: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -29,32 +37,6 @@ class HomeView extends ConsumerWidget {
         ),
         body: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    context.l10n.appTitle.capitalize(),
-                    style: context.theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.theme.colorScheme.onSurface,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      IconButton.filledTonal(
-                        icon: const Icon(
-                          Icons.settings_rounded,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => onSettingsPressed(),
-                        splashRadius: 8,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
             SliverFillRemaining(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -66,11 +48,7 @@ class HomeView extends ConsumerWidget {
                         ref.watch(counterProvider),
                       ),
                       textAlign: TextAlign.center,
-                      style: context.theme.textTheme.titleMedium?.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: context.theme.colorScheme.onSurface,
-                      ),
+                      style: context.theme.textTheme.titleMedium,
                     ),
                   ),
                 ],

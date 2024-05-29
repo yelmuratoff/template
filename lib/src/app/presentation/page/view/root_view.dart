@@ -9,5 +9,8 @@ class _RootView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: navigationShell,
+        bottomNavigationBar: _BottomNavigationBar(
+          navigationShell: navigationShell,
+        ),
       );
 }

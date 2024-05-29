@@ -26,6 +26,18 @@
             "problemMatcher": []
         },
         {
+            "label": "Run l10n gen",
+            "type": "shell",
+            "command": [
+                "fvm flutter gen-l10n"
+            ],
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Format",
             "type": "shell",
             "command": [

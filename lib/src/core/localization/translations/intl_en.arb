@@ -30,11 +30,6 @@
    "updated": "Updated",
    "noDataToDownload": "No data to download",
    "lastUpdate": "Last updated: {text}",
-   "@last_update": {
-      "placeholders": {
-         "text": {}
-      }
-   },
    "fieldIsRequired": "This field is required",
    "requestSuccess": "The request was successful",
    "nothingFound": "Nothing found for this query",
@@ -56,20 +51,12 @@
    "changeEnvironment": "Change environment",
    "goToLogger": "Go to logger page",
    "environmentTapNumber": "Taps left to open the dialog: {number}",
-   "@environmentTapNumber": {
-      "placeholders": {
-         "number": {}
-      }
-   },
    "counterTimesText": "Button press count: {number}",
-   "@counterTimesText": {
-      "placeholders": {
-         "number": {}
-      }
-   },
    "login": "Log in",
    "initializationFailed": "Initialization failed",
    "errorType": "Error type",
    "retry": "Retry",
-   "logout": "Log out"
+   "logout": "Log out",
+   "home": "Home",
+   "profile": "Profile"
 }

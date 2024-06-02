@@ -44,6 +44,17 @@ Future<void> bootstrap() async {
         exception: error,
         stackTrace: stackTrace,
       );
+      // if (kReleaseMode && envType == EnvType.prod) {
+      //   FirebaseCrashlytics.instance
+      //       .recordError(
+      //         error,
+      //         stack,
+      //         reason: 'runZonedGuarded',
+      //       )
+      //       .whenComplete(
+      //         () => FirebaseCrashlytics.instance.sendUnsentReports(),
+      //       );
+      // }
     },
   );
 }

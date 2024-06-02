@@ -31,7 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } on RestClientException catch (e) {
       emit(ErrorAuthState(cause: e, message: e.message));
-    } on Object catch (e) {
+    } catch (e) {
       emit(ErrorAuthState(cause: e, message: e.toString()));
     }
   }

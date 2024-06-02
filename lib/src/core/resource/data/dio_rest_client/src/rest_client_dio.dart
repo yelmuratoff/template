@@ -74,7 +74,11 @@ final class RestClientDio extends RestClientBase {
           statusCode: e.response?.statusCode,
         );
 
-        return result;
+        throw CustomBackendException(
+          message: e.response?.statusMessage ?? 'Backend returned custom error',
+          error: result ?? {},
+          statusCode: e.response?.statusCode,
+        );
       }
       Error.throwWithStackTrace(
         ClientException(
@@ -190,33 +194,64 @@ class DioClient {
         },
         onError: (DioException e, handler) async {
           if (e.response?.statusCode == 401) {
-            // If a 401 response is received, refresh the access token
-            final TokenPair? oldToken = await SecureStorageManager.getToken();
+            try {
+              // If a 401 response is received, refresh the access token
+              final TokenPair? oldToken = await SecureStorageManager.getToken();
 
-            /// TODO: Add the refresh token endpoint
-            final TokenPair? newToken = await dio.post(
-              'api/v1/auth/refresh-token',
-              options: Options(
-                sendTimeout: const Duration(milliseconds: 30000),
-                receiveTimeout: const Duration(milliseconds: 60000),
-                headers: {
-                  "Content-Type": "application/json",
+              if (oldToken == null) {
+                return handler.reject(e);
+              }
+
+              final TokenPair? newToken = await dio.post(
+                '/auth/refresh',
+                options: Options(
+                  sendTimeout: const Duration(milliseconds: 30000),
+                  receiveTimeout: const Duration(milliseconds: 60000),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                ),
+                data: {
+                  "token": oldToken.refresh,
                 },
-              ),
-              data: {
-                "refresh": oldToken?.refresh,
-              },
-            ).then(
-              (value) => TokenPair.fromJson(value.data as Map<String, dynamic>),
-            );
+              ).then(
+                (value) {
+                  if (value.data == null) {
+                    return null;
+                  }
+                  return TokenPair.fromJson(value.data as Map<String, dynamic>);
+                },
+              );
 
-            // Update the request header with the new access token
-            e.requestOptions.headers['Authorization'] =
-                'Bearer ${newToken?.access}';
-            await SecureStorageManager.setToken(value: newToken);
+              if (newToken != null) {
+                // Update the request header with the new access token
+                e.requestOptions.headers['Authorization'] =
+                    'Bearer ${newToken.access}';
+                await SecureStorageManager.setToken(value: newToken);
 
-            // Repeat the request with the updated header
-            return handler.resolve(await dio.fetch(e.requestOptions));
+                // Repeat the request with the updated header
+                return handler.resolve(await dio.fetch(e.requestOptions));
+              } else {
+                return handler.reject(
+                  DioException(
+                    requestOptions: e.requestOptions,
+                    response: e.response,
+                    error: 'Failed to refresh token',
+                  ),
+                );
+              }
+            } catch (refreshError) {
+              // Propagate the error from the refresh token request
+              return handler.reject(
+                DioException(
+                  requestOptions: e.requestOptions,
+                  response: e.response,
+                  error: refreshError,
+                ),
+              );
+            }
+          } else if (e.response == null) {
+            return handler.reject(e);
           }
           return handler.next(e);
         },

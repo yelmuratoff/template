@@ -1,10 +1,11 @@
 // ignore_for_file: overridden_fields
 
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 /// Base class for all rest client exceptions
 @immutable
-abstract base class RestClientException implements Exception {
+abstract base class RestClientException extends Equatable implements Exception {
   /// Message of the exception
   final String message;
 
@@ -46,6 +47,9 @@ final class ClientException extends RestClientException {
       'statusCode: $statusCode,'
       'cause: $cause'
       ')';
+
+  @override
+  List<Object?> get props => [message, statusCode, cause];
 }
 
 /// [CustomBackendException] is thrown if the backend returns an error
@@ -66,6 +70,9 @@ final class CustomBackendException extends RestClientException {
       'error: $error,'
       'statusCode: $statusCode,'
       ')';
+
+  @override
+  List<Object?> get props => [message, error, statusCode];
 }
 
 /// [WrongResponseTypeException] is thrown if the response type
@@ -82,6 +89,9 @@ final class WrongResponseTypeException extends RestClientException {
       'message: $message,'
       'statusCode: $statusCode,'
       ')';
+
+  @override
+  List<Object?> get props => [message, statusCode];
 }
 
 /// [ConnectionException] is thrown if there are problems with the connection
@@ -99,6 +109,9 @@ final class ConnectionException extends RestClientExceptionWithCause {
       'statusCode: $statusCode,'
       'cause: $cause'
       ')';
+
+  @override
+  List<Object?> get props => [message, statusCode, cause];
 }
 
 /// If something went wrong on the server side
@@ -116,4 +129,7 @@ final class InternalServerException extends RestClientExceptionWithCause {
       'statusCode: $statusCode,'
       'cause: $cause'
       ')';
+
+  @override
+  List<Object?> get props => [message, statusCode, cause];
 }

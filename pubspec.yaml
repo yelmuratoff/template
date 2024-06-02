@@ -103,7 +103,7 @@ flutter_gen:
 
 flutter_intl:
   enabled: true
-  class_name: GeneratedLocalization
+  class_name: L10n
   main_locale: en
   arb_dir: lib/src/core/localization/translations
   output_dir: lib/src/core/localization/generated

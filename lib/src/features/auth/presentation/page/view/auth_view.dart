@@ -1,7 +1,16 @@
 part of '../auth.dart';
 
 class _AuthView extends StatelessWidget {
-  const _AuthView();
+  final void Function() onAuthenticate;
+  final void Function(String) onAuthError;
+  final void Function() onAuthLoading;
+  final void Function() onSignInPressed;
+  const _AuthView({
+    required this.onAuthenticate,
+    required this.onAuthError,
+    required this.onAuthLoading,
+    required this.onSignInPressed,
+  });
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -12,15 +21,14 @@ class _AuthView extends StatelessWidget {
           listener: (context, state) => switch (state) {
             InitialAuthState() => null,
             AuthenticatedAuthState() => {
-                AppDialogs.dismiss(),
-                context.goNamed(HomePage.name),
+                onAuthenticate.call(),
               },
             ErrorAuthState() => {
-                AppDialogs.dismiss(),
-                Toaster.showErrorToast(context, title: state.message),
+                onAuthError.call(state.message),
               },
-            LoadingAuthState() =>
-              AppDialogs.showLoader(context, title: context.l10n.loading),
+            LoadingAuthState() => {
+                onAuthLoading.call(),
+              },
           },
           child: Center(
             child: Column(
@@ -28,12 +36,7 @@ class _AuthView extends StatelessWidget {
               children: <Widget>[
                 AppButton(
                   onPressed: () {
-                    context.dependencies.authBloc.add(
-                      const LoginAuthEvent(
-                        email: 'john@mail.com',
-                        password: 'changeme',
-                      ),
-                    );
+                    onSignInPressed.call();
                   },
                   text: context.l10n.login,
                 ),

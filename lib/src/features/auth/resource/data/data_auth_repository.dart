@@ -2,7 +2,6 @@ import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
 import 'package:base_starter/src/features/auth/resource/domain/models/user_model.dart';
 import 'package:base_starter/src/features/auth/resource/domain/repositories/auth_repository.dart';
-import 'package:ispect/ispect.dart';
 
 final class AuthRepository implements IAuthRepository {
   final RestClientBase restClient;
@@ -20,12 +19,7 @@ final class AuthRepository implements IAuthRepository {
       } else {
         return null;
       }
-    } catch (e, st) {
-      talkerWrapper.handle(
-        exception: e,
-        stackTrace: st,
-        message: "Get current user failed",
-      );
+    } catch (e) {
       rethrow;
     }
   }
@@ -48,12 +42,7 @@ final class AuthRepository implements IAuthRepository {
       } else {
         return null;
       }
-    } catch (e, st) {
-      talkerWrapper.handle(
-        exception: e,
-        stackTrace: st,
-        message: "Login failed",
-      );
+    } catch (e) {
       rethrow;
     }
   }

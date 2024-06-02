@@ -22,5 +22,25 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   @override
-  Widget build(BuildContext context) => const _AuthView();
+  Widget build(BuildContext context) => _AuthView(
+        onSignInPressed: () {
+          context.dependencies.authBloc.add(
+            const LoginAuthEvent(
+              email: 'john@mail.com',
+              password: 'changeme',
+            ),
+          );
+        },
+        onAuthenticate: () {
+          AppDialogs.dismiss();
+          context.goNamed(HomePage.name);
+        },
+        onAuthError: (message) {
+          AppDialogs.dismiss();
+          Toaster.showErrorToast(context, title: message);
+        },
+        onAuthLoading: () {
+          AppDialogs.showLoader(context, title: context.l10n.loading);
+        },
+      );
 }

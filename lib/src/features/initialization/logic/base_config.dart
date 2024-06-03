@@ -1,4 +1,4 @@
-import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/features/initialization/model/environment.dart';
 import 'package:flutter/material.dart';
 

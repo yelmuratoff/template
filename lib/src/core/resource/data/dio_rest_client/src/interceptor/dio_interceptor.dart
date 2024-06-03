@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_dynamic_calls
 
-import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/constants/exception_keys.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:dio/dio.dart';
@@ -53,63 +53,64 @@ class DioInterceptor extends Interceptor {
 
     if (err.response != null &&
         err.response!.data.toString().contains("html")) {
-      return handler.reject(errorMessage(ErrorsKeys.badRequest, isHtml: true));
+      return handler
+          .reject(errorMessage(ExceptionKeys.badRequest, isHtml: true));
     } else if (err.type == DioExceptionType.connectionError) {
-      return handler.reject(errorMessage(ErrorsKeys.noConnection));
+      return handler.reject(errorMessage(ExceptionKeys.noConnection));
     } else if (err.type == DioExceptionType.connectionTimeout) {
-      return handler.reject(errorMessage(ErrorsKeys.connectionTimeout));
+      return handler.reject(errorMessage(ExceptionKeys.connectionTimeout));
     } else if (err.response == null) {
       return handler.reject(err);
     } else if (err.message.toString().contains("Invalid login details")) {
-      return handler.reject(errorMessage(ErrorsKeys.passwordNotCorrect));
+      return handler.reject(errorMessage(ExceptionKeys.passwordNotCorrect));
     } else if (response.statusCode == 400) {
-      return handler.reject(errorMessage(ErrorsKeys.badRequest));
+      return handler.reject(errorMessage(ExceptionKeys.badRequest));
     } else if (response.statusCode == 418 || response.statusCode == 401) {
       await AppUtils.removeToken();
       if (response.data.toString().contains("Invalid login details")) {
-        return handler.reject(errorMessage(ErrorsKeys.passwordNotCorrect));
+        return handler.reject(errorMessage(ExceptionKeys.passwordNotCorrect));
       } else {
-        return handler.reject(errorMessage(ErrorsKeys.status401));
+        return handler.reject(errorMessage(ExceptionKeys.status401));
       }
     } else if (response.statusCode == 404) {
-      return handler.reject(errorMessage(ErrorsKeys.status404));
+      return handler.reject(errorMessage(ExceptionKeys.status404));
     } else if (response.statusCode! >= 500) {
       if (err.message.toString().contains("Invalid login details")) {
-        return handler.reject(errorMessage(ErrorsKeys.status500));
+        return handler.reject(errorMessage(ExceptionKeys.status500));
       } else {
-        return handler.reject(errorMessage(ErrorsKeys.status500));
+        return handler.reject(errorMessage(ExceptionKeys.status500));
       }
     }
     return handler.reject(err);
   }
 
-  /// `getErrorMessage` - This function is used to get error message from `ErrorsKeys`.
+  /// `getErrorMessage` - This function is used to get error message from `ExceptionKeys`.
   static String getErrorMessage({
     required String key,
   }) {
     final appLocalizations = L10n.current;
     switch (key) {
-      case ErrorsKeys.noConnection:
+      case ExceptionKeys.noConnection:
         return appLocalizations.noConnection;
-      case ErrorsKeys.connectionTimeout:
+      case ExceptionKeys.connectionTimeout:
         return appLocalizations.connectionTimeout;
-      case ErrorsKeys.noData:
+      case ExceptionKeys.noData:
         return appLocalizations.noData;
-      case ErrorsKeys.userNotFound:
+      case ExceptionKeys.userNotFound:
         return appLocalizations.userNotFound;
-      case ErrorsKeys.thisEmailAlreadyExist:
+      case ExceptionKeys.thisEmailAlreadyExist:
         return appLocalizations.thisEmailAlreadyExist;
-      case ErrorsKeys.thisUsernameAlreadyExist:
+      case ExceptionKeys.thisUsernameAlreadyExist:
         return appLocalizations.thisUsernameAlreadyExist;
-      case ErrorsKeys.passwordNotCorrect:
+      case ExceptionKeys.passwordNotCorrect:
         return appLocalizations.passwordNotCorrect;
-      case ErrorsKeys.badRequest:
+      case ExceptionKeys.badRequest:
         return appLocalizations.badRequest;
-      case ErrorsKeys.status401:
+      case ExceptionKeys.status401:
         return appLocalizations.status401;
-      case ErrorsKeys.status404:
+      case ExceptionKeys.status404:
         return appLocalizations.status404;
-      case ErrorsKeys.status500:
+      case ExceptionKeys.status500:
         return appLocalizations.status500;
       default:
         return appLocalizations.error;

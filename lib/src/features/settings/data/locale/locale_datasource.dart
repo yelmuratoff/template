@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:base_starter/src/common/configs/preferences/preferences_dao.dart';
 
-/// [LocaleDataSource] is an entry point to the locale data layer.
+/// [ILocaleDataSource] is an entry point to the locale data layer.
 /// This is used to set and get locale.
 
-abstract interface class LocaleDataSource {
+abstract interface class ILocaleDataSource {
   /// Set locale
   Future<void> setLocale(Locale locale);
 
@@ -14,7 +14,7 @@ abstract interface class LocaleDataSource {
 }
 
 final class LocaleDataSourceLocal extends PreferencesDao
-    implements LocaleDataSource {
+    implements ILocaleDataSource {
   const LocaleDataSourceLocal({required super.sharedPreferences});
 
   PreferencesEntry<String> get _locale => stringEntry('settings.locale');

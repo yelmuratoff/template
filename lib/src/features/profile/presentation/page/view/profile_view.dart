@@ -10,7 +10,7 @@ class _ProfileScreenView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(
-            context.l10n.profile,
+            L10n.current.profile,
             style: context.theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -35,7 +35,7 @@ class _ProfileScreenView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                context.l10n.profile,
+                L10n.current.profile,
                 style: context.theme.textTheme.titleMedium,
               ),
             ],

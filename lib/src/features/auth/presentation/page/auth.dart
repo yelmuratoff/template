@@ -3,6 +3,7 @@ import 'package:base_starter/src/common/presentation/widgets/buttons/app_button.
 import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/home/presentation/page/home.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _AuthPageState extends State<AuthPage> {
           Toaster.showErrorToast(context, title: message);
         },
         onAuthLoading: () {
-          AppDialogs.showLoader(context, title: context.l10n.loading);
+          AppDialogs.showLoader(context, title: L10n.current.loading);
         },
       );
 }

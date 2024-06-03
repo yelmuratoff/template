@@ -1,5 +1,6 @@
 import 'package:base_starter/src/common/presentation/widgets/app_loading_indicator.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -37,7 +38,7 @@ final class AppDialogs {
 
     EasyLoading.dismiss();
     EasyLoading.showError(
-      title ?? context.l10n.error,
+      title ?? L10n.current.error,
       duration: const Duration(seconds: 2),
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: true,
@@ -49,7 +50,7 @@ final class AppDialogs {
     EasyLoading.dismiss();
 
     EasyLoading.show(
-      status: title ?? context.l10n.loading,
+      status: title ?? L10n.current.loading,
       indicator: const AppLoadingIndicator(),
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: false,
@@ -61,7 +62,7 @@ final class AppDialogs {
     EasyLoading.dismiss();
 
     EasyLoading.showSuccess(
-      title ?? context.l10n.requestSuccess,
+      title ?? L10n.current.requestSuccess,
       duration: const Duration(seconds: 1),
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: true,

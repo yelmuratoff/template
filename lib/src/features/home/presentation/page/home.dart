@@ -2,6 +2,7 @@ import 'package:base_starter/src/app/router/extras.dart';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/string_extension.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/features/home/state/counter.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           context.pushNamed(
             SettingsPage.name,
             queryParameters: {
-              ExtraKeys.title: context.l10n.settings,
+              ExtraKeys.title: L10n.current.settings,
             },
           );
         },

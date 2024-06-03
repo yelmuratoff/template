@@ -21,7 +21,7 @@ class SettingsView extends StatelessWidget {
           ),
         ),
         title: Text(
-          context.l10n.settings,
+          L10n.current.settings,
           style: context.theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -34,22 +34,22 @@ class SettingsView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  context.l10n.locales,
+                  L10n.current.locales,
                   style: _titleMediumTextStyle,
                 ),
               ),
-              _LanguagesSelector(Localization.supportedLocales),
+              const _LanguagesSelector(AppLocalizations.supportedLocales),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  context.l10n.defaultThemes,
+                  L10n.current.defaultThemes,
                   style: _titleMediumTextStyle,
                 ),
               ),
               const _ThemeSelector(Colors.primaries),
               SwitchListTile(
                 title: Text(
-                  context.l10n.changeTheme,
+                  L10n.current.changeTheme,
                   style: _titleMediumTextStyle,
                 ),
                 value: SettingsScope.themeOf(context).isDarkMode,
@@ -101,7 +101,7 @@ class SettingsView extends StatelessWidget {
                   listener: (context, state) => switch (state) {
                     LoadingAuthState() => AppDialogs.showLoader(
                         context,
-                        title: context.l10n.loading,
+                        title: L10n.current.loading,
                       ),
                     _ => AppDialogs.dismiss(),
                   },
@@ -110,7 +110,7 @@ class SettingsView extends StatelessWidget {
                       context.dependencies.authBloc
                           .add(const LogoutAuthEvent());
                     },
-                    text: context.l10n.logout,
+                    text: L10n.current.logout,
                   ),
                 ),
                 const Gap(32),

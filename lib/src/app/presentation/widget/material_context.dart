@@ -43,7 +43,7 @@ class MaterialContext extends ConsumerWidget {
         localizationsDelegates: ISpectLocalizations.localizationDelegates([
           AppLocalizations.delegate,
         ]),
-        supportedLocales: Localization.supportedLocales,
+        supportedLocales: AppLocalizations.supportedLocales,
         locale: locale,
         routerConfig: routerConfig,
         builder: (context, child) {

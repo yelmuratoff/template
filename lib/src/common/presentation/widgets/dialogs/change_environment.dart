@@ -1,8 +1,9 @@
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/configs/preferences/preferences.dart';
+import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/features/initialization/model/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -16,7 +17,7 @@ final class ChangeEnvironmentDialog {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          context.l10n.changeEnvironment,
+          L10n.current.changeEnvironment,
           style: context.theme.textTheme.titleMedium,
         ),
         content: Column(
@@ -70,7 +71,7 @@ final class ChangeEnvironmentDialog {
                         );
                         Toaster.showErrorToast(
                           context,
-                          title: context.l10n.error,
+                          title: L10n.current.error,
                         );
                       }
                     },

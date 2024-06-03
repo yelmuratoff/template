@@ -7,7 +7,7 @@ import 'package:flutter/material.dart' show ThemeMode, Color;
 
 /// `ThemeDataSource` is a data source that provides theme data.
 /// This is used to set and get theme.
-abstract interface class ThemeDataSource {
+abstract interface class IThemeDataSource {
   /// Set theme
   Future<void> setTheme(AppTheme theme);
 
@@ -16,7 +16,7 @@ abstract interface class ThemeDataSource {
 }
 
 final class ThemeDataSourceLocal extends PreferencesDao
-    implements ThemeDataSource {
+    implements IThemeDataSource {
   const ThemeDataSourceLocal({
     required super.sharedPreferences,
     required this.codec,

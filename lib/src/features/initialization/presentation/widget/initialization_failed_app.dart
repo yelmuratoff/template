@@ -1,10 +1,11 @@
-import 'package:base_starter/src/common/configs/preferences/preferences.dart';
+import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/common/di/containers/dependencies.dart';
 import 'package:base_starter/src/common/di/containers/repositories.dart';
 import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
 import 'package:base_starter/src/features/initialization/model/environment.dart';
@@ -55,8 +56,8 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
   String? _environmentKey;
 
   SettingsState? settingsState;
-  LocaleRepository? localeRepository;
-  ThemeRepository? themeRepository;
+  ILocaleRepository? localeRepository;
+  IThemeRepository? themeRepository;
 
   bool _isInitialized = false;
 
@@ -126,8 +127,8 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
                 darkTheme: settingsState?.appTheme?.darkTheme,
                 themeMode: settingsState?.appTheme?.mode,
                 locale: settingsState?.locale,
-                localizationsDelegates: Localization.localizationDelegates,
-                supportedLocales: Localization.supportedLocales,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
                 home: _View(
                   error: widget.error,
                   retryInitialization: widget.retryInitialization != null
@@ -184,7 +185,7 @@ class _View extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          context.l10n.initializationFailed,
+          L10n.current.initializationFailed,
           style: context.theme.textTheme.titleLarge?.copyWith(
             color: context.theme.colorScheme.error,
             fontWeight: FontWeight.w600,
@@ -223,7 +224,7 @@ class _View extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              '${context.l10n.errorType}: ${error.toString()}',
+              '${L10n.current.errorType}: ${error.toString()}',
               style: context.theme.textTheme.bodyLarge?.copyWith(
                 color: context.theme.colorScheme.error,
                 fontWeight: FontWeight.w500,
@@ -242,7 +243,7 @@ class _View extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          context.l10n.retry,
+                          L10n.current.retry,
                           style: const TextStyle(color: Colors.white),
                         ),
                         const Gap(8),

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
 
 /// Repository that manages locale information
-abstract interface class LocaleRepository {
+abstract interface class ILocaleRepository {
   /// Get locale
   Future<Locale?> getLocale();
 
@@ -12,12 +12,12 @@ abstract interface class LocaleRepository {
 }
 
 /// Locale repository implementation
-final class LocaleRepositoryImpl implements LocaleRepository {
+final class LocaleRepositoryImpl implements ILocaleRepository {
   /// Create locale repository
-  const LocaleRepositoryImpl({required LocaleDataSource localeDataSource})
+  const LocaleRepositoryImpl({required ILocaleDataSource localeDataSource})
       : _localeDataSource = localeDataSource;
 
-  final LocaleDataSource _localeDataSource;
+  final ILocaleDataSource _localeDataSource;
 
   @override
   Future<Locale?> getLocale() => _localeDataSource.getLocale();

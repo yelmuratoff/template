@@ -1,6 +1,6 @@
 import 'package:base_starter/src/app/presentation/widget/material_context.dart';
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/configs/preferences/preferences.dart';
+import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/services/router_service.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';

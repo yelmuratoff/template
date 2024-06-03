@@ -20,7 +20,7 @@ class _AppVersionBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '${context.l10n.appVersion}: ',
+                  '${L10n.current.appVersion}: ',
                   style: context.theme.textTheme.titleSmall?.copyWith(
                     color: _versionTextColor,
                   ),
@@ -38,7 +38,7 @@ class _AppVersionBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${context.l10n.buildVersion}: ',
+                '${L10n.current.buildVersion}: ',
                 style: context.theme.textTheme.titleSmall?.copyWith(
                   color: _versionTextColor,
                 ),

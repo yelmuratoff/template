@@ -12,7 +12,7 @@ class _HomePageView extends ConsumerWidget {
         backgroundColor: context.theme.colorScheme.surface,
         appBar: AppBar(
           title: Text(
-            context.l10n.appTitle.capitalize(),
+            L10n.current.appTitle.capitalize(),
             style: context.theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -44,7 +44,7 @@ class _HomePageView extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Text(
-                      context.l10n.counterTimesText(
+                      L10n.current.counterTimesText(
                         ref.watch(counterProvider),
                       ),
                       textAlign: TextAlign.center,

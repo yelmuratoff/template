@@ -38,7 +38,7 @@ class _AuthView extends StatelessWidget {
                   onPressed: () {
                     onSignInPressed.call();
                   },
-                  text: context.l10n.login,
+                  text: L10n.current.login,
                 ),
               ],
             ),

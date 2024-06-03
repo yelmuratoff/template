@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
-import 'package:base_starter/src/common/configs/preferences/preferences.dart';
+import 'package:base_starter/src/common/constants/preferences.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
+import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/resource/data/data_auth_repository.dart';
@@ -67,7 +69,9 @@ mixin InitializationSteps {
 
       final localeFuture = localeRepository.getLocale();
       final theme = await themeRepository.getTheme();
-      final locale = await localeFuture;
+      final locale = await localeFuture ?? Localization.computeDefaultLocale;
+
+      await L10n.load(locale);
 
       final initialState = IdleSettingsState(appTheme: theme, locale: locale);
 

@@ -1,4 +1,4 @@
-import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/constants/app_constants.dart';
 
 /// Constants for the app's preferences.
 /// It used for storing and retrieving data from the shared preferences.

@@ -1,5 +1,5 @@
-import 'package:base_starter/src/common/configs/style/themes/dark.dart';
-import 'package:base_starter/src/common/configs/style/themes/light.dart';
+import 'package:base_starter/src/common/theme/presentation/themes/dark.dart';
+import 'package:base_starter/src/common/theme/presentation/themes/light.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 @immutable
 final class AppTheme with Diagnosticable {
   AppTheme({required this.mode, required this.seed})
-      : darkTheme = getBaseDarkTheme(seed: seed),
-        lightTheme = getBaseLightTheme(seed: seed);
+      : darkTheme = DarkThemeData.getTheme(seed: seed),
+        lightTheme = LightThemeData.getTheme(seed: seed);
 
   /// The type of theme to use.
   final ThemeMode mode;

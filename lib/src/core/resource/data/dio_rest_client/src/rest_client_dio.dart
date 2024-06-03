@@ -1,8 +1,8 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
 import 'package:base_starter/bootstrap.dart';
-import 'package:base_starter/src/common/configs/constants.dart';
 import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
+import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/interceptor/dio_interceptor.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
@@ -201,7 +201,7 @@ class DioClient {
               if (oldToken == null) {
                 return handler.reject(e);
               }
-
+              //TODO: Change this to your refresh token endpoint
               final TokenPair? newToken = await dio.post(
                 '/auth/refresh',
                 options: Options(

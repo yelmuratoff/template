@@ -1,6 +1,6 @@
 import 'dart:developer' as dev;
 
-import 'package:base_starter/src/common/configs/constants.dart';
+import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:talker/talker.dart';
 

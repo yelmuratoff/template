@@ -6,6 +6,7 @@ import 'package:base_starter/src/common/presentation/widgets/dialogs/change_envi
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/services/page_lifecycle_model.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
@@ -58,7 +59,7 @@ class _SettingsPageState extends State<SettingsPage> {
           if (_model.tapNumber > 5 && _model.tapNumber < 10) {
             Toaster.showToast(
               context,
-              title: context.l10n.environmentTapNumber(10 - _model.tapNumber),
+              title: L10n.current.environmentTapNumber(10 - _model.tapNumber),
             );
           } else if (_model.tapNumber == 10) {
             talkerWrapper.info("ℹ️ Environment change dialog opened");

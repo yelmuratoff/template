@@ -1,5 +1,6 @@
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

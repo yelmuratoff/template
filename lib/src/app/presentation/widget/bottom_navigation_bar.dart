@@ -32,12 +32,12 @@ class _BottomNavigationBar extends StatelessWidget {
             NavigationDestination(
               icon: const Icon(Icons.home_outlined),
               selectedIcon: const Icon(Icons.home, color: Colors.white),
-              label: context.l10n.home,
+              label: L10n.current.home,
             ),
             NavigationDestination(
               icon: const Icon(Icons.person_outline),
               selectedIcon: const Icon(Icons.person, color: Colors.white),
-              label: context.l10n.profile,
+              label: L10n.current.profile,
             ),
           ],
         ),

@@ -11,7 +11,7 @@ class _RouterErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text(context.l10n.error),
+          title: Text(L10n.current.error),
           centerTitle: true,
         ),
         body: Column(
@@ -25,14 +25,14 @@ class _RouterErrorView extends StatelessWidget {
                   Expanded(
                     child: AutoSizeText.rich(
                       TextSpan(
-                        text: "${context.l10n.pageNotFound}: ",
+                        text: "${L10n.current.pageNotFound}: ",
                         children: [
                           TextSpan(
                             text: error,
                             style: context.theme.textTheme.titleMedium,
                             children: [
                               TextSpan(
-                                text: " ${context.l10n.notFound}".toLowerCase(),
+                                text: " ${L10n.current.notFound}".toLowerCase(),
                                 style: context.theme.textTheme.titleMedium
                                     ?.copyWith(
                                   color: context.colors.error,
@@ -56,7 +56,7 @@ class _RouterErrorView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
-                child: Text(context.l10n.backToHome),
+                child: Text(L10n.current.backToHome),
                 onPressed: () {
                   onGoHomePressed();
                 },

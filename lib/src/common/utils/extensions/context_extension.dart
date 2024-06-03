@@ -1,7 +1,7 @@
 import 'package:base_starter/src/common/di/containers/dependencies.dart';
 import 'package:base_starter/src/common/di/dependencies_scope.dart';
-import 'package:base_starter/src/common/utils/extensions/colors_extension.dart';
-import 'package:base_starter/src/core/localization/localization.dart';
+import 'package:base_starter/src/common/theme/presentation/theme_colors.dart';
+import 'package:base_starter/src/common/theme/presentation/theme_text_style.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
 import 'package:base_starter/src/features/initialization/presentation/widget/environment_scope.dart';
 import 'package:flutter/foundation.dart';
@@ -65,10 +65,10 @@ extension ContextExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
 
   /// `colors` returns colors of the `BuildContext`.
-  AppColorsExtension get colors => theme.extension<AppColorsExtension>()!;
+  ThemeColors get colors => theme.extension<ThemeColors>()!;
 
-  /// Returns the current `AppLocalizations` of the `BuildContext`.
-  AppLocalizations get l10n => Localization.of(this);
+  /// `textStyles` returns text styles of the `BuildContext`.
+  ThemeTextStyle get textStyles => theme.extension<ThemeTextStyle>()!;
 
   /// `isDark` returns `true` if the current `Theme` is dark.
   bool get isDark => theme.brightness == Brightness.dark;
@@ -131,5 +131,5 @@ extension ContextExtension on BuildContext {
 /// List of extensions for `ThemeData`
 extension ColorsThemeData on ThemeData {
   /// `colors` returns colors of the `ThemeData`.
-  AppColorsExtension get colors => extension<AppColorsExtension>()!;
+  ThemeColors get colors => extension<ThemeColors>()!;
 }

@@ -24,7 +24,7 @@ class _ProfileScreenView extends StatelessWidget {
                   Icons.settings_rounded,
                   color: Colors.white,
                 ),
-                onPressed: () => onSettingsPressed(),
+                onPressed: () => onSettingsPressed.call(),
                 splashRadius: 8,
               ),
             ),

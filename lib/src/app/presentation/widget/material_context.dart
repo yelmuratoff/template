@@ -26,7 +26,7 @@ class MaterialContext extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = SettingsScope.themeOf(context).theme;
     final locale = SettingsScope.localeOf(context).locale;
-    final config = EnvironmentScope.of(context);
+    final config = InternalEnvironmentScope.of(context);
 
     return ISpectScopeWrapper(
       options: ISpectOptions(

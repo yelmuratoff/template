@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 /// The environment.
-enum Environment {
+enum EnvType {
   /// Development environment.
   dev._('DEV'),
 
@@ -11,12 +11,12 @@ enum Environment {
   /// The environment value.
   final String value;
 
-  const Environment._(this.value);
+  const EnvType._(this.value);
 
   /// Returns the environment from the given [value].
-  static Environment from(String? value) => switch (value) {
-        'DEV' => Environment.dev,
-        'PROD' => Environment.prod,
-        _ => kReleaseMode ? Environment.prod : Environment.dev,
+  static EnvType from(String? value) => switch (value) {
+        'DEV' => EnvType.dev,
+        'PROD' => EnvType.prod,
+        _ => kReleaseMode ? EnvType.prod : EnvType.dev,
       };
 }

@@ -37,5 +37,11 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
+        onIncrementPressed: (ref) {
+          ref.read(counterProvider.notifier).increment();
+        },
+        onDecrementPressed: (ref) {
+          ref.read(counterProvider.notifier).decrement();
+        },
       );
 }

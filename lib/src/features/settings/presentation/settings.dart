@@ -52,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   @override
-  Widget build(BuildContext context) => SettingsView(
+  Widget build(BuildContext context) => _SettingsView(
         onTapAppVersion: () {
           _model.tapNumber++;
 
@@ -68,6 +68,17 @@ class _SettingsPageState extends State<SettingsPage> {
             });
             _model.tapNumber = 0;
           }
+        },
+        onThemeChanged: ({required value}) {
+          SettingsScope.themeOf(context).setThemeMode(
+            value ? ThemeMode.dark : ThemeMode.light,
+          );
+        },
+        onLocaleChanged: (locale) {
+          SettingsScope.localeOf(context).setLocale(locale);
+        },
+        onLogoutPressed: () {
+          context.dependencies.authBloc.add(const LogoutAuthEvent());
         },
       );
 }

@@ -1,9 +1,13 @@
 part of '../settings.dart';
 
 class _LanguageCard extends StatelessWidget {
-  const _LanguageCard(this._language);
+  const _LanguageCard({
+    required this.language,
+    required this.onLocaleTapped,
+  });
 
-  final Locale _language;
+  final Locale language;
+  final void Function(Locale) onLocaleTapped;
 
   @override
   Widget build(BuildContext context) => Card(
@@ -13,13 +17,13 @@ class _LanguageCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
           ),
           child: InkWell(
-            onTap: () => SettingsScope.localeOf(context).setLocale(_language),
+            onTap: () => onLocaleTapped.call(language),
             borderRadius: BorderRadius.circular(4),
             child: SizedBox(
               width: 64,
               child: Center(
                 child: Text(
-                  _language.languageCode,
+                  language.languageCode,
                   style: context.theme.textTheme.bodyMedium?.copyWith(
                     color: context.theme.colorScheme.onPrimary,
                   ),

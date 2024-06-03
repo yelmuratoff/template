@@ -1,23 +1,23 @@
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
 import 'package:flutter/material.dart';
 
-/// `EnvironmentScope` is an entry point to the environment scope.
-class EnvironmentScope extends InheritedWidget {
-  final BaseConfig config;
+/// `InternalEnvironmentScope` is an entry point to the environment scope.
+class InternalEnvironmentScope extends InheritedWidget {
+  final InternalEnvConfig config;
 
-  const EnvironmentScope({
+  const InternalEnvironmentScope({
     required this.config,
     required super.child,
     super.key,
   });
 
-  static BaseConfig of(BuildContext context) {
-    final EnvironmentScope? wrapper =
-        context.dependOnInheritedWidgetOfExactType<EnvironmentScope>();
+  static InternalEnvConfig of(BuildContext context) {
+    final InternalEnvironmentScope? wrapper =
+        context.dependOnInheritedWidgetOfExactType<InternalEnvironmentScope>();
     if (wrapper != null) {
       return wrapper.config;
     }
-    throw Exception('No EnvironmentScope found in widget tree');
+    throw Exception('No InternalEnvironmentScope found in widget tree');
   }
 
   @override

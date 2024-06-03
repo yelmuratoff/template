@@ -4,7 +4,7 @@ import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart'
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/features/initialization/model/environment.dart';
+import 'package:base_starter/src/features/initialization/model/env_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ispect/ispect.dart';
@@ -22,7 +22,7 @@ final class ChangeEnvironmentDialog {
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: Environment.values
+          children: EnvType.values
               .map(
                 (env) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),
@@ -60,7 +60,7 @@ final class ChangeEnvironmentDialog {
                           "Environment changed to ${env.name}",
                         );
                         ISpect.read(context).setISpect =
-                            env.value == Environment.dev.value;
+                            env.value == EnvType.dev.value;
                         Navigator.pop(context);
                         RestartWrapper.restartApp(navigatorKey.currentContext!);
                       } catch (e, st) {

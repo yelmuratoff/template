@@ -8,7 +8,7 @@ import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
-import 'package:base_starter/src/features/initialization/model/environment.dart';
+import 'package:base_starter/src/features/initialization/model/env_type.dart';
 import 'package:base_starter/src/features/initialization/presentation/widget/environment_scope.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
@@ -110,9 +110,8 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 
   @override
   Widget build(BuildContext context) => _isInitialized
-      ? EnvironmentScope(
-          config:
-              configMap[_environmentKey] ?? configMap[Environment.prod.value]!,
+      ? InternalEnvironmentScope(
+          config: configMap[_environmentKey] ?? configMap[EnvType.prod.value]!,
           child: DependenciesScope(
             dependencies: Dependencies(),
             repositories: Repositories(),

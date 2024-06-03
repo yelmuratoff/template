@@ -100,8 +100,8 @@ extension ContextExtension on BuildContext {
   /// `dependencies` returns the nearest `DependenciesScope` of the given `BuildContext`.
   Dependencies get dependencies => DependenciesScope.of(this);
 
-  /// `config` returns the nearest `EnvironmentScope` of the given `BuildContext`.
-  BaseConfig get config => EnvironmentScope.of(this);
+  /// `config` returns the nearest `InternalEnvironmentScope` of the given `BuildContext`.
+  InternalEnvConfig get config => InternalEnvironmentScope.of(this);
 
   /// `provide` returns the nearest `Provider` of the given `BuildContext`.
   T provide<T>() => Provider.of<T>(this);

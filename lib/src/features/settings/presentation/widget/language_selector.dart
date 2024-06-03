@@ -1,22 +1,29 @@
 part of '../settings.dart';
 
 class _LanguagesSelector extends StatelessWidget {
-  const _LanguagesSelector(this._languages);
+  const _LanguagesSelector({
+    required this.languages,
+    required this.onLocaleTapped,
+  });
 
-  final List<Locale> _languages;
+  final List<Locale> languages;
+  final void Function(Locale) onLocaleTapped;
 
   @override
   Widget build(BuildContext context) => SizedBox(
         height: 100,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: _languages.length,
+          itemCount: languages.length,
           itemBuilder: (context, index) {
-            final language = _languages.elementAt(index);
+            final language = languages.elementAt(index);
 
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: _LanguageCard(language),
+              child: _LanguageCard(
+                language: language,
+                onLocaleTapped: onLocaleTapped,
+              ),
             );
           },
         ),

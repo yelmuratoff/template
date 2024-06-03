@@ -1,5 +1,5 @@
 import 'package:base_starter/src/common/constants/app_constants.dart';
-import 'package:base_starter/src/features/initialization/model/environment.dart';
+import 'package:base_starter/src/features/initialization/model/env_type.dart';
 import 'package:flutter/material.dart';
 
 const configMap = {
@@ -8,39 +8,39 @@ const configMap = {
 };
 
 @immutable
-sealed class BaseConfig {
-  final Environment environment;
+sealed class InternalEnvConfig {
+  final EnvType environment;
   final String appName;
   final String flavor;
 
-  const BaseConfig({
+  const InternalEnvConfig({
     required this.environment,
     required this.appName,
     required this.flavor,
   });
 
-  Environment get getEnvironment => environment;
+  EnvType get getEnvironment => environment;
 
   String get getAppName => appName;
 
-  bool get isDev => environment == Environment.dev;
+  bool get isDev => environment == EnvType.dev;
 
-  bool get isProd => environment == Environment.prod;
+  bool get isProd => environment == EnvType.prod;
 }
 
-class DevConfig extends BaseConfig {
+class DevConfig extends InternalEnvConfig {
   const DevConfig()
       : super(
-          environment: Environment.dev,
+          environment: EnvType.dev,
           appName: "[DEV] ${AppConstants.appName}",
           flavor: "DEV",
         );
 }
 
-class ProdConfig extends BaseConfig {
+class ProdConfig extends InternalEnvConfig {
   const ProdConfig()
       : super(
-          environment: Environment.prod,
+          environment: EnvType.prod,
           appName: AppConstants.appName,
           flavor: "PROD",
         );

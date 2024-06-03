@@ -2,9 +2,13 @@ part of '../home.dart';
 
 class _HomePageView extends ConsumerWidget {
   final void Function() onSettingsPressed;
+  final void Function(WidgetRef) onIncrementPressed;
+  final void Function(WidgetRef) onDecrementPressed;
 
   const _HomePageView({
     required this.onSettingsPressed,
+    required this.onIncrementPressed,
+    required this.onDecrementPressed,
   });
 
   @override
@@ -24,13 +28,13 @@ class _HomePageView extends ConsumerWidget {
           children: [
             FloatingActionButton(
               heroTag: 'increment',
-              onPressed: () => ref.read(counterProvider.notifier).increment(),
+              onPressed: () => onIncrementPressed.call(ref),
               child: const Icon(Icons.add),
             ),
             const Gap(8),
             FloatingActionButton(
               heroTag: 'decrement',
-              onPressed: () => ref.read(counterProvider.notifier).decrement(),
+              onPressed: () => onDecrementPressed.call(ref),
               child: const Icon(Icons.remove),
             ),
           ],

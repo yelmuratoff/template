@@ -8,7 +8,7 @@ import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_cli
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/resource/data/data_auth_repository.dart';
 import 'package:base_starter/src/features/auth/resource/domain/use_cases/auth_use_cases.dart';
-import 'package:base_starter/src/features/initialization/model/environment.dart';
+import 'package:base_starter/src/features/initialization/model/env_type.dart';
 import 'package:base_starter/src/features/initialization/model/initialization_progress.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
@@ -49,7 +49,7 @@ mixin InitializationSteps {
       if (environment == null) {
         await sharedPreferences.setString(
           Preferences.environment,
-          Environment.prod.value,
+          EnvType.prod.value,
         );
       }
     },

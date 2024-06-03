@@ -1,8 +1,18 @@
 part of '../settings.dart';
 
-class SettingsView extends StatelessWidget {
+class _SettingsView extends StatelessWidget {
   final void Function() onTapAppVersion;
-  const SettingsView({required this.onTapAppVersion, super.key});
+  final void Function(Locale) onLocaleChanged;
+  final void Function() onLogoutPressed;
+  final void Function({
+    required bool value,
+  }) onThemeChanged;
+  const _SettingsView({
+    required this.onTapAppVersion,
+    required this.onLocaleChanged,
+    required this.onThemeChanged,
+    required this.onLogoutPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +48,10 @@ class SettingsView extends StatelessWidget {
                   style: _titleMediumTextStyle,
                 ),
               ),
-              const _LanguagesSelector(AppLocalizations.supportedLocales),
+              _LanguagesSelector(
+                languages: AppLocalizations.supportedLocales,
+                onLocaleTapped: onLocaleChanged,
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -54,9 +67,7 @@ class SettingsView extends StatelessWidget {
                 ),
                 value: SettingsScope.themeOf(context).isDarkMode,
                 onChanged: (value) {
-                  SettingsScope.themeOf(context).setThemeMode(
-                    value ? ThemeMode.dark : ThemeMode.light,
-                  );
+                  onThemeChanged.call(value: value);
                 },
               ),
             ]),
@@ -64,9 +75,8 @@ class SettingsView extends StatelessWidget {
           SliverToBoxAdapter(
             child: Row(
               children: [
-                SizedBox(
-                  height: 100,
-                  width: 100,
+                SizedBox.square(
+                  dimension: 100,
                   child: Theme(
                     data: context.theme.copyWith(
                       cardTheme: CardTheme(
@@ -107,8 +117,7 @@ class SettingsView extends StatelessWidget {
                   },
                   child: AppButton(
                     onPressed: () {
-                      context.dependencies.authBloc
-                          .add(const LogoutAuthEvent());
+                      onLogoutPressed.call();
                     },
                     text: L10n.current.logout,
                   ),

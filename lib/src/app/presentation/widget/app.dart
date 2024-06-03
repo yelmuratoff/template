@@ -5,7 +5,7 @@ import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/services/router_service.dart';
 import 'package:base_starter/src/features/initialization/logic/base_config.dart';
 import 'package:base_starter/src/features/initialization/model/dependencies.dart';
-import 'package:base_starter/src/features/initialization/model/environment.dart';
+import 'package:base_starter/src/features/initialization/model/env_type.dart';
 import 'package:base_starter/src/features/initialization/presentation/widget/environment_scope.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
@@ -62,9 +62,9 @@ class _AppState extends State<App> {
         providers: [
           BlocProvider.value(value: widget.result.dependencies.authBloc),
         ],
-        child: EnvironmentScope(
+        child: InternalEnvironmentScope(
           config:
-              configMap[_environmentKey] ?? configMap[Environment.prod.value]!,
+              configMap[_environmentKey] ?? configMap[EnvType.prod.value]!,
           child: DependenciesScope(
             dependencies: widget.result.dependencies,
             repositories: widget.result.repositories,

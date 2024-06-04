@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+/// `TokenPair` is a value object that holds the access and refresh tokens.
 class TokenPair extends Equatable {
   final String access;
   final String refresh;

@@ -1,19 +1,19 @@
 IP_ADDRESS=""
 
-# Функция для вывода инструкции по использованию скрипта
+# Function to display the script usage instructions
 usage() {
-    echo "Использование: $0 --ip [IP-адрес]"
+    echo "Usage: $0 --ip [IP address]"
     exit 1
 }
 
-# Парсинг аргументов командной строки
+# Parsing command line arguments
 while [[ $# -gt 0 ]]; do
     key="$1"
 
     case $key in
         --ip)
         if [ -z "$2" ]; then
-            echo "Ошибка: после --ip не указан IP-адрес."
+            echo "Error: No IP address specified after --ip."
             usage
             exit 1
         fi
@@ -21,20 +21,20 @@ while [[ $# -gt 0 ]]; do
         shift # past argument
         shift # past value
         ;;
-        *)    # неизвестный аргумент
+        *)    # unknown argument
         usage
         exit 1
         ;;
     esac
 done
 
-# Проверка, был ли предоставлен IP-адрес
+# Check if an IP address has been provided
 if [ -z "$IP_ADDRESS" ]; then
-    echo "Ошибка: IP-адрес не указан."
+    echo "Error: IP address not specified."
     usage
     exit 1
 else
-    echo "Подключение к IP: $IP_ADDRESS"
+    echo "Connecting to IP: $IP_ADDRESS"
     adb tcpip 5555
     adb connect $IP_ADDRESS
 fi

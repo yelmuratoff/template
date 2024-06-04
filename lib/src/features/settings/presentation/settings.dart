@@ -85,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               _LanguagesSelector(
-                languages: AppLocalizations.supportedLocales,
+                languages: L10n.delegate.supportedLocales,
                 onLocaleTapped: (locale) {
                   SettingsScope.localeOf(context).setLocale(locale);
                 },

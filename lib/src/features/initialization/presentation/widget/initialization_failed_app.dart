@@ -126,8 +126,8 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
                 darkTheme: settingsState?.appTheme?.darkTheme,
                 themeMode: settingsState?.appTheme?.mode,
                 locale: settingsState?.locale,
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
+                localizationsDelegates: Localization.delegates,
+                supportedLocales: L10n.delegate.supportedLocales,
                 home: _View(
                   error: widget.error,
                   retryInitialization: widget.retryInitialization != null

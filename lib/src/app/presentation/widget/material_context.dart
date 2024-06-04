@@ -1,5 +1,5 @@
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/core/localization/localization.dart';
+import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/features/initialization/presentation/widget/environment_scope.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +41,9 @@ class MaterialContext extends ConsumerWidget {
         darkTheme: theme.darkTheme,
         themeMode: theme.mode,
         localizationsDelegates: ISpectLocalizations.localizationDelegates([
-          AppLocalizations.delegate,
+          L10n.delegate,
         ]),
-        supportedLocales: AppLocalizations.supportedLocales,
+        supportedLocales: L10n.delegate.supportedLocales,
         locale: locale,
         routerConfig: routerConfig,
         builder: (context, child) {

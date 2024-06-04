@@ -63,8 +63,7 @@ class _AppState extends State<App> {
           BlocProvider.value(value: widget.result.dependencies.authBloc),
         ],
         child: InternalEnvironmentScope(
-          config:
-              configMap[_environmentKey] ?? configMap[EnvType.prod.value]!,
+          config: configMap[_environmentKey] ?? configMap[EnvType.prod.value]!,
           child: DependenciesScope(
             dependencies: widget.result.dependencies,
             repositories: widget.result.repositories,

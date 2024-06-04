@@ -9,8 +9,6 @@ import 'package:base_starter/src/features/home/presentation/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'view/auth_view.dart';
-
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
@@ -23,25 +21,43 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   @override
-  Widget build(BuildContext context) => _AuthView(
-        onSignInPressed: () {
-          context.dependencies.authBloc.add(
-            const LoginAuthEvent(
-              email: 'john@mail.com',
-              password: 'changeme',
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(L10n.current.login),
+        ),
+        body: BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) => switch (state) {
+            InitialAuthState() => null,
+            AuthenticatedAuthState() => {
+                AppDialogs.dismiss(),
+                context.goNamed(HomePage.name),
+              },
+            ErrorAuthState() => {
+                AppDialogs.dismiss(),
+                Toaster.showErrorToast(context, title: state.message),
+              },
+            LoadingAuthState() => {
+                AppDialogs.showLoader(context, title: L10n.current.loading),
+              },
+          },
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                AppButton(
+                  onPressed: () {
+                    context.dependencies.authBloc.add(
+                      const LoginAuthEvent(
+                        email: 'john@mail.com',
+                        password: 'changeme',
+                      ),
+                    );
+                  },
+                  text: L10n.current.login,
+                ),
+              ],
             ),
-          );
-        },
-        onAuthenticate: () {
-          AppDialogs.dismiss();
-          context.goNamed(HomePage.name);
-        },
-        onAuthError: (message) {
-          AppDialogs.dismiss();
-          Toaster.showErrorToast(context, title: message);
-        },
-        onAuthLoading: () {
-          AppDialogs.showLoader(context, title: L10n.current.loading);
-        },
+          ),
+        ),
       );
 }

@@ -54,19 +54,19 @@ abstract class PageLifecycleModel {
     callback();
     _updateCallback();
   }
-}
 
-/// A function `createModel` that creates and initializes a new instance of specified model using the context and default builder function.
-T createModel<T extends PageLifecycleModel>(
-  BuildContext context,
-  T Function() defaultBuilder,
-) {
-  // Retrieves an existing instance of the model from the context or creates a new one using default builder function.
-  final model = context.read<T?>() ?? defaultBuilder();
+  /// A function `createModel` that creates and initializes a new instance of specified model using the context and default builder function.
+  static T createModel<T extends PageLifecycleModel>(
+    BuildContext context,
+    T Function() defaultBuilder,
+  ) {
+    // Retrieves an existing instance of the model from the context or creates a new one using default builder function.
+    final model = context.read<T?>() ?? defaultBuilder();
 
-  // Initializes the model if not already initialized.
-  model._init(context);
+    // Initializes the model if not already initialized.
+    model._init(context);
 
-  // Returns the initialized model.
-  return model;
+    // Returns the initialized model.
+    return model;
+  }
 }

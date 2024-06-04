@@ -38,7 +38,7 @@ final class DarkThemeData {
           shimmerBase: const Color(0xffB4B4B4),
           shimmerHighlight: Colors.white,
         ),
-        textStyles,
+        // textStyles,
       ],
     );
   }

@@ -10,14 +10,13 @@ import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
-import 'package:base_starter/src/features/settings/presentation/view/settings_model.dart';
+import 'package:base_starter/src/features/settings/presentation/controller/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:ispect/ispect.dart';
 
 part 'controller/settings_scope.dart';
-part 'view/settings_view.dart';
 part 'widget/app_version.dart';
 part 'widget/language_card.dart';
 part 'widget/language_selector.dart';
@@ -41,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
-    _model = createModel(context, () => SettingsPageModel());
+    _model = PageLifecycleModel.createModel(context, () => SettingsPageModel());
     super.initState();
   }
 
@@ -52,33 +51,141 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   @override
-  Widget build(BuildContext context) => _SettingsView(
-        onTapAppVersion: () {
-          _model.tapNumber++;
+  Widget build(BuildContext context) {
+    final _versionTextColor =
+        context.theme.colorScheme.onSurface.withOpacity(0.5);
+    final _titleMediumTextStyle = context.theme.textTheme.titleMedium?.copyWith(
+      fontWeight: FontWeight.bold,
+    );
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        leading: IconButton(
+          onPressed: () => context.pop(),
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+        ),
+        title: Text(
+          L10n.current.settings,
+          style: context.theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate.fixed([
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  L10n.current.locales,
+                  style: _titleMediumTextStyle,
+                ),
+              ),
+              _LanguagesSelector(
+                languages: AppLocalizations.supportedLocales,
+                onLocaleTapped: (locale) {
+                  SettingsScope.localeOf(context).setLocale(locale);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  L10n.current.defaultThemes,
+                  style: _titleMediumTextStyle,
+                ),
+              ),
+              const _ThemeSelector(Colors.primaries),
+              SwitchListTile(
+                title: Text(
+                  L10n.current.changeTheme,
+                  style: _titleMediumTextStyle,
+                ),
+                value: SettingsScope.themeOf(context).isDarkMode,
+                onChanged: (value) {
+                  SettingsScope.themeOf(context).setThemeMode(
+                    value ? ThemeMode.dark : ThemeMode.light,
+                  );
+                },
+              ),
+            ]),
+          ),
+          SliverToBoxAdapter(
+            child: Row(
+              children: [
+                SizedBox.square(
+                  dimension: 100,
+                  child: Theme(
+                    data: context.theme.copyWith(
+                      cardTheme: CardTheme(
+                        color: context.theme.colorScheme.primaryContainer,
+                        elevation: 0,
+                      ),
+                      colorScheme: context.theme.colorScheme.copyWith(
+                        primary: context.theme.colorScheme.primary,
+                        secondary: context.theme.colorScheme.secondary,
+                        surface: context.theme.colorScheme.surface,
+                      ),
+                    ),
+                    child: const Card(
+                      margin: EdgeInsets.all(8),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                _AppVersionBody(
+                  onTapAppVersion: () {
+                    _model.tapNumber++;
 
-          if (_model.tapNumber > 5 && _model.tapNumber < 10) {
-            Toaster.showToast(
-              context,
-              title: L10n.current.environmentTapNumber(10 - _model.tapNumber),
-            );
-          } else if (_model.tapNumber == 10) {
-            talkerWrapper.info("ℹ️ Environment change dialog opened");
-            ChangeEnvironmentDialog.show(context).then((value) {
-              talkerWrapper.info("🔙 Environment change dialog closed");
-            });
-            _model.tapNumber = 0;
-          }
-        },
-        onThemeChanged: ({required value}) {
-          SettingsScope.themeOf(context).setThemeMode(
-            value ? ThemeMode.dark : ThemeMode.light,
-          );
-        },
-        onLocaleChanged: (locale) {
-          SettingsScope.localeOf(context).setLocale(locale);
-        },
-        onLogoutPressed: () {
-          context.dependencies.authBloc.add(const LogoutAuthEvent());
-        },
-      );
+                    if (_model.tapNumber > 5 && _model.tapNumber < 10) {
+                      Toaster.showToast(
+                        context,
+                        title: L10n.current
+                            .environmentTapNumber(10 - _model.tapNumber),
+                      );
+                    } else if (_model.tapNumber == 10) {
+                      talkerWrapper.info("ℹ️ Environment change dialog opened");
+                      ChangeEnvironmentDialog.show(context).then((value) {
+                        talkerWrapper
+                            .info("🔙 Environment change dialog closed");
+                      });
+                      _model.tapNumber = 0;
+                    }
+                  },
+                  versionTextColor: _versionTextColor,
+                ),
+                const Gap(24),
+                BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) => switch (state) {
+                    LoadingAuthState() => AppDialogs.showLoader(
+                        context,
+                        title: L10n.current.loading,
+                      ),
+                    _ => AppDialogs.dismiss(),
+                  },
+                  child: AppButton(
+                    onPressed: () {
+                      context.dependencies.authBloc
+                          .add(const LogoutAuthEvent());
+                    },
+                    text: L10n.current.logout,
+                  ),
+                ),
+                const Gap(32),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

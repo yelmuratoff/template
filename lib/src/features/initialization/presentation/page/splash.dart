@@ -9,9 +9,6 @@ import 'package:base_starter/src/features/auth/presentation/page/auth.dart';
 import 'package:base_starter/src/features/home/presentation/page/home.dart';
 import 'package:flutter/material.dart';
 
-part 'view/splash_model.dart';
-part 'view/splash_view.dart';
-
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -46,5 +43,8 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   @override
-  Widget build(BuildContext context) => const _SplashView();
+  Widget build(BuildContext context) => Image.asset(
+        Assets.images.splash.path,
+        fit: BoxFit.cover,
+      );
 }

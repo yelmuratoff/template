@@ -4,7 +4,6 @@ import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-part 'view/root_view.dart';
 part '../widget/bottom_navigation_bar.dart';
 
 /// The root page of the application.
@@ -26,7 +25,10 @@ class _RootPageState extends ConsumerState<RootPage> {
   }
 
   @override
-  Widget build(BuildContext context) => _RootView(
-        widget.navigationShell,
+  Widget build(BuildContext context) => Scaffold(
+        body: widget.navigationShell,
+        bottomNavigationBar: _BottomNavigationBar(
+          navigationShell: widget.navigationShell,
+        ),
       );
 }

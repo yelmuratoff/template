@@ -1,6 +1,7 @@
 import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
+import 'package:base_starter/src/features/auth/resource/data/user_manager.dart';
 import 'package:base_starter/src/features/auth/resource/domain/use_cases/auth_use_cases.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -27,6 +28,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       if (tokenPair != null) {
         await SecureStorageManager.setToken(value: tokenPair);
+        //TODO: Save user to UserManager
+        await UserManager.instance.write(user: null);
         emit(const AuthenticatedAuthState());
       }
     } on RestClientException catch (e) {

@@ -7,6 +7,7 @@ import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/resource/data/data_auth_repository.dart';
+import 'package:base_starter/src/features/auth/resource/data/user_manager.dart';
 import 'package:base_starter/src/features/auth/resource/domain/use_cases/auth_use_cases.dart';
 import 'package:base_starter/src/features/initialization/model/env_type.dart';
 import 'package:base_starter/src/features/initialization/model/initialization_progress.dart';
@@ -38,9 +39,10 @@ mixin InitializationSteps {
       final sharedPreferences = await SharedPreferences.getInstance();
       progress.dependencies.sharedPreferences = sharedPreferences;
     },
-    'App Configs': (progress) async {
+    'App Configs, User manager': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;
       AppConfigManager.initialize(sharedPreferences);
+      UserManager.initialize(sharedPreferences);
     },
     'Environment': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;

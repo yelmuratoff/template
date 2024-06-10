@@ -10,4 +10,5 @@ final class Preferences {
   static const String performanceTracking =
       '${AppConstants.appIdentifier}.performanceTracking';
   static const String firstRun = '${AppConstants.appIdentifier}.firstRun';
+  static const String currentUser = '${AppConstants.appIdentifier}.currentUser';
 }

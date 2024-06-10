@@ -4,6 +4,15 @@ This is a highly adaptable Flutter starter kit, designed with an ideal layout an
 
 To utilize this repository, simply click on the "Use this template" button. The subsequent instructions will guide you through the process of integrating and deploying this starter within your projects.
 
+Note: use this for android inside `settings.gradle`:
+```
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "7.3.0" apply false
+    id "org.jetbrains.kotlin.android" version "1.8.22" apply false
+}
+```
+
 
 ## Features
 

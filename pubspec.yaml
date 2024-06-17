@@ -41,7 +41,7 @@ dependencies:
   talker_riverpod_logger: ^1.0.2
 
   # Utils
-  pure: ^0.2.0
+  pure: ^0.3.0
   platform_info: ^4.0.2
   path: ^1.9.0
   path_provider: ^2.1.3

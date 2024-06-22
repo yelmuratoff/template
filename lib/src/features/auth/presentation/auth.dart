@@ -5,7 +5,7 @@ import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dar
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
-import 'package:base_starter/src/features/home/presentation/page/home.dart';
+import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

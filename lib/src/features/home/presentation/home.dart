@@ -18,9 +18,7 @@ class HomePage extends ConsumerWidget {
         appBar: AppBar(
           title: Text(
             L10n.current.appTitle.capitalize(),
-            style: context.theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: context.textStyles.s24w700,
           ),
           centerTitle: false,
         ),
@@ -53,7 +51,7 @@ class HomePage extends ConsumerWidget {
                         ref.watch(counterProvider),
                       ),
                       textAlign: TextAlign.center,
-                      style: context.theme.textTheme.titleMedium,
+                      style: context.textStyles.s18w600,
                     ),
                   ),
                 ],

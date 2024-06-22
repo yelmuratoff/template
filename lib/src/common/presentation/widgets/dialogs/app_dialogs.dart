@@ -22,7 +22,7 @@ final class AppDialogs {
       ..loadingStyle = EasyLoadingStyle.custom
       ..indicatorSize = 45
       ..radius = 16
-      ..textStyle = context.theme.textTheme.bodyLarge
+      ..textStyle = context.textStyles.s16w500
       ..progressColor = context.theme.primaryColor
       ..backgroundColor = context.theme.colorScheme.surface
       ..indicatorColor = context.theme.primaryColor

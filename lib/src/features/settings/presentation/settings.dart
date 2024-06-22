@@ -54,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final _versionTextColor =
         context.theme.colorScheme.onSurface.withOpacity(0.5);
-    final _titleMediumTextStyle = context.theme.textTheme.titleMedium?.copyWith(
+    final _titleMediumTextStyle = context.textStyles.s18w600.copyWith(
       fontWeight: FontWeight.bold,
     );
     return Scaffold(
@@ -68,9 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         title: Text(
           L10n.current.settings,
-          style: context.theme.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: context.textStyles.s24w700,
         ),
       ),
       body: CustomScrollView(

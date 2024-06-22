@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
-import 'package:base_starter/src/features/auth/presentation/page/auth.dart';
+import 'package:base_starter/src/features/auth/presentation/auth.dart';
 import 'package:base_starter/src/features/auth/resource/data/user_manager.dart';
 import 'package:ispect/ispect.dart';
 

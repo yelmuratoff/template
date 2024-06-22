@@ -37,9 +37,8 @@ class _ToasterBody extends StatelessWidget {
               Flexible(
                 child: AutoSizeText(
                   title,
-                  style: context.theme.textTheme.bodyMedium?.copyWith(
+                  style: context.textStyles.s14w500.copyWith(
                     color: textColor,
-                    fontSize: 14,
                   ),
                   textScaleFactor: 1.0,
                   maxLines: 3,

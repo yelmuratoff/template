@@ -1,5 +1,5 @@
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/features/home/presentation/page/home.dart';
+import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 
 class RestartWrapper extends StatefulWidget {

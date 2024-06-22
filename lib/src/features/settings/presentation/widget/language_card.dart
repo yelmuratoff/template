@@ -24,7 +24,7 @@ class _LanguageCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   language.languageCode,
-                  style: context.theme.textTheme.bodyMedium?.copyWith(
+                  style: context.textStyles.s14w500.copyWith(
                     color: context.theme.colorScheme.onPrimary,
                   ),
                 ),

@@ -185,9 +185,8 @@ class _View extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           L10n.current.initializationFailed,
-          style: context.theme.textTheme.titleLarge?.copyWith(
+          style: context.textStyles.s20w600.copyWith(
             color: context.theme.colorScheme.error,
-            fontWeight: FontWeight.w600,
           ),
         ),
         actions: [
@@ -224,7 +223,7 @@ class _View extends StatelessWidget {
           children: [
             Text(
               '${L10n.current.errorType}: ${error.toString()}',
-              style: context.theme.textTheme.bodyLarge?.copyWith(
+              style: context.textStyles.s16w500.copyWith(
                 color: context.theme.colorScheme.error,
                 fontWeight: FontWeight.w500,
               ),
@@ -271,9 +270,8 @@ class _View extends StatelessWidget {
                     'StackTrace: \n$stackTrace',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 50,
-                    style: context.theme.textTheme.bodyMedium?.copyWith(
+                    style: context.textStyles.s14w400.copyWith(
                       color: context.theme.colorScheme.error,
-                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),

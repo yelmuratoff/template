@@ -18,7 +18,7 @@ final class ChangeEnvironmentDialog {
       builder: (context) => AlertDialog(
         title: Text(
           L10n.current.changeEnvironment,
-          style: context.theme.textTheme.titleMedium,
+          style: context.textStyles.s18w600,
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -44,7 +44,7 @@ final class ChangeEnvironmentDialog {
                         ],
                         Text(
                           env.name,
-                          style: context.theme.textTheme.titleMedium,
+                          style: context.textStyles.s18w600,
                         ),
                       ],
                     ),

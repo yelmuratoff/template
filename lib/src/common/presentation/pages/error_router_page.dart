@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/features/home/presentation/page/home.dart';
+import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -13,7 +13,9 @@ class RouterErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text(L10n.current.error),
+          title: Text(
+            L10n.current.error,
+          ),
           centerTitle: true,
         ),
         body: Column(
@@ -31,12 +33,11 @@ class RouterErrorPage extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: error,
-                            style: context.theme.textTheme.titleMedium,
+                            style: context.textStyles.s18w600,
                             children: [
                               TextSpan(
                                 text: " ${L10n.current.notFound}".toLowerCase(),
-                                style: context.theme.textTheme.titleMedium
-                                    ?.copyWith(
+                                style: context.textStyles.s18w600.copyWith(
                                   color: context.colors.error,
                                 ),
                               ),
@@ -44,7 +45,7 @@ class RouterErrorPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      style: context.theme.textTheme.titleMedium,
+                      style: context.textStyles.s18w600,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       minFontSize: 16,
@@ -58,7 +59,9 @@ class RouterErrorPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
-                child: Text(L10n.current.backToHome),
+                child: Text(
+                  L10n.current.backToHome,
+                ),
                 onPressed: () {
                   navigatorKey.currentContext?.goNamed(HomePage.name);
                 },

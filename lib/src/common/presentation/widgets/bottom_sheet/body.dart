@@ -65,10 +65,7 @@ class AppBottomSheet extends StatelessWidget {
                           maxLines: 2,
                           minFontSize: 16,
                           overflow: TextOverflow.ellipsis,
-                          style: context.theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
+                          style: context.textStyles.s18w600,
                         ),
                       ),
                     ),

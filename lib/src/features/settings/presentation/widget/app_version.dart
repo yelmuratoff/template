@@ -21,13 +21,13 @@ class _AppVersionBody extends StatelessWidget {
               children: [
                 Text(
                   '${L10n.current.appVersion}: ',
-                  style: context.theme.textTheme.titleSmall?.copyWith(
+                  style: context.textStyles.s16w500.copyWith(
                     color: _versionTextColor,
                   ),
                 ),
                 Text(
                   context.dependencies.packageInfo.version,
-                  style: context.theme.textTheme.titleSmall?.copyWith(
+                  style: context.textStyles.s16w500.copyWith(
                     color: _versionTextColor,
                   ),
                 ),
@@ -39,13 +39,13 @@ class _AppVersionBody extends StatelessWidget {
             children: [
               Text(
                 '${L10n.current.buildVersion}: ',
-                style: context.theme.textTheme.titleSmall?.copyWith(
+                style: context.textStyles.s16w500.copyWith(
                   color: _versionTextColor,
                 ),
               ),
               Text(
                 context.dependencies.packageInfo.buildNumber,
-                style: context.theme.textTheme.titleSmall?.copyWith(
+                style: context.textStyles.s16w500.copyWith(
                   color: _versionTextColor,
                 ),
               ),

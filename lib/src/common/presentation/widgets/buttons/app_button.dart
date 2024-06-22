@@ -33,9 +33,8 @@ class AppButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
         child: Text(
           text,
-          style: context.theme.textTheme.bodyLarge?.copyWith(
+          style: context.textStyles.s16w600.copyWith(
             color: textColor ?? context.theme.colorScheme.surface,
-            fontWeight: FontWeight.w500,
           ),
         ),
       );

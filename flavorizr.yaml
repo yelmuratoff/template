@@ -1,0 +1,33 @@
+# dart run flutter_flavorizr
+flavors:
+  prod:
+    app:
+      name: "Base"
+
+    android:
+      applicationId: "kz.app.template"
+      icon: "assets/images/icon-1024x1024.png"
+      firebase:
+        config: "firebase/google-services-prod.json"
+         
+    ios:
+      bundleId: "kz.app.template"
+      icon: "assets/images/icon-1024x1024.png"
+      firebase:
+        config: "firebase/GoogleService-Info-Prod.plist"
+
+  dev:
+    app:
+      name: "Base Dev"
+
+    android:
+      applicationId: "kz.app.template.dev"
+      icon: "assets/images/icon-1024x1024.png"
+      firebase:
+        config: "firebase/google-services-dev.json"
+       
+    ios:
+      bundleId: "kz.app.template.dev"
+      icon: "assets/images/icon-1024x1024.png"
+      firebase:
+        config: "firebase/GoogleService-Info-Dev.plist"

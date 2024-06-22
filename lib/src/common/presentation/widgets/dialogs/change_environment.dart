@@ -1,10 +1,10 @@
+import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/features/initialization/model/env_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ispect/ispect.dart';
@@ -22,7 +22,7 @@ final class ChangeEnvironmentDialog {
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: EnvType.values
+          children: Flavor.values
               .map(
                 (env) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),
@@ -35,7 +35,7 @@ final class ChangeEnvironmentDialog {
                     ),
                     title: Row(
                       children: [
-                        if (context.config.environment == env) ...[
+                        if (F.appFlavor == env) ...[
                           Icon(
                             Icons.check_circle_outline_rounded,
                             color: context.theme.colorScheme.primary,
@@ -52,15 +52,16 @@ final class ChangeEnvironmentDialog {
                     dense: true,
                     onTap: () {
                       try {
+                        F.appFlavor = env;
                         context.dependencies.sharedPreferences.setString(
                           Preferences.environment,
-                          env.value,
+                          env.name,
                         );
                         talkerWrapper.warning(
                           "Environment changed to ${env.name}",
                         );
                         ISpect.read(context).setISpect =
-                            env.value == EnvType.dev.value;
+                            env.name == Flavor.dev.name;
                         Navigator.pop(context);
                         RestartWrapper.restartApp(navigatorKey.currentContext!);
                       } catch (e, st) {

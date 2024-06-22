@@ -1,19 +1,19 @@
-import 'package:base_starter/src/features/initialization/model/env_type.dart';
+import 'package:base_starter/flavors.dart';
 
 /// Environment store
 final class EnvironmentStore {
   const EnvironmentStore();
 
   /// The environment.
-  static EnvType get environment {
+  static Flavor get environment {
     var environment = const String.fromEnvironment('ENVIRONMENT');
 
     if (environment.isNotEmpty) {
-      return EnvType.from(environment);
+      return Flavor.from(environment);
     }
 
     environment = const String.fromEnvironment('FLUTTER_APP_FLAVOR');
 
-    return EnvType.from(environment);
+    return Flavor.from(environment);
   }
 }

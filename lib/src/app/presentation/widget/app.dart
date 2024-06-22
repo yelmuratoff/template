@@ -1,12 +1,8 @@
 import 'package:base_starter/src/app/presentation/widget/material_context.dart';
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/services/router_service.dart';
-import 'package:base_starter/src/features/initialization/logic/base_config.dart';
 import 'package:base_starter/src/features/initialization/model/dependencies.dart';
-import 'package:base_starter/src/features/initialization/model/env_type.dart';
-import 'package:base_starter/src/features/initialization/presentation/widget/environment_scope.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +33,6 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   late final GoRouter _router;
-  String? _environmentKey;
 
   @override
   void initState() {
@@ -46,8 +41,6 @@ class _AppState extends State<App> {
 
     _router.routerDelegate.addListener(_handleRouteInformation);
 
-    _environmentKey = widget.result.dependencies.sharedPreferences
-        .getString(Preferences.environment);
     super.initState();
   }
 
@@ -62,16 +55,13 @@ class _AppState extends State<App> {
         providers: [
           BlocProvider.value(value: widget.result.dependencies.authBloc),
         ],
-        child: InternalEnvironmentScope(
-          config: configMap[_environmentKey] ?? configMap[EnvType.prod.value]!,
-          child: DependenciesScope(
-            dependencies: widget.result.dependencies,
-            repositories: widget.result.repositories,
-            child: SettingsScope(
-              settingsBloc: widget.result.dependencies.settingsBloc,
-              child: MaterialContext(
-                routerConfig: _router,
-              ),
+        child: DependenciesScope(
+          dependencies: widget.result.dependencies,
+          repositories: widget.result.repositories,
+          child: SettingsScope(
+            settingsBloc: widget.result.dependencies.settingsBloc,
+            child: MaterialContext(
+              routerConfig: _router,
             ),
           ),
         ),

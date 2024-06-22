@@ -3,8 +3,6 @@ import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/theme/domain/theme_colors.dart';
 import 'package:base_starter/src/common/theme/domain/theme_text_styles.dart';
 import 'package:base_starter/src/common/theme/presentation/theme_colors.dart';
-import 'package:base_starter/src/features/initialization/logic/base_config.dart';
-import 'package:base_starter/src/features/initialization/presentation/widget/environment_scope.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -100,9 +98,6 @@ extension ContextExtension on BuildContext {
 
   /// `dependencies` returns the nearest `DependenciesScope` of the given `BuildContext`.
   Dependencies get dependencies => DependenciesScope.of(this);
-
-  /// `config` returns the nearest `InternalEnvironmentScope` of the given `BuildContext`.
-  InternalEnvConfig get config => InternalEnvironmentScope.of(this);
 
   /// `provide` returns the nearest `Provider` of the given `BuildContext`.
   T provide<T>() => Provider.of<T>(this);

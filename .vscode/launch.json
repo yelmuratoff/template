@@ -1,30 +1,51 @@
 {
-   // Use IntelliSense to learn about possible attributes.
-   // Hover to view descriptions of existing attributes.
-   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-   "version": "0.2.0",
-   "configurations": [
-      {
-         "name": "base_starter",
-         "request": "launch",
-         "type": "dart",
-         "program": "lib/main.dart",
-         "args": [
-            "--target",
-            "lib/main.dart"
-         ]
-      },
-      {
-         "name": "base_starter (profile mode)",
-         "request": "launch",
-         "type": "dart",
-         "flutterMode": "profile"
-      },
-      {
-         "name": "base_starter (release mode)",
-         "request": "launch",
-         "type": "dart",
-         "flutterMode": "release"
-      }
-   ]
+    "version": "0.2.0",
+    "configurations": [   
+        {
+            "name": "Debug [DEV]",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "-t",
+                "lib/main_dev.dart",
+            ],
+        },
+        {
+            "name": "Release [DEV]",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "--flavor",
+                "dev",
+                "-t",
+                "lib/main_dev.dart",
+            ],
+        },
+        {
+            "name": "Debug [PROD]",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "-t",
+                "lib/main_prod.dart",
+            ]
+        },
+        {
+            "name": "Release [PROD]",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "--flavor",
+                "prod",
+                "-t",
+                "lib/main_prod.dart",
+            ]
+        },
+    ]
 }

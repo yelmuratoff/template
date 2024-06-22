@@ -148,8 +148,3 @@ pubspec.lock
 
 #TODO: Uncomment this line
 #*.env
-
-#TODO: Remove this lines
-ios/
-android/
-web/

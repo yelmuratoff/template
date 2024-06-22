@@ -1,6 +1,6 @@
+import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/features/initialization/presentation/widget/environment_scope.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -26,17 +26,17 @@ class MaterialContext extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = SettingsScope.themeOf(context).theme;
     final locale = SettingsScope.localeOf(context).locale;
-    final config = InternalEnvironmentScope.of(context);
 
     return ISpectScopeWrapper(
       options: ISpectOptions(
         locale: locale,
       ),
-      isISpectEnabled: config.isDev,
+      isISpectEnabled: F.isDev,
       child: MaterialApp.router(
         key: _globalKey,
-        title: config.appName,
-        onGenerateTitle: (context) => config.appName,
+        title: F.title,
+        onGenerateTitle: (context) => F.title,
+        debugShowCheckedModeBanner: false,
         theme: theme.lightTheme,
         darkTheme: theme.darkTheme,
         themeMode: theme.mode,
@@ -61,6 +61,15 @@ class MaterialContext extends ConsumerWidget {
           );
 
           child = FToastBuilder()(context, child);
+
+          if (F.isDev) {
+            child = Banner(
+              message: F.name,
+              location: BannerLocation.topStart,
+              color: Colors.red,
+              child: child,
+            );
+          }
           return child;
         },
       ),

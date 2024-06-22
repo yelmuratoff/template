@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
@@ -9,7 +10,6 @@ import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/resource/data/data_auth_repository.dart';
 import 'package:base_starter/src/features/auth/resource/data/user_manager.dart';
 import 'package:base_starter/src/features/auth/resource/domain/use_cases/auth_use_cases.dart';
-import 'package:base_starter/src/features/initialization/model/env_type.dart';
 import 'package:base_starter/src/features/initialization/model/initialization_progress.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
@@ -17,6 +17,7 @@ import 'package:base_starter/src/features/settings/data/locale/locale_repository
 import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
+import 'package:ispect/ispect.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,12 +49,15 @@ mixin InitializationSteps {
       final sharedPreferences = progress.dependencies.sharedPreferences;
       final String? environment =
           sharedPreferences.getString(Preferences.environment);
+
       if (environment == null) {
         await sharedPreferences.setString(
           Preferences.environment,
-          EnvType.prod.value,
+          Flavor.prod.name,
         );
       }
+      F.appFlavor = Flavor.from(environment);
+      talkerWrapper.good('Environment: $environment');
     },
     'Settings BLoC': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;

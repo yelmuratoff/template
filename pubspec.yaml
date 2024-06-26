@@ -35,10 +35,10 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.24
 
   # Logging
-  talker: ^4.2.4
-  talker_dio_logger: ^4.2.4
-  talker_bloc_logger: ^4.2.2
-  talker_riverpod_logger: ^1.0.4
+  talker: ^4.3.0
+  talker_dio_logger: ^4.3.0
+  talker_bloc_logger: ^4.3.0
+  talker_riverpod_logger: ^1.1.0
 
   # Utils
   pure: ^0.3.0
@@ -76,7 +76,7 @@ dev_dependencies:
   custom_lint: ^0.6.4
 
   # Utils
-  flutter_gen_runner: ^5.5.0+1
+  flutter_gen_runner: ^5.6.0
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.0
 
@@ -86,7 +86,7 @@ dev_dependencies:
   # Codegen
   drift_dev: ^2.18.0
   build_runner: ^2.4.11
-  envied_generator: ^0.5.4+1
+  envied_generator: ^0.5.4
 
 flutter:
   uses-material-design: true

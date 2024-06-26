@@ -1,5 +1,5 @@
-import 'package:base_starter/src/common/di/containers/dependencies.dart';
-import 'package:base_starter/src/common/di/containers/repositories.dart';
+import 'package:base_starter/src/core/di/containers/dependencies.dart';
+import 'package:base_starter/src/core/di/containers/repositories.dart';
 import 'package:base_starter/src/features/initialization/logic/initialization_steps.dart';
 import 'package:base_starter/src/features/initialization/model/dependencies.dart';
 import 'package:base_starter/src/features/initialization/model/environment_store.dart';

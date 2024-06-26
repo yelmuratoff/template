@@ -1,4 +1,4 @@
-import 'package:base_starter/src/common/theme/domain/theme_colors.dart';
+import 'package:base_starter/src/core/theme/domain/theme_colors.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 

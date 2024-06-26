@@ -1,7 +1,7 @@
 import 'package:base_starter/src/app/presentation/widget/material_context.dart';
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/services/router_service.dart';
+import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/features/initialization/model/dependencies.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';

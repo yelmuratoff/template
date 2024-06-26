@@ -9,7 +9,6 @@ import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_cli
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/resource/data/data_auth_repository.dart';
 import 'package:base_starter/src/features/auth/resource/data/user_manager.dart';
-import 'package:base_starter/src/features/auth/resource/domain/use_cases/auth_use_cases.dart';
 import 'package:base_starter/src/features/initialization/model/initialization_progress.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
@@ -98,7 +97,7 @@ mixin InitializationSteps {
           AuthRepository(restClient: progress.dependencies.restClient);
 
       final authBloc = AuthBloc(
-        authUseCases: AuthUseCases(authRepository: authRepository),
+        repository: authRepository,
       );
 
       progress.dependencies.authBloc = authBloc;

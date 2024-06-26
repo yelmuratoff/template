@@ -2,9 +2,8 @@ import 'package:base_starter/src/common/configs/preferences/secure_storage_manag
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/resource/data/user_manager.dart';
-import 'package:base_starter/src/features/auth/resource/domain/use_cases/auth_use_cases.dart';
+import 'package:base_starter/src/features/auth/resource/domain/repositories/auth_repository.dart';
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ispect/ispect.dart';
 
@@ -12,8 +11,8 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthUseCases authUseCases;
-  AuthBloc({required this.authUseCases}) : super(const InitialAuthState()) {
+  final IAuthRepository repository;
+  AuthBloc({required this.repository}) : super(const InitialAuthState()) {
     on<LoginAuthEvent>(_onLogin);
     on<GetCurrentUserAuthEvent>(_onGetCurrentUser);
     on<LogoutAuthEvent>(_onLogout);
@@ -22,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) async {
     try {
       emit(const LoadingAuthState());
-      final tokenPair = await authUseCases.login(
+      final tokenPair = await repository.login(
         email: event.email,
         password: event.password,
       );
@@ -57,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     try {
       emit(const LoadingAuthState());
-      final user = await authUseCases.getCurrentUser();
+      final user = await repository.getCurrentUser();
       if (user != null) {
         emit(const AuthenticatedAuthState());
       } else {
@@ -69,11 +68,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ),
         );
       }
-    } on DioException catch (e, st) {
-      talkerWrapper.handle(exception: e, stackTrace: st, message: "Dio error");
-      emit(ErrorAuthState(cause: e, message: e.message ?? e.toString()));
-    } on Object catch (e, st) {
-      talkerWrapper.handle(exception: e, stackTrace: st, message: "Error");
+    } on RestClientException catch (e) {
+      emit(ErrorAuthState(cause: e, message: e.message));
+    } on Object catch (e) {
       emit(ErrorAuthState(cause: e, message: e.toString()));
     }
   }

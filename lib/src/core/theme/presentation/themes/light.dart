@@ -1,19 +1,31 @@
-import 'package:base_starter/src/common/theme/presentation/theme_colors.dart';
-import 'package:base_starter/src/common/theme/presentation/theme_text_style.dart';
+import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
+import 'package:base_starter/src/core/theme/presentation/theme_text_style.dart';
+import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-final class DarkThemeData {
-  /// `getBaseDarkTheme` is a function that returns a Dark `ThemeData` for the app.
+final class LightThemeData {
+  /// `getBaseLightTheme` is a function that returns a Light `ThemeData` for the app.
   static ThemeData getTheme({required Color seed}) {
     final ThemeData baseTheme = ThemeData.from(
-      colorScheme: ColorScheme.fromSeed(
+      colorScheme: ColorScheme.light(
         primary: seed,
-        seedColor: seed,
-        brightness: Brightness.dark,
+        secondary: AppUtils.adjustColorBrightness(seed, 0.8),
       ),
     ).copyWith(
       appBarTheme: const AppBarTheme(
         scrolledUnderElevation: 0,
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.all<Color>(seed),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return seed.withOpacity(0.8);
+          }
+          return seed.withOpacity(0.3);
+        }),
+        trackOutlineColor: WidgetStateProperty.all<Color>(
+          seed.withOpacity(0.1),
+        ),
       ),
     );
     return baseTheme.copyWith(
@@ -23,16 +35,16 @@ final class DarkThemeData {
           onPrimary: baseTheme.colorScheme.onPrimary,
           secondary: baseTheme.colorScheme.secondary,
           onSecondary: baseTheme.colorScheme.onSecondary,
-          error: const Color.fromARGB(255, 239, 83, 80),
+          error: baseTheme.colorScheme.error,
           onError: baseTheme.colorScheme.onError,
           background: baseTheme.colorScheme.surface,
           onBackground: baseTheme.colorScheme.onSurface,
           surface: baseTheme.colorScheme.surface,
           onSurface: baseTheme.colorScheme.onSurface,
-          divider: Colors.grey[700]!,
-          text: Colors.white,
-          border: Colors.grey[600]!,
-          card: Colors.grey.withOpacity(0.1),
+          divider: Colors.grey[300]!,
+          text: Colors.black,
+          border: Colors.grey[400]!,
+          card: Colors.grey.withOpacity(0.05),
           shadow: const Color.fromARGB(255, 211, 211, 211),
           success: const Color(0xff4CAF50),
           shimmerBase: const Color(0xffB4B4B4),

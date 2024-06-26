@@ -1,8 +1,8 @@
-import 'package:base_starter/src/common/di/containers/dependencies.dart';
-import 'package:base_starter/src/common/di/dependencies_scope.dart';
-import 'package:base_starter/src/common/theme/domain/theme_colors.dart';
-import 'package:base_starter/src/common/theme/domain/theme_text_styles.dart';
-import 'package:base_starter/src/common/theme/presentation/theme_colors.dart';
+import 'package:base_starter/src/core/di/containers/dependencies.dart';
+import 'package:base_starter/src/core/di/dependencies_scope.dart';
+import 'package:base_starter/src/core/theme/domain/theme_colors.dart';
+import 'package:base_starter/src/core/theme/domain/theme_text_styles.dart';
+import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

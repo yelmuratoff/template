@@ -1,5 +1,5 @@
-import 'package:base_starter/src/common/theme/presentation/themes/dark.dart';
-import 'package:base_starter/src/common/theme/presentation/themes/light.dart';
+import 'package:base_starter/src/core/theme/presentation/themes/dark.dart';
+import 'package:base_starter/src/core/theme/presentation/themes/light.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

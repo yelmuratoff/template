@@ -1,6 +1,6 @@
-import 'package:base_starter/src/common/di/containers/dependencies.dart';
-import 'package:base_starter/src/common/di/containers/repositories.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/di/containers/dependencies.dart';
+import 'package:base_starter/src/core/di/containers/repositories.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

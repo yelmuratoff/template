@@ -7,8 +7,6 @@ import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'auth_interceptor_test.dart' as auth_interceptor_test;
-
 Map<String, Object?> _generateJsonData(int length) => {
       'data': {
         'list': List.generate(length, (index) => {'test': 'test'}),
@@ -17,8 +15,6 @@ Map<String, Object?> _generateJsonData(int length) => {
 
 void main() {
   group('RestClient >', () {
-    auth_interceptor_test.main();
-
     group('encodeBody >', () {
       test('Should encode body', () {
         final restClient = _RestClientBase();
@@ -349,6 +345,7 @@ final class _RestClientBase extends RestClientBase {
     String path, {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) async {
     throw UnimplementedError();
   }
@@ -358,6 +355,7 @@ final class _RestClientBase extends RestClientBase {
     String path, {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) async {
     throw UnimplementedError();
   }
@@ -368,6 +366,7 @@ final class _RestClientBase extends RestClientBase {
     Map<String, Object?>? body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) async {
     throw UnimplementedError();
   }
@@ -375,9 +374,10 @@ final class _RestClientBase extends RestClientBase {
   @override
   Future<Map<String, Object?>> post(
     String path, {
-    Map<String, Object?>? body,
+    dynamic body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) async {
     throw UnimplementedError();
   }
@@ -388,6 +388,7 @@ final class _RestClientBase extends RestClientBase {
     Map<String, Object?>? body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) async {
     throw UnimplementedError();
   }

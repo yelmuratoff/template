@@ -1,6 +1,6 @@
+import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
 import 'package:base_starter/src/core/theme/presentation/theme_text_style.dart';
-import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 final class LightThemeData {

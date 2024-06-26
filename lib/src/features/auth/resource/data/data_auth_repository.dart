@@ -15,11 +15,7 @@ final class AuthRepository implements IAuthRepository {
   Future<UserModel?> getCurrentUser() async {
     try {
       final response = await restClient.get("api/v1/auth/profile");
-      if (response != null) {
-        return UserModel.fromJson(response);
-      } else {
-        return null;
-      }
+      return UserModel.fromJson(response);
     } catch (e, st) {
       talkerWrapper.handle(
         exception: e,
@@ -43,11 +39,7 @@ final class AuthRepository implements IAuthRepository {
           "password": password,
         },
       );
-      if (response != null) {
-        return TokenPair.fromJson(response);
-      } else {
-        return null;
-      }
+      return TokenPair.fromJson(response);
     } catch (e, st) {
       talkerWrapper.handle(
         exception: e,

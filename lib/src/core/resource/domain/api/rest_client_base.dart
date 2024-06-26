@@ -2,15 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 @immutable
 abstract base class RestClientBase implements RestClient {
-  RestClientBase({String baseUrl = AppConstants.baseUrl})
-      : baseUri = Uri.parse(baseUrl);
+  RestClientBase({required String baseUrl}) : baseUri = Uri.parse(baseUrl);
 
   /// The base url for the client
   final Uri baseUri;
@@ -35,7 +33,10 @@ abstract base class RestClientBase implements RestClient {
   @protected
   @visibleForTesting
   Uri buildUri({required String path, Map<String, Object?>? queryParams}) {
-    final finalPath = p.canonicalize(p.join(baseUri.path, path));
+    final finalPath = p.canonicalize(
+      p.join(baseUri.path, path.startsWith('/') ? path.substring(1) : path),
+    );
+
     return baseUri.replace(
       path: finalPath,
       queryParameters: {
@@ -51,17 +52,24 @@ abstract base class RestClientBase implements RestClient {
   FutureOr<Map<String, Object?>?> decodeResponse(
     Object? body, {
     int? statusCode,
+    bool returnFullData = false,
   }) async {
     if (body == null) return null;
     try {
       Map<String, Object?> result;
       if (body is String) {
-        if (body.length > 1000) {
-          result = await Isolate.run(
-            () => json.decode(body) as Map<String, Object?>,
-          );
+        if (body.contains('DOCTYPE html')) {
+          result = {
+            'HTML error': body.toString(),
+          };
         } else {
-          result = json.decode(body) as Map<String, Object?>;
+          if (body.length > 1000) {
+            result = await Isolate.run(
+              () => json.decode(body) as Map<String, Object?>,
+            );
+          } else {
+            result = json.decode(body) as Map<String, Object?>;
+          }
         }
       } else if (body is Map<String, Object?>) {
         result = body;
@@ -88,8 +96,10 @@ abstract base class RestClientBase implements RestClient {
         );
       }
 
-      if (result case {'data': final Map<String, Object?> data}) {
-        return data;
+      if (returnFullData == false) {
+        if (result case {'data': final Map<String, Object?> data}) {
+          return data;
+        }
       }
 
       /// return null if in your response you have no data key (data key is required)

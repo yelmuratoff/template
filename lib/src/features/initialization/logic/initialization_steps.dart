@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
+import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
@@ -16,6 +17,7 @@ import 'package:base_starter/src/features/settings/data/locale/locale_repository
 import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:ispect/ispect.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,7 +91,8 @@ mixin InitializationSteps {
       progress.dependencies.settingsBloc = settingsBloc;
     },
     'Rest Client': (progress) async {
-      final restClient = RestClientDio();
+      final dio = Dio();
+      final restClient = RestClientDio(baseUrl: AppConstants.baseUrl, dio: dio);
       progress.dependencies.restClient = restClient;
     },
     'Auth Repository, BLoC': (progress) async {

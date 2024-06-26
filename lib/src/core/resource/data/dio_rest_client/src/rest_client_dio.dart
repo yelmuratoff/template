@@ -2,7 +2,6 @@
 
 import 'package:base_starter/bootstrap.dart';
 import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
-import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/core/resource/data/dio_rest_client/src/interceptor/dio_interceptor.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
@@ -15,33 +14,37 @@ import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 /// Rest client that uses `Dio` as HTTP library.
 final class RestClientDio extends RestClientBase {
   final Dio? dio;
-  final String? baseUrl;
+  final String baseUrl;
   RestClientDio({
+    required this.baseUrl,
     this.dio,
-    this.baseUrl,
-  });
+  }) : super(baseUrl: baseUrl);
 
   /// Send [Dio] request
   @protected
   @visibleForTesting
-  Future<Map<String, Object?>?> sendRequest<T extends Object>({
+  Future<Map<String, Object?>> sendRequest<T extends Object>({
     required String path,
     required String method,
-    Map<String, Object?>? body,
+    dynamic body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) async {
     try {
       final uri = buildUri(path: path, queryParams: queryParams);
+
       final options = Options(
         headers: headers,
         method: method,
         contentType: 'application/json',
         responseType: ResponseType.json,
       );
+      final dioClient = (dio != null)
+          ? DioClient(baseUrl: dio!.options.baseUrl, initialDio: dio).dio
+          : DioClient(baseUrl: baseUrl).dio;
 
-      final response =
-          await (dio ?? DioClient(baseUrl: baseUrl).dio).request<T>(
+      final response = await dioClient.request<T>(
         uri.toString(),
         data: body,
         options: options,
@@ -50,8 +53,15 @@ final class RestClientDio extends RestClientBase {
       final resp = await decodeResponse(
         response.data,
         statusCode: response.statusCode,
+        returnFullData: returnFullData,
       );
 
+      if (resp == null) {
+        throw WrongResponseTypeException(
+          message: 'Unexpected response body type: ${body.runtimeType}',
+          statusCode: response.statusCode,
+        );
+      }
       return resp;
     } on RestClientException {
       rethrow;
@@ -72,6 +82,7 @@ final class RestClientDio extends RestClientBase {
         final result = await decodeResponse(
           e.response?.data,
           statusCode: e.response?.statusCode,
+          returnFullData: returnFullData,
         );
 
         throw CustomBackendException(
@@ -97,37 +108,42 @@ final class RestClientDio extends RestClientBase {
   }
 
   @override
-  Future<Map<String, Object?>?> delete(
+  Future<Map<String, Object?>> delete(
     String path, {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) =>
       sendRequest(
         path: path,
         method: 'DELETE',
         headers: headers,
         queryParams: queryParams,
+        returnFullData: returnFullData,
       );
 
   @override
-  Future<Map<String, Object?>?> get(
+  Future<Map<String, Object?>> get(
     String path, {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) =>
       sendRequest(
         path: path,
         method: 'GET',
         headers: headers,
         queryParams: queryParams,
+        returnFullData: returnFullData,
       );
 
   @override
-  Future<Map<String, Object?>?> patch(
+  Future<Map<String, Object?>> patch(
     String path, {
     required Map<String, Object?> body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) =>
       sendRequest(
         path: path,
@@ -135,14 +151,16 @@ final class RestClientDio extends RestClientBase {
         body: body,
         headers: headers,
         queryParams: queryParams,
+        returnFullData: returnFullData,
       );
 
   @override
-  Future<Map<String, Object?>?> post(
+  Future<Map<String, Object?>> post(
     String path, {
-    required Map<String, Object?> body,
+    required dynamic body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) =>
       sendRequest(
         path: path,
@@ -150,14 +168,16 @@ final class RestClientDio extends RestClientBase {
         body: body,
         headers: headers,
         queryParams: queryParams,
+        returnFullData: returnFullData,
       );
 
   @override
-  Future<Map<String, Object?>?> put(
+  Future<Map<String, Object?>> put(
     String path, {
     required Map<String, Object?> body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
+    bool returnFullData = false,
   }) =>
       sendRequest(
         path: path,
@@ -165,6 +185,7 @@ final class RestClientDio extends RestClientBase {
         body: body,
         headers: headers,
         queryParams: queryParams,
+        returnFullData: returnFullData,
       );
 }
 
@@ -172,13 +193,13 @@ class DioClient {
   static DioClient? _instance;
   final Dio dio;
 
-  factory DioClient({String? baseUrl}) {
-    _instance ??= DioClient._internal(baseUrl ?? AppConstants.baseUrl);
+  factory DioClient({required String baseUrl, Dio? initialDio}) {
+    _instance ??= DioClient._internal(baseUrl: baseUrl, initialDio: initialDio);
     return _instance!;
   }
 
-  DioClient._internal(String baseUrl)
-      : dio = Dio(BaseOptions(baseUrl: baseUrl)) {
+  DioClient._internal({required String baseUrl, Dio? initialDio})
+      : dio = initialDio ?? Dio(BaseOptions(baseUrl: baseUrl)) {
     _initInterceptors();
   }
 

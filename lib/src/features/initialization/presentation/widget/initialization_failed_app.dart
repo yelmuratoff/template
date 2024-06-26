@@ -1,10 +1,10 @@
 import 'package:base_starter/flavors.dart';
-import 'package:base_starter/src/core/di/containers/dependencies.dart';
-import 'package:base_starter/src/core/di/containers/repositories.dart';
-import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
+import 'package:base_starter/src/core/di/containers/dependencies.dart';
+import 'package:base_starter/src/core/di/containers/repositories.dart';
+import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';

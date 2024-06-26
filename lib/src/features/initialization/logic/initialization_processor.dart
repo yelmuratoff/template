@@ -1,10 +1,10 @@
 import 'package:base_starter/src/core/di/containers/dependencies.dart';
 import 'package:base_starter/src/core/di/containers/repositories.dart';
 import 'package:base_starter/src/features/initialization/logic/initialization_steps.dart';
-import 'package:base_starter/src/features/initialization/model/dependencies.dart';
-import 'package:base_starter/src/features/initialization/model/environment_store.dart';
-import 'package:base_starter/src/features/initialization/model/initialization_hook.dart';
-import 'package:base_starter/src/features/initialization/model/initialization_progress.dart';
+import 'package:base_starter/src/features/initialization/models/dependencies.dart';
+import 'package:base_starter/src/features/initialization/models/environment_store.dart';
+import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
+import 'package:base_starter/src/features/initialization/models/initialization_progress.dart';
 import 'package:flutter/foundation.dart';
 
 part 'initialization_factory.dart';

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class UserModel extends Equatable {
+class UserDTO extends Equatable {
   final int id;
   final String email;
   final String name;
@@ -9,7 +9,7 @@ class UserModel extends Equatable {
   final String creationAt;
   final String updatedAt;
 
-  const UserModel({
+  const UserDTO({
     required this.id,
     required this.email,
     required this.name,
@@ -19,7 +19,7 @@ class UserModel extends Equatable {
     required this.updatedAt,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+  factory UserDTO.fromJson(Map<String, dynamic> json) => UserDTO(
         id: json['id'] as int,
         email: json['email'] as String,
         name: json['name'] as String,
@@ -39,8 +39,8 @@ class UserModel extends Equatable {
         'updatedAt': updatedAt,
       };
 
-  static List<UserModel> fromJsonList(List<dynamic> jsonList) => jsonList
-      .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
+  static List<UserDTO> fromJsonList(List<dynamic> jsonList) => jsonList
+      .map((json) => UserDTO.fromJson(json as Map<String, dynamic>))
       .toList();
 
   @override

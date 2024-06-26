@@ -1,5 +1,5 @@
 import 'package:base_starter/src/features/initialization/logic/initialization_processor.dart';
-import 'package:base_starter/src/features/initialization/model/dependencies.dart';
+import 'package:base_starter/src/features/initialization/models/dependencies.dart';
 
 /// A hook for the initialization process.
 ///

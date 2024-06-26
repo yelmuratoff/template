@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:base_starter/src/common/configs/preferences/preferences_dao.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:base_starter/src/features/auth/resource/domain/models/user_model.dart';
+import 'package:base_starter/src/features/auth/resource/domain/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// `UserManager` - A class to manage the current user configurations.
@@ -29,15 +29,15 @@ final class UserManager extends PreferencesDao {
   PreferencesEntry<String> get _currentUserEntry =>
       stringEntry(Preferences.currentUser);
 
-  UserModel? get read {
+  UserDTO? get read {
     final String? token = _currentUserEntry.read();
     final Map<String, dynamic>? jsonObject =
         token != null ? json.decode(token) as Map<String, dynamic>? : null;
-    return jsonObject != null ? UserModel.fromJson(jsonObject) : null;
+    return jsonObject != null ? UserDTO.fromJson(jsonObject) : null;
   }
 
   Future<void> write({
-    required UserModel? user,
+    required UserDTO? user,
   }) async {
     await _currentUserEntry.set(json.encode(user?.toJson()));
   }

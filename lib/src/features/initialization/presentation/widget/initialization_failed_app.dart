@@ -8,12 +8,14 @@ import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
-import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
-import 'package:base_starter/src/features/settings/data/locale/locale_repository.dart';
-import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
-import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
-import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
+import 'package:base_starter/src/features/settings/resource/data/locale/locale_datasource.dart';
+import 'package:base_starter/src/features/settings/resource/data/locale/locale_repository.dart';
+import 'package:base_starter/src/features/settings/resource/data/theme/theme_datasource.dart';
+import 'package:base_starter/src/features/settings/resource/data/theme/theme_mode_codec.dart';
+import 'package:base_starter/src/features/settings/resource/data/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/resource/domain/locale/locale_repository.dart';
+import 'package:base_starter/src/features/settings/resource/domain/theme/theme_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ispect/ispect.dart';
@@ -70,12 +72,12 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 
   Future<void> _initialize() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    localeRepository = LocaleRepositoryImpl(
+    localeRepository = LocaleRepository(
       localeDataSource: LocaleDataSourceLocal(
         sharedPreferences: sharedPreferences,
       ),
     );
-    themeRepository = ThemeRepositoryImpl(
+    themeRepository = ThemeRepository(
       themeDataSource: ThemeDataSourceLocal(
         sharedPreferences: sharedPreferences,
         codec: const ThemeModeCodec(),

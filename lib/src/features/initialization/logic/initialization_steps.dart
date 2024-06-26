@@ -10,13 +10,13 @@ import 'package:base_starter/src/core/resource/data/dio_rest_client/src/rest_cli
 import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/resource/data/data_auth_repository.dart';
 import 'package:base_starter/src/features/auth/resource/data/user_manager.dart';
-import 'package:base_starter/src/features/initialization/model/initialization_progress.dart';
+import 'package:base_starter/src/features/initialization/models/initialization_progress.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
-import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
-import 'package:base_starter/src/features/settings/data/locale/locale_repository.dart';
-import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
-import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
-import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/resource/data/locale/locale_datasource.dart';
+import 'package:base_starter/src/features/settings/resource/data/locale/locale_repository.dart';
+import 'package:base_starter/src/features/settings/resource/data/theme/theme_datasource.dart';
+import 'package:base_starter/src/features/settings/resource/data/theme/theme_mode_codec.dart';
+import 'package:base_starter/src/features/settings/resource/data/theme/theme_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:ispect/ispect.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -62,12 +62,12 @@ mixin InitializationSteps {
     },
     'Settings BLoC': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;
-      final localeRepository = LocaleRepositoryImpl(
+      final localeRepository = LocaleRepository(
         localeDataSource:
             LocaleDataSourceLocal(sharedPreferences: sharedPreferences),
       );
 
-      final themeRepository = ThemeRepositoryImpl(
+      final themeRepository = ThemeRepository(
         themeDataSource: ThemeDataSourceLocal(
           sharedPreferences: sharedPreferences,
           codec: const ThemeModeCodec(),

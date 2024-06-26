@@ -4,7 +4,7 @@ import 'package:base_starter/src/app/presentation/widget/app.dart';
 import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart';
 import 'package:base_starter/src/features/initialization/logic/initialization_processor.dart';
 import 'package:base_starter/src/features/initialization/logic/initialization_steps.dart';
-import 'package:base_starter/src/features/initialization/model/initialization_hook.dart';
+import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

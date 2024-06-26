@@ -1,13 +1,13 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/features/settings/data/locale/locale_repository.dart';
-import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/resource/domain/locale/locale_repository.dart';
+import 'package:base_starter/src/features/settings/resource/domain/theme/theme_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'settings_event.dart';
-part 'settings_state.dart';
+part 'event.dart';
+part 'state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final ILocaleRepository _localeRepo;
@@ -20,20 +20,15 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   })  : _localeRepo = localeRepository,
         _themeRepo = themeRepository,
         super(initialState) {
-    on<SettingsEvent>((event, emit) async {
-      if (event is UpdateThemeSettingsEvent) {
-        await _updateTheme(event, emit);
-      } else if (event is UpdateLocaleSettingsEvent) {
-        await _updateLocale(event, emit);
-      }
-    });
+    on<UpdateThemeSettingsEvent>(_updateTheme);
+    on<UpdateLocaleSettingsEvent>(_updateLocale);
   }
 
   Future<void> _updateTheme(
     UpdateThemeSettingsEvent event,
-    Emitter<SettingsState> emitter,
+    Emitter<SettingsState> emit,
   ) async {
-    emitter(
+    emit(
       ProcessingSettingsState(
         appTheme: state.appTheme,
         locale: state.locale,
@@ -43,11 +38,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     try {
       await _themeRepo.setTheme(event.appTheme);
 
-      emitter(
+      emit(
         IdleSettingsState(appTheme: event.appTheme, locale: state.locale),
       );
     } catch (e) {
-      emitter(
+      emit(
         ErrorSettingsState(
           appTheme: state.appTheme,
           locale: state.locale,
@@ -60,9 +55,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Future<void> _updateLocale(
     UpdateLocaleSettingsEvent event,
-    Emitter<SettingsState> emitter,
+    Emitter<SettingsState> emit,
   ) async {
-    emitter(
+    emit(
       ProcessingSettingsState(
         appTheme: state.appTheme,
         locale: state.locale,
@@ -73,11 +68,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       await _localeRepo.setLocale(event.locale);
       await L10n.load(event.locale);
 
-      emitter(
+      emit(
         IdleSettingsState(appTheme: state.appTheme, locale: event.locale),
       );
     } catch (e) {
-      emitter(
+      emit(
         ErrorSettingsState(
           appTheme: state.appTheme,
           locale: state.locale,

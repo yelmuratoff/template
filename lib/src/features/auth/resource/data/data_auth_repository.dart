@@ -1,21 +1,21 @@
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
-import 'package:base_starter/src/features/auth/resource/domain/models/user_model.dart';
+import 'package:base_starter/src/features/auth/resource/domain/models/user.dart';
 import 'package:base_starter/src/features/auth/resource/domain/repositories/auth_repository.dart';
 import 'package:ispect/ispect.dart';
 
 final class AuthRepository implements IAuthRepository {
   final RestClientBase restClient;
 
-  AuthRepository({
+  const AuthRepository({
     required this.restClient,
   });
 
   @override
-  Future<UserModel?> getCurrentUser() async {
+  Future<UserDTO?> getCurrentUser() async {
     try {
       final response = await restClient.get("api/v1/auth/profile");
-      return UserModel.fromJson(response);
+      return UserDTO.fromJson(response);
     } catch (e, st) {
       talkerWrapper.handle(
         exception: e,

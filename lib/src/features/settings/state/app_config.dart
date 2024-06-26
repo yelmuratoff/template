@@ -3,25 +3,7 @@ import 'dart:async';
 import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppConfigsState {
-  final bool isPerformanceTrackingEnabled;
-  final bool isInspectorEnabled;
-
-  const AppConfigsState({
-    this.isPerformanceTrackingEnabled = false,
-    this.isInspectorEnabled = false,
-  });
-
-  AppConfigsState copyWith({
-    bool? isPerformanceTrackingEnabled,
-    bool? isInspectorEnabled,
-  }) =>
-      AppConfigsState(
-        isPerformanceTrackingEnabled:
-            isPerformanceTrackingEnabled ?? this.isPerformanceTrackingEnabled,
-        isInspectorEnabled: isInspectorEnabled ?? this.isInspectorEnabled,
-      );
-}
+part 'state.dart';
 
 class AppConfigs extends StateNotifier<AppConfigsState> {
   AppConfigs() : super(const AppConfigsState()) {

@@ -1,10 +1,10 @@
 part of 'auth_bloc.dart';
 
-sealed class AuthEvent extends Equatable {
+sealed class AuthEvent {
   const AuthEvent._();
 }
 
-final class LoginAuthEvent extends AuthEvent {
+final class LoginAuthEvent extends AuthEvent with EquatableMixin {
   final String email;
   final String password;
   const LoginAuthEvent({
@@ -18,14 +18,8 @@ final class LoginAuthEvent extends AuthEvent {
 
 final class GetCurrentUserAuthEvent extends AuthEvent {
   const GetCurrentUserAuthEvent() : super._();
-
-  @override
-  List<Object> get props => [];
 }
 
 final class LogoutAuthEvent extends AuthEvent {
   const LogoutAuthEvent() : super._();
-
-  @override
-  List<Object> get props => [];
 }

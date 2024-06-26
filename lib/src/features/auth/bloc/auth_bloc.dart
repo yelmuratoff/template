@@ -7,8 +7,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ispect/ispect.dart';
 
-part 'auth_event.dart';
-part 'auth_state.dart';
+part 'event.dart';
+part 'state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthRepository repository;

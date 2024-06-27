@@ -1,13 +1,13 @@
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
+import 'package:base_starter/src/features/auth/resource/domain/data_source/auth/auth_data_source.dart';
 import 'package:base_starter/src/features/auth/resource/domain/models/user.dart';
-import 'package:base_starter/src/features/auth/resource/domain/repositories/auth_repository.dart';
 import 'package:ispect/ispect.dart';
 
-final class AuthRepository implements IAuthRepository {
+final class AuthRemoteDataSource implements IAuthDataSource {
   final RestClientBase restClient;
 
-  const AuthRepository({
+  const AuthRemoteDataSource({
     required this.restClient,
   });
 

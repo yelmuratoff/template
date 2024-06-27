@@ -4,7 +4,7 @@ import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/features/auth/bloc/auth_bloc.dart';
+import 'package:base_starter/src/features/auth/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,10 +26,12 @@ class _AuthPageState extends State<AuthPage> {
           title: Text(L10n.current.login),
         ),
         body: BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) => switch (state) {
+          listener: (context, state) async => switch (state) {
             InitialAuthState() => null,
             AuthenticatedAuthState() => {
                 AppDialogs.dismiss(),
+                //TODO: Save user to UserManager
+                //context.dependencies.userCubit.write(user: state.user),
                 context.goNamed(HomePage.name),
               },
             ErrorAuthState() => {

@@ -54,6 +54,9 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider.value(value: widget.result.dependencies.authBloc),
+          BlocProvider.value(
+            value: widget.result.dependencies.userCubit..get(),
+          ),
         ],
         child: DependenciesScope(
           dependencies: widget.result.dependencies,

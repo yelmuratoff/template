@@ -9,7 +9,6 @@ To utilize this repository, simply click on the "Use this template" button. The 
 **Important:** A pure architecture based project with SOLID principles. But there are a couple of differences:
    - We don't use Entity, DTO (model) takes two responsibilities, as in the future there will be a possibility to use macros.
    - We don't use ValueObject as it is only necessary for complex objects that can be used in different parts of the application.
-   - We don't use Data Source, because the project is designed for only one data source: Remote API and it can't be offline in principle.
    - We don't use UseCase because there is no complex business logic in the project that requires additional processing.
    - We don't use GetIt, because it is antipattern. Read more: https://lazebny.io/avoid-these-dart-libraries/#get_it
       Instead, we use a simple DI container that is easy to maintain and expand.

@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
+import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/features/auth/presentation/auth.dart';
-import 'package:base_starter/src/features/auth/resource/data/user_manager.dart';
 import 'package:ispect/ispect.dart';
 
 final class AppUtils {
@@ -15,13 +15,13 @@ final class AppUtils {
 
     // Set the token stored in secure storage to null using await
     await SecureStorageManager.setToken(value: null);
-    await UserManager.instance.write(user: null);
 
     /// Navigate to the LoginScreen and replace the current route with it, while passing the extra parameter indicating whether the logout is from the drawer or not.
     /// If [paramIsFromDrawer] is not null, use its value. Otherwise, use the default value of false.
     final context = navigatorKey.currentContext;
     if (context != null && context.mounted) {
-      navigatorKey.currentContext!.goNamed(AuthPage.name);
+      context.dependencies.userCubit.clear();
+      context.goNamed(AuthPage.name);
     }
   }
 

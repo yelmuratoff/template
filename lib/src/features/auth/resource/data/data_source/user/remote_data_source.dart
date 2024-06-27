@@ -16,7 +16,7 @@ final class UserRemoteDataSource implements IRemoteUserDataSource {
       final response = await restClient.get("api/v1/auth/profile");
       return UserDTO.fromJson(response);
     } catch (e, st) {
-      talkerWrapper.handle(
+      ISpectTalker.handle(
         exception: e,
         stackTrace: st,
         message: 'Get current user failed.',

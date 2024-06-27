@@ -17,7 +17,7 @@ final class AuthRemoteDataSource implements IAuthDataSource {
       final response = await restClient.get("api/v1/auth/profile");
       return UserDTO.fromJson(response);
     } catch (e, st) {
-      talkerWrapper.handle(
+      ISpectTalker.handle(
         exception: e,
         stackTrace: st,
         message: 'Get current user failed.',
@@ -41,7 +41,7 @@ final class AuthRemoteDataSource implements IAuthDataSource {
       );
       return TokenPair.fromJson(response);
     } catch (e, st) {
-      talkerWrapper.handle(
+      ISpectTalker.handle(
         exception: e,
         stackTrace: st,
         message: 'Login failed.',

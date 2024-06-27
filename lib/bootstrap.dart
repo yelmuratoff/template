@@ -39,7 +39,7 @@ Future<void> bootstrap() async {
       hook!,
     ),
     (error, stackTrace) {
-      talkerWrapper.handle(
+      ISpectTalker.handle(
         message: error.toString(),
         exception: error,
         stackTrace: stackTrace,
@@ -64,7 +64,7 @@ Future<void> bootstrap() async {
 /// `_onInitializing` is a callback function that is called when the initialization process is started.
 void _onInitializing(InitializationStepInfo info) {
   final percentage = ((info.step / info.stepsCount) * 100).toInt();
-  talkerWrapper.info(
+  ISpectTalker.info(
     '🌀 Inited ${info.stepName} in ${info.msSpent} ms | '
     'Progress: $percentage%',
   );
@@ -72,7 +72,7 @@ void _onInitializing(InitializationStepInfo info) {
 
 /// `_onInitialized` is a callback function that is called when the initialization process is completed.
 void _onInitialized(InitializationResult result) {
-  talkerWrapper.good(
+  ISpectTalker.good(
     '🎉 Initialization completed in ${result.msSpent} ms',
   );
 }
@@ -84,7 +84,7 @@ void _onErrorFactory(
   StackTrace stackTrace,
   InitializationHook hook,
 ) {
-  talkerWrapper.error(
+  ISpectTalker.error(
     message: '❗️ Initialization failed on step $step with error: $error',
   );
   FlutterNativeSplash.remove();
@@ -100,6 +100,6 @@ void _onErrorFactory(
 /// `_onInit` is a callback function that is called when the initialization process is started.
 void _onInit() {
   talker.info('📱 App started');
-  talkerWrapper.initHandling(talker: talker);
-  talkerWrapper.info('🚀 App initialization started');
+  ISpectTalker.initHandling(talker: talker);
+  ISpectTalker.info('🚀 App initialization started');
 }

@@ -151,10 +151,11 @@ class _SettingsPageState extends State<SettingsPage> {
                             .environmentTapNumber(10 - _model.tapNumber),
                       );
                     } else if (_model.tapNumber == 10) {
-                      talkerWrapper.info("ℹ️ Environment change dialog opened");
+                      ISpectTalker.info("ℹ️ Environment change dialog opened");
                       ChangeEnvironmentDialog.show(context).then((value) {
-                        talkerWrapper
-                            .info("🔙 Environment change dialog closed");
+                        ISpectTalker.info(
+                          "🔙 Environment change dialog closed",
+                        );
                       });
                       _model.tapNumber = 0;
                     }

@@ -64,7 +64,7 @@ mixin InitializationSteps {
         );
       }
       F.appFlavor = Flavor.from(environment);
-      talkerWrapper.good('Environment: $environment');
+      ISpectTalker.good('Environment: $environment');
     },
     'Settings BLoC': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;

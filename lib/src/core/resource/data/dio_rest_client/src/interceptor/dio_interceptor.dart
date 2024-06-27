@@ -46,7 +46,7 @@ class DioInterceptor extends Interceptor {
       );
     }
 
-    talkerWrapper.error(
+    ISpectTalker.error(
       message:
           "====================ERROR - START====================\nERROR_TYPE: ${err.type}\nPATH: ${err.requestOptions.path}\n${err.message}\n${err.response?.data}\n====================ERROR - END====================",
     );

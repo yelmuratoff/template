@@ -11,7 +11,7 @@ final class AppUtils {
   /// If paramIsFromDrawer is true, it is passed as an extra parameter to the LoginScreen. Otherwise, the default value of false is used for this parameter.
   static Future<void> removeToken() async {
     // Log a debug message using an instance of Talker obtained from the service locator
-    talkerWrapper.warning('AppUtils: "remove token" called 🥴');
+    ISpectTalker.warning('AppUtils: "remove token" called 🥴');
 
     // Set the token stored in secure storage to null using await
     await SecureStorageManager.setToken(value: null);

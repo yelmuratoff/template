@@ -58,7 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (user != null) {
         emit(const AuthenticatedAuthState());
       } else {
-        talkerWrapper.error(message: "Get current user failed: user is null");
+        ISpectTalker.error(message: "Get current user failed: user is null");
         emit(
           const ErrorAuthState(
             cause: "Get current user failed: user is null",

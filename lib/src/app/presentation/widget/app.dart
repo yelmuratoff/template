@@ -37,7 +37,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     _router = createRouter;
-    talkerWrapper.route('📜 ${_router.configuration.debugKnownRoutes()}');
+    ISpectTalker.route('📜 ${_router.configuration.debugKnownRoutes()}');
 
     _router.routerDelegate.addListener(_handleRouteInformation);
 
@@ -88,7 +88,7 @@ class _AppState extends State<App> {
 
     RouterService.setRoute(path);
 
-    talkerWrapper.route(
+    ISpectTalker.route(
       "📍 Route: \n Name: $screenName \n Path: $path \n Path parameters: $pathParams \n Query parameters: $queryParams \n Extra params: $extra",
     );
   }

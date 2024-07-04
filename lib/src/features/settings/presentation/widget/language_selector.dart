@@ -19,7 +19,7 @@ class _LanguagesSelector extends StatelessWidget {
             final language = languages.elementAt(index);
 
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8),
               child: _LanguageCard(
                 language: language,
                 onLocaleTapped: onLocaleTapped,

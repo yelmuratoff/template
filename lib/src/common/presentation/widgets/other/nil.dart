@@ -17,7 +17,7 @@ class _NilElement extends Element {
   _NilElement(Nil super.widget);
 
   @override
-  void mount(Element? parent, dynamic newSlot) {
+  void mount(Element? parent, Object? newSlot) {
     assert(parent is! MultiChildRenderObjectElement, """
         You are using Nil under a MultiChildRenderObjectElement.
         This suggests a possibility that the Nil is not needed or is being used improperly.

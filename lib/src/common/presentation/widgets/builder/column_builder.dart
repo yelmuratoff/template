@@ -5,13 +5,6 @@ import 'package:flutter/material.dart';
 /// which are generated dynamically based on an IndexedWidgetBuilder function.
 
 class ColumnBuilder extends StatelessWidget {
-  final IndexedWidgetBuilder itemBuilder;
-  final MainAxisAlignment mainAxisAlignment;
-  final MainAxisSize mainAxisSize;
-  final CrossAxisAlignment crossAxisAlignment;
-  final VerticalDirection verticalDirection;
-  final int itemCount;
-
   const ColumnBuilder({
     required this.itemBuilder,
     required this.itemCount,
@@ -21,6 +14,12 @@ class ColumnBuilder extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.verticalDirection = VerticalDirection.down,
   });
+  final IndexedWidgetBuilder itemBuilder;
+  final MainAxisAlignment mainAxisAlignment;
+  final MainAxisSize mainAxisSize;
+  final CrossAxisAlignment crossAxisAlignment;
+  final VerticalDirection verticalDirection;
+  final int itemCount;
 
   @override
   Widget build(BuildContext context) => Column(

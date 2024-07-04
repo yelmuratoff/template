@@ -1,13 +1,12 @@
 part of 'app_config.dart';
 
 class AppConfigsState {
-  final bool isPerformanceTrackingEnabled;
-  final bool isInspectorEnabled;
-
   const AppConfigsState({
     this.isPerformanceTrackingEnabled = false,
     this.isInspectorEnabled = false,
   });
+  final bool isPerformanceTrackingEnabled;
+  final bool isInspectorEnabled;
 
   AppConfigsState copyWith({
     bool? isPerformanceTrackingEnabled,

@@ -2,10 +2,10 @@ part of '../page/root.dart';
 
 /// `BottomNavigationBar` widget for bottom navigation in root view.
 class _BottomNavigationBar extends StatelessWidget {
-  final StatefulNavigationShell navigationShell;
   const _BottomNavigationBar({
     required this.navigationShell,
   });
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context) => DecoratedBox(

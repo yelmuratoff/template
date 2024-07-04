@@ -1,8 +1,7 @@
 /// `RouterService` - This class is responsible for handling the app routing.
 final class RouterService {
-  late String _currentRoute;
-
   RouterService._privateConstructor();
+  late String _currentRoute;
 
   static final RouterService instance = RouterService._privateConstructor();
 

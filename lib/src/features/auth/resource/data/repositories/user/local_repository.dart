@@ -3,16 +3,16 @@ import 'package:base_starter/src/features/auth/resource/domain/models/user.dart'
 import 'package:base_starter/src/features/auth/resource/domain/repositories/user/local_repository.dart';
 
 class LocalUserRepository implements ILocalUserRepository {
-  final ILocalUserDataSource dataSource;
 
   const LocalUserRepository({
     required this.dataSource,
   });
+  final ILocalUserDataSource dataSource;
 
   @override
   UserDTO? get() {
     try {
-      final UserDTO? localUser = dataSource.get();
+      final localUser = dataSource.get();
       return localUser;
     } catch (e) {
       rethrow;

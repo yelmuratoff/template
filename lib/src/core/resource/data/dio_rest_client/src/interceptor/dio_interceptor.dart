@@ -16,7 +16,7 @@ class DioInterceptor extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    final Response<dynamic> response =
+    final response =
         err.response ?? Response(requestOptions: err.requestOptions);
 
     DioException errorMessage(String errorMessage, {bool isHtml = false}) {
@@ -25,16 +25,16 @@ class DioInterceptor extends Interceptor {
       if (isHtml) {
         // If the error is to be interpreted as HTML and we have a context.
         computedMessage = DioInterceptor.getErrorMessage(
-          key: errorMessage.toString(),
+          key: errorMessage,
         );
-      } else if (!isHtml && err.response?.data?["msg"] != null) {
+      } else if (!isHtml && err.response?.data?['msg'] != null) {
         // If the error is not to be interpreted as HTML and the response
         //message exists.
-        computedMessage = err.response!.data["msg"].toString();
+        computedMessage = err.response!.data['msg'].toString();
       } else {
         // Fallback for any other case.
         computedMessage = DioInterceptor.getErrorMessage(
-          key: errorMessage.toString(),
+          key: errorMessage,
         );
       }
 
@@ -55,7 +55,7 @@ class DioInterceptor extends Interceptor {
     );
 
     if (err.response != null &&
-        err.response!.data.toString().contains("html")) {
+        err.response!.data.toString().contains('html')) {
       return handler
           .reject(errorMessage(ExceptionKeys.badRequest, isHtml: true));
     } else if (err.type == DioExceptionType.connectionError) {
@@ -64,13 +64,13 @@ class DioInterceptor extends Interceptor {
       return handler.reject(errorMessage(ExceptionKeys.connectionTimeout));
     } else if (err.response == null) {
       return handler.reject(err);
-    } else if (err.message.toString().contains("Invalid login details")) {
+    } else if (err.message.toString().contains('Invalid login details')) {
       return handler.reject(errorMessage(ExceptionKeys.passwordNotCorrect));
     } else if (response.statusCode == 400) {
       return handler.reject(errorMessage(ExceptionKeys.badRequest));
     } else if (response.statusCode == 418 || response.statusCode == 401) {
       await AppUtils.removeToken();
-      if (response.data.toString().contains("Invalid login details")) {
+      if (response.data.toString().contains('Invalid login details')) {
         return handler.reject(errorMessage(ExceptionKeys.passwordNotCorrect));
       } else {
         return handler.reject(errorMessage(ExceptionKeys.status401));
@@ -78,7 +78,7 @@ class DioInterceptor extends Interceptor {
     } else if (response.statusCode == 404) {
       return handler.reject(errorMessage(ExceptionKeys.status404));
     } else if (response.statusCode! >= 500) {
-      if (err.message.toString().contains("Invalid login details")) {
+      if (err.message.toString().contains('Invalid login details')) {
         return handler.reject(errorMessage(ExceptionKeys.status500));
       } else {
         return handler.reject(errorMessage(ExceptionKeys.status500));

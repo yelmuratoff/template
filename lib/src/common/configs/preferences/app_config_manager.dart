@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// This class is used to manage the app configurations like performance
 /// tracking, first run, etc.
 final class AppConfigManager extends PreferencesDao {
-  static AppConfigManager? _instance;
-
   AppConfigManager._(SharedPreferences sharedPreferences)
       : super(sharedPreferences: sharedPreferences);
 
@@ -15,6 +13,7 @@ final class AppConfigManager extends PreferencesDao {
     _instance ??= AppConfigManager._(sharedPreferences);
     return _instance!;
   }
+  static AppConfigManager? _instance;
 
   static AppConfigManager get instance {
     if (_instance == null) {

@@ -3,16 +3,16 @@ import 'package:base_starter/src/features/auth/resource/domain/models/user.dart'
 import 'package:base_starter/src/features/auth/resource/domain/repositories/user/remote_repository.dart';
 
 class RemoteUserRepository implements IRemoteUserRepository {
-  final IRemoteUserDataSource dataSource;
 
   const RemoteUserRepository({
     required this.dataSource,
   });
+  final IRemoteUserDataSource dataSource;
 
   @override
   Future<UserDTO?> get() async {
     try {
-      final UserDTO? remoteUser = await dataSource.get();
+      final remoteUser = await dataSource.get();
       return remoteUser;
     } catch (e) {
       rethrow;

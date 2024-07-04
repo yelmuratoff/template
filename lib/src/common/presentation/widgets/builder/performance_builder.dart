@@ -8,15 +8,15 @@ import 'package:performance/performance.dart';
 /// `PerformanceOverlayBuilder` is a class that builds a
 /// performance overlay widget.
 class PerformanceOverlayBuilder extends StatelessWidget {
-  final AppConfigsState appConfigState;
-  final AppTheme theme;
-  final Widget child;
   const PerformanceOverlayBuilder({
     required this.appConfigState,
     required this.theme,
     required this.child,
     super.key,
   });
+  final AppConfigsState appConfigState;
+  final AppTheme theme;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) => Directionality(

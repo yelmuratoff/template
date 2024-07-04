@@ -41,13 +41,13 @@ CustomTransitionPage<T> buildPageWithDefaultTransition<T>({
 
 String? getCurrentPath() {
   if (navigatorKey.currentContext != null) {
-    final GoRouterDelegate routerDelegate =
+    final routerDelegate =
         GoRouter.of(navigatorKey.currentContext!).routerDelegate;
-    final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
-    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
+    final lastMatch = routerDelegate.currentConfiguration.last;
+    final matchList = lastMatch is ImperativeRouteMatch
         ? lastMatch.matches
         : routerDelegate.currentConfiguration;
-    final String location = matchList.uri.toString();
+    final location = matchList.uri.toString();
     return location;
   } else {
     return null;
@@ -70,7 +70,7 @@ CustomTransitionPage<T> buildPageWithNoTransition<T>({
 Page<dynamic> Function(GoRouterState state) defaultPageBuilder<T>(
   Widget child,
 ) =>
-    (GoRouterState state) => buildPageWithDefaultTransition<T>(
+    (state) => buildPageWithDefaultTransition<T>(
           state: state,
           child: child,
         );
@@ -104,9 +104,9 @@ GoRouter createRouter = GoRouter(
     ),
     StatefulShellRoute.indexedStack(
       builder: (
-        BuildContext _,
-        GoRouterState __,
-        StatefulNavigationShell navigationShell,
+        _,
+        __,
+        navigationShell,
       ) {
         /// Return the widget that implements the custom shell (in this case
         /// using a BottomNavigationBar). The StatefulNavigationShell is passed
@@ -141,10 +141,9 @@ GoRouter createRouter = GoRouter(
                   name: SettingsPage.name,
                   path: SettingsPage.routePath,
                   builder: (_, state) {
-                    final Map<String, String> queryParameters =
-                        state.uri.queryParameters;
+                    final queryParameters = state.uri.queryParameters;
                     return SettingsPage(
-                      title: queryParameters[ExtraKeys.title] ?? "Settings",
+                      title: queryParameters[ExtraKeys.title] ?? 'Settings',
                     );
                   },
                 ),

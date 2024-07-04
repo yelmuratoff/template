@@ -5,16 +5,16 @@ import 'package:base_starter/src/features/auth/resource/domain/models/user.dart'
 import 'package:ispect/ispect.dart';
 
 final class AuthRemoteDataSource implements IAuthDataSource {
-  final RestClientBase restClient;
 
   const AuthRemoteDataSource({
     required this.restClient,
   });
+  final RestClientBase restClient;
 
   @override
   Future<UserDTO?> getCurrentUser() async {
     try {
-      final response = await restClient.get("api/v1/auth/profile");
+      final response = await restClient.get('api/v1/auth/profile');
       return UserDTO.fromJson(response);
     } catch (e, st) {
       ISpectTalker.handle(
@@ -33,10 +33,10 @@ final class AuthRemoteDataSource implements IAuthDataSource {
   }) async {
     try {
       final response = await restClient.post(
-        "api/v1/auth/login",
+        'api/v1/auth/login',
         body: {
-          "email": email,
-          "password": password,
+          'email': email,
+          'password': password,
         },
       );
       return TokenPair.fromJson(response);

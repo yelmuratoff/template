@@ -58,7 +58,7 @@ final class ChangeEnvironmentDialog {
                           env.name,
                         );
                         ISpectTalker.warning(
-                          "Environment changed to ${env.name}",
+                          'Environment changed to ${env.name}',
                         );
                         ISpect.read(context).setISpect =
                             env.name == Flavor.dev.name;

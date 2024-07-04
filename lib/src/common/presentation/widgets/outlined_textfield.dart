@@ -7,29 +7,6 @@ import 'package:flutter/services.dart';
 /// `OutlinedTextField` is a custom widget which
 /// is used for return custom textfield with custom style.
 class OutlinedTextfield extends StatelessWidget {
-  // These are the required input parameters for the widget.
-  final String hintText;
-  final FocusNode? focusNode;
-  final String? labelText;
-  final bool? readOnly;
-  final Function()? onTap;
-  final Function(String text)? onChanged;
-  final TextEditingController? textController;
-  final int? maxLines;
-  final int? minLines;
-  final bool? obsureText;
-  final int? maxLength;
-  final bool? enabled;
-  final Widget? suffixIcon;
-  final Widget? prefixIcon;
-  final TextInputType? keyboardType;
-  final FormFieldValidator<String>? validator;
-  final List<TextInputFormatter>? inputFormatters;
-  final TextInputAction? textInputAction;
-  final double? radius;
-  final bool autofocusEnabled;
-  final Function()? onEditingComplete;
-
   // Constructor method to initialize the above input parameters.
   const OutlinedTextfield({
     required this.textController,
@@ -55,6 +32,28 @@ class OutlinedTextfield extends StatelessWidget {
     this.autofocusEnabled = false,
     this.onEditingComplete,
   });
+  // These are the required input parameters for the widget.
+  final String hintText;
+  final FocusNode? focusNode;
+  final String? labelText;
+  final bool? readOnly;
+  final Function()? onTap;
+  final Function(String text)? onChanged;
+  final TextEditingController? textController;
+  final int? maxLines;
+  final int? minLines;
+  final bool? obsureText;
+  final int? maxLength;
+  final bool? enabled;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final TextInputType? keyboardType;
+  final FormFieldValidator<String>? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputAction? textInputAction;
+  final double? radius;
+  final bool autofocusEnabled;
+  final Function()? onEditingComplete;
 
   // This is a FocusNode variable which can be used to
   // control the focus on the text field if needed.
@@ -91,7 +90,7 @@ class OutlinedTextfield extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintTextDirection: TextDirection.ltr,
-          labelText: (labelText != "") ? labelText ?? hintText : null,
+          labelText: (labelText != '') ? labelText ?? hintText : null,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
             borderSide: BorderSide(

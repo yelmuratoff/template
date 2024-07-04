@@ -49,13 +49,12 @@ mixin InitializationSteps {
     'App Configs, User manager': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;
       AppConfigManager.initialize(sharedPreferences);
-      // TODO: Remove this line
+      // TODO(Yelaman): Remove this line
       // UserManager.initialize(sharedPreferences);
     },
     'Environment': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;
-      final String? environment =
-          sharedPreferences.getString(Preferences.environment);
+      final environment = sharedPreferences.getString(Preferences.environment);
 
       if (environment == null) {
         await sharedPreferences.setString(

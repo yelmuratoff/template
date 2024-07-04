@@ -13,12 +13,12 @@ import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
 /// Rest client that uses `Dio` as HTTP library.
 final class RestClientDio extends RestClientBase {
-  final Dio? dio;
-  final String baseUrl;
   RestClientDio({
     required this.baseUrl,
     this.dio,
   }) : super(baseUrl: baseUrl);
+  final Dio? dio;
+  final String baseUrl;
 
   /// Send [Dio] request
   @protected
@@ -26,7 +26,7 @@ final class RestClientDio extends RestClientBase {
   Future<Map<String, Object?>> sendRequest<T extends Object>({
     required String path,
     required String method,
-    dynamic body,
+    Object? body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,
@@ -157,7 +157,7 @@ final class RestClientDio extends RestClientBase {
   @override
   Future<Map<String, Object?>> post(
     String path, {
-    required dynamic body,
+    required Object? body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,
@@ -190,9 +190,6 @@ final class RestClientDio extends RestClientBase {
 }
 
 class DioClient {
-  static DioClient? _instance;
-  final Dio dio;
-
   factory DioClient({required String baseUrl, Dio? initialDio}) {
     _instance ??= DioClient._internal(baseUrl: baseUrl, initialDio: initialDio);
     return _instance!;
@@ -202,40 +199,42 @@ class DioClient {
       : dio = initialDio ?? Dio(BaseOptions(baseUrl: baseUrl)) {
     _initInterceptors();
   }
+  static DioClient? _instance;
+  final Dio dio;
 
   void _initInterceptors() {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final TokenPair? tokenModel = await SecureStorageManager.getToken();
+          final tokenModel = await SecureStorageManager.getToken();
           if (tokenModel != null) {
             options.headers['Authorization'] = 'Bearer ${tokenModel.access}';
           }
           return handler.next(options);
         },
-        onError: (DioException e, handler) async {
+        onError: (e, handler) async {
           if (e.response?.statusCode == 401) {
             try {
               // If a 401 response is received, refresh the access token
-              final TokenPair? oldToken = await SecureStorageManager.getToken();
+              final oldToken = await SecureStorageManager.getToken();
 
               if (oldToken == null) {
                 return handler.reject(e);
               }
 
               // ignore: prefer_async_await
-              final TokenPair? newToken = await dio.post(
-                //TODO: Change this to your refresh token endpoint
+              final newToken = await dio.post(
+                // TODO(Yelaman): Change this to your refresh token endpoint
                 '/auth/refresh',
                 options: Options(
                   sendTimeout: const Duration(milliseconds: 30000),
                   receiveTimeout: const Duration(milliseconds: 60000),
                   headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                   },
                 ),
                 data: {
-                  "token": oldToken.refresh,
+                  'token': oldToken.refresh,
                 },
               ).then(
                 (value) {

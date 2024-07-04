@@ -12,7 +12,7 @@ class RestartWrapper extends StatefulWidget {
   }
 
   @override
-  _RestartWidgetState createState() => _RestartWidgetState();
+  State createState() => _RestartWidgetState();
 }
 
 class _RestartWidgetState extends State<RestartWrapper> {

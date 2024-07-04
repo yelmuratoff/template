@@ -6,13 +6,13 @@ import 'package:meta/meta.dart';
 /// Base class for all rest client exceptions
 @immutable
 abstract base class RestClientException extends Equatable implements Exception {
+  const RestClientException({required this.message, this.statusCode});
+
   /// Message of the exception
   final String message;
 
   /// The status code of the response (if any)
   final int? statusCode;
-
-  const RestClientException({required this.message, this.statusCode});
 }
 
 /// Base class for all rest client exceptions that have a cause
@@ -42,11 +42,11 @@ final class ClientException extends RestClientException {
   final Object? cause;
 
   @override
-  String toString() => 'ClientException('
+  String toString() => '''ClientException('
       'message: $message,'
       'statusCode: $statusCode,'
       'cause: $cause'
-      ')';
+      ')''';
 
   @override
   List<Object?> get props => [message, statusCode, cause];
@@ -65,11 +65,11 @@ final class CustomBackendException extends RestClientException {
   final Map<String, Object?> error;
 
   @override
-  String toString() => 'CustomBackendException('
+  String toString() => '''CustomBackendException('
       'message: $message,'
       'error: $error,'
       'statusCode: $statusCode,'
-      ')';
+      ')''';
 
   @override
   List<Object?> get props => [message, error, statusCode];
@@ -85,10 +85,10 @@ final class WrongResponseTypeException extends RestClientException {
   });
 
   @override
-  String toString() => 'WrongResponseTypeException('
+  String toString() => '''WrongResponseTypeException('
       'message: $message,'
       'statusCode: $statusCode,'
-      ')';
+      ')''';
 
   @override
   List<Object?> get props => [message, statusCode];
@@ -104,11 +104,11 @@ final class ConnectionException extends RestClientExceptionWithCause {
   });
 
   @override
-  String toString() => 'ConnectionException('
+  String toString() => '''ConnectionException('
       'message: $message,'
       'statusCode: $statusCode,'
       'cause: $cause'
-      ')';
+      ')''';
 
   @override
   List<Object?> get props => [message, statusCode, cause];
@@ -124,11 +124,11 @@ final class InternalServerException extends RestClientExceptionWithCause {
   });
 
   @override
-  String toString() => 'InternalServerException('
+  String toString() => '''InternalServerException('
       'message: $message,'
       'statusCode: $statusCode,'
       'cause: $cause'
-      ')';
+      ')''';
 
   @override
   List<Object?> get props => [message, statusCode, cause];

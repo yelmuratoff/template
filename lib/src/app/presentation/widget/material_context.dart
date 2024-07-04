@@ -50,8 +50,8 @@ class MaterialContext extends ConsumerWidget {
           child = EasyLoading.init()(context, child);
 
           child = MediaQuery.withClampedTextScaling(
-            minScaleFactor: 1.0,
-            maxScaleFactor: 2.0,
+            minScaleFactor: 1,
+            maxScaleFactor: 2,
             child: child,
           );
 

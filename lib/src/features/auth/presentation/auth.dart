@@ -12,8 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
-  static const String name = "Auth";
-  static const String routePath = "/auth";
+  static const String name = 'Auth';
+  static const String routePath = '/auth';
 
   @override
   State<AuthPage> createState() => _AuthPageState();
@@ -30,7 +30,7 @@ class _AuthPageState extends State<AuthPage> {
             InitialAuthState() => null,
             AuthenticatedAuthState() => {
                 AppDialogs.dismiss(),
-                //TODO: Save user to UserManager
+                // TODO(Yelaman): Save user to UserManager
                 //context.dependencies.userCubit.write(user: state.user),
                 context.goNamed(HomePage.name),
               },

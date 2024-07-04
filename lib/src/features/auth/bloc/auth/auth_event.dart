@@ -5,12 +5,12 @@ sealed class AuthEvent {
 }
 
 final class LoginAuthEvent extends AuthEvent with EquatableMixin {
-  final String email;
-  final String password;
   const LoginAuthEvent({
     required this.email,
     required this.password,
   }) : super._();
+  final String email;
+  final String password;
 
   @override
   List<Object> get props => [email, password];

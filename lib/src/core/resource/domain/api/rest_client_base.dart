@@ -60,7 +60,7 @@ abstract base class RestClientBase implements RestClient {
       if (body is String) {
         if (body.contains('DOCTYPE html')) {
           result = {
-            'HTML error': body.toString(),
+            'HTML error': body,
           };
         } else {
           if (body.length > 1000) {
@@ -96,7 +96,7 @@ abstract base class RestClientBase implements RestClient {
         );
       }
 
-      if (returnFullData == false) {
+      if (!returnFullData) {
         if (result case {'data': final Map<String, Object?> data}) {
           return data;
         }

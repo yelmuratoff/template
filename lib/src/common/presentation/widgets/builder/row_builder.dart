@@ -5,14 +5,6 @@ import 'package:flutter/material.dart';
 ///which are generated dynamically based on an IndexedWidgetBuilder function.
 
 class RowBuilder extends StatelessWidget {
-  final IndexedWidgetBuilder itemBuilder;
-  final MainAxisAlignment mainAxisAlignment;
-  final MainAxisSize mainAxisSize;
-  final CrossAxisAlignment crossAxisAlignment;
-  final TextDirection textDirection;
-  final VerticalDirection verticalDirection;
-  final int itemCount;
-
   const RowBuilder({
     required this.itemBuilder,
     required this.itemCount,
@@ -23,6 +15,13 @@ class RowBuilder extends StatelessWidget {
     this.textDirection = TextDirection.ltr,
     this.verticalDirection = VerticalDirection.down,
   });
+  final IndexedWidgetBuilder itemBuilder;
+  final MainAxisAlignment mainAxisAlignment;
+  final MainAxisSize mainAxisSize;
+  final CrossAxisAlignment crossAxisAlignment;
+  final TextDirection textDirection;
+  final VerticalDirection verticalDirection;
+  final int itemCount;
 
   @override
   Widget build(BuildContext context) => Row(

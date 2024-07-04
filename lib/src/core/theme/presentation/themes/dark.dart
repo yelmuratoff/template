@@ -6,7 +6,7 @@ final class DarkThemeData {
   /// `getBaseDarkTheme` is a function that
   /// returns a Dark `ThemeData` for the app.
   static ThemeData getTheme({required Color seed}) {
-    final ThemeData baseTheme = ThemeData.from(
+    final baseTheme = ThemeData.from(
       colorScheme: ColorScheme.fromSeed(
         primary: seed,
         seedColor: seed,

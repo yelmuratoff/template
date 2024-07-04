@@ -31,12 +31,13 @@ class DependenciesScope extends InheritedWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(
-      DiagnosticsProperty<Dependencies>('dependencies', dependencies),
-    );
-    properties.add(
-      DiagnosticsProperty<Repositories>('repositories', repositories),
-    );
+    properties
+      ..add(
+        DiagnosticsProperty<Dependencies>('dependencies', dependencies),
+      )
+      ..add(
+        DiagnosticsProperty<Repositories>('repositories', repositories),
+      );
   }
 
   @override

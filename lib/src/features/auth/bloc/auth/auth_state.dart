@@ -17,12 +17,12 @@ final class AuthenticatedAuthState extends AuthState {
 }
 
 final class ErrorAuthState extends AuthState with EquatableMixin {
-  final String message;
-  final Object cause;
   const ErrorAuthState({
     required this.message,
     required this.cause,
   }) : super._();
+  final String message;
+  final Object cause;
 
   @override
   List<Object> get props => [message, cause];

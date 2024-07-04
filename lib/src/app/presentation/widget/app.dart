@@ -72,13 +72,11 @@ class _AppState extends State<App> {
 
   /// Handles the route information and logs it
   void _handleRouteInformation() {
-    final RouteMatchList routeMatchList =
-        _router.routerDelegate.currentConfiguration;
+    final routeMatchList = _router.routerDelegate.currentConfiguration;
 
-    final RouteConfiguration configuration = _router.configuration;
+    final configuration = _router.configuration;
 
-    final GoRouterState state =
-        routeMatchList.last.buildState(configuration, routeMatchList);
+    final state = routeMatchList.last.buildState(configuration, routeMatchList);
 
     final screenName = routeMatchList.last.route.name;
     final path = routeMatchList.last.matchedLocation;

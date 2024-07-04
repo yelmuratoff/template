@@ -11,7 +11,7 @@ abstract class RestClient {
   /// Sends a POST request to the given [path].
   Future<Map<String, Object?>> post(
     String path, {
-    required dynamic body,
+    required Object? body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,

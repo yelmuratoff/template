@@ -1,4 +1,4 @@
-// ignore_for_file: prefer-declaring-const-constructor
+// ignore_for_file: prefer-declaring-const-constructor, flutter_style_todos
 import 'package:drift/drift.dart';
 
 /// Todos table definition

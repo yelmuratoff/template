@@ -4,17 +4,6 @@ import 'package:flutter/cupertino.dart';
 ///with a specified number of child widgets,
 ///which are generated dynamically based on an IndexedWidgetBuilder function.
 class WrapBuilder extends StatelessWidget {
-  final IndexedWidgetBuilder itemBuilder;
-  final int itemCount;
-  final Axis? direction;
-  final WrapAlignment? alignment;
-  final double? spacing;
-  final double? runSpacing;
-  final WrapAlignment? runAlignment;
-  final WrapCrossAlignment? crossAxisAlignment;
-  final TextDirection? textDirection;
-  final VerticalDirection? verticalDirection;
-  final Clip? clipBehavior;
   const WrapBuilder({
     required this.itemBuilder,
     required this.itemCount,
@@ -29,6 +18,17 @@ class WrapBuilder extends StatelessWidget {
     this.verticalDirection,
     this.clipBehavior,
   });
+  final IndexedWidgetBuilder itemBuilder;
+  final int itemCount;
+  final Axis? direction;
+  final WrapAlignment? alignment;
+  final double? spacing;
+  final double? runSpacing;
+  final WrapAlignment? runAlignment;
+  final WrapCrossAlignment? crossAxisAlignment;
+  final TextDirection? textDirection;
+  final VerticalDirection? verticalDirection;
+  final Clip? clipBehavior;
 
   @override
   Widget build(BuildContext context) => Wrap(

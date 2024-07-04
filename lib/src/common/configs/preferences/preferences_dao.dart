@@ -4,10 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Inspired by https://pub.dev/packages/typed_preferences
 
 abstract base class PreferencesDao {
-  final SharedPreferences _sharedPreferences;
-
   const PreferencesDao({required SharedPreferences sharedPreferences})
       : _sharedPreferences = sharedPreferences;
+  final SharedPreferences _sharedPreferences;
 
   /// Obtain [bool] entry from the preferences.
   PreferencesEntry<bool> boolEntry(String key) => _PreferencesEntry<bool>(
@@ -84,7 +83,7 @@ final class _PreferencesEntry<T extends Object> extends PreferencesEntry<T> {
     if (value is T) return value;
 
     throw Exception(
-      'The value of $key is not of type ${T.runtimeType.toString()}',
+      'The value of $key is not of type ${T.runtimeType}',
     );
   }
 

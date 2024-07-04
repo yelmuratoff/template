@@ -77,10 +77,9 @@ abstract class PageLifecycleModel {
   ) {
     // Retrieves an existing instance of the model from the context or creates
     //a new one using default builder function.
-    final model = context.read<T?>() ?? defaultBuilder();
-
-    // Initializes the model if not already initialized.
-    model._init(context);
+    final model = context.read<T?>() ?? defaultBuilder()
+      // Initializes the model if not already initialized.
+      .._init(context);
 
     // Returns the initialized model.
     return model;

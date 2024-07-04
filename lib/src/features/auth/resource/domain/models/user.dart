@@ -1,13 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class UserDTO extends Equatable {
-  final int id;
-  final String email;
-  final String name;
-  final String role;
-  final String avatar;
-  final String creationAt;
-  final String updatedAt;
 
   const UserDTO({
     required this.id,
@@ -28,6 +21,13 @@ class UserDTO extends Equatable {
         creationAt: json['creationAt'] as String,
         updatedAt: json['updatedAt'] as String,
       );
+  final int id;
+  final String email;
+  final String name;
+  final String role;
+  final String avatar;
+  final String creationAt;
+  final String updatedAt;
 
   Map<String, dynamic> toJson() => {
         'id': id,

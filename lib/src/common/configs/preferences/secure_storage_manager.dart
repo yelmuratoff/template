@@ -19,8 +19,8 @@ final class SecureStorageManager {
   /// Methods for settings and getting `kToken`
   static Future<TokenPair?> getToken() async {
     try {
-      final String? token = await storage.read(key: Preferences.tokenPair);
-      final Map<String, dynamic>? jsonObject =
+      final token = await storage.read(key: Preferences.tokenPair);
+      final jsonObject =
           token != null ? json.decode(token) as Map<String, dynamic>? : null;
       return jsonObject != null ? TokenPair.fromJson(jsonObject) : null;
     } catch (e) {

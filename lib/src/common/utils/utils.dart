@@ -40,11 +40,10 @@ final class AppUtils {
       'Brightness must be between 0.0 and 1.0',
     );
 
-    final int red =
-        ((color.red * brightness) + (255 * (1.0 - brightness))).round();
-    final int green =
+    final red = ((color.red * brightness) + (255 * (1.0 - brightness))).round();
+    final green =
         ((color.green * brightness) + (255 * (1.0 - brightness))).round();
-    final int blue =
+    final blue =
         ((color.blue * brightness) + (255 * (1.0 - brightness))).round();
 
     return Color.fromARGB(color.alpha, red, green, blue);
@@ -58,9 +57,9 @@ final class AppUtils {
       'Darken must be between 0.0 and 1.0',
     );
 
-    final int red = (color.red * (1.0 - darken)).round();
-    final int green = (color.green * (1.0 - darken)).round();
-    final int blue = (color.blue * (1.0 - darken)).round();
+    final red = (color.red * (1.0 - darken)).round();
+    final green = (color.green * (1.0 - darken)).round();
+    final blue = (color.blue * (1.0 - darken)).round();
 
     return Color.fromARGB(color.alpha, red, green, blue);
   }

@@ -7,10 +7,10 @@ enum Flavor {
   /// Production environment.
   prod._('prod');
 
+  const Flavor._(this.value);
+
   /// The environment value.
   final String value;
-
-  const Flavor._(this.value);
 
   /// Returns the environment from the given [value].
   static Flavor from(String? value) => switch (value) {

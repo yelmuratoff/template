@@ -13,9 +13,7 @@ class _AppVersionBody extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           GestureDetector(
-            onTap: () {
-              onTapAppVersion();
-            },
+            onTap: onTapAppVersion,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -4,19 +4,19 @@ import 'package:base_starter/src/features/auth/resource/domain/repositories/user
 import 'package:bloc/bloc.dart';
 
 class UserCubit extends Cubit<UserDTO?> {
-  final IRemoteUserRepository remoteUserRepository;
-  final ILocalUserRepository localUserRepository;
 
   UserCubit({
     required this.remoteUserRepository,
     required this.localUserRepository,
   }) : super(null);
+  final IRemoteUserRepository remoteUserRepository;
+  final ILocalUserRepository localUserRepository;
 
   Future<void> get() async {
     try {
-      final UserDTO? localUser = localUserRepository.get();
+      final localUser = localUserRepository.get();
       emit(localUser);
-      final UserDTO? remoteUser = await remoteUserRepository.get();
+      final remoteUser = await remoteUserRepository.get();
       if (remoteUser != null && remoteUser != localUser) {
         localUserRepository.write(user: remoteUser);
         emit(remoteUser);

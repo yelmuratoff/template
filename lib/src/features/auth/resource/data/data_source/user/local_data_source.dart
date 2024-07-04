@@ -34,8 +34,8 @@ final class UserLocalDataSource extends PreferencesDao
   @override
   UserDTO? get() {
     try {
-      final String? token = _currentUserEntry.read();
-      final Map<String, dynamic>? jsonObject =
+      final token = _currentUserEntry.read();
+      final jsonObject =
           token != null ? json.decode(token) as Map<String, dynamic>? : null;
       return jsonObject != null ? UserDTO.fromJson(jsonObject) : null;
     } catch (e, st) {

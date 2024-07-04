@@ -2,11 +2,6 @@ import 'package:base_starter/src/common/utils/extensions/context_extension.dart'
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-  final Color? backgroundColor;
-  final Color? textColor;
-  final Color? borderColor;
   const AppButton({
     required this.onPressed,
     required this.text,
@@ -15,12 +10,15 @@ class AppButton extends StatelessWidget {
     this.borderColor,
     super.key,
   });
+  final VoidCallback onPressed;
+  final String text;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) => MaterialButton(
-        onPressed: () {
-          onPressed.call();
-        },
+        onPressed: onPressed,
         color: backgroundColor ?? context.theme.colorScheme.primary,
         highlightElevation: 0,
         elevation: 0,

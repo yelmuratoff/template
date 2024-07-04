@@ -10,12 +10,12 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final IAuthRepository repository;
   AuthBloc({required this.repository}) : super(const InitialAuthState()) {
     on<LoginAuthEvent>(_onLogin);
     on<GetCurrentUserAuthEvent>((_, state) => _onGetCurrentUser(state));
     on<LogoutAuthEvent>((_, state) => _onLogout(state));
   }
+  final IAuthRepository repository;
 
   Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) async {
     try {
@@ -57,11 +57,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (user != null) {
         emit(const AuthenticatedAuthState());
       } else {
-        ISpectTalker.error(message: "Get current user failed: user is null");
+        ISpectTalker.error(message: 'Get current user failed: user is null');
         emit(
           const ErrorAuthState(
-            cause: "Get current user failed: user is null",
-            message: "Get current user failed: user is null",
+            cause: 'Get current user failed: user is null',
+            message: 'Get current user failed: user is null',
           ),
         );
       }

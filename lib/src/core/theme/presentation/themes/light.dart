@@ -7,7 +7,7 @@ final class LightThemeData {
   /// `getBaseLightTheme` is a function that
   /// returns a Light `ThemeData` for the app.
   static ThemeData getTheme({required Color seed}) {
-    final ThemeData baseTheme = ThemeData.from(
+    final baseTheme = ThemeData.from(
       colorScheme: ColorScheme.light(
         primary: seed,
         secondary: AppUtils.adjustColorBrightness(seed, 0.8),

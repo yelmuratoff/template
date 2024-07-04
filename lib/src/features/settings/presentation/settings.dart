@@ -26,8 +26,8 @@ part 'widget/theme_selector.dart';
 class SettingsPage extends StatefulWidget {
   const SettingsPage({required this.title, super.key});
 
-  static const String name = "Settings";
-  static const String routePath = "settings";
+  static const String name = 'Settings';
+  static const String routePath = 'settings';
 
   final String title;
 
@@ -41,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-    _model = PageLifecycleModel.createModel(context, () => SettingsPageModel());
+    _model = PageLifecycleModel.createModel(context, SettingsPageModel.new);
   }
 
   @override
@@ -52,9 +52,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _versionTextColor =
+    final versionTextColor =
         context.theme.colorScheme.onSurface.withOpacity(0.5);
-    final _titleMediumTextStyle = context.textStyles.s18w600.copyWith(
+    final titleMediumTextStyle = context.textStyles.s18w600.copyWith(
       fontWeight: FontWeight.bold,
     );
     return Scaffold(
@@ -76,10 +76,10 @@ class _SettingsPageState extends State<SettingsPage> {
           SliverList(
             delegate: SliverChildListDelegate.fixed([
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Text(
                   L10n.current.locales,
-                  style: _titleMediumTextStyle,
+                  style: titleMediumTextStyle,
                 ),
               ),
               _LanguagesSelector(
@@ -89,17 +89,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Text(
                   L10n.current.defaultThemes,
-                  style: _titleMediumTextStyle,
+                  style: titleMediumTextStyle,
                 ),
               ),
               const _ThemeSelector(Colors.primaries),
               SwitchListTile(
                 title: Text(
                   L10n.current.changeTheme,
-                  style: _titleMediumTextStyle,
+                  style: titleMediumTextStyle,
                 ),
                 value: SettingsScope.themeOf(context).isDarkMode,
                 onChanged: (value) {
@@ -146,15 +146,15 @@ class _SettingsPageState extends State<SettingsPage> {
                             .environmentTapNumber(10 - _model.tapNumber),
                       );
                     } else if (_model.tapNumber == 10) {
-                      ISpectTalker.info("ℹ️ Environment change dialog opened");
+                      ISpectTalker.info('ℹ️ Environment change dialog opened');
                       await ChangeEnvironmentDialog.show(context);
                       ISpectTalker.info(
-                        "🔙 Environment change dialog closed",
+                        '🔙 Environment change dialog closed',
                       );
                       _model.tapNumber = 0;
                     }
                   },
-                  versionTextColor: _versionTextColor,
+                  versionTextColor: versionTextColor,
                 ),
                 const Gap(24),
                 BlocListener<AuthBloc, AuthState>(

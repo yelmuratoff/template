@@ -25,20 +25,21 @@ final class Toaster {
     ToastGravity gravity = ToastGravity.BOTTOM,
     VoidCallback? then,
   }) async {
-    fToast.removeCustomToast();
-    fToast.showToast(
-      child: _ToasterBody(
-        title: title,
-        backgroundColor: backgroundColor,
-        textColor: textColor,
-        hasImage: hasImage,
-      ),
-      gravity: gravity,
-      fadeDuration: fadeDuration,
-      toastDuration: toastDuration,
-      ignorePointer: isIgnorePointer,
-      isDismissable: isDismissable,
-    );
+    fToast
+      ..removeCustomToast()
+      ..showToast(
+        child: _ToasterBody(
+          title: title,
+          backgroundColor: backgroundColor,
+          textColor: textColor,
+          hasImage: hasImage,
+        ),
+        gravity: gravity,
+        fadeDuration: fadeDuration,
+        toastDuration: toastDuration,
+        ignorePointer: isIgnorePointer,
+        isDismissable: isDismissable,
+      );
 
     await Future.delayed(toastDuration, () {
       if (then != null) {
@@ -59,20 +60,21 @@ final class Toaster {
     Duration toastDuration = const Duration(milliseconds: 1500),
     ToastGravity gravity = ToastGravity.BOTTOM,
   }) async {
-    fToast.removeCustomToast();
-    fToast.showToast(
-      child: _ToasterBody(
-        title: title,
-        backgroundColor: context.colors.success,
-        textColor: textColor,
-        hasImage: hasImage,
-      ),
-      gravity: gravity,
-      fadeDuration: fadeDuration,
-      toastDuration: toastDuration,
-      ignorePointer: isIgnorePointer,
-      isDismissable: isDismissable,
-    );
+    fToast
+      ..removeCustomToast()
+      ..showToast(
+        child: _ToasterBody(
+          title: title,
+          backgroundColor: context.colors.success,
+          textColor: textColor,
+          hasImage: hasImage,
+        ),
+        gravity: gravity,
+        fadeDuration: fadeDuration,
+        toastDuration: toastDuration,
+        ignorePointer: isIgnorePointer,
+        isDismissable: isDismissable,
+      );
 
     await Future.delayed(toastDuration, () {
       if (then != null) {
@@ -93,20 +95,21 @@ final class Toaster {
     Duration toastDuration = const Duration(milliseconds: 1500),
     ToastGravity gravity = ToastGravity.BOTTOM,
   }) async {
-    fToast.removeCustomToast();
-    fToast.showToast(
-      child: _ToasterBody(
-        title: title,
-        backgroundColor: context.colors.error,
-        textColor: textColor,
-        hasImage: hasImage,
-      ),
-      gravity: gravity,
-      fadeDuration: fadeDuration,
-      toastDuration: toastDuration,
-      ignorePointer: isIgnorePointer,
-      isDismissable: isDismissable,
-    );
+    fToast
+      ..removeCustomToast()
+      ..showToast(
+        child: _ToasterBody(
+          title: title,
+          backgroundColor: context.colors.error,
+          textColor: textColor,
+          hasImage: hasImage,
+        ),
+        gravity: gravity,
+        fadeDuration: fadeDuration,
+        toastDuration: toastDuration,
+        ignorePointer: isIgnorePointer,
+        isDismissable: isDismissable,
+      );
 
     await Future.delayed(toastDuration, () {
       if (then != null) {

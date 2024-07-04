@@ -10,8 +10,6 @@ part 'event.dart';
 part 'state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
-  final ILocaleRepository _localeRepo;
-  final IThemeRepository _themeRepo;
 
   SettingsBloc({
     required ILocaleRepository localeRepository,
@@ -23,6 +21,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateThemeSettingsEvent>(_updateTheme);
     on<UpdateLocaleSettingsEvent>(_updateLocale);
   }
+  final ILocaleRepository _localeRepo;
+  final IThemeRepository _themeRepo;
 
   Future<void> _updateTheme(
     UpdateThemeSettingsEvent event,

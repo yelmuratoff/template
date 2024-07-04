@@ -3,8 +3,6 @@
 import 'dart:convert';
 
 import 'package:base_starter/src/core/resource/data/dio_rest_client/rest_client.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, Object?> _generateJsonData(int length) => {
@@ -119,45 +117,6 @@ void main() {
   });
 }
 
-final class MockHttpAdapter implements HttpClientAdapter {
-  const MockHttpAdapter();
-
-  // ignore: avoid_field_initializers_in_const_classes
-  final _responses =
-      const <String, ResponseBody Function(RequestOptions options)>{};
-
-  void registerResponse(
-    String path,
-    ResponseBody Function(RequestOptions options) response,
-  ) {
-    _responses[path] = response;
-  }
-
-  @override
-  Future<ResponseBody> fetch(
-    RequestOptions options,
-    Stream<Uint8List>? requestStream,
-    Future<void>? cancelFuture,
-  ) async {
-    final req = options.path.replaceAll("?", "");
-
-    if (_responses.containsKey(req)) {
-      final response = _responses[req]!;
-
-      return response(options);
-    }
-
-    throw Exception('No key was specified');
-  }
-
-  @override
-  void close({bool force = false}) {
-    if (kDebugMode) {
-      print('Closed');
-    }
-  }
-}
-
 /// Class used to test RestClientBase
 ///
 /// Other methods are just stubs
@@ -198,7 +157,7 @@ final class _RestClientBase extends RestClientBase {
   @override
   Future<Map<String, Object?>> post(
     String path, {
-    dynamic body,
+    Object? body,
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,

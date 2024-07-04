@@ -1,16 +1,16 @@
 part of 'toaster.dart';
 
 class _ToasterBody extends StatelessWidget {
-  final String title;
-  final Color backgroundColor;
-  final Color textColor;
-  final bool hasImage;
   const _ToasterBody({
     required this.title,
     required this.backgroundColor,
     required this.textColor,
     required this.hasImage,
   });
+  final String title;
+  final Color backgroundColor;
+  final Color textColor;
+  final bool hasImage;
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
@@ -40,7 +40,7 @@ class _ToasterBody extends StatelessWidget {
                   style: context.textStyles.s14w500.copyWith(
                     color: textColor,
                   ),
-                  textScaleFactor: 1.0,
+                  textScaleFactor: 1,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),

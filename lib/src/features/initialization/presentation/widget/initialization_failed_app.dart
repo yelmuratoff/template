@@ -26,6 +26,13 @@ import 'package:talker/talker.dart';
 
 /// InitializationFailedScreen widget
 class InitializationFailedApp extends StatefulWidget {
+
+  const InitializationFailedApp({
+    required this.error,
+    required this.stackTrace,
+    this.retryInitialization,
+    super.key,
+  });
   /// The error that caused the initialization to fail.
   final Object error;
 
@@ -36,13 +43,6 @@ class InitializationFailedApp extends StatefulWidget {
   ///
   /// If null, the retry button will not be shown.
   final AsyncCallback? retryInitialization;
-
-  const InitializationFailedApp({
-    required this.error,
-    required this.stackTrace,
-    this.retryInitialization,
-    super.key,
-  });
 
   @override
   State<InitializationFailedApp> createState() =>
@@ -153,14 +153,6 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 }
 
 class _View extends StatelessWidget {
-  final Object error;
-  final AsyncCallback? retryInitialization;
-  final StackTrace stackTrace;
-  final Talker talker;
-  final ThemeMode themeMode;
-  final ThemeData lightTheme;
-  final ThemeData darkTheme;
-  final Locale locale;
 
   const _View({
     required this.error,
@@ -172,6 +164,14 @@ class _View extends StatelessWidget {
     required this.locale,
     this.retryInitialization,
   });
+  final Object error;
+  final AsyncCallback? retryInitialization;
+  final StackTrace stackTrace;
+  final Talker talker;
+  final ThemeMode themeMode;
+  final ThemeData lightTheme;
+  final ThemeData darkTheme;
+  final Locale locale;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -185,7 +185,7 @@ class _View extends StatelessWidget {
           actions: [
             if (F.isDev) ...[
               Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8),
                 child: IconButton.filledTonal(
                   icon: const Icon(Icons.monitor_heart),
                   onPressed: () {
@@ -215,7 +215,7 @@ class _View extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                '${L10n.current.errorType}: ${error.toString()}',
+                '${L10n.current.errorType}: $error',
                 style: context.textStyles.s16w500.copyWith(
                   color: context.theme.colorScheme.error,
                   fontWeight: FontWeight.w500,
@@ -258,7 +258,7 @@ class _View extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: Text(
                       'StackTrace: \n$stackTrace',
                       overflow: TextOverflow.ellipsis,

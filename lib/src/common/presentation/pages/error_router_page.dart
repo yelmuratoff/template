@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class RouterErrorPage extends StatelessWidget {
-  final String error;
   const RouterErrorPage({required this.error, super.key});
+  final String error;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -29,14 +29,14 @@ class RouterErrorPage extends StatelessWidget {
                   Expanded(
                     child: AutoSizeText.rich(
                       TextSpan(
-                        text: "${L10n.current.pageNotFound}: ",
+                        text: '${L10n.current.pageNotFound}: ',
                         children: [
                           TextSpan(
                             text: error,
                             style: context.textStyles.s18w600,
                             children: [
                               TextSpan(
-                                text: " ${L10n.current.notFound}".toLowerCase(),
+                                text: ' ${L10n.current.notFound}'.toLowerCase(),
                                 style: context.textStyles.s18w600.copyWith(
                                   color: context.colors.error,
                                 ),

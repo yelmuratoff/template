@@ -15,7 +15,7 @@ class DragHandleComponent extends StatelessWidget {
         height: 4,
         decoration: BoxDecoration(
           color: context.colors.divider,
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
       );
 }

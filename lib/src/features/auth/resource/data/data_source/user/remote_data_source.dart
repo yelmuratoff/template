@@ -4,16 +4,16 @@ import 'package:base_starter/src/features/auth/resource/domain/models/user.dart'
 import 'package:ispect/ispect.dart';
 
 final class UserRemoteDataSource implements IRemoteUserDataSource {
-  final RestClientBase restClient;
 
   const UserRemoteDataSource({
     required this.restClient,
   });
+  final RestClientBase restClient;
 
   @override
   Future<UserDTO?> get() async {
     try {
-      final response = await restClient.get("api/v1/auth/profile");
+      final response = await restClient.get('api/v1/auth/profile');
       return UserDTO.fromJson(response);
     } catch (e, st) {
       ISpectTalker.handle(

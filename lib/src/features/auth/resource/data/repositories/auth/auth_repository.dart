@@ -4,11 +4,11 @@ import 'package:base_starter/src/features/auth/resource/domain/models/user.dart'
 import 'package:base_starter/src/features/auth/resource/domain/repositories/auth/remote_repository.dart';
 
 final class AuthRepository implements IAuthRepository {
-  final IAuthDataSource dataSource;
 
   const AuthRepository({
     required this.dataSource,
   });
+  final IAuthDataSource dataSource;
 
   @override
   Future<UserDTO?> getCurrentUser() async {

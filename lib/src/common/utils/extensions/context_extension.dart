@@ -51,7 +51,8 @@ extension ContextExtension on BuildContext {
   /// `size` returns the current `MediaQuery` size of the `BuildContext`.
   Size get mediaSize => MediaQuery.sizeOf(this);
 
-  /// `viewInsets` returns the current `MediaQuery` view insets of the `BuildContext`.
+  /// `viewInsets` returns the current `MediaQuery`
+  /// view insets of the `BuildContext`.
   EdgeInsets get viewInsets => MediaQuery.viewInsetsOf(this);
 
   /// `height` returns the height of the current `MediaQuery`.
@@ -96,16 +97,19 @@ extension ContextExtension on BuildContext {
   /// `isWeb` returns `true` if the current `Platform` is for Web.
   bool get isWeb => kIsWeb;
 
-  /// `dependencies` returns the nearest `DependenciesScope` of the given `BuildContext`.
+  /// `dependencies` returns the nearest `DependenciesScope`
+  /// of the given `BuildContext`.
   Dependencies get dependencies => DependenciesScope.of(this);
 
   /// `provide` returns the nearest `Provider` of the given `BuildContext`.
   T provide<T>() => Provider.of<T>(this);
 
-  /// `provideOnce` returns the nearest `Provider` of the given `BuildContext` without listening to changes.
+  /// `provideOnce` returns the nearest `Provider` of the given `BuildContext`
+  /// without listening to changes.
   T provideOnce<T>() => Provider.of<T>(this, listen: false);
 
-  /// `provideOrNull` returns the nearest `Provider` of the given `BuildContext` or `null` if not found.
+  /// `provideOrNull` returns the nearest `Provider` of the given `BuildContext`
+  /// or `null` if not found.
   T? provideOrNull<T>() {
     try {
       return provide<T>();
@@ -114,7 +118,8 @@ extension ContextExtension on BuildContext {
     }
   }
 
-  /// `provideOnceOrNull` returns the nearest `Provider` of the given `BuildContext` without listening to changes or `null` if not found.
+  /// `provideOnceOrNull` returns the nearest `Provider` of the given
+  /// `BuildContext` without listening to changes or `null` if not found.
   T? provideOnceOrNull<T>() {
     try {
       return provideOnce<T>();

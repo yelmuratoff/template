@@ -16,6 +16,7 @@ import 'package:base_starter/src/features/settings/resource/data/theme/theme_mod
 import 'package:base_starter/src/features/settings/resource/data/theme/theme_repository.dart';
 import 'package:base_starter/src/features/settings/resource/domain/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/resource/domain/theme/theme_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ispect/ispect.dart';
@@ -34,7 +35,7 @@ class InitializationFailedApp extends StatefulWidget {
   /// The callback that will be called when the retry button is pressed.
   ///
   /// If null, the retry button will not be shown.
-  final Future<void> Function()? retryInitialization;
+  final AsyncCallback? retryInitialization;
 
   const InitializationFailedApp({
     required this.error,
@@ -51,16 +52,16 @@ class InitializationFailedApp extends StatefulWidget {
 class _InitializationFailedAppState extends State<InitializationFailedApp> {
   /// Whether the initialization is in progress.
   final _inProgress = ValueNotifier<bool>(false);
-  late final SharedPreferences sharedPreferences;
+  late final SharedPreferences _sharedPreferences;
 
-  SettingsState? settingsState;
-  ILocaleRepository? localeRepository;
-  IThemeRepository? themeRepository;
+  SettingsState? _settingsState;
+  ILocaleRepository? _localeRepository;
+  IThemeRepository? _themeRepository;
 
   bool _isInitialized = false;
 
   /// ISpect fields
-  final Talker talker = TalkerFlutter.init();
+  final Talker _talker = TalkerFlutter.init();
 
   @override
   void initState() {
@@ -71,23 +72,23 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
   }
 
   Future<void> _initialize() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    localeRepository = LocaleRepository(
+    _sharedPreferences = await SharedPreferences.getInstance();
+    _localeRepository = LocaleRepository(
       localeDataSource: LocaleDataSourceLocal(
-        sharedPreferences: sharedPreferences,
+        sharedPreferences: _sharedPreferences,
       ),
     );
-    themeRepository = ThemeRepository(
+    _themeRepository = ThemeRepository(
       themeDataSource: ThemeDataSourceLocal(
-        sharedPreferences: sharedPreferences,
+        sharedPreferences: _sharedPreferences,
         codec: const ThemeModeCodec(),
       ),
     );
-    final localeFuture = localeRepository?.getLocale();
-    final theme = await themeRepository?.getTheme();
+    final localeFuture = _localeRepository?.getLocale();
+    final theme = await _themeRepository?.getTheme();
     final locale = await localeFuture;
 
-    settingsState = IdleSettingsState(appTheme: theme, locale: locale);
+    _settingsState = IdleSettingsState(appTheme: theme, locale: locale);
     setState(() {
       _isInitialized = true;
     });
@@ -112,15 +113,15 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
           repositories: Repositories(),
           child: SettingsScope(
             settingsBloc: SettingsBloc(
-              localeRepository: localeRepository!,
-              themeRepository: themeRepository!,
-              initialState: settingsState!,
+              localeRepository: _localeRepository!,
+              themeRepository: _themeRepository!,
+              initialState: _settingsState!,
             ),
             child: MaterialApp(
-              theme: settingsState?.appTheme?.lightTheme,
-              darkTheme: settingsState?.appTheme?.darkTheme,
-              themeMode: settingsState?.appTheme?.mode,
-              locale: settingsState?.locale,
+              theme: _settingsState?.appTheme?.lightTheme,
+              darkTheme: _settingsState?.appTheme?.darkTheme,
+              themeMode: _settingsState?.appTheme?.mode,
+              locale: _settingsState?.locale,
               localizationsDelegates: Localization.delegates,
               supportedLocales: L10n.delegate.supportedLocales,
               home: _View(
@@ -129,13 +130,13 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
                     ? _retryInitialization
                     : null,
                 stackTrace: widget.stackTrace,
-                talker: talker,
-                themeMode: settingsState?.appTheme?.mode ?? ThemeMode.system,
+                talker: _talker,
+                themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
                 lightTheme:
-                    settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
+                    _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
                 darkTheme:
-                    settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
-                locale: settingsState?.locale ?? const Locale('en'),
+                    _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
+                locale: _settingsState?.locale ?? const Locale('en'),
               ),
             ),
           ),
@@ -153,7 +154,7 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 
 class _View extends StatelessWidget {
   final Object error;
-  final Future<void> Function()? retryInitialization;
+  final AsyncCallback? retryInitialization;
   final StackTrace stackTrace;
   final Talker talker;
   final ThemeMode themeMode;
@@ -191,7 +192,7 @@ class _View extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (context) => ISpectPage(
+                        builder: (_) => ISpectPage(
                           options: ISpectOptions(
                             locale: locale,
                           ),
@@ -248,13 +249,13 @@ class _View extends StatelessWidget {
               ),
               const Gap(16),
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    border: Border.all(
+                    border: Border.fromBorderSide(BorderSide(
                       color: context.theme.colorScheme.error,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
+                    ),),
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

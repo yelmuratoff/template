@@ -9,12 +9,12 @@ class _ThemeCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
         child: Material(
           color: _color,
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: const BorderRadius.all(Radius.circular(4)),
           child: InkWell(
             onTap: () {
               SettingsScope.themeOf(context).setThemeSeedColor(_color);
             },
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: const BorderRadius.all(Radius.circular(4)),
             child: const Gap(70),
           ),
         ),

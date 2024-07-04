@@ -3,9 +3,11 @@ import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// `SecureStorageManager` - A class to manage secure storage for preserving user data.
+/// `SecureStorageManager` - A class to manage secure storage
+/// for preserving user data.
 final class SecureStorageManager {
-  /// Here, we create a static const `FlutterSecureStorage` object, with `encryptedSharedPreferences` enabled for Android.
+  /// Here, we create a static const `FlutterSecureStorage` object,
+  /// with `encryptedSharedPreferences` enabled for Android.
 
   static const FlutterSecureStorage storage = FlutterSecureStorage(
     iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),

@@ -4,7 +4,8 @@ import 'package:base_starter/src/core/theme/presentation/theme_text_style.dart';
 import 'package:flutter/material.dart';
 
 final class LightThemeData {
-  /// `getBaseLightTheme` is a function that returns a Light `ThemeData` for the app.
+  /// `getBaseLightTheme` is a function that
+  /// returns a Light `ThemeData` for the app.
   static ThemeData getTheme({required Color seed}) {
     final ThemeData baseTheme = ThemeData.from(
       colorScheme: ColorScheme.light(

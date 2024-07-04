@@ -11,7 +11,7 @@ class _ThemeSelector extends StatelessWidget {
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: _colors.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (_, index) {
             final color = _colors.elementAt(index);
 
             return Padding(

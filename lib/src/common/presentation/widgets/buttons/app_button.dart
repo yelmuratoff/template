@@ -25,7 +25,7 @@ class AppButton extends StatelessWidget {
         highlightElevation: 0,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
           side: BorderSide(
             color: borderColor ?? context.theme.colorScheme.primary,
           ),

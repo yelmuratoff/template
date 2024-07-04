@@ -57,7 +57,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   auto_size_text: ^3.0.0
   fluttertoast: ^8.2.6
-  ispect: ^1.2.1
+  ispect: ^1.2.2
 
   # Others
   provider: ^6.1.2
@@ -65,6 +65,9 @@ dependencies:
   go_router: ^14.2.0
   flutter_secure_storage: ^9.2.2
   envied: ^0.5.4
+  dev: ^1.0.0
+  
+  custom_lint: ^0.6.4
   
 dev_dependencies:
   # Testing
@@ -72,8 +75,7 @@ dev_dependencies:
     sdk: flutter
 
   # Lints
-  sizzle_lints: ^2.0.2
-  custom_lint: ^0.6.4
+  pyramid_lint: ^2.0.0
 
   # Utils
   flutter_gen_runner: ^5.6.0

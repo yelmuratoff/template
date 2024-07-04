@@ -3,7 +3,8 @@ import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// `AppConfigManager` - A class to manage the app configurations.
-/// This class is used to manage the app configurations like performance tracking, first run, etc.
+/// This class is used to manage the app configurations like performance
+/// tracking, first run, etc.
 final class AppConfigManager extends PreferencesDao {
   static AppConfigManager? _instance;
 

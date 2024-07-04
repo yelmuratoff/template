@@ -35,7 +35,7 @@ class MaterialContext extends ConsumerWidget {
       child: MaterialApp.router(
         key: _globalKey,
         title: F.title,
-        onGenerateTitle: (context) => F.title,
+        onGenerateTitle: (_) => F.title,
         debugShowCheckedModeBanner: false,
         theme: theme.lightTheme,
         darkTheme: theme.darkTheme,
@@ -56,7 +56,6 @@ class MaterialContext extends ConsumerWidget {
           );
 
           child = ISpectBuilder(
-            navigatorKey: navigatorKey,
             child: child,
           );
 

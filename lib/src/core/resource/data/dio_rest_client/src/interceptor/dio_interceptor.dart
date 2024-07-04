@@ -28,7 +28,8 @@ class DioInterceptor extends Interceptor {
           key: errorMessage.toString(),
         );
       } else if (!isHtml && err.response?.data?["msg"] != null) {
-        // If the error is not to be interpreted as HTML and the response message exists.
+        // If the error is not to be interpreted as HTML and the response
+        //message exists.
         computedMessage = err.response!.data["msg"].toString();
       } else {
         // Fallback for any other case.
@@ -47,8 +48,10 @@ class DioInterceptor extends Interceptor {
     }
 
     ISpectTalker.error(
-      message:
-          "====================ERROR - START====================\nERROR_TYPE: ${err.type}\nPATH: ${err.requestOptions.path}\n${err.message}\n${err.response?.data}\n====================ERROR - END====================",
+      message: '''====================ERROR - START====================
+          \nERROR_TYPE: ${err.type}\nPATH: ${err.requestOptions.path}
+          \n${err.message}\n${err.response?.data}
+          \n====================ERROR - END====================''',
     );
 
     if (err.response != null &&
@@ -84,7 +87,8 @@ class DioInterceptor extends Interceptor {
     return handler.reject(err);
   }
 
-  /// `getErrorMessage` - This function is used to get error message from `ExceptionKeys`.
+  /// `getErrorMessage` - This function is used to get error message
+  /// from `ExceptionKeys`.
   static String getErrorMessage({
     required String key,
   }) {

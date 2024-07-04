@@ -31,7 +31,7 @@ final class ChangeEnvironmentDialog {
                       side: BorderSide(
                         color: context.theme.colorScheme.primary,
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
                     ),
                     title: Row(
                       children: [

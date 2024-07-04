@@ -5,7 +5,7 @@ import 'package:base_starter/src/features/auth/resource/domain/repositories/user
 class RemoteUserRepository implements IRemoteUserRepository {
   final IRemoteUserDataSource dataSource;
 
-  RemoteUserRepository({
+  const RemoteUserRepository({
     required this.dataSource,
   });
 

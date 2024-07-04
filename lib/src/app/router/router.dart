@@ -14,26 +14,28 @@ import 'package:go_router/go_router.dart';
 
 export 'package:go_router/go_router.dart';
 
-/// This line declares a global key variable which is used to access the `NavigatorState` object associated with a widget.
+/// This line declares a global key variable which is used to access the
+/// `NavigatorState` object associated with a widget.
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-/// This key is used to access the `NavigatorState` object associated with the home section of the app.
+/// This key is used to access the `NavigatorState` object associated with
+/// the home section of the app.
 final GlobalKey<NavigatorState> _homeSectionNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'homeSectionNavigatorKey');
 
 final GlobalKey<NavigatorState> _profileSectionNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'profileSectionNavigatorKey');
 
-/// This function returns a [CustomTransitionPage] widget with default fade animation.
+/// This function returns a [CustomTransitionPage] widget with default
+/// fade animation.
 CustomTransitionPage<T> buildPageWithDefaultTransition<T>({
-  required BuildContext context,
   required GoRouterState state,
   required Widget child,
 }) =>
     CustomTransitionPage<T>(
       key: state.pageKey,
       child: child,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+      transitionsBuilder: (_, animation, __, child) =>
           FadeTransition(opacity: animation, child: child),
     );
 
@@ -54,7 +56,6 @@ String? getCurrentPath() {
 
 /// This function returns a [NoTransitionPage] widget with no animation.
 CustomTransitionPage<T> buildPageWithNoTransition<T>({
-  required BuildContext context,
   required GoRouterState state,
   required Widget child,
 }) =>
@@ -64,18 +65,18 @@ CustomTransitionPage<T> buildPageWithNoTransition<T>({
     );
 
 /// This function returns a dynamic [Page] widget based on the input parameters.
-/// It uses the '[buildPageWithDefaultTransition]' function to create a page with a default [fade animation].
-Page<dynamic> Function(BuildContext, GoRouterState) defaultPageBuilder<T>(
+/// It uses the '[buildPageWithDefaultTransition]' function to create a page
+/// with a default [fade animation].
+Page<dynamic> Function(GoRouterState state) defaultPageBuilder<T>(
   Widget child,
 ) =>
-    (BuildContext context, GoRouterState state) =>
-        buildPageWithDefaultTransition<T>(
-          context: context,
+    (GoRouterState state) => buildPageWithDefaultTransition<T>(
           state: state,
           child: child,
         );
 
-/// [createRouter] is a factory function that creates a [GoRouter] instance with all routes.
+/// [createRouter] is a factory function that creates a [GoRouter] instance
+/// with all routes.
 
 GoRouter createRouter = GoRouter(
   initialLocation: SplashPage.routePath,
@@ -84,7 +85,7 @@ GoRouter createRouter = GoRouter(
     HeroController(),
     RouterObserver(),
   ],
-  errorBuilder: (context, state) {
+  errorBuilder: (_, state) {
     final error = state.matchedLocation;
     return RouterErrorPage(
       error: error,
@@ -94,17 +95,17 @@ GoRouter createRouter = GoRouter(
     GoRoute(
       name: SplashPage.name,
       path: SplashPage.routePath,
-      builder: (context, state) => const SplashPage(),
+      builder: (_, __) => const SplashPage(),
     ),
     GoRoute(
       name: AuthPage.name,
       path: AuthPage.routePath,
-      builder: (context, pathParameters) => const AuthPage(),
+      builder: (_, __) => const AuthPage(),
     ),
     StatefulShellRoute.indexedStack(
       builder: (
-        BuildContext context,
-        GoRouterState state,
+        BuildContext _,
+        GoRouterState __,
         StatefulNavigationShell navigationShell,
       ) {
         /// Return the widget that implements the custom shell (in this case
@@ -124,7 +125,7 @@ GoRouter createRouter = GoRouter(
             GoRoute(
               name: HomePage.name,
               path: HomePage.routePath,
-              builder: (context, pathParameters) => const HomePage(),
+              builder: (_, __) => const HomePage(),
             ),
           ],
         ),
@@ -134,12 +135,12 @@ GoRouter createRouter = GoRouter(
             GoRoute(
               name: ProfilePage.name,
               path: ProfilePage.routePath,
-              builder: (context, state) => const ProfilePage(),
+              builder: (_, __) => const ProfilePage(),
               routes: [
                 GoRoute(
                   name: SettingsPage.name,
                   path: SettingsPage.routePath,
-                  builder: (context, state) {
+                  builder: (_, state) {
                     final Map<String, String> queryParameters =
                         state.uri.queryParameters;
                     return SettingsPage(

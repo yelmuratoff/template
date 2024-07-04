@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 ///Body text style:
 ///`s12w700 = TextStyle(fontSize: 12, fontWeight: FontWeight.w700);`
 ///Header text style
-///`hs14w500 = TextStyle(fontSize: 14, fontWeight: FontWeight.w500, fontFamily: 'Inter');`
+// ignore: lines_longer_than_80_chars
+///`hs14w500 =TextStyle(fontSize: 14, fontWeight: FontWeight.w500, fontFamily: 'Inter');`
 abstract class ITextStyles extends ThemeExtension<ITextStyles> {
   abstract final TextStyle error;
   abstract final TextStyle s9w600;

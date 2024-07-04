@@ -24,7 +24,8 @@ class _BottomNavigationBar extends StatelessWidget {
           onDestinationSelected: (index) {
             navigationShell.goBranch(
               index,
-              // It is need for go to the initial page of the current branch if tap on the selected destination.
+              // It is need for go to the initial page of the current branch
+              //if tap on the selected destination.
               initialLocation: index == navigationShell.currentIndex,
             );
           },

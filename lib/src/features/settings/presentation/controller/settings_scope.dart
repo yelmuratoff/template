@@ -114,7 +114,7 @@ class _SettingsScopeState extends State<SettingsScope>
   Widget build(BuildContext context) =>
       BlocBuilder<SettingsBloc, SettingsState>(
         bloc: widget.settingsBloc,
-        builder: (context, state) => _InheritedSettingsScope(
+        builder: (_, state) => _InheritedSettingsScope(
           controller: this,
           state: state,
           child: widget.child,

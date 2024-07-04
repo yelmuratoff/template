@@ -4,7 +4,8 @@ import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-/// `AppDialogs` is a class that provides a set of methods to show different types of dialogs.
+/// `AppDialogs` is a class that provides a set of methods
+/// to show different types of dialogs.
 final class AppDialogs {
   const AppDialogs();
 

@@ -61,7 +61,8 @@ Future<void> bootstrap() async {
 
 // ==================== Initialization Callbacks ====================
 
-/// `_onInitializing` is a callback function that is called when the initialization process is started.
+/// `_onInitializing` is a callback function that is
+/// called when the initialization process is started.
 void _onInitializing(InitializationStepInfo info) {
   final percentage = ((info.step / info.stepsCount) * 100).toInt();
   ISpectTalker.info(
@@ -70,14 +71,16 @@ void _onInitializing(InitializationStepInfo info) {
   );
 }
 
-/// `_onInitialized` is a callback function that is called when the initialization process is completed.
+/// `_onInitialized` is a callback function that is called when
+/// the initialization process is completed.
 void _onInitialized(InitializationResult result) {
   ISpectTalker.good(
     '🎉 Initialization completed in ${result.msSpent} ms',
   );
 }
 
-/// `_onErrorFactory` is a factory function that creates an error handling function.
+/// `_onErrorFactory` is a factory function that creates an error
+/// handling function.
 void _onErrorFactory(
   int step,
   Object error,
@@ -97,7 +100,8 @@ void _onErrorFactory(
   );
 }
 
-/// `_onInit` is a callback function that is called when the initialization process is started.
+/// `_onInit` is a callback function that is called when the
+/// initialization process is started.
 void _onInit() {
   talker.info('📱 App started');
   ISpectTalker.initHandling(talker: talker);

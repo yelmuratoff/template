@@ -26,6 +26,7 @@ mixin InitializationProcessor {
       repositories: Repositories(),
     );
 
+    // ignore: avoid_empty_blocks
     if (!kDebugMode) {}
     hook.onInit?.call();
     try {

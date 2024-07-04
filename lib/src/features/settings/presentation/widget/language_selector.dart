@@ -7,7 +7,7 @@ class _LanguagesSelector extends StatelessWidget {
   });
 
   final List<Locale> languages;
-  final void Function(Locale) onLocaleTapped;
+  final void Function(Locale locale) onLocaleTapped;
 
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -15,7 +15,7 @@ class _LanguagesSelector extends StatelessWidget {
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: languages.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (_, index) {
             final language = languages.elementAt(index);
 
             return Padding(

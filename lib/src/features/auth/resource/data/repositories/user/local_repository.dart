@@ -5,7 +5,7 @@ import 'package:base_starter/src/features/auth/resource/domain/repositories/user
 class LocalUserRepository implements ILocalUserRepository {
   final ILocalUserDataSource dataSource;
 
-  LocalUserRepository({
+  const LocalUserRepository({
     required this.dataSource,
   });
 

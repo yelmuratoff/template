@@ -222,8 +222,10 @@ class DioClient {
               if (oldToken == null) {
                 return handler.reject(e);
               }
-              //TODO: Change this to your refresh token endpoint
+
+              // ignore: prefer_async_await
               final TokenPair? newToken = await dio.post(
+                //TODO: Change this to your refresh token endpoint
                 '/auth/refresh',
                 options: Options(
                   sendTimeout: const Duration(milliseconds: 30000),
@@ -279,7 +281,8 @@ class DioClient {
       ),
     );
 
-    /// Adds `TalkerDioLogger` to intercept Dio requests and responses and log them using Talker service.
+    /// Adds `TalkerDioLogger` to intercept Dio requests and responses and
+    /// log them using Talker service.
     dio.interceptors.add(
       TalkerDioLogger(
         talker: talker,

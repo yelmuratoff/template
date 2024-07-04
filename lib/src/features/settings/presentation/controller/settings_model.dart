@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 final class SettingsPageModel extends PageLifecycleModel {
   int tapNumber = 0;
   @override
+  // ignore: avoid_empty_blocks
   void dispose() {}
 
   @override
+  // ignore: avoid_empty_blocks
   void initState(BuildContext context) {}
 }

@@ -6,7 +6,7 @@ class _AppVersionBody extends StatelessWidget {
     required Color versionTextColor,
   }) : _versionTextColor = versionTextColor;
 
-  final void Function() onTapAppVersion;
+  final VoidCallback onTapAppVersion;
   final Color _versionTextColor;
 
   @override

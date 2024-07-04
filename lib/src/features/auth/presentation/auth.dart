@@ -43,21 +43,16 @@ class _AuthPageState extends State<AuthPage> {
               },
           },
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                AppButton(
-                  onPressed: () {
-                    context.dependencies.authBloc.add(
-                      const LoginAuthEvent(
-                        email: 'john@mail.com',
-                        password: 'changeme',
-                      ),
-                    );
-                  },
-                  text: L10n.current.login,
-                ),
-              ],
+            child: AppButton(
+              onPressed: () {
+                context.dependencies.authBloc.add(
+                  const LoginAuthEvent(
+                    email: 'john@mail.com',
+                    password: 'changeme',
+                  ),
+                );
+              },
+              text: L10n.current.login,
             ),
           ),
         ),

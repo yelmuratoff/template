@@ -4,7 +4,8 @@ import 'package:base_starter/src/common/utils/extensions/context_extension.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// `OutlinedTextField` is a custom widget which is used for return custom textfield with custom style.
+/// `OutlinedTextField` is a custom widget which
+/// is used for return custom textfield with custom style.
 class OutlinedTextfield extends StatelessWidget {
   // These are the required input parameters for the widget.
   final String hintText;
@@ -12,7 +13,7 @@ class OutlinedTextfield extends StatelessWidget {
   final String? labelText;
   final bool? readOnly;
   final Function()? onTap;
-  final Function(String)? onChanged;
+  final Function(String text)? onChanged;
   final TextEditingController? textController;
   final int? maxLines;
   final int? minLines;
@@ -55,11 +56,13 @@ class OutlinedTextfield extends StatelessWidget {
     this.onEditingComplete,
   });
 
-  // This is a FocusNode variable which can be used to control the focus on the text field if needed.
+  // This is a FocusNode variable which can be used to
+  // control the focus on the text field if needed.
   // (It is currently commented out because it is not being used.)
   // FocusNode focusNode = FocusNode();
 
-  // This method builds and returns the widget tree for the OutlinedTextfield widget.
+  // This method builds and returns the widget tree for
+  // the OutlinedTextfield widget.
   @override
   Widget build(BuildContext context) => TextFormField(
         // These properties define the basic configuration of the text field.
@@ -73,7 +76,7 @@ class OutlinedTextfield extends StatelessWidget {
         validator: validator,
         inputFormatters: inputFormatters,
         textInputAction: textInputAction,
-        onTapOutside: (event) {
+        onTapOutside: (_) {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         autofocus: autofocusEnabled,
@@ -90,21 +93,21 @@ class OutlinedTextfield extends StatelessWidget {
           hintTextDirection: TextDirection.ltr,
           labelText: (labelText != "") ? labelText ?? hintText : null,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 16),
+            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
             borderSide: BorderSide(
               color: context.theme.colors.border,
               width: 1.5,
             ),
           ),
           disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 16),
+            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
             borderSide: BorderSide(
               color: context.theme.colors.border,
               width: 1.5,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 16),
+            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
             borderSide: BorderSide(
               color: context.theme.colors.error,
               width: 1.5,
@@ -112,14 +115,14 @@ class OutlinedTextfield extends StatelessWidget {
           ),
           alignLabelWithHint: true,
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 16),
+            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
             borderSide: BorderSide(
               color: context.theme.colors.error,
               width: 1.5,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 16),
+            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
             borderSide: BorderSide(
               color: readOnly ?? false
                   ? context.theme.colors.border

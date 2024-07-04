@@ -4,6 +4,7 @@ import 'package:base_starter/src/features/auth/resource/domain/repositories/user
 
 /// Repositories container
 base class Repositories {
+  // ignore: prefer_const_constructor_declarations
   Repositories();
 
   late final IAuthRepository authRepository;

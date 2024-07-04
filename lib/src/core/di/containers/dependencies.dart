@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Dependencies container
 base class Dependencies {
+  // ignore: prefer_const_constructor_declarations
   Dependencies();
 
   late final SharedPreferences sharedPreferences;

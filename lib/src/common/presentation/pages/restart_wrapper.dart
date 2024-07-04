@@ -8,7 +8,7 @@ class RestartWrapper extends StatefulWidget {
   final Widget child;
 
   static void restartApp(BuildContext context) {
-    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
+    context.findAncestorStateOfType<_RestartWidgetState>()?._restartApp();
   }
 
   @override
@@ -18,7 +18,7 @@ class RestartWrapper extends StatefulWidget {
 class _RestartWidgetState extends State<RestartWrapper> {
   Key _key = UniqueKey();
 
-  void restartApp() {
+  void _restartApp() {
     setState(() {
       navigatorKey.currentContext?.goNamed(HomePage.name);
       _key = UniqueKey();

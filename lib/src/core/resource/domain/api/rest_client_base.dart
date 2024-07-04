@@ -102,7 +102,8 @@ abstract base class RestClientBase implements RestClient {
         }
       }
 
-      /// return null if in your response you have no data key (data key is required)
+      /// return null if in your response you have no data key
+      /// (data key is required)
       return result;
     } on RestClientException {
       rethrow;

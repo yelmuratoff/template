@@ -3,7 +3,8 @@ import 'package:base_starter/src/core/theme/presentation/theme_text_style.dart';
 import 'package:flutter/material.dart';
 
 final class DarkThemeData {
-  /// `getBaseDarkTheme` is a function that returns a Dark `ThemeData` for the app.
+  /// `getBaseDarkTheme` is a function that
+  /// returns a Dark `ThemeData` for the app.
   static ThemeData getTheme({required Color seed}) {
     final ThemeData baseTheme = ThemeData.from(
       colorScheme: ColorScheme.fromSeed(

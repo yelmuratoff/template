@@ -36,18 +36,18 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
+    super.initState();
     _router = createRouter;
+
     ISpectTalker.route('📜 ${_router.configuration.debugKnownRoutes()}');
 
     _router.routerDelegate.addListener(_handleRouteInformation);
-
-    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     _router.routerDelegate.removeListener(_handleRouteInformation);
+    super.dispose();
   }
 
   @override
@@ -89,7 +89,7 @@ class _AppState extends State<App> {
     RouterService.setRoute(path);
 
     ISpectTalker.route(
-      "📍 Route: \n Name: $screenName \n Path: $path \n Path parameters: $pathParams \n Query parameters: $queryParams \n Extra params: $extra",
+      '''📍 Route:\nName: $screenName \n Path: $path \n Path parameters:$pathParams\nQuery parameters: $queryParams \n Extra params: $extra''',
     );
   }
 }

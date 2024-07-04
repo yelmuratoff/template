@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:base_starter/src/features/initialization/logic/initialization_processor.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
 
@@ -12,7 +14,7 @@ import 'package:base_starter/src/features/initialization/models/dependencies.dar
 ///
 /// The `onError` is called when the initialization process is failed.
 abstract interface class InitializationHook {
-  InitializationHook({
+  const InitializationHook({
     this.onInit,
     this.onInitializing,
     this.onInitialized,
@@ -21,27 +23,28 @@ abstract interface class InitializationHook {
 
   /// Setup the initialization hook.
   factory InitializationHook.setup({
-    void Function()? onInit,
+    VoidCallback? onInit,
     void Function(InitializationStepInfo info)? onInitializing,
-    void Function(InitializationResult)? onInitialized,
-    void Function(int, Object error, StackTrace stackTrace)? onError,
+    void Function(InitializationResult result)? onInitialized,
+    void Function(int percent, Object error, StackTrace stackTrace)? onError,
   }) = _Hook;
 
   /// Called before the initialization process starts.
-  void Function()? onInit;
+  final VoidCallback? onInit;
 
   /// Called when the initialization process is in progress.
-  void Function(InitializationStepInfo info)? onInitializing;
+  final void Function(InitializationStepInfo info)? onInitializing;
 
   /// Called when the initialization process is finished.
-  void Function(InitializationResult)? onInitialized;
+  final void Function(InitializationResult result)? onInitialized;
 
   /// Called when the initialization process is failed.
-  void Function(int, Object error, StackTrace stackTrace)? onError;
+  final void Function(int percent, Object error, StackTrace stackTrace)?
+      onError;
 }
 
 final class _Hook extends InitializationHook {
-  _Hook({
+  const _Hook({
     super.onInit,
     super.onInitializing,
     super.onInitialized,

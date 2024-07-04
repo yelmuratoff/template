@@ -40,14 +40,14 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
-    _model = PageLifecycleModel.createModel(context, () => SettingsPageModel());
     super.initState();
+    _model = PageLifecycleModel.createModel(context, () => SettingsPageModel());
   }
 
   @override
   void dispose() {
-    super.dispose();
     _model.dispose();
+    super.dispose();
   }
 
   @override
@@ -111,28 +111,24 @@ class _SettingsPageState extends State<SettingsPage> {
             ]),
           ),
           SliverToBoxAdapter(
-            child: Row(
-              children: [
-                SizedBox.square(
-                  dimension: 100,
-                  child: Theme(
-                    data: context.theme.copyWith(
-                      cardTheme: CardTheme(
-                        color: context.theme.colorScheme.primaryContainer,
-                        elevation: 0,
-                      ),
-                      colorScheme: context.theme.colorScheme.copyWith(
-                        primary: context.theme.colorScheme.primary,
-                        secondary: context.theme.colorScheme.secondary,
-                        surface: context.theme.colorScheme.surface,
-                      ),
+            child: Align(
+              child: SizedBox.square(
+                dimension: 100,
+                child: Theme(
+                  data: context.theme.copyWith(
+                    cardTheme: CardTheme(
+                      color: context.theme.colorScheme.primaryContainer,
+                      elevation: 0,
                     ),
-                    child: const Card(
-                      margin: EdgeInsets.all(8),
+                    colorScheme: context.theme.colorScheme.copyWith(
+                      primary: context.theme.colorScheme.primary,
+                      secondary: context.theme.colorScheme.secondary,
+                      surface: context.theme.colorScheme.surface,
                     ),
                   ),
+                  child: const Card(margin: EdgeInsets.all(8)),
                 ),
-              ],
+              ),
             ),
           ),
           SliverFillRemaining(
@@ -141,22 +137,20 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 _AppVersionBody(
-                  onTapAppVersion: () {
+                  onTapAppVersion: () async {
                     _model.tapNumber++;
 
                     if (_model.tapNumber > 5 && _model.tapNumber < 10) {
-                      Toaster.showToast(
-                        context,
+                      await Toaster.showToast(
                         title: L10n.current
                             .environmentTapNumber(10 - _model.tapNumber),
                       );
                     } else if (_model.tapNumber == 10) {
                       ISpectTalker.info("ℹ️ Environment change dialog opened");
-                      ChangeEnvironmentDialog.show(context).then((value) {
-                        ISpectTalker.info(
-                          "🔙 Environment change dialog closed",
-                        );
-                      });
+                      await ChangeEnvironmentDialog.show(context);
+                      ISpectTalker.info(
+                        "🔙 Environment change dialog closed",
+                      );
                       _model.tapNumber = 0;
                     }
                   },

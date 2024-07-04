@@ -13,8 +13,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthRepository repository;
   AuthBloc({required this.repository}) : super(const InitialAuthState()) {
     on<LoginAuthEvent>(_onLogin);
-    on<GetCurrentUserAuthEvent>(_onGetCurrentUser);
-    on<LogoutAuthEvent>(_onLogout);
+    on<GetCurrentUserAuthEvent>((_, state) => _onGetCurrentUser(state));
+    on<LogoutAuthEvent>((_, state) => _onLogout(state));
   }
 
   Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) async {
@@ -36,7 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _onLogout(LogoutAuthEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onLogout(Emitter<AuthState> emit) async {
     try {
       emit(const LoadingAuthState());
       await AppUtils.removeToken();
@@ -49,7 +49,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onGetCurrentUser(
-    GetCurrentUserAuthEvent event,
     Emitter<AuthState> emit,
   ) async {
     try {

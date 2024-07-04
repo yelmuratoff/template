@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-///* `RowBuilder` - This widget is designed to build a row layout with a specified number of child widgets,
+///* `RowBuilder` - This widget is designed to build a row layout with a
+///specified number of child widgets,
 ///which are generated dynamically based on an IndexedWidgetBuilder function.
 
 class RowBuilder extends StatelessWidget {

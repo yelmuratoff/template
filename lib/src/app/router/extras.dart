@@ -1,4 +1,5 @@
-/// `ScreenExtras` is a class that contains all the extra data that can be passed to a screen.
+/// `ScreenExtras` is a class that contains all the
+/// extra data that can be passed to a screen.
 final class ExtraKeys {
   static const String title = "title";
   static const String data = "data";

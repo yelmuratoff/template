@@ -4,9 +4,9 @@ import 'package:base_starter/src/common/services/file/src/base_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 class FileService implements BaseFileService {
-  FileService._();
+  const FileService._();
 
-  static final BaseFileService _service = FileService._();
+  static const BaseFileService _service = FileService._();
   static BaseFileService get instance => _service;
 
   @override

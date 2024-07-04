@@ -41,20 +41,15 @@ class HomePage extends ConsumerWidget {
         body: CustomScrollView(
           slivers: [
             SliverFillRemaining(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
-                      L10n.current.counterTimesText(
-                        ref.watch(counterProvider),
-                      ),
-                      textAlign: TextAlign.center,
-                      style: context.textStyles.s18w600,
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  L10n.current.counterTimesText(
+                    ref.watch(counterProvider),
                   ),
-                ],
+                  textAlign: TextAlign.center,
+                  style: context.textStyles.s18w600,
+                ),
               ),
             ),
           ],

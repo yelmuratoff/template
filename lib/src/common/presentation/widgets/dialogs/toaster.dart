@@ -13,8 +13,7 @@ final FToast fToast = FToast();
 final class Toaster {
   const Toaster._();
 
-  static Future<void> showToast(
-    BuildContext context, {
+  static Future<void> showToast({
     required String title,
     Color backgroundColor = const Color.fromARGB(255, 43, 42, 42),
     Color textColor = Colors.white,
@@ -24,7 +23,7 @@ final class Toaster {
     Duration fadeDuration = const Duration(milliseconds: 200),
     Duration toastDuration = const Duration(seconds: 1),
     ToastGravity gravity = ToastGravity.BOTTOM,
-    void Function()? then,
+    VoidCallback? then,
   }) async {
     fToast.removeCustomToast();
     fToast.showToast(
@@ -51,7 +50,7 @@ final class Toaster {
   static Future<void> showSuccessToast(
     BuildContext context, {
     required String title,
-    void Function()? then,
+    VoidCallback? then,
     Color textColor = Colors.white,
     bool hasImage = false,
     bool isDismissable = true,
@@ -85,7 +84,7 @@ final class Toaster {
   static Future<void> showErrorToast(
     BuildContext context, {
     required String title,
-    void Function()? then,
+    VoidCallback? then,
     Color textColor = Colors.white,
     bool hasImage = false,
     bool isDismissable = true,

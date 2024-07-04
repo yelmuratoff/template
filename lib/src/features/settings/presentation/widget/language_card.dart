@@ -7,18 +7,18 @@ class _LanguageCard extends StatelessWidget {
   });
 
   final Locale language;
-  final void Function(Locale) onLocaleTapped;
+  final void Function(Locale locale) onLocaleTapped;
 
   @override
   Widget build(BuildContext context) => Card(
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: context.theme.colorScheme.primary,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: const BorderRadius.all(Radius.circular(4)),
           ),
           child: InkWell(
             onTap: () => onLocaleTapped.call(language),
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: const BorderRadius.all(Radius.circular(4)),
             child: SizedBox(
               width: 64,
               child: Center(

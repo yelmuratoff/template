@@ -1,7 +1,7 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/features/settings/resource/domain/locale/locale_repository.dart';
-import 'package:base_starter/src/features/settings/resource/domain/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/core/domain/locale/locale_repository.dart';
+import 'package:base_starter/src/features/settings/core/domain/theme/theme_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

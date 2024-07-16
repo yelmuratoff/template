@@ -27,7 +27,7 @@ dependencies:
   bloc_concurrency: ^0.2.5
 
   # Networking
-  dio: ^5.4.3
+  dio: ^5.5.0
 
   # Persisting
   shared_preferences: ^2.2.3
@@ -57,7 +57,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   auto_size_text: ^3.0.0
   fluttertoast: ^8.2.6
-  ispect: ^1.2.2
+  ispect: ^1.4.3
 
   # Others
   provider: ^6.1.2

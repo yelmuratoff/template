@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:base_starter/src/core/resource/domain/token/token_pair.dart';
+import 'package:base_starter/src/core/domain/token/token_pair.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// `SecureStorageManager` - A class to manage secure storage

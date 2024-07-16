@@ -1,6 +1,6 @@
-import 'package:base_starter/src/features/auth/resource/domain/models/user.dart';
-import 'package:base_starter/src/features/auth/resource/domain/repositories/user/local_repository.dart';
-import 'package:base_starter/src/features/auth/resource/domain/repositories/user/remote_repository.dart';
+import 'package:base_starter/src/features/auth/core/data/models/user.dart';
+import 'package:base_starter/src/features/auth/core/domain/repositories/user/local_repository.dart';
+import 'package:base_starter/src/features/auth/core/domain/repositories/user/remote_repository.dart';
 import 'package:bloc/bloc.dart';
 
 class UserCubit extends Cubit<UserDTO?> {

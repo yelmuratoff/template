@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
+import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 part 'state.dart';

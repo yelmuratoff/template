@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
-import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
+import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
+import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/features/auth/presentation/auth.dart';

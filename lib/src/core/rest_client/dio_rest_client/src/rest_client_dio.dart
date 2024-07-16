@@ -1,10 +1,10 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
 import 'package:base_starter/bootstrap.dart';
-import 'package:base_starter/src/common/configs/preferences/secure_storage_manager.dart';
-import 'package:base_starter/src/core/data/dio_rest_client/rest_client.dart';
-import 'package:base_starter/src/core/data/dio_rest_client/src/interceptor/dio_interceptor.dart';
-import 'package:base_starter/src/core/domain/token/token_pair.dart';
+import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
+import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
+import 'package:base_starter/src/core/rest_client/dio_rest_client/src/interceptor/dio_interceptor.dart';
+import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:talker/talker.dart';

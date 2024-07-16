@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:base_starter/flavors.dart';
-import 'package:base_starter/src/common/configs/preferences/app_config_manager.dart';
+import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:base_starter/src/core/data/dio_rest_client/src/rest_client_dio.dart';
+import 'package:base_starter/src/core/rest_client/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/auth/bloc/auth/auth_bloc.dart';

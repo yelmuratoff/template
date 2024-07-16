@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:base_starter/src/core/data/dio_rest_client/rest_client.dart';
+import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 

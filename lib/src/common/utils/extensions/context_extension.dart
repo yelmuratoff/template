@@ -5,6 +5,7 @@ import 'package:base_starter/src/core/theme/domain/theme_text_styles.dart';
 import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 /// List of extensions for `BuildContext`
@@ -104,9 +105,17 @@ extension ContextExtension on BuildContext {
   /// `provide` returns the nearest `Provider` of the given `BuildContext`.
   T provide<T>() => Provider.of<T>(this);
 
+  /// `blocProvide` returns the nearest `BlocProvider` of the
+  /// given `BuildContext`.
+  T blocWatch<T extends StateStreamableSource<Object?>>() =>
+      BlocProvider.of<T>(this, listen: true);
+
   /// `provideOnce` returns the nearest `Provider` of the given `BuildContext`
   /// without listening to changes.
   T provideOnce<T>() => Provider.of<T>(this, listen: false);
+
+  T blocRead<T extends StateStreamableSource<Object?>>() =>
+      BlocProvider.of<T>(this);
 
   /// `provideOrNull` returns the nearest `Provider` of the given `BuildContext`
   /// or `null` if not found.

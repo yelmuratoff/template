@@ -5,7 +5,7 @@
             "label": "Init bash commands",
             "type": "shell",
             "command": [
-                "chmod a+x bash/*"
+                "chmod a+x automation/bash/*"
             ],
             "group": {
                 "kind": "none",
@@ -53,7 +53,7 @@
             "label": "Setup",
             "type": "shell",
             "command": [
-                "./bash/setup.sh"
+                "./automation/bash/setup.sh"
             ],
             "group": {
                 "kind": "none",
@@ -65,7 +65,7 @@
             "label": "Setup iOS",
             "type": "shell",
             "command": [
-                "./bash/setup_ios.sh"
+                "./automation/bash/setup_ios.sh"
             ],
             "group": {
                 "kind": "none",
@@ -77,7 +77,7 @@
             "label": "Build IPA",
             "type": "shell",
             "command": [
-                "./bash/build_ipa.sh"
+                "./automation/bash/build_ipa.sh"
             ],
             "group": {
                 "kind": "none",
@@ -89,7 +89,7 @@
             "label": "Build APK",
             "type": "shell",
             "command": [
-                "./bash/build_apk.sh"
+                "./automation/bash/build_apk.sh"
             ],
             "group": {
                 "kind": "none",
@@ -101,7 +101,7 @@
             "label": "Build AppBundle",
             "type": "shell",
             "command": [
-                "./bash/build_appbundle.sh"
+                "./automation/bash/build_appbundle.sh"
             ],
             "group": {
                 "kind": "none",
@@ -113,7 +113,7 @@
             "label": "Build WEB",
             "type": "shell",
             "command": [
-                "./bash/build_web.sh"
+                "./automation/bash/build_web.sh"
             ],
             "group": {
                 "kind": "none",
@@ -125,7 +125,7 @@
             "label": "Init Flutterfire",
             "type": "shell",
             "command": [
-                "./bash/firebase_init.sh"
+                "./automation/bash/firebase_init.sh"
             ],
             "group": {
                 "kind": "none",

@@ -4,7 +4,6 @@ import 'package:base_starter/src/features/auth/core/data/models/user.dart';
 import 'package:ispect/ispect.dart';
 
 final class UserRemoteDataSource implements IRemoteUserDataSource {
-
   const UserRemoteDataSource({
     required this.restClient,
   });

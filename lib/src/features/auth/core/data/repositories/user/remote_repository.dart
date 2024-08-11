@@ -3,7 +3,6 @@ import 'package:base_starter/src/features/auth/core/data/models/user.dart';
 import 'package:base_starter/src/features/auth/core/domain/repositories/user/remote_repository.dart';
 
 class RemoteUserRepository implements IRemoteUserRepository {
-
   const RemoteUserRepository({
     required this.dataSource,
   });

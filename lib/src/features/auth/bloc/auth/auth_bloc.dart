@@ -1,5 +1,5 @@
-import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
+import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/core/domain/repositories/auth/remote_repository.dart';
 import 'package:bloc/bloc.dart';

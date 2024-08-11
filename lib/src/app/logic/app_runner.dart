@@ -40,6 +40,7 @@ final class AppRunner
         );
 
         FlutterNativeSplash.remove();
+
         runApp(
           ProviderScope(
             observers: [
@@ -48,8 +49,18 @@ final class AppRunner
               ),
             ],
             child: RestartWrapper(
-              child: App(
-                result: result,
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(
+                    value: result.dependencies.authBloc,
+                  ),
+                  BlocProvider.value(
+                    value: result.dependencies.userCubit,
+                  ),
+                ],
+                child: App(
+                  result: result,
+                ),
               ),
             ),
           ),

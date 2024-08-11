@@ -1,7 +1,6 @@
 part of 'settings_bloc.dart';
 
 sealed class SettingsState extends Equatable {
-
   const SettingsState({this.locale, this.appTheme});
   final Locale? locale;
   final AppTheme? appTheme;
@@ -19,7 +18,6 @@ class ProcessingSettingsState extends SettingsState {
 }
 
 class ErrorSettingsState extends SettingsState {
-
   const ErrorSettingsState({
     required this.cause,
     super.locale,

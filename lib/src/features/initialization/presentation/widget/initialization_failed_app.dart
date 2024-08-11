@@ -20,19 +20,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ispect/ispect.dart';
-import 'package:ispect/ispect_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker/talker.dart';
 
 /// InitializationFailedScreen widget
 class InitializationFailedApp extends StatefulWidget {
-
   const InitializationFailedApp({
     required this.error,
     required this.stackTrace,
     this.retryInitialization,
     super.key,
   });
+
   /// The error that caused the initialization to fail.
   final Object error;
 
@@ -153,7 +152,6 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 }
 
 class _View extends StatelessWidget {
-
   const _View({
     required this.error,
     required this.stackTrace,
@@ -252,9 +250,11 @@ class _View extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    border: Border.fromBorderSide(BorderSide(
-                      color: context.theme.colorScheme.error,
-                    ),),
+                    border: Border.fromBorderSide(
+                      BorderSide(
+                        color: context.theme.colorScheme.error,
+                      ),
+                    ),
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                   ),
                   child: Padding(

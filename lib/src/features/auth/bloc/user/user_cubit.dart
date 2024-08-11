@@ -4,7 +4,6 @@ import 'package:base_starter/src/features/auth/core/domain/repositories/user/rem
 import 'package:bloc/bloc.dart';
 
 class UserCubit extends Cubit<UserDTO?> {
-
   UserCubit({
     required this.remoteUserRepository,
     required this.localUserRepository,

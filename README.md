@@ -76,7 +76,7 @@ Put this code in your project at an screen and learn how it works. 😊
 3. Run `fvm install`
 4. Run `fvm dart run build_runner build --delete-conflicting-outputs`
 5. Decide which platforms your app will be running on
-6. Run `chmod a+x bash/create_app.sh && ./bash/create_app.sh --id com.example.app`
+6. Run `chmod a+x automation/bash/create_app.sh && ./automation/bash/create_app.sh --id com.example.app`
 7. Run `fvm flutter pub get` to install all dependencies
 8. Run `fvm flutter run` to run your app
 9. For other tasks (like build bundle, ipa) use: `ctrl + shift + p` -> `Run Task`

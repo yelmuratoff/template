@@ -1,11 +1,12 @@
 import 'package:base_starter/src/app/presentation/widget/material_context.dart';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/services/router_service.dart';
+import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
+import 'package:base_starter/src/features/auth/bloc/user/user_cubit.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ispect/ispect.dart';
 
 /// `App` is an entry point to the application.
@@ -42,6 +43,8 @@ class _AppState extends State<App> {
     ISpectTalker.route('📜 ${_router.configuration.debugKnownRoutes()}');
 
     _router.routerDelegate.addListener(_handleRouteInformation);
+
+    context.blocRead<UserCubit>().get();
   }
 
   @override
@@ -51,21 +54,13 @@ class _AppState extends State<App> {
   }
 
   @override
-  Widget build(BuildContext context) => MultiBlocProvider(
-        providers: [
-          BlocProvider.value(value: widget.result.dependencies.authBloc),
-          BlocProvider.value(
-            value: widget.result.dependencies.userCubit..get(),
-          ),
-        ],
-        child: DependenciesScope(
-          dependencies: widget.result.dependencies,
-          repositories: widget.result.repositories,
-          child: SettingsScope(
-            settingsBloc: widget.result.dependencies.settingsBloc,
-            child: MaterialContext(
-              routerConfig: _router,
-            ),
+  Widget build(BuildContext context) => DependenciesScope(
+        dependencies: widget.result.dependencies,
+        repositories: widget.result.repositories,
+        child: SettingsScope(
+          settingsBloc: widget.result.dependencies.settingsBloc,
+          child: MaterialContext(
+            routerConfig: _router,
           ),
         ),
       );

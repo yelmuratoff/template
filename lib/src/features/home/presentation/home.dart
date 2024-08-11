@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 class HomePage extends ConsumerWidget {
-
   const HomePage({super.key});
   static const String name = 'Home';
   static const String routePath = '/home';

@@ -3,7 +3,6 @@ import 'package:base_starter/src/features/auth/core/data/models/user.dart';
 import 'package:base_starter/src/features/auth/core/domain/repositories/user/local_repository.dart';
 
 class LocalUserRepository implements ILocalUserRepository {
-
   const LocalUserRepository({
     required this.dataSource,
   });

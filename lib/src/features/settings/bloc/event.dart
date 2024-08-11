@@ -5,7 +5,6 @@ sealed class SettingsEvent extends Equatable {
 }
 
 final class UpdateThemeSettingsEvent extends SettingsEvent {
-
   const UpdateThemeSettingsEvent({required this.appTheme}) : super._();
   final AppTheme appTheme;
 
@@ -14,7 +13,6 @@ final class UpdateThemeSettingsEvent extends SettingsEvent {
 }
 
 final class UpdateLocaleSettingsEvent extends SettingsEvent {
-
   const UpdateLocaleSettingsEvent({required this.locale}) : super._();
   final Locale locale;
 

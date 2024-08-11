@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class UserDTO extends Equatable {
-
   const UserDTO({
     required this.id,
     required this.email,

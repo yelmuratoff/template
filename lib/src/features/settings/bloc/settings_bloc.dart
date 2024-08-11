@@ -10,7 +10,6 @@ part 'event.dart';
 part 'state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
-
   SettingsBloc({
     required ILocaleRepository localeRepository,
     required IThemeRepository themeRepository,

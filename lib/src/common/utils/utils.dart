@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/features/auth/presentation/auth.dart';
 import 'package:ispect/ispect.dart';
 

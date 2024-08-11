@@ -30,26 +30,26 @@ dependencies:
   dio: ^5.5.0
 
   # Persisting
-  shared_preferences: ^2.2.3
-  drift: ^2.18.0
+  shared_preferences: ^2.3.1
+  drift: ^2.19.1
   sqlite3_flutter_libs: ^0.5.24
 
   # Logging
-  talker: ^4.3.2
-  talker_dio_logger: ^4.3.2
-  talker_bloc_logger: ^4.3.2
-  talker_riverpod_logger: ^1.1.2
+  talker: ^4.4.0
+  talker_dio_logger: ^4.4.0
+  talker_bloc_logger: ^4.4.0
+  talker_riverpod_logger: ^4.4.0
 
   # Utils
   pure: ^0.3.0
   platform_info: ^4.0.2
   path: ^1.9.0
-  path_provider: ^2.1.3
+  path_provider: ^2.1.4
   mocktail: ^1.0.4
   equatable: ^2.0.5
   share_plus: ^9.0.0
-  package_info_plus: ^8.0.0
-  device_info_plus: ^10.1.0
+  package_info_plus: ^8.0.2
+  device_info_plus: ^10.1.2
 
   # UI
   gap: ^3.0.1
@@ -57,18 +57,18 @@ dependencies:
   flutter_easyloading: ^3.0.5
   auto_size_text: ^3.0.0
   fluttertoast: ^8.2.6
-  ispect: ^1.4.3
+  ispect: ^1.7.7
 
   # Others
   provider: ^6.1.2
   flutter_riverpod: ^2.5.1
-  go_router: ^14.2.0
+  go_router: ^14.2.3
   flutter_secure_storage: ^9.2.2
   envied: ^0.5.4
   dev: ^1.0.0
-  
+
   custom_lint: ^0.6.4
-  
+
 dev_dependencies:
   # Testing
   flutter_test:
@@ -79,7 +79,7 @@ dev_dependencies:
 
   # Utils
   flutter_gen_runner: ^5.6.0
-  flutter_native_splash: ^2.4.0
+  flutter_native_splash: ^2.4.1
   flutter_launcher_icons: ^0.13.1
 
   # Flavors

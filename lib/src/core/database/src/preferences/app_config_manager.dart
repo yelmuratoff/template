@@ -1,5 +1,5 @@
-import 'package:base_starter/src/core/database/src/preferences/preferences_dao.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
+import 'package:base_starter/src/core/database/src/preferences/preferences_dao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// `AppConfigManager` - A class to manage the app configurations.

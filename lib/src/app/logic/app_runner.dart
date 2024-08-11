@@ -40,6 +40,7 @@ final class AppRunner
         );
 
         FlutterNativeSplash.remove();
+
         runApp(
           ProviderScope(
             observers: [

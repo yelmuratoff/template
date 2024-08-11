@@ -56,6 +56,7 @@ class MaterialContext extends ConsumerWidget {
           );
 
           child = ISpectBuilder(
+            navigatorKey: navigatorKey,
             child: child,
           );
 

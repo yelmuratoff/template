@@ -2,7 +2,6 @@ import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.da
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:base_starter/src/features/auth/core/data/data_source/interface/auth/auth_data_source.dart';
 import 'package:base_starter/src/features/auth/core/data/models/user.dart';
-import 'package:ispect/ispect.dart';
 
 final class AuthRemoteDataSource implements IAuthDataSource {
   const AuthRemoteDataSource({
@@ -15,12 +14,7 @@ final class AuthRemoteDataSource implements IAuthDataSource {
     try {
       final response = await restClient.get('api/v1/auth/profile');
       return UserDTO.fromJson(response);
-    } catch (e, st) {
-      ISpectTalker.handle(
-        exception: e,
-        stackTrace: st,
-        message: 'Get current user failed.',
-      );
+    } catch (e) {
       rethrow;
     }
   }
@@ -39,12 +33,7 @@ final class AuthRemoteDataSource implements IAuthDataSource {
         },
       );
       return TokenPair.fromJson(response);
-    } catch (e, st) {
-      ISpectTalker.handle(
-        exception: e,
-        stackTrace: st,
-        message: 'Login failed.',
-      );
+    } catch (e) {
       rethrow;
     }
   }

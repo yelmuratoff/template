@@ -22,7 +22,6 @@ import 'package:base_starter/src/features/settings/core/data/locale/locale_repos
 import 'package:base_starter/src/features/settings/core/data/theme/theme_datasource.dart';
 import 'package:base_starter/src/features/settings/core/data/theme/theme_mode_codec.dart';
 import 'package:base_starter/src/features/settings/core/data/theme/theme_repository.dart';
-import 'package:dio/dio.dart';
 import 'package:ispect/ispect.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +61,6 @@ mixin InitializationSteps {
           Flavor.prod.name,
         );
       }
-      F.appFlavor = Flavor.from(environment);
       ISpectTalker.good('Environment: $environment');
     },
     'Settings BLoC': (progress) async {
@@ -96,9 +94,7 @@ mixin InitializationSteps {
       progress.dependencies.settingsBloc = settingsBloc;
     },
     'Rest Client': (progress) async {
-      final dio = Dio();
-
-      final restClient = RestClientDio(baseUrl: AppConstants.baseUrl, dio: dio);
+      final restClient = RestClientDio(baseUrl: AppConstants.baseUrl);
 
       progress.dependencies.restClient = restClient;
     },

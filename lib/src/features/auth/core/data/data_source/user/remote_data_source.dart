@@ -1,7 +1,6 @@
 import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/core/data/data_source/interface/user/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/core/data/models/user.dart';
-import 'package:ispect/ispect.dart';
 
 final class UserRemoteDataSource implements IRemoteUserDataSource {
   const UserRemoteDataSource({
@@ -14,12 +13,7 @@ final class UserRemoteDataSource implements IRemoteUserDataSource {
     try {
       final response = await restClient.get('api/v1/auth/profile');
       return UserDTO.fromJson(response);
-    } catch (e, st) {
-      ISpectTalker.handle(
-        exception: e,
-        stackTrace: st,
-        message: 'Get current user failed.',
-      );
+    } catch (e) {
       rethrow;
     }
   }

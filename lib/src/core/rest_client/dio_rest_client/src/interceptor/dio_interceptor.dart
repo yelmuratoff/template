@@ -4,7 +4,6 @@ import 'package:base_starter/src/common/constants/exception_keys.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:dio/dio.dart';
-import 'package:ispect/ispect.dart';
 
 /// `DioInterceptor` - This class is used to intercept `dio` errors.
 
@@ -46,13 +45,6 @@ class DioInterceptor extends Interceptor {
         type: err.type,
       );
     }
-
-    ISpectTalker.error(
-      message: '''====================ERROR - START====================
-          \nERROR_TYPE: ${err.type}\nPATH: ${err.requestOptions.path}
-          \n${err.message}\n${err.response?.data}
-          \n====================ERROR - END====================''',
-    );
 
     if (err.response != null &&
         err.response!.data.toString().contains('html')) {

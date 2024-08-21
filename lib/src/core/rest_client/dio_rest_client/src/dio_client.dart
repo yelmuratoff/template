@@ -49,7 +49,7 @@ class DioClient {
               final oldToken = await SecureStorageManager.getToken();
 
               if (oldToken == null) {
-                return handler.reject(e);
+                return handler.next(e);
               }
 
               // ignore: prefer_async_await

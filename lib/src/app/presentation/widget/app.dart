@@ -69,20 +69,8 @@ class _AppState extends State<App> {
   void _handleRouteInformation() {
     final routeMatchList = _router.routerDelegate.currentConfiguration;
 
-    final configuration = _router.configuration;
-
-    final state = routeMatchList.last.buildState(configuration, routeMatchList);
-
-    final screenName = routeMatchList.last.route.name;
     final path = routeMatchList.last.matchedLocation;
-    final pathParams = routeMatchList.pathParameters;
-    final queryParams = state.uri.queryParameters;
-    final extra = state.extra;
 
     RouterService.setRoute(path);
-
-    ISpectTalker.route(
-      '''📍 Route:\nName: $screenName \n Path: $path \n Path parameters:$pathParams\nQuery parameters: $queryParams \n Extra params: $extra''',
-    );
   }
 }

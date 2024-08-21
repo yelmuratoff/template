@@ -34,26 +34,23 @@ Future<void> bootstrap() async {
     onInit: _onInit,
   );
 
-  await runZonedGuarded(
+  ISpect.run(
     () => AppRunner().initializeAndRun(
       hook!,
     ),
-    (error, stackTrace) {
-      ISpectTalker.handle(
-        message: error.toString(),
-        exception: error,
-        stackTrace: stackTrace,
-      );
-      // if (kReleaseMode && envType == EnvType.prod) {
-      //   FirebaseCrashlytics.instance
-      //       .recordError(
-      //         error,
-      //         stack,
-      //         reason: 'runZonedGuarded',
-      //       )
-      //       .whenComplete(
-      //         () => FirebaseCrashlytics.instance.sendUnsentReports(),
-      //       );
+    talker: talker,
+    onError: (_, __) {
+      debugPrint('Zoned error');
+      //     if (kReleaseMode && envType == EnvType.prod) {
+      // FirebaseCrashlytics.instance
+      //     .recordError(
+      //       error,
+      //       stack,
+      //       reason: 'runZonedGuarded',
+      //     )
+      //     .whenComplete(
+      //       () => FirebaseCrashlytics.instance.sendUnsentReports(),
+      //     );
       // }
     },
   );
@@ -104,6 +101,4 @@ void _onErrorFactory(
 /// initialization process is started.
 void _onInit() {
   talker.info('📱 App started');
-  ISpectTalker.initHandling(talker: talker);
-  ISpectTalker.info('🚀 App initialization started');
 }

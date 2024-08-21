@@ -2,7 +2,6 @@
 
 import 'package:base_starter/src/app/presentation/page/root.dart';
 import 'package:base_starter/src/app/router/extras.dart';
-import 'package:base_starter/src/app/router/observer.dart';
 import 'package:base_starter/src/common/presentation/pages/error_router_page.dart';
 import 'package:base_starter/src/features/auth/presentation/auth.dart';
 import 'package:base_starter/src/features/home/presentation/home.dart';
@@ -11,6 +10,7 @@ import 'package:base_starter/src/features/profile/presentation/profile.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ispect/ispect.dart';
 
 export 'package:go_router/go_router.dart';
 
@@ -83,7 +83,7 @@ GoRouter createRouter = GoRouter(
   navigatorKey: navigatorKey,
   observers: [
     HeroController(),
-    RouterObserver(),
+    ISpectNavigatorObserver(),
   ],
   errorBuilder: (_, state) {
     final error = state.matchedLocation;
@@ -119,7 +119,7 @@ GoRouter createRouter = GoRouter(
           navigatorKey: _homeSectionNavigatorKey,
           observers: [
             HeroController(),
-            RouterObserver(),
+            ISpectNavigatorObserver(),
           ],
           routes: [
             GoRoute(
@@ -152,7 +152,7 @@ GoRouter createRouter = GoRouter(
           ],
           observers: [
             HeroController(),
-            RouterObserver(),
+            ISpectNavigatorObserver(),
           ],
         ),
       ],

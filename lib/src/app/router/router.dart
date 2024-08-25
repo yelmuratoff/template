@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_expression_function_bodies
 
 import 'package:base_starter/src/app/presentation/page/root.dart';
-import 'package:base_starter/src/app/router/extras.dart';
 import 'package:base_starter/src/common/presentation/pages/error_router_page.dart';
 import 'package:base_starter/src/features/auth/presentation/auth.dart';
 import 'package:base_starter/src/features/home/presentation/home.dart';
@@ -13,6 +12,9 @@ import 'package:go_router/go_router.dart';
 import 'package:ispect/ispect.dart';
 
 export 'package:go_router/go_router.dart';
+
+part 'routes.dart';
+part 'router.g.dart';
 
 /// This line declares a global key variable which is used to access the
 /// `NavigatorState` object associated with a widget.
@@ -79,7 +81,7 @@ Page<dynamic> Function(GoRouterState state) defaultPageBuilder<T>(
 /// with all routes.
 
 GoRouter createRouter = GoRouter(
-  initialLocation: SplashPage.routePath,
+  initialLocation: const SplashRoute().location,
   navigatorKey: navigatorKey,
   observers: [
     HeroController(),
@@ -93,75 +95,68 @@ GoRouter createRouter = GoRouter(
       error: error,
     );
   },
-  routes: [
-    GoRoute(
-      name: SplashPage.name,
-      path: SplashPage.routePath,
-      builder: (_, __) => const SplashPage(),
-    ),
-    GoRoute(
-      name: AuthPage.name,
-      path: AuthPage.routePath,
-      builder: (_, __) => const AuthPage(),
-    ),
-    StatefulShellRoute.indexedStack(
-      builder: (
-        _,
-        __,
-        navigationShell,
-      ) {
-        /// Return the widget that implements the custom shell (in this case
-        /// using a BottomNavigationBar). The StatefulNavigationShell is passed
-        /// to be able access the state of the shell and to navigate to other
-        /// branches in a stateful way.
-        return RootPage(navigationShell: navigationShell);
-      },
-      branches: [
-        StatefulShellBranch(
-          navigatorKey: _homeSectionNavigatorKey,
-          observers: [
-            HeroController(),
-            ISpectNavigatorObserver(
-              isLogModals: false,
-            ),
-          ],
-          routes: [
-            GoRoute(
-              name: HomePage.name,
-              path: HomePage.routePath,
-              builder: (_, __) => const HomePage(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          navigatorKey: _profileSectionNavigatorKey,
-          routes: [
-            GoRoute(
-              name: ProfilePage.name,
-              path: ProfilePage.routePath,
-              builder: (_, __) => const ProfilePage(),
-              routes: [
-                GoRoute(
-                  name: SettingsPage.name,
-                  path: SettingsPage.routePath,
-                  builder: (_, state) {
-                    final queryParameters = state.uri.queryParameters;
-                    return SettingsPage(
-                      title: queryParameters[ExtraKeys.title] ?? 'Settings',
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
-          observers: [
-            HeroController(),
-            ISpectNavigatorObserver(
-              isLogModals: false,
-            ),
-          ],
-        ),
-      ],
-    ),
-  ],
+  routes: $appRoutes,
+  // routes: [
+  //   $splashRoute,
+  //   $authRoute,
+  //   StatefulShellRoute.indexedStack(
+  //     builder: (
+  //       _,
+  //       __,
+  //       navigationShell,
+  //     ) {
+  //       /// Return the widget that implements the custom shell (in this case
+  //       /// using a BottomNavigationBar). The StatefulNavigationShell is passed
+  //       /// to be able access the state of the shell and to navigate to other
+  //       /// branches in a stateful way.
+  //       return RootPage(navigationShell: navigationShell);
+  //     },
+  //     branches: [
+  //       StatefulShellBranch(
+  //         navigatorKey: _homeSectionNavigatorKey,
+  //         observers: [
+  //           HeroController(),
+  //           ISpectNavigatorObserver(
+  //             isLogModals: false,
+  //           ),
+  //         ],
+  //         routes: [
+  //           GoRoute(
+  //             name: HomePage.name,
+  //             path: HomePage.routePath,
+  //             builder: (_, __) => const HomePage(),
+  //           ),
+  //         ],
+  //       ),
+  //       StatefulShellBranch(
+  //         navigatorKey: _profileSectionNavigatorKey,
+  //         routes: [
+  //           GoRoute(
+  //             name: ProfilePage.name,
+  //             path: ProfilePage.routePath,
+  //             builder: (_, __) => const ProfilePage(),
+  //             routes: [
+  //               GoRoute(
+  //                 name: SettingsPage.name,
+  //                 path: SettingsPage.routePath,
+  //                 builder: (_, state) {
+  //                   final queryParameters = state.uri.queryParameters;
+  //                   return SettingsPage(
+  //                     title: queryParameters[ExtraKeys.title] ?? 'Settings',
+  //                   );
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //         observers: [
+  //           HeroController(),
+  //           ISpectNavigatorObserver(
+  //             isLogModals: false,
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   ),
+  // ],
 );

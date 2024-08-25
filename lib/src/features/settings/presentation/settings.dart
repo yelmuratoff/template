@@ -26,9 +26,6 @@ part 'widget/theme_selector.dart';
 class SettingsPage extends StatefulWidget {
   const SettingsPage({required this.title, super.key});
 
-  static const String name = 'Settings';
-  static const String routePath = 'settings';
-
   final String title;
 
   @override

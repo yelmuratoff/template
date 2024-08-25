@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
-import 'package:base_starter/src/features/auth/presentation/auth.dart';
 import 'package:ispect/ispect.dart';
 
 final class AppUtils {
@@ -28,7 +27,7 @@ final class AppUtils {
     final context = navigatorKey.currentContext;
     if (context != null && context.mounted) {
       context.dependencies.userCubit.clear();
-      context.goNamed(AuthPage.name);
+      const AuthRoute().go(context);
     }
   }
 

@@ -5,15 +5,10 @@ import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dar
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
-import 'package:base_starter/src/features/auth/presentation/auth.dart';
-import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
-
-  static const String name = 'Splash';
-  static const String routePath = '/splash';
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -35,9 +30,9 @@ class _SplashPageState extends State<SplashPage> {
       fToast.init(navigatorKey.currentContext!);
       final tokenPair = await SecureStorageManager.getToken();
       if (tokenPair != null && context.mounted) {
-        context.goNamed(HomePage.name);
+        const HomeRoute().go(context);
       } else {
-        context.goNamed(AuthPage.name);
+        const AuthRoute().go(context);
       }
     });
   }

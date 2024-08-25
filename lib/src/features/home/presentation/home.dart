@@ -8,8 +8,6 @@ import 'package:gap/gap.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
-  static const String name = 'Home';
-  static const String routePath = '/home';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(

@@ -5,15 +5,11 @@ import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dar
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/features/auth/bloc/auth/auth_bloc.dart';
-import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
-
-  static const String name = 'Auth';
-  static const String routePath = '/auth';
 
   @override
   State<AuthPage> createState() => _AuthPageState();
@@ -32,7 +28,7 @@ class _AuthPageState extends State<AuthPage> {
                 AppDialogs.dismiss(),
                 // TODO(Yelaman): Save user to UserManager
                 //context.dependencies.userCubit.write(user: state.user),
-                context.goNamed(HomePage.name),
+                const HomeRoute().go(context),
               },
             ErrorAuthState() => {
                 AppDialogs.dismiss(),

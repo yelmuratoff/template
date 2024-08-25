@@ -5,6 +5,7 @@ import 'package:base_starter/src/features/home/state/counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -25,13 +26,13 @@ class HomePage extends ConsumerWidget {
             FloatingActionButton(
               heroTag: 'increment',
               onPressed: () => ref.read(counterProvider.notifier).increment(),
-              child: const Icon(Icons.add),
+              child: const Icon(IconsaxPlusLinear.add),
             ),
             const Gap(8),
             FloatingActionButton(
               heroTag: 'decrement',
               onPressed: () => ref.read(counterProvider.notifier).decrement(),
-              child: const Icon(Icons.remove),
+              child: const Icon(IconsaxPlusLinear.minus),
             ),
           ],
         ),

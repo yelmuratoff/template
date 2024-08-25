@@ -19,6 +19,7 @@ import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker/talker.dart';
@@ -185,7 +186,7 @@ class _View extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: IconButton.filledTonal(
-                  icon: const Icon(Icons.monitor_heart),
+                  icon: const Icon(IconsaxPlusLinear.activity),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -237,7 +238,8 @@ class _View extends StatelessWidget {
                           ),
                           const Gap(8),
                           const Icon(
-                            Icons.refresh_rounded,
+                            IconsaxPlusLinear.refresh_2,
+                            size: 18,
                             color: Colors.white,
                           ),
                         ],

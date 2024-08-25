@@ -7,6 +7,7 @@ import 'package:base_starter/src/common/utils/extensions/context_extension.dart'
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
 
 final class ChangeEnvironmentDialog {
@@ -37,7 +38,7 @@ final class ChangeEnvironmentDialog {
                       children: [
                         if (F.appFlavor == env) ...[
                           Icon(
-                            Icons.check_circle_outline_rounded,
+                            IconsaxPlusLinear.tick_square,
                             color: context.theme.colorScheme.primary,
                           ),
                           const Gap(8),

@@ -58,6 +58,7 @@ dependencies:
   auto_size_text: ^3.0.0
   fluttertoast: ^8.2.8
   ispect: ^1.9.3-beta.8
+  iconsax_plus: ^1.0.0
 
   # Others
   provider: ^6.1.2

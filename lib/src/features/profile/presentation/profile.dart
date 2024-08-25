@@ -2,6 +2,7 @@ import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -24,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: const EdgeInsets.only(right: 16),
               child: IconButton.filledTonal(
                 icon: const Icon(
-                  Icons.settings_rounded,
+                  IconsaxPlusLinear.setting_2,
                   color: Colors.white,
                 ),
                 onPressed: () => SettingsRoute(

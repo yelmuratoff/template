@@ -14,6 +14,7 @@ import 'package:base_starter/src/features/settings/presentation/controller/setti
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
 
 part 'controller/settings_scope.dart';
@@ -60,7 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(
-            Icons.arrow_back,
+            IconsaxPlusLinear.arrow_square_left,
           ),
         ),
         title: Text(

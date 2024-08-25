@@ -39,7 +39,7 @@ Future<void> bootstrap() async {
       hook!,
     ),
     talker: talker,
-    onError: (_, __) {
+    onZonedError: (_, __) {
       debugPrint('Zoned error');
       //     if (kReleaseMode && envType == EnvType.prod) {
       // FirebaseCrashlytics.instance

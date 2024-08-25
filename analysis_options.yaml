@@ -321,6 +321,8 @@ dart_code_metrics:
         ignore-private-widgets: true
 
 custom_lint:
+  debug: false,
+  verbose: false,
   rules:
     - always_put_doc_comments_before_annotations
     - always_specify_parameter_names

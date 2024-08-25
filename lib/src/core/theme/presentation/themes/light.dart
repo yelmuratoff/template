@@ -16,6 +16,7 @@ final class LightThemeData {
       appBarTheme: const AppBarTheme(
         scrolledUnderElevation: 0,
       ),
+      dividerColor: Colors.grey[300],
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.all<Color>(seed),
         trackColor: WidgetStateProperty.resolveWith((states) {

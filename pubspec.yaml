@@ -57,12 +57,12 @@ dependencies:
   flutter_easyloading: ^3.0.5
   auto_size_text: ^3.0.0
   fluttertoast: ^8.2.8
-  ispect: ^1.9.3-beta.5
+  ispect: ^1.9.3-beta.8
 
   # Others
   provider: ^6.1.2
   flutter_riverpod: ^2.5.1
-  go_router: ^14.2.6
+  go_router: ^14.2.7
   flutter_secure_storage: ^9.2.2
   envied: ^0.5.4
   dev: ^1.0.0

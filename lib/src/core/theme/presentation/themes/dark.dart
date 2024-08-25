@@ -16,6 +16,7 @@ final class DarkThemeData {
       appBarTheme: const AppBarTheme(
         scrolledUnderElevation: 0,
       ),
+      dividerColor: Colors.grey[700],
     );
     return baseTheme.copyWith(
       extensions: [

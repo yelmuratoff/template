@@ -83,7 +83,9 @@ GoRouter createRouter = GoRouter(
   navigatorKey: navigatorKey,
   observers: [
     HeroController(),
-    ISpectNavigatorObserver(),
+    ISpectNavigatorObserver(
+      isLogModals: false,
+    ),
   ],
   errorBuilder: (_, state) {
     final error = state.matchedLocation;
@@ -119,7 +121,9 @@ GoRouter createRouter = GoRouter(
           navigatorKey: _homeSectionNavigatorKey,
           observers: [
             HeroController(),
-            ISpectNavigatorObserver(),
+            ISpectNavigatorObserver(
+              isLogModals: false,
+            ),
           ],
           routes: [
             GoRoute(
@@ -152,7 +156,9 @@ GoRouter createRouter = GoRouter(
           ],
           observers: [
             HeroController(),
-            ISpectNavigatorObserver(),
+            ISpectNavigatorObserver(
+              isLogModals: false,
+            ),
           ],
         ),
       ],

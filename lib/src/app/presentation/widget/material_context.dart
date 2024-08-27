@@ -1,6 +1,6 @@
 import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/core/localization/generated/l10n.dart';
+import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -43,7 +43,7 @@ class MaterialContext extends ConsumerWidget {
         localizationsDelegates: ISpectLocalizations.localizationDelegates([
           L10n.delegate,
         ]),
-        supportedLocales: L10n.delegate.supportedLocales,
+        supportedLocales: L10n.supportedLocales,
         locale: locale,
         routerConfig: routerConfig,
         builder: (context, child) {

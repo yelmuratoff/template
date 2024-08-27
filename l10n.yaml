@@ -1,0 +1,6 @@
+arb-dir: lib/src/core/localization/translations
+template-arb-file: intl_en.arb
+output-localization-file: app_localizations.g.dart
+output-dir: lib/src/core/localization/generated
+synthetic-package: false
+nullable-getter: false

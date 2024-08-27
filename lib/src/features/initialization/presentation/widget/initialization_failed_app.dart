@@ -5,7 +5,6 @@ import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/di/containers/dependencies.dart';
 import 'package:base_starter/src/core/di/containers/repositories.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
-import 'package:base_starter/src/core/localization/generated/l10n.dart';
 import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/core/data/locale/locale_datasource.dart';
@@ -122,8 +121,8 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
               darkTheme: _settingsState?.appTheme?.darkTheme,
               themeMode: _settingsState?.appTheme?.mode,
               locale: _settingsState?.locale,
-              localizationsDelegates: Localization.delegates,
-              supportedLocales: L10n.delegate.supportedLocales,
+              localizationsDelegates: L10n.delegates,
+              supportedLocales: L10n.supportedLocales,
               home: _View(
                 error: widget.error,
                 retryInitialization: widget.retryInitialization != null

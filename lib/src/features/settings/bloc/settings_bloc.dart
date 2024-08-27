@@ -1,5 +1,5 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:base_starter/src/core/localization/generated/l10n.dart';
+import 'package:base_starter/src/core/localization/localization.dart';
 import 'package:base_starter/src/features/settings/core/domain/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/core/domain/theme/theme_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -65,7 +65,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
     try {
       await _localeRepo.setLocale(event.locale);
-      await L10n.load(event.locale);
+      L10n.load(event.locale);
 
       emit(
         IdleSettingsState(appTheme: state.appTheme, locale: event.locale),

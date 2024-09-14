@@ -1,6 +1,6 @@
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/string_extension.dart';
-import 'package:base_starter/src/core/localization/localization.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/home/state/counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

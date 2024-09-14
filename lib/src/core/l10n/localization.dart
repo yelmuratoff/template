@@ -1,4 +1,4 @@
-import 'package:base_starter/src/core/localization/generated/app_localizations.g.dart';
+import 'package:base_starter/src/core/l10n/generated/app_localizations.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

@@ -106,13 +106,6 @@ flutter_gen:
   output: lib/src/core/assets/generated
   line_length: 80
 
-flutter_intl:
-  enabled: true
-  class_name: L10n
-  main_locale: en
-  arb_dir: lib/src/core/localization/translations
-  output_dir: lib/src/core/localization/generated
-
 flutter_launcher_icons: # dart pub run flutter_launcher_icons
   #  image_path: "assets/images/icon-128x128.png"
   image_path_android: "assets/images/icon-1024x1024.png"

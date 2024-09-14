@@ -1,5 +1,5 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:base_starter/src/core/localization/localization.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/core/domain/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/core/domain/theme/theme_repository.dart';
 import 'package:equatable/equatable.dart';

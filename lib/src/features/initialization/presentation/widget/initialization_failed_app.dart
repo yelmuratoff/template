@@ -5,7 +5,7 @@ import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/di/containers/dependencies.dart';
 import 'package:base_starter/src/core/di/containers/repositories.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
-import 'package:base_starter/src/core/localization/localization.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/core/data/locale/locale_datasource.dart';
 import 'package:base_starter/src/features/settings/core/data/locale/locale_repository.dart';

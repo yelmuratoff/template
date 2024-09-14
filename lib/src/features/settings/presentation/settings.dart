@@ -6,14 +6,14 @@ import 'package:base_starter/src/common/presentation/widgets/dialogs/change_envi
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/common/services/page_lifecycle_model.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/core/localization/localization.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/auth/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/controller/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
 
 part 'controller/settings_scope.dart';
@@ -60,7 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(
-            Icons.arrow_back,
+            IconsaxPlusLinear.arrow_square_left,
           ),
         ),
         title: Text(
@@ -80,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               _LanguagesSelector(
-                languages: L10n.delegate.supportedLocales,
+                languages: L10n.supportedLocales,
                 onLocaleTapped: (locale) {
                   SettingsScope.localeOf(context).setLocale(locale);
                 },

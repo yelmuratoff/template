@@ -104,7 +104,7 @@ class _SettingsScopeState extends State<SettingsScope>
 
   @override
   Locale get locale =>
-      widget.settingsBloc.state.locale ?? Localization.computeDefaultLocale;
+      widget.settingsBloc.state.locale ?? L10n.computeDefaultLocale;
 
   @override
   AppTheme get theme =>

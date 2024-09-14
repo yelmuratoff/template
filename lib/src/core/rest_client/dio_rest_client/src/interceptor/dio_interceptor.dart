@@ -2,7 +2,7 @@
 
 import 'package:base_starter/src/common/constants/exception_keys.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
-import 'package:base_starter/src/core/localization/generated/l10n.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:dio/dio.dart';
 
 /// `DioInterceptor` - This class is used to intercept `dio` errors.

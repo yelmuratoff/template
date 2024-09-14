@@ -1,6 +1,6 @@
 import 'package:base_starter/src/common/presentation/widgets/app_loading_indicator.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/core/localization/generated/l10n.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 

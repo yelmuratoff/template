@@ -4,8 +4,7 @@ import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
-import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/core/localization/localization.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/core/rest_client/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/features/auth/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/bloc/user/user_cubit.dart';
@@ -79,9 +78,9 @@ mixin InitializationSteps {
 
       final localeFuture = localeRepository.getLocale();
       final theme = await themeRepository.getTheme();
-      final locale = await localeFuture ?? Localization.computeDefaultLocale;
+      final locale = await localeFuture ?? L10n.computeDefaultLocale;
 
-      await L10n.load(locale);
+      L10n.load(locale);
 
       final initialState = IdleSettingsState(appTheme: theme, locale: locale);
 

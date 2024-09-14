@@ -31,13 +31,15 @@ class _BottomNavigationBar extends StatelessWidget {
           },
           destinations: [
             NavigationDestination(
-              icon: const Icon(Icons.home_outlined),
-              selectedIcon: const Icon(Icons.home, color: Colors.white),
+              icon: const Icon(IconsaxPlusLinear.home),
+              selectedIcon:
+                  const Icon(IconsaxPlusBold.home, color: Colors.white),
               label: L10n.current.home,
             ),
             NavigationDestination(
-              icon: const Icon(Icons.person_outline),
-              selectedIcon: const Icon(Icons.person, color: Colors.white),
+              icon: const Icon(IconsaxPlusLinear.user_square),
+              selectedIcon:
+                  const Icon(IconsaxPlusBold.user_square, color: Colors.white),
               label: L10n.current.profile,
             ),
           ],

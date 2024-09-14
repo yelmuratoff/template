@@ -5,8 +5,7 @@ import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/di/containers/dependencies.dart';
 import 'package:base_starter/src/core/di/containers/repositories.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
-import 'package:base_starter/src/core/localization/generated/l10n.dart';
-import 'package:base_starter/src/core/localization/localization.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/core/data/locale/locale_datasource.dart';
 import 'package:base_starter/src/features/settings/core/data/locale/locale_repository.dart';
@@ -19,6 +18,7 @@ import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker/talker.dart';
@@ -121,8 +121,8 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
               darkTheme: _settingsState?.appTheme?.darkTheme,
               themeMode: _settingsState?.appTheme?.mode,
               locale: _settingsState?.locale,
-              localizationsDelegates: Localization.delegates,
-              supportedLocales: L10n.delegate.supportedLocales,
+              localizationsDelegates: L10n.delegates,
+              supportedLocales: L10n.supportedLocales,
               home: _View(
                 error: widget.error,
                 retryInitialization: widget.retryInitialization != null
@@ -185,7 +185,7 @@ class _View extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: IconButton.filledTonal(
-                  icon: const Icon(Icons.monitor_heart),
+                  icon: const Icon(IconsaxPlusLinear.activity),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -237,7 +237,8 @@ class _View extends StatelessWidget {
                           ),
                           const Gap(8),
                           const Icon(
-                            Icons.refresh_rounded,
+                            IconsaxPlusLinear.refresh_2,
+                            size: 18,
                             color: Colors.white,
                           ),
                         ],

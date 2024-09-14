@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({
@@ -72,7 +73,10 @@ class AppBottomSheet extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 16),
                       child: IconButton(
                         iconSize: 20,
-                        icon: const Icon(Icons.cancel_outlined, size: 32),
+                        icon: const Icon(
+                          IconsaxPlusLinear.close_circle,
+                          size: 32,
+                        ),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

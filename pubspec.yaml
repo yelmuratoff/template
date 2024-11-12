@@ -29,9 +29,6 @@ dependencies:
   # Networking
   dio: ^5.6.0
 
-  # Routing
-  octopus: ^0.0.9
-
   # Persisting
   shared_preferences: ^2.3.2
   drift: ^2.19.1

@@ -6,5 +6,5 @@ abstract interface class IAuthDataSource {
     required String email,
     required String password,
   });
-  Future<UserDTO?> getCurrentUser();
+  Future<UserDTO> getCurrentUser();
 }

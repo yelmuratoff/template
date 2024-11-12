@@ -1,10 +1,9 @@
+import 'package:base_starter/src/common/utils/extensions/bloc_extension.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
-import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/core/domain/repositories/auth/remote_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ispect/ispect.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -29,22 +28,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(const AuthenticatedAuthState());
       }
-    } on RestClientException catch (e) {
-      emit(ErrorAuthState(cause: e, message: e.message));
-    } catch (e) {
-      emit(ErrorAuthState(cause: e, message: e.toString()));
+    } catch (e, st) {
+      handleException(
+        exception: e,
+        stackTrace: st,
+        onError: (message, cause, _) {
+          emit(ErrorAuthState(cause: cause, message: message));
+        },
+      );
     }
   }
 
   Future<void> _onLogout(Emitter<AuthState> emit) async {
     try {
       emit(const LoadingAuthState());
-      await AppUtils.removeToken();
+      await AppUtils.exit();
       emit(const InitialAuthState());
-    } on RestClientException catch (e) {
-      emit(ErrorAuthState(cause: e, message: e.message));
-    } on Object catch (e) {
-      emit(ErrorAuthState(cause: e, message: e.toString()));
+    } catch (e, st) {
+      handleException(
+        exception: e,
+        stackTrace: st,
+        onError: (message, cause, _) {
+          emit(ErrorAuthState(cause: cause, message: message));
+        },
+      );
     }
   }
 
@@ -53,22 +60,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     try {
       emit(const LoadingAuthState());
-      final user = await repository.getCurrentUser();
-      if (user != null) {
-        emit(const AuthenticatedAuthState());
-      } else {
-        ISpectTalker.error(message: 'Get current user failed: user is null');
-        emit(
-          const ErrorAuthState(
-            cause: 'Get current user failed: user is null',
-            message: 'Get current user failed: user is null',
-          ),
-        );
-      }
-    } on RestClientException catch (e) {
-      emit(ErrorAuthState(cause: e, message: e.message));
-    } on Object catch (e) {
-      emit(ErrorAuthState(cause: e, message: e.toString()));
+      await repository.getCurrentUser();
+
+      emit(const AuthenticatedAuthState());
+    } catch (e, st) {
+      handleException(
+        exception: e,
+        stackTrace: st,
+        onError: (message, cause, _) {
+          emit(ErrorAuthState(cause: cause, message: message));
+        },
+      );
     }
   }
 }

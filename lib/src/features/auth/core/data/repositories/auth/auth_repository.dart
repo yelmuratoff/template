@@ -10,7 +10,7 @@ final class AuthRepository implements IAuthRepository {
   final IAuthDataSource dataSource;
 
   @override
-  Future<UserDTO?> getCurrentUser() async {
+  Future<UserDTO> getCurrentUser() async {
     try {
       final user = await dataSource.getCurrentUser();
       return user;

@@ -6,22 +6,17 @@ import 'package:meta/meta.dart';
 /// Base class for all rest client exceptions
 @immutable
 abstract base class RestClientException extends Equatable implements Exception {
-  const RestClientException({required this.message, this.statusCode});
+  const RestClientException({
+    required this.message,
+    this.cause,
+    this.statusCode,
+  });
 
   /// Message of the exception
   final String message;
 
   /// The status code of the response (if any)
   final int? statusCode;
-}
-
-/// Base class for all rest client exceptions that have a cause
-abstract base class RestClientExceptionWithCause extends RestClientException {
-  const RestClientExceptionWithCause({
-    required super.message,
-    required this.cause,
-    super.statusCode,
-  });
 
   /// The cause of the exception
   /// It is the inner exception that caused this exception to be thrown
@@ -33,13 +28,8 @@ final class ClientException extends RestClientException {
   const ClientException({
     required super.message,
     super.statusCode,
-    this.cause,
+    super.cause,
   });
-
-  /// The cause of the exception
-  ///
-  /// It is the inner exception that caused this exception to be thrown
-  final Object? cause;
 
   @override
   String toString() => '''ClientException('
@@ -96,7 +86,7 @@ final class WrongResponseTypeException extends RestClientException {
 
 /// [ConnectionException] is thrown if there are problems with the connection
 
-final class ConnectionException extends RestClientExceptionWithCause {
+final class ConnectionException extends RestClientException {
   const ConnectionException({
     required super.message,
     super.statusCode,
@@ -116,7 +106,7 @@ final class ConnectionException extends RestClientExceptionWithCause {
 
 /// If something went wrong on the server side
 
-final class InternalServerException extends RestClientExceptionWithCause {
+final class InternalServerException extends RestClientException {
   const InternalServerException({
     required super.message,
     super.statusCode,

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
-import 'package:ispect/ispect.dart';
 
 final class AppUtils {
   /// `removeToken` - This function removes the token stored in secure storage,
@@ -11,11 +10,7 @@ final class AppUtils {
   /// If paramIsFromDrawer is true, it is passed as an extra parameter to the
   /// LoginScreen. Otherwise, the default value of false is used for this
   /// parameter.
-  static Future<void> removeToken() async {
-    // Log a debug message using an instance of Talker obtained from the
-    //service locator
-    ISpectTalker.warning('AppUtils: "remove token" called 🥴');
-
+  static Future<void> exit() async {
     // Set the token stored in secure storage to null using await
     await SecureStorageManager.setToken(value: null);
 

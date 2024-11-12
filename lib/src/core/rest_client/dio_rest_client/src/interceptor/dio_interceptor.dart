@@ -61,7 +61,7 @@ class DioInterceptor extends Interceptor {
     } else if (response.statusCode == 400) {
       return handler.reject(errorMessage(ExceptionKeys.badRequest));
     } else if (response.statusCode == 418 || response.statusCode == 401) {
-      await AppUtils.removeToken();
+      await AppUtils.exit();
       if (response.data.toString().contains('Invalid login details')) {
         return handler.reject(errorMessage(ExceptionKeys.passwordNotCorrect));
       } else {

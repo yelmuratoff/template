@@ -143,9 +143,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             .environmentTapNumber(10 - _model.tapNumber),
                       );
                     } else if (_model.tapNumber == 10) {
-                      ISpectTalker.info('ℹ️ Environment change dialog opened');
+                      ISpect.info('ℹ️ Environment change dialog opened');
                       await ChangeEnvironmentDialog.show(context);
-                      ISpectTalker.info(
+                      ISpect.info(
                         '🔙 Environment change dialog closed',
                       );
                       _model.tapNumber = 0;

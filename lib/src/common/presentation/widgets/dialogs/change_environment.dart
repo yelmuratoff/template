@@ -58,7 +58,7 @@ final class ChangeEnvironmentDialog {
                           Preferences.environment,
                           env.name,
                         );
-                        ISpectTalker.warning(
+                        ISpect.warning(
                           'Environment changed to ${env.name}',
                         );
                         ISpect.read(context).setISpect =
@@ -66,7 +66,7 @@ final class ChangeEnvironmentDialog {
                         Navigator.pop(context);
                         RestartWrapper.restartApp(navigatorKey.currentContext!);
                       } catch (e, st) {
-                        ISpectTalker.handle(
+                        ISpect.handle(
                           exception: e,
                           stackTrace: st,
                           message: 'Error changing environment',

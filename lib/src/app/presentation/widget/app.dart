@@ -40,7 +40,7 @@ class _AppState extends State<App> {
     super.initState();
     _router = createRouter;
 
-    ISpectTalker.route('📜 ${_router.configuration.debugKnownRoutes()}');
+    ISpect.route('📜 ${_router.configuration.debugKnownRoutes()}');
 
     _router.routerDelegate.addListener(_handleRouteInformation);
 

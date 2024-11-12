@@ -114,7 +114,7 @@ class DioClient {
     /// log them using Talker service.
     dio.interceptors.add(
       TalkerDioLogger(
-        talker: ISpectTalker.talker,
+        talker: ISpect.talker,
         settings: const TalkerDioLoggerSettings(
           printRequestHeaders: true,
           printResponseHeaders: true,

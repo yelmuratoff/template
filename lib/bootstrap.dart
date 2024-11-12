@@ -62,7 +62,7 @@ Future<void> bootstrap() async {
 /// called when the initialization process is started.
 void _onInitializing(InitializationStepInfo info) {
   final percentage = ((info.step / info.stepsCount) * 100).toInt();
-  ISpectTalker.info(
+  ISpect.info(
     '🌀 Inited ${info.stepName} in ${info.msSpent} ms | '
     'Progress: $percentage%',
   );
@@ -71,7 +71,7 @@ void _onInitializing(InitializationStepInfo info) {
 /// `_onInitialized` is a callback function that is called when
 /// the initialization process is completed.
 void _onInitialized(InitializationResult result) {
-  ISpectTalker.good(
+  ISpect.good(
     '🎉 Initialization completed in ${result.msSpent} ms',
   );
 }
@@ -84,7 +84,7 @@ void _onErrorFactory(
   StackTrace stackTrace,
   InitializationHook hook,
 ) {
-  ISpectTalker.error(
+  ISpect.error(
     message: '❗️ Initialization failed on step $step with error: $error',
   );
   FlutterNativeSplash.remove();

@@ -60,7 +60,7 @@ mixin InitializationSteps {
           Flavor.prod.name,
         );
       }
-      ISpectTalker.good('Environment: $environment');
+      ISpect.good('Environment: $environment');
     },
     'Settings BLoC': (progress) async {
       final sharedPreferences = progress.dependencies.sharedPreferences;

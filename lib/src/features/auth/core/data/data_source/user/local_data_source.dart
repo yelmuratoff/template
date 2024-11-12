@@ -22,7 +22,7 @@ final class UserLocalDataSource extends PreferencesDao
     try {
       await _currentUserEntry.set(json.encode(user?.toJson()));
     } catch (e, st) {
-      ISpectTalker.handle(
+      ISpect.handle(
         exception: e,
         stackTrace: st,
         message: 'Write local user failed.',
@@ -39,7 +39,7 @@ final class UserLocalDataSource extends PreferencesDao
           token != null ? json.decode(token) as Map<String, dynamic>? : null;
       return jsonObject != null ? UserDTO.fromJson(jsonObject) : null;
     } catch (e, st) {
-      ISpectTalker.handle(
+      ISpect.handle(
         exception: e,
         stackTrace: st,
         message: 'Get local user failed.',
@@ -53,7 +53,7 @@ final class UserLocalDataSource extends PreferencesDao
     try {
       return _currentUserEntry.remove();
     } catch (e, st) {
-      ISpectTalker.handle(
+      ISpect.handle(
         exception: e,
         stackTrace: st,
         message: 'Clear local user failed.',

@@ -45,7 +45,7 @@ final class AppRunner
           ProviderScope(
             observers: [
               TalkerRiverpodObserver(
-                talker: ISpectTalker.talker,
+                talker: ISpect.talker,
               ),
             ],
             child: RestartWrapper(

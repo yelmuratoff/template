@@ -1,6 +1,6 @@
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/core/di/containers/dependencies.dart';
-import 'package:base_starter/src/core/di/containers/repositories.dart';
+import 'package:base_starter/src/features/initialization/models/dependencies.dart';
+import 'package:base_starter/src/features/initialization/models/repositories.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,17 +15,17 @@ class DependenciesScope extends InheritedWidget {
   });
 
   /// The dependencies
-  final Dependencies dependencies;
+  final DependenciesContainer dependencies;
 
   /// The repositories
-  final Repositories repositories;
+  final RepositoriesContainer repositories;
 
   /// Get the dependencies from the [context].
-  static Dependencies of(BuildContext context) =>
+  static DependenciesContainer of(BuildContext context) =>
       context.inhOf<DependenciesScope>(listen: false).dependencies;
 
   /// Get the repositories from the [context].
-  static Repositories repositoriesOf(BuildContext context) =>
+  static RepositoriesContainer repositoriesOf(BuildContext context) =>
       context.inhOf<DependenciesScope>(listen: false).repositories;
 
   @override
@@ -33,10 +33,16 @@ class DependenciesScope extends InheritedWidget {
     super.debugFillProperties(properties);
     properties
       ..add(
-        DiagnosticsProperty<Dependencies>('dependencies', dependencies),
+        DiagnosticsProperty<DependenciesContainer>(
+          'dependencies',
+          dependencies,
+        ),
       )
       ..add(
-        DiagnosticsProperty<Repositories>('repositories', repositories),
+        DiagnosticsProperty<RepositoriesContainer>(
+          'repositories',
+          repositories,
+        ),
       );
   }
 

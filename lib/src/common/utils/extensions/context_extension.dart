@@ -1,8 +1,9 @@
-import 'package:base_starter/src/core/di/containers/dependencies.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/core/theme/domain/theme_colors.dart';
 import 'package:base_starter/src/core/theme/domain/theme_text_styles.dart';
 import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
+import 'package:base_starter/src/core/theme/presentation/themes/light.dart';
+import 'package:base_starter/src/features/initialization/models/dependencies.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,7 +70,8 @@ extension ContextExtension on BuildContext {
   IColors get colors => theme.extension<IColors>()!;
 
   /// `textStyles` returns text styles of the `BuildContext`.
-  ITextStyles get textStyles => theme.extension<ITextStyles>()!;
+  ITextStyles get textStyles =>
+      theme.extension<ITextStyles>() ?? LightThemeData.textStyles;
 
   /// `isDark` returns `true` if the current `Theme` is dark.
   bool get isDark => theme.brightness == Brightness.dark;
@@ -100,7 +102,7 @@ extension ContextExtension on BuildContext {
 
   /// `dependencies` returns the nearest `DependenciesScope`
   /// of the given `BuildContext`.
-  Dependencies get dependencies => DependenciesScope.of(this);
+  DependenciesContainer get dependencies => DependenciesScope.of(this);
 
   /// `provide` returns the nearest `Provider` of the given `BuildContext`.
   T provide<T>() => Provider.of<T>(this);

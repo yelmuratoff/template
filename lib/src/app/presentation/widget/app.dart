@@ -4,7 +4,7 @@ import 'package:base_starter/src/common/services/router_service.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/features/auth/bloc/user/user_cubit.dart';
-import 'package:base_starter/src/features/initializations/models/dependencies.dart';
+import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:ispect/ispect.dart';
@@ -22,7 +22,7 @@ class App extends StatefulWidget {
 
   /// The initialization result from the `InitializationProcessor`
   /// which contains initialized dependencies.
-  final InitializationResult result;
+  final CompositionResult result;
 
   /// Running this function will result in attaching
   /// corresponding `RenderObject` to the root of the tree.

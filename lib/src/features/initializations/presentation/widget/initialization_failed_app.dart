@@ -2,9 +2,6 @@ import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
-import 'package:base_starter/src/core/di/containers/dependencies.dart';
-import 'package:base_starter/src/core/di/containers/repositories.dart';
-import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/core/data/locale/locale_datasource.dart';
@@ -107,21 +104,25 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 
   @override
   Widget build(BuildContext context) => _isInitialized
-      ? DependenciesScope(
-          dependencies: Dependencies(),
-          repositories: Repositories(),
-          child: SettingsScope(
-            settingsBloc: SettingsBloc(
-              localeRepository: _localeRepository!,
-              themeRepository: _themeRepository!,
-              initialState: _settingsState!,
+      ? SettingsScope(
+          settingsBloc: SettingsBloc(
+            localeRepository: _localeRepository!,
+            themeRepository: _themeRepository!,
+            initialState: _settingsState!,
+          ),
+          child: ISpectScopeWrapper(
+            isISpectEnabled: F.isDev,
+            options: ISpectOptions(
+              locale: _settingsState?.locale ?? const Locale('en'),
             ),
             child: MaterialApp(
               theme: _settingsState?.appTheme?.lightTheme,
               darkTheme: _settingsState?.appTheme?.darkTheme,
               themeMode: _settingsState?.appTheme?.mode,
               locale: _settingsState?.locale,
-              localizationsDelegates: L10n.delegates,
+              localizationsDelegates: ISpectLocalizations.localizationDelegates(
+                [L10n.delegate],
+              ),
               supportedLocales: L10n.supportedLocales,
               home: _View(
                 error: widget.error,

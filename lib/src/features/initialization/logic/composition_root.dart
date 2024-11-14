@@ -1,7 +1,8 @@
-import 'package:base_starter/src/features/initialization/containers/dependencies.dart';
-import 'package:base_starter/src/features/initialization/containers/repositories.dart';
 import 'package:base_starter/src/features/initialization/factories/dependencies_factories.dart';
 import 'package:base_starter/src/features/initialization/factories/repositories_factories.dart';
+import 'package:base_starter/src/features/initialization/models/dependencies.dart';
+import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
+import 'package:base_starter/src/features/initialization/models/repositories.dart';
 import 'package:clock/clock.dart';
 import 'package:ispect/ispect.dart';
 
@@ -14,7 +15,11 @@ import 'package:ispect/ispect.dart';
 /// easier to manage them and to ensure that they are initialized only once.
 
 final class CompositionRoot {
-  const CompositionRoot();
+  const CompositionRoot({
+    required this.hook,
+  });
+
+  final InitializationHook hook;
 
   /// Composes dependencies and returns result of composition.
   Future<CompositionResult> compose() async {
@@ -23,11 +28,15 @@ final class CompositionRoot {
     ISpect.info('🌀 Initializing dependencies...');
 
     // initialize dependencies
-    final dependencies = await const DependenciesFactory().create();
+    final dependencies = await DependenciesFactory(
+      hook: hook,
+    ).create();
 
     // initialize repositories
     final repositories = await RepositoriesFactory(
+      hook: hook,
       restClient: dependencies.restClient,
+      sharedPreferences: dependencies.sharedPreferences,
     ).create();
 
     stopwatch.stop();
@@ -36,8 +45,6 @@ final class CompositionRoot {
       repositories: repositories,
       millisecondsSpent: stopwatch.elapsedMilliseconds,
     );
-
-    ISpect.good('Dependencies initialized:\n$result');
 
     return result;
   }
@@ -69,17 +76,27 @@ final class CompositionResult {
 }
 
 /// Factory that creates an instance of [T].
-abstract class Factory<T> {
+abstract interface class Factory<T> {
   const Factory();
 
   /// Creates an instance of [T].
   T create();
+
+  /// Name of the factory.
+  String get name => throw UnimplementedError();
 }
 
 /// Factory that creates an instance of [T] asynchronously.
-abstract class AsyncFactory<T> {
-  const AsyncFactory();
+abstract interface class AsyncFactory<T> {
+  const AsyncFactory({
+    required this.hook,
+  });
+
+  final InitializationHook hook;
 
   /// Creates an instance of [T].
   Future<T> create();
+
+  /// Name of the factory.
+  String get name => throw UnimplementedError();
 }

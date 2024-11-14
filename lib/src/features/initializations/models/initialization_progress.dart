@@ -1,6 +1,6 @@
 import 'package:base_starter/src/core/di/containers/dependencies.dart';
 import 'package:base_starter/src/core/di/containers/repositories.dart';
-import 'package:base_starter/src/features/initialization/models/environment_store.dart';
+import 'package:base_starter/src/features/initializations/models/environment_store.dart';
 
 /// A class which represents the initialization progress.
 final class InitializationProgress {

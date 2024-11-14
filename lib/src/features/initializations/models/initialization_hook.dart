@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:base_starter/src/features/initialization/logic/initialization_processor.dart';
-import 'package:base_starter/src/features/initialization/models/dependencies.dart';
+import 'package:base_starter/src/features/initializations/logic/initialization_processor.dart';
+import 'package:base_starter/src/features/initializations/models/dependencies.dart';
 
 /// A hook for the initialization process.
 ///

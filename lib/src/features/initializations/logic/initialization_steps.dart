@@ -14,7 +14,7 @@ import 'package:base_starter/src/features/auth/core/data/data_source/user/remote
 import 'package:base_starter/src/features/auth/core/data/repositories/auth/auth_repository.dart';
 import 'package:base_starter/src/features/auth/core/data/repositories/user/local_repository.dart';
 import 'package:base_starter/src/features/auth/core/data/repositories/user/remote_repository.dart';
-import 'package:base_starter/src/features/initialization/models/initialization_progress.dart';
+import 'package:base_starter/src/features/initializations/models/initialization_progress.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/core/data/locale/locale_datasource.dart';
 import 'package:base_starter/src/features/settings/core/data/locale/locale_repository.dart';

@@ -4,7 +4,7 @@ import 'package:base_starter/src/app/logic/app_runner.dart';
 import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
-import 'package:base_starter/src/features/initializations/presentation/widget/initialization_failed_app.dart';
+import 'package:base_starter/src/features/initialization/presentation/widget/initialization_failed_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ispect/ispect.dart';

@@ -1,5 +1,4 @@
 import 'package:base_starter/flavors.dart';
-import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
@@ -55,19 +54,8 @@ class MaterialContext extends ConsumerWidget {
             child: child,
           );
 
-          child = Navigator(
-            key: const ValueKey('ispect-navigator'),
-            observers: [
-              ISpectNavigatorObserver(),
-            ],
-            pages: [
-              MaterialPage(
-                child: ISpectBuilder(
-                  child: child,
-                ),
-              ),
-            ],
-            onDidRemovePage: (_) {},
+          child = ISpectBuilder(
+            child: child,
           );
 
           child = FToastBuilder()(context, child);

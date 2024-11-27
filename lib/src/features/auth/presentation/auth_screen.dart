@@ -1,4 +1,3 @@
-import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/presentation/widgets/buttons/app_button.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs.dart';

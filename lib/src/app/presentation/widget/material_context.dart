@@ -16,7 +16,7 @@ class MaterialContext extends ConsumerWidget {
     super.key,
   });
 
-  final GoRouter routerConfig;
+  final RouterConfig<Object> routerConfig;
 
   // This global key is needed for [MaterialApp]
   // to work properly when Widgets Inspector is enabled.
@@ -55,9 +55,19 @@ class MaterialContext extends ConsumerWidget {
             child: child,
           );
 
-          child = ISpectBuilder(
-            navigatorKey: navigatorKey,
-            child: child,
+          child = Navigator(
+            key: const ValueKey('ispect-navigator'),
+            observers: [
+              ISpectNavigatorObserver(),
+            ],
+            pages: [
+              MaterialPage(
+                child: ISpectBuilder(
+                  child: child,
+                ),
+              ),
+            ],
+            onDidRemovePage: (_) {},
           );
 
           child = FToastBuilder()(context, child);

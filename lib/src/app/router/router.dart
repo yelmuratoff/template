@@ -2,7 +2,7 @@
 
 import 'package:base_starter/src/app/presentation/page/root.dart';
 import 'package:base_starter/src/common/presentation/pages/error_router_page.dart';
-import 'package:base_starter/src/features/auth/presentation/auth.dart';
+import 'package:base_starter/src/features/auth/presentation/auth_screen.dart';
 import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:base_starter/src/features/initialization/presentation/page/splash.dart';
 import 'package:base_starter/src/features/profile/presentation/profile.dart';

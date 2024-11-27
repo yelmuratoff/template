@@ -1,4 +1,5 @@
 import 'package:base_starter/src/app/router/router.dart';
+import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/presentation/widgets/buttons/app_button.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
@@ -7,15 +8,16 @@ import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/auth/bloc/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:octopus/octopus.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -28,7 +30,11 @@ class _AuthPageState extends State<AuthPage> {
                 AppDialogs.dismiss(),
                 // TODO(Yelaman): Save user to UserManager
                 //context.dependencies.userCubit.write(user: state.user),
-                const HomeRoute().go(context),
+                context.octopus.setState(
+                  (state) => state
+                    ..clear()
+                    ..add(Routes.home.node()),
+                ),
               },
             ErrorAuthState() => {
                 AppDialogs.dismiss(),

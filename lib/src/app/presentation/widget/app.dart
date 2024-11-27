@@ -1,13 +1,14 @@
 import 'package:base_starter/src/app/presentation/widget/material_context.dart';
-import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/services/router_service.dart';
+import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/features/auth/bloc/user/user_cubit.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:ispect/ispect.dart';
+import 'package:octopus/octopus.dart';
 
 /// `App` is an entry point to the application.
 ///
@@ -33,23 +34,28 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late final GoRouter _router;
+  final _router = Octopus(
+    routes: Routes.values,
+    defaultRoute: Routes.auth,
+    observers: [
+      ISpectNavigatorObserver(),
+    ],
+  );
 
   @override
   void initState() {
     super.initState();
-    _router = createRouter;
 
-    ISpect.route('📜 ${_router.configuration.debugKnownRoutes()}');
+    final routes = _router.config.routes
+        .map((key, value) => MapEntry(key, value.toString()));
 
-    _router.routerDelegate.addListener(_handleRouteInformation);
+    ISpect.route('📜 Routes:\n${AppUtils.formatPrettyJson(routes)}');
 
     context.blocRead<UserCubit>().get();
   }
 
   @override
   void dispose() {
-    _router.routerDelegate.removeListener(_handleRouteInformation);
     super.dispose();
   }
 
@@ -60,17 +66,8 @@ class _AppState extends State<App> {
         child: SettingsScope(
           settingsBloc: widget.result.dependencies.settingsBloc,
           child: MaterialContext(
-            routerConfig: _router,
+            routerConfig: _router.config,
           ),
         ),
       );
-
-  /// Handles the route information and logs it
-  void _handleRouteInformation() {
-    final routeMatchList = _router.routerDelegate.currentConfiguration;
-
-    final path = routeMatchList.last.matchedLocation;
-
-    RouterService.setRoute(path);
-  }
 }

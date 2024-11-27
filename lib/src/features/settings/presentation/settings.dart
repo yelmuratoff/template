@@ -23,22 +23,22 @@ part 'widget/language_selector.dart';
 part 'widget/theme_card.dart';
 part 'widget/theme_selector.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({required this.title, super.key});
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({required this.title, super.key});
 
-  final String title;
+  final String? title;
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
-  late final SettingsPageModel _model;
+class _SettingsScreenState extends State<SettingsScreen> {
+  late final SettingsScreenModel _model;
 
   @override
   void initState() {
     super.initState();
-    _model = PageLifecycleModel.createModel(context, SettingsPageModel.new);
+    _model = PageLifecycleModel.createModel(context, SettingsScreenModel.new);
   }
 
   @override

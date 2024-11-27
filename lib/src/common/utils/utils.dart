@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:base_starter/src/app/router/router.dart';
@@ -56,5 +57,12 @@ final class AppUtils {
     final blue = (color.blue * (1.0 - darken)).round();
 
     return Color.fromARGB(color.alpha, red, green, blue);
+  }
+
+  /// `formatPrettyJson` - This function formats a map of strings as a pretty
+  /// JSON string.
+  static String formatPrettyJson(Map<String, String> data) {
+    const encoder = JsonEncoder.withIndent('  ');
+    return encoder.convert(data);
   }
 }

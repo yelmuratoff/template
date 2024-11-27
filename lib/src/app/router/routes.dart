@@ -11,7 +11,8 @@ class SplashRoute extends GoRouteData {
   const SplashRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const SplashPage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const SplashScreen();
 }
 
 // <-- Auth Page -->
@@ -24,7 +25,7 @@ class AuthRoute extends GoRouteData {
   const AuthRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const AuthPage();
+  Widget build(BuildContext context, GoRouterState state) => const AuthScreen();
 }
 
 // <-- Statefull Shell Routes -->
@@ -111,7 +112,7 @@ class HomeRoute extends GoRouteData {
   ];
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const HomePage();
+  Widget build(BuildContext context, GoRouterState state) => const HomeScreen();
 }
 
 // <-- Profile Page -->
@@ -121,7 +122,7 @@ class ProfileRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ProfilePage();
+      const ProfileScreen();
 }
 
 // <-- Settings Page -->
@@ -134,7 +135,7 @@ class SettingsRoute extends GoRouteData {
   final String title;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => SettingsPage(
+  Widget build(BuildContext context, GoRouterState state) => SettingsScreen(
         title: title,
       );
 }

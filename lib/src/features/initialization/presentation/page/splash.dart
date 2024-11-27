@@ -7,14 +7,14 @@ import 'package:base_starter/src/core/database/src/preferences/app_config_manage
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:flutter/material.dart';
 
-class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();

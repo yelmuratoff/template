@@ -1,8 +1,22 @@
+import 'package:base_starter/src/app/presentation/page/root.dart';
 import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:octopus/octopus.dart';
+
+class ProfileTab extends StatelessWidget {
+  const ProfileTab({super.key});
+
+  @override
+  Widget build(BuildContext context) => BucketNavigator(
+        bucket: '${RootTabsEnum.profile}-tab',
+        // Handles back button only if the current route is the catalog screen
+        shouldHandleBackButton: (_) =>
+            Octopus.instance.state.arguments['tab'] == 'profile',
+      );
+}
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

@@ -1,3 +1,4 @@
+import 'package:base_starter/src/app/presentation/page/root.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/string_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
@@ -6,6 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:octopus/octopus.dart';
+
+class HomeTab extends StatelessWidget {
+  const HomeTab({super.key});
+
+  @override
+  Widget build(BuildContext context) => BucketNavigator(
+        bucket: '${RootTabsEnum.home}-tab',
+        // Handles back button only if the current route is the catalog screen
+        shouldHandleBackButton: (_) =>
+            Octopus.instance.state.arguments['root'] == 'home',
+      );
+}
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

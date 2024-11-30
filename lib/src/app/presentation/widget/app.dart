@@ -1,4 +1,5 @@
 import 'package:base_starter/src/app/presentation/widget/material_context.dart';
+import 'package:base_starter/src/app/router/guards/tab.dart';
 import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
@@ -37,6 +38,7 @@ class _AppState extends State<App> {
   final _router = Octopus(
     routes: Routes.values,
     defaultRoute: Routes.auth,
+    guards: [TabGuard()],
     observers: [
       ISpectNavigatorObserver(),
     ],

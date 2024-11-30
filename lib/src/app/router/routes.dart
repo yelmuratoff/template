@@ -65,9 +65,7 @@ class RootShellRouteData extends StatefulShellRouteData {
     GoRouterState state,
     StatefulNavigationShell navigationShell,
   ) =>
-      RootPage(
-        navigationShell: navigationShell,
-      );
+      const RootScreen();
 }
 
 class BranchHomeData extends StatefulShellBranchData {

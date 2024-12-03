@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
@@ -18,21 +17,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _initialize();
+    _initialize(context);
   }
 
-  Future<void> _initialize() async {
+  Future<void> _initialize(BuildContext context) async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (AppConfigManager.instance.isFirstRun) {
         await SecureStorageManager.storage.deleteAll();
         await AppConfigManager.instance.setFirstRun(value: false);
       }
-      fToast.init(navigatorKey.currentContext!);
+      fToast.init(context);
       final tokenPair = await SecureStorageManager.getToken();
       if (tokenPair != null && context.mounted) {
-        const HomeRoute().go(context);
+        // const HomeRoute().go(context);
       } else {
-        const AuthRoute().go(context);
+        // const AuthRoute().go(context);
       }
     });
   }

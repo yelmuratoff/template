@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 
 final class AppUtils {
@@ -20,11 +18,11 @@ final class AppUtils {
     /// from the drawer or not.
     /// If [paramIsFromDrawer] is not null, use its value. Otherwise, use the
     /// default value of false.
-    final context = navigatorKey.currentContext;
-    if (context != null && context.mounted) {
-      context.dependencies.userCubit.clear();
-      const AuthRoute().go(context);
-    }
+    // final context = navigatorKey.currentContext;
+    // if (context != null && context.mounted) {
+    //   context.dependencies.userCubit.clear();
+    //   const AuthRoute().go(context);
+    // }
   }
 
   /// `adjustColorBrightness` - This function adjusts the brightness of a color

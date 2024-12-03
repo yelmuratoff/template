@@ -1,4 +1,3 @@
-import 'package:base_starter/src/app/router/router.dart';
 import 'package:flutter/material.dart';
 
 class RestartWrapper extends StatefulWidget {
@@ -19,7 +18,6 @@ class _RestartWidgetState extends State<RestartWrapper> {
 
   void _restartApp() {
     setState(() {
-      const HomeRoute().go(navigatorKey.currentContext ?? context);
       _key = UniqueKey();
     });
   }

@@ -1,5 +1,4 @@
 import 'package:base_starter/flavors.dart';
-import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
@@ -64,7 +63,7 @@ final class ChangeEnvironmentDialog {
                         ISpect.read(context).setISpect =
                             env.name == Flavor.dev.name;
                         Navigator.pop(context);
-                        RestartWrapper.restartApp(navigatorKey.currentContext!);
+                        RestartWrapper.restartApp(context);
                       } catch (e, st) {
                         ISpect.handle(
                           exception: e,

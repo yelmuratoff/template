@@ -1,14 +1,10 @@
-import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:base_starter/src/features/profile/presentation/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:octopus/octopus.dart';
-
-part '../widget/bottom_navigation_bar.dart';
 
 /// RootTabsEnum enumeration
 enum RootTabsEnum implements Comparable<RootTabsEnum> {
@@ -101,9 +97,6 @@ class _RootScreenState extends ConsumerState<RootScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(context.octopus.state.location),
-        ),
         body: NoAnimationScope(
           child: IndexedStack(
             index: _tab.index,
@@ -113,26 +106,37 @@ class _RootScreenState extends ConsumerState<RootScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Colors.green,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-              backgroundColor: Colors.blue,
-            ),
-          ],
-          currentIndex: _tab.index,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
+        bottomNavigationBar: DecoratedBox(
+          decoration: BoxDecoration(
+            color: context.theme.colorScheme.surface,
+            boxShadow: [
+              BoxShadow(
+                color: context.theme.colorScheme.onSurface.withOpacity(0.1),
+                blurRadius: 1,
+                offset: const Offset(0, -1),
+              ),
+            ],
+          ),
+          child: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(IconsaxPlusLinear.home),
+                activeIcon: Icon(IconsaxPlusBold.home),
+                label: 'Home',
+                backgroundColor: Colors.green,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(IconsaxPlusLinear.user_square),
+                activeIcon: Icon(IconsaxPlusBold.user_square),
+                label: 'Profile',
+                backgroundColor: Colors.blue,
+              ),
+            ],
+            currentIndex: _tab.index,
+            selectedItemColor: Colors.amber[800],
+            onTap: _onItemTapped,
+          ),
         ),
-        // bottomNavigationBar: _BottomNavigationBar(
-        //   navigationShell: widget.navigationShell,
-        // ),
       );
 
   // <--- Methods --->
@@ -140,13 +144,8 @@ class _RootScreenState extends ConsumerState<RootScreen> {
   // Bottom navigation bar item tapped
   void _onItemTapped(int index) {
     final newTab = RootTabsEnum.values[index];
-    if (_tab == newTab) {
-      // The same tab tapped twice
-      if (newTab == RootTabsEnum.home) _clearCatalogNavigationStack();
-    } else {
-      // Switch tab to new one
-      _switchTab(newTab);
-    }
+    // Switch tab to new one
+    _switchTab(newTab);
   }
 
   // Change tab
@@ -164,23 +163,5 @@ class _RootScreenState extends ConsumerState<RootScreen> {
       fallback: RootTabsEnum.home,
     );
     _switchTab(newTab);
-  }
-
-  // Pop to catalog at double tap on catalog tab
-  void _clearCatalogNavigationStack() {
-    // context.octopus.setState((state) {
-    //   final catalog = state.findByName('catalog-tab');
-    //   if (catalog == null || catalog.children.length < 2) return state;
-    //   catalog.children.length = 1;
-    //   if (mounted) {
-    //     ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-    //       const SnackBar(
-    //         content: Text('Poped to catalog tab at double tap'),
-    //         backgroundColor: Colors.green,
-    //       ),
-    //     );
-    //   }
-    //   return state;
-    // });
   }
 }

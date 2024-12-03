@@ -1,5 +1,5 @@
 import 'package:base_starter/src/app/presentation/page/root.dart';
-import 'package:base_starter/src/app/router/router.dart';
+import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
@@ -47,9 +47,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   IconsaxPlusLinear.setting_2,
                   color: Colors.white,
                 ),
-                onPressed: () => SettingsRoute(
-                  title: L10n.current.settings,
-                ).push(context),
+                onPressed: () => context.octopus.setState(
+                  (state) => state
+                    ..findByName('profile-tab')?.add(
+                      Routes.settings.node(),
+                    ),
+                ),
                 splashRadius: 8,
               ),
             ),

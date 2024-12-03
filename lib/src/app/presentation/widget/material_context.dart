@@ -3,13 +3,13 @@ import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/presentation/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ispect/ispect.dart';
+import 'package:octopus/octopus.dart';
 
 /// [MaterialContext] is an entry point to the material context.
 /// This widget sets locales, themes and routing.
-class MaterialContext extends ConsumerWidget {
+class MaterialContext extends StatelessWidget {
   const MaterialContext({
     required this.routerConfig,
     super.key,
@@ -22,7 +22,7 @@ class MaterialContext extends ConsumerWidget {
   static final _globalKey = GlobalKey();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final theme = SettingsScope.themeOf(context).theme;
     final locale = SettingsScope.localeOf(context).locale;
 
@@ -55,6 +55,11 @@ class MaterialContext extends ConsumerWidget {
           );
 
           child = ISpectBuilder(
+            child: child,
+          );
+
+          child = OctopusTools(
+            enable: F.isDev,
             child: child,
           );
 

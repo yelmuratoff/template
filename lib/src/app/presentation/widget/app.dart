@@ -1,6 +1,7 @@
 import 'package:base_starter/src/app/presentation/widget/material_context.dart';
 import 'package:base_starter/src/app/router/guards/tab.dart';
 import 'package:base_starter/src/app/router/routes/router.dart';
+import 'package:base_starter/src/common/presentation/pages/error_router_page.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
@@ -42,6 +43,10 @@ class _AppState extends State<App> {
     observers: [
       ISpectNavigatorObserver(),
     ],
+    onError: (error, stackTrace) {},
+    notFound: (ctx, name, arguments) => RouterErrorPage(
+      error: 'Route not found: $name with arguments: $arguments',
+    ),
   );
 
   @override

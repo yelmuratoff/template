@@ -1,5 +1,5 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:base_starter/src/app/router/router.dart';
+import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/presentation/widgets/buttons/app_button.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/change_environment.dart';
@@ -11,10 +11,12 @@ import 'package:base_starter/src/features/auth/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/controller/settings_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
+import 'package:octopus/octopus.dart';
 
 part 'controller/settings_scope.dart';
 part 'widget/app_version.dart';
@@ -58,7 +60,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         centerTitle: false,
         leading: IconButton(
-          onPressed: () => context.pop(),
+          onPressed: () {
+            context.pop();
+          },
           icon: const Icon(
             IconsaxPlusLinear.arrow_square_left,
           ),
@@ -160,6 +164,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         context,
                         title: L10n.current.loading,
                       ),
+                    InitialAuthState() => {
+                        AppDialogs.dismiss(),
+                        context.octopus.setState(
+                          (state) => state
+                            ..clear()
+                            ..add(Routes.auth.node()),
+                        ),
+                      },
                     _ => AppDialogs.dismiss(),
                   },
                   child: AppButton(

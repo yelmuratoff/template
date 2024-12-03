@@ -7,10 +7,20 @@ import 'package:base_starter/src/features/initialization/models/dependencies.dar
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:octopus/octopus.dart';
 import 'package:provider/provider.dart';
 
 /// List of extensions for `BuildContext`
 extension ContextExtension on BuildContext {
+  /// `pop` pops the current `BuildContext` from the `Navigator`.
+  void pop() {
+    octopus.pop();
+    if (Navigator.canPop(this)) {
+      Navigator.maybePop(this);
+      return;
+    }
+  }
+
   /// Obtain the nearest widget of the given type T,
   /// which must be the type of a concrete `InheritedWidget` subclass,
   /// and register this build context with that widget such that

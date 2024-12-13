@@ -135,6 +135,7 @@ build/
 generated_*
 lib/src/core/assets/generated/
 lib/src/core/localization/generated/
+*untranslated_messages.txt
 
 pubspec.lock
 .metadata

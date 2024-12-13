@@ -1,16 +1,8 @@
 import 'package:base_starter/src/app/presentation/widgets/material_context.dart';
-import 'package:base_starter/src/app/router/guards/tab.dart';
-import 'package:base_starter/src/app/router/routes/router.dart';
-import 'package:base_starter/src/common/presentation/screens/error_router_screen.dart';
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/common/utils/utils.dart';
-import 'package:base_starter/src/core/di/dependencies_scope.dart';
-import 'package:base_starter/src/features/auth/presentation/bloc/user/user_cubit.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
+import 'package:base_starter/src/features/initialization/presentation/dependencies_scope.dart';
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:ispect/ispect.dart';
-import 'package:octopus/octopus.dart';
 
 /// `App` is an entry point to the application.
 ///
@@ -36,31 +28,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final _router = Octopus(
-    routes: Routes.values,
-    defaultRoute: Routes.auth,
-    guards: [TabGuard()],
-    observers: [
-      ISpectNavigatorObserver(),
-    ],
-    onError: (error, stackTrace) {},
-    notFound: (ctx, name, arguments) => RouterErrorScreen(
-      error: 'Route not found: $name with arguments: $arguments',
-    ),
-  );
-
-  @override
-  void initState() {
-    super.initState();
-
-    final routes = _router.config.routes
-        .map((key, value) => MapEntry(key, value.toString()));
-
-    ISpect.route('📜 Routes:\n${AppUtils.formatPrettyJson(routes)}');
-
-    context.blocRead<UserCubit>().get();
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -72,9 +39,7 @@ class _AppState extends State<App> {
         repositories: widget.result.repositories,
         child: SettingsScope(
           settingsBloc: widget.result.dependencies.settingsBloc,
-          child: MaterialContext(
-            routerConfig: _router.config,
-          ),
+          child: const MaterialContext(),
         ),
       );
 }

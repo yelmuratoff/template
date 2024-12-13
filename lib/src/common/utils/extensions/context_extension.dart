@@ -1,9 +1,9 @@
-import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/core/theme/domain/theme_colors.dart';
 import 'package:base_starter/src/core/theme/domain/theme_text_styles.dart';
 import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
 import 'package:base_starter/src/core/theme/presentation/themes/light.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
+import 'package:base_starter/src/features/initialization/presentation/dependencies_scope.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

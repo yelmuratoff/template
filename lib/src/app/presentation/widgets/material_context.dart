@@ -1,5 +1,11 @@
 import 'package:base_starter/flavors.dart';
+import 'package:base_starter/src/app/router/guards/tab.dart';
+import 'package:base_starter/src/app/router/routes/router.dart';
+import 'package:base_starter/src/common/presentation/screens/error_router_screen.dart';
+import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
+import 'package:base_starter/src/features/auth/presentation/bloc/user/user_cubit.dart';
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -9,17 +15,46 @@ import 'package:octopus/octopus.dart';
 
 /// [MaterialContext] is an entry point to the material context.
 /// This widget sets locales, themes and routing.
-class MaterialContext extends StatelessWidget {
+class MaterialContext extends StatefulWidget {
   const MaterialContext({
-    required this.routerConfig,
     super.key,
   });
 
-  final RouterConfig<Object> routerConfig;
+  @override
+  State<MaterialContext> createState() => _MaterialContextState();
+}
 
-  // This global key is needed for [MaterialApp]
-  // to work properly when Widgets Inspector is enabled.
-  static final _globalKey = GlobalKey();
+class _MaterialContextState extends State<MaterialContext> {
+  late final Octopus _router;
+
+  final observer = ISpectNavigatorObserver();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _router = Octopus(
+      routes: Routes.values,
+      defaultRoute: Routes.auth,
+      observers: [
+        observer,
+      ],
+      guards: [
+        TabGuard(),
+      ],
+      onError: (error, stackTrace) {},
+      notFound: (ctx, name, arguments) => RouterErrorScreen(
+        error: 'Route not found: $name with arguments: $arguments',
+      ),
+    );
+
+    final routes = _router.config.routes
+        .map((key, value) => MapEntry(key, value.toString()));
+
+    ISpect.route('📜 Routes:\n${AppUtils.formatPrettyJson(routes)}');
+
+    context.blocRead<UserCubit>().get();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +67,6 @@ class MaterialContext extends StatelessWidget {
       ),
       isISpectEnabled: F.isDev,
       child: MaterialApp.router(
-        key: _globalKey,
         title: F.title,
         onGenerateTitle: (_) => F.title,
         debugShowCheckedModeBanner: false,
@@ -44,7 +78,7 @@ class MaterialContext extends StatelessWidget {
         ]),
         supportedLocales: L10n.supportedLocales,
         locale: locale,
-        routerConfig: routerConfig,
+        routerConfig: _router.config,
         builder: (context, child) {
           child = EasyLoading.init()(context, child);
 
@@ -55,6 +89,7 @@ class MaterialContext extends StatelessWidget {
           );
 
           child = ISpectBuilder(
+            observer: observer,
             child: child,
           );
 

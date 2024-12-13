@@ -1,9 +1,9 @@
 import 'package:base_starter/src/app/presentation/page/root.dart';
 import 'package:base_starter/src/features/auth/presentation/auth_screen.dart';
-import 'package:base_starter/src/features/home/presentation/home.dart';
+import 'package:base_starter/src/features/home/presentation/home_screen.dart';
 import 'package:base_starter/src/features/initialization/presentation/page/splash.dart';
-import 'package:base_starter/src/features/profile/presentation/profile.dart';
-import 'package:base_starter/src/features/settings/presentation/settings.dart';
+import 'package:base_starter/src/features/profile/presentation/profile_screen.dart';
+import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
 

@@ -5,9 +5,9 @@ import 'package:base_starter/src/common/presentation/pages/error_router_page.dar
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/di/dependencies_scope.dart';
-import 'package:base_starter/src/features/auth/bloc/user/user_cubit.dart';
+import 'package:base_starter/src/features/auth/presentation/bloc/user/user_cubit.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
-import 'package:base_starter/src/features/settings/presentation/settings.dart';
+import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ispect/ispect.dart';
 import 'package:octopus/octopus.dart';

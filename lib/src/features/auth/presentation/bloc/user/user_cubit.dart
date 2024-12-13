@@ -8,6 +8,7 @@ class UserCubit extends Cubit<UserDTO?> {
     required this.remoteUserRepository,
     required this.localUserRepository,
   }) : super(null);
+
   final IRemoteUserRepository remoteUserRepository;
   final ILocalUserRepository localUserRepository;
 

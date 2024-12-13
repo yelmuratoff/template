@@ -3,7 +3,6 @@ import 'package:base_starter/src/common/utils/extensions/context_extension.dart'
 import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
-import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
@@ -11,6 +10,7 @@ import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.d
 import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
 import 'package:base_starter/src/features/settings/domain/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/domain/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

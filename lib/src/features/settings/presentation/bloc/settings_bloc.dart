@@ -6,8 +6,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'event.dart';
-part 'state.dart';
+part 'settings_event.dart';
+part 'settings_state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsBloc({
@@ -17,8 +17,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   })  : _localeRepo = localeRepository,
         _themeRepo = themeRepository,
         super(initialState) {
-    on<UpdateThemeSettingsEvent>(_updateTheme);
-    on<UpdateLocaleSettingsEvent>(_updateLocale);
+    on<SettingsEvent>(
+      (event, emit) => switch (event) {
+        final UpdateThemeSettingsEvent e => _updateTheme(e, emit),
+        final UpdateLocaleSettingsEvent e => _updateLocale(e, emit),
+      },
+    );
   }
   final ILocaleRepository _localeRepo;
   final IThemeRepository _themeRepo;
@@ -38,7 +42,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       await _themeRepo.setTheme(event.appTheme);
 
       emit(
-        IdleSettingsState(appTheme: event.appTheme, locale: state.locale),
+        IdleSettingsState(
+          appTheme: event.appTheme,
+          locale: state.locale,
+        ),
       );
     } catch (e) {
       emit(
@@ -68,7 +75,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       L10n.load(event.locale);
 
       emit(
-        IdleSettingsState(appTheme: state.appTheme, locale: event.locale),
+        IdleSettingsState(
+          appTheme: state.appTheme,
+          locale: event.locale,
+        ),
       );
     } catch (e) {
       emit(

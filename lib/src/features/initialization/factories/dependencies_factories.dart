@@ -11,12 +11,12 @@ import 'package:base_starter/src/features/initialization/factories/repositories_
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
-import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:ispect/ispect.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';

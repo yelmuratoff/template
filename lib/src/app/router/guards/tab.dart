@@ -17,25 +17,26 @@ class TabGuard extends OctopusGuard {
     OctopusState$Mutable state,
     Map<String, Object?> context,
   ) {
-    final shop = state.findByName(Routes.root.name);
-    if (shop == null) return state; // Do nothing if `shop` not found.
+    final root = state.findByName(Routes.root.name);
+    if (root == null) return state; // Do nothing if `root` not found.
 
     // Remove all nested routes except of `*-tab`.
-    shop.removeWhere(
+    root.removeWhere(
       (node) => node.name != _homeTab && node.name != _profileTab,
       recursive: false,
     );
-    // Upsert catalog tab node if not exists.
-    final catalog =
-        shop.putIfAbsent(_homeTab, () => OctopusNode.mutable(_homeTab));
-    if (!catalog.hasChildren) {
-      catalog.add(OctopusNode.mutable(Routes.home.name));
+    // Upsert home tab node if not exists.
+    final home =
+        root.putIfAbsent(_homeTab, () => OctopusNode.mutable(_homeTab));
+    if (!home.hasChildren) {
+      home.add(OctopusNode.mutable(Routes.home.name));
     }
+
     // Upsert basket tab node if not exists.
-    final basket =
-        shop.putIfAbsent(_profileTab, () => OctopusNode.mutable(_profileTab));
-    if (!basket.hasChildren) {
-      basket.add(OctopusNode.mutable(Routes.profile.name));
+    final profile =
+        root.putIfAbsent(_profileTab, () => OctopusNode.mutable(_profileTab));
+    if (!profile.hasChildren) {
+      profile.add(OctopusNode.mutable(Routes.profile.name));
     }
 
     return state;

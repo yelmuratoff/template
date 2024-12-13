@@ -10,9 +10,13 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.repository}) : super(const InitialAuthState()) {
-    on<LoginAuthEvent>(_onLogin);
-    on<GetCurrentUserAuthEvent>((_, state) => _onGetCurrentUser(state));
-    on<LogoutAuthEvent>((_, state) => _onLogout(state));
+    on<AuthEvent>(
+      (event, emit) => switch (event) {
+        final LoginAuthEvent e => _onLogin(e, emit),
+        final GetCurrentUserAuthEvent _ => _onGetCurrentUser(emit),
+        final LogoutAuthEvent _ => _onLogout(emit),
+      },
+    );
   }
   final IAuthRepository repository;
 

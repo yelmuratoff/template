@@ -4,8 +4,8 @@ import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class RouterErrorPage extends StatelessWidget {
-  const RouterErrorPage({required this.error, super.key});
+class RouterErrorScreen extends StatelessWidget {
+  const RouterErrorScreen({required this.error, super.key});
   final String error;
 
   @override

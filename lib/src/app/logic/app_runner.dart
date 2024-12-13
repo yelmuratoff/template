@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:base_starter/src/app/presentation/widget/app.dart';
-import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart';
+import 'package:base_starter/src/app/presentation/widgets/app.dart';
+import 'package:base_starter/src/common/presentation/widgets/restart_wrapper.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;

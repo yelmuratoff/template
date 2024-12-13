@@ -1,4 +1,4 @@
-import 'package:base_starter/src/app/presentation/page/root.dart';
+import 'package:base_starter/src/app/presentation/screens/root_screen.dart';
 import 'package:base_starter/src/features/auth/presentation/auth_screen.dart';
 import 'package:base_starter/src/features/home/presentation/home_screen.dart';
 import 'package:base_starter/src/features/initialization/presentation/page/splash.dart';

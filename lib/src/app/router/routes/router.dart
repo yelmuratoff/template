@@ -34,17 +34,5 @@ enum Routes with OctopusRoute {
         Routes.settings => SettingsScreen(
             title: node.arguments['title'],
           ),
-        // Routes.product => _ShopLoader(
-        //     builder: (context) =>
-        //         shop_screens.ProductScreen(id: node.arguments['id']),
-        //   ),
-        // Routes.productImageDialog => _ShopLoader(
-        //     builder: (context) => shop_screens.ProductImageDialog(
-        //       id: node.arguments['id'],
-        //       idx: node.arguments['idx'],
-        //     ),
-        //   ),
-        // Routes.gallery => const GalleryScreen(),
-        // Routes.picture => PictureScreen(id: node.arguments['id']),
       };
 }

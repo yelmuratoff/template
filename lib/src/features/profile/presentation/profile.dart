@@ -1,9 +1,10 @@
-import 'package:base_starter/src/app/presentation/page/root.dart';
+import 'package:base_starter/src/app/router/enums/root_tabs_enum.dart';
 import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:ispect/ispect.dart';
 import 'package:octopus/octopus.dart';
 
 class ProfileTab extends StatelessWidget {
@@ -11,10 +12,10 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BucketNavigator(
-        bucket: '${RootTabsEnum.profile}-tab',
-        // Handles back button only if the current route is the catalog screen
-        shouldHandleBackButton: (_) =>
-            Octopus.instance.state.arguments['tab'] == 'profile',
+        bucket: RootTabsEnum.profile.bucket,
+        observers: [
+          ISpectNavigatorObserver(),
+        ],
       );
 }
 
@@ -49,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 onPressed: () => context.octopus.setState(
                   (state) => state
-                    ..findByName('profile-tab')?.add(
+                    ..findByName(RootTabsEnum.profile.bucket)?.add(
                       Routes.settings.node(),
                     ),
                 ),

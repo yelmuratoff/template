@@ -1,3 +1,4 @@
+import 'package:base_starter/src/app/router/enums/root_tabs_enum.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/features/home/presentation/home.dart';
 import 'package:base_starter/src/features/profile/presentation/profile.dart';
@@ -5,66 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:octopus/octopus.dart';
-
-/// RootTabsEnum enumeration
-enum RootTabsEnum implements Comparable<RootTabsEnum> {
-  /// Home
-  home('home'),
-
-  /// Profile
-  profile('profile');
-
-  const RootTabsEnum(this.name);
-
-  /// Creates a new instance of [RootTabsEnum] from a given string.
-  static RootTabsEnum fromValue(String? value, {RootTabsEnum? fallback}) =>
-      switch (value?.trim().toLowerCase()) {
-        'home' => home,
-        'profile' => profile,
-        _ => fallback ?? (throw ArgumentError.value(value)),
-      };
-
-  /// Value of the enum
-  final String name;
-
-  /// Pattern matching
-  T map<T>({
-    required T Function() home,
-    required T Function() profile,
-  }) =>
-      switch (this) {
-        RootTabsEnum.home => home(),
-        RootTabsEnum.profile => profile(),
-      };
-
-  /// Pattern matching
-  T maybeMap<T>({
-    required T Function() orElse,
-    T Function()? home,
-    T Function()? profile,
-  }) =>
-      map<T>(
-        home: home ?? orElse,
-        profile: profile ?? orElse,
-      );
-
-  /// Pattern matching
-  T? maybeMapOrNull<T>({
-    T Function()? home,
-    T Function()? profile,
-  }) =>
-      maybeMap<T?>(
-        orElse: () => null,
-        home: home,
-        profile: profile,
-      );
-
-  @override
-  int compareTo(RootTabsEnum other) => index.compareTo(other.index);
-
-  @override
-  String toString() => name;
-}
 
 /// The root page of the application.
 class RootScreen extends ConsumerStatefulWidget {

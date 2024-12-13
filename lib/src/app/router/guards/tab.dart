@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:base_starter/src/app/presentation/page/root.dart';
+import 'package:base_starter/src/app/router/enums/root_tabs_enum.dart';
 import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:octopus/octopus.dart';
 
@@ -8,8 +8,8 @@ import 'package:octopus/octopus.dart';
 class TabGuard extends OctopusGuard {
   TabGuard();
 
-  static final String _homeTab = '${RootTabsEnum.home.name}-tab';
-  static final String _profileTab = '${RootTabsEnum.profile.name}-tab';
+  static final _homeTab = RootTabsEnum.home.bucket;
+  static final _profileTab = RootTabsEnum.profile.bucket;
 
   @override
   FutureOr<OctopusState> call(

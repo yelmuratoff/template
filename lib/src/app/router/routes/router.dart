@@ -4,7 +4,7 @@ import 'package:base_starter/src/features/home/presentation/home_screen.dart';
 import 'package:base_starter/src/features/initialization/presentation/page/splash.dart';
 import 'package:base_starter/src/features/profile/presentation/profile_screen.dart';
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:octopus/octopus.dart';
 
 enum Routes with OctopusRoute {
@@ -35,4 +35,21 @@ enum Routes with OctopusRoute {
             title: node.arguments['title'],
           ),
       };
+
+  @override
+  Page<Object?> pageBuilder(
+    BuildContext context,
+    OctopusState state,
+    OctopusNode node,
+  ) =>
+      CupertinoPage<Object?>(
+        key: createKey(node),
+        child: InheritedOctopusRoute(
+          node: node,
+          child: builder(context, state, node),
+        ),
+        name: node.name,
+        arguments: node.arguments,
+        fullscreenDialog: node.name.endsWith('-dialog'),
+      );
 }

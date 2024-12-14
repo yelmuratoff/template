@@ -13,6 +13,7 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BucketNavigator(
         bucket: RootTabsEnum.profile.bucket,
+        transitionDelegate: const DefaultTransitionDelegate<void>(),
         observers: [
           ISpectNavigatorObserver(),
         ],

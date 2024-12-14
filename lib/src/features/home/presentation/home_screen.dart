@@ -16,6 +16,7 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BucketNavigator(
         bucket: RootTabsEnum.home.bucket,
+        transitionDelegate: const DefaultTransitionDelegate<void>(),
         observers: [
           ISpectNavigatorObserver(),
         ],

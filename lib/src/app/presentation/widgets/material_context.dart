@@ -35,7 +35,7 @@ class _MaterialContextState extends State<MaterialContext> {
 
     _router = Octopus(
       routes: Routes.values,
-      defaultRoute: Routes.auth,
+      defaultRoute: Routes.splash,
       observers: [
         observer,
       ],

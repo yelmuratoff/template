@@ -1,10 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
+import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:octopus/octopus.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,10 +32,27 @@ class _SplashScreenState extends State<SplashScreen> {
       }
       fToast.init(context);
       final tokenPair = await SecureStorageManager.getToken();
+      await Future<void>.delayed(const Duration(seconds: 1));
       if (tokenPair != null && context.mounted) {
-        // const HomeRoute().go(context);
+        unawaited(
+          context.octopus.setState(
+            (state) => state
+              ..clear()
+              ..add(
+                Routes.root.node(),
+              ),
+          ),
+        );
       } else {
-        // const AuthRoute().go(context);
+        unawaited(
+          context.octopus.setState(
+            (state) => state
+              ..clear()
+              ..add(
+                Routes.auth.node(),
+              ),
+          ),
+        );
       }
     });
   }

@@ -33,13 +33,11 @@ final class AppUtils {
       'Brightness must be between 0.0 and 1.0',
     );
 
-    final red = ((color.red * brightness) + (255 * (1.0 - brightness))).round();
-    final green =
-        ((color.green * brightness) + (255 * (1.0 - brightness))).round();
-    final blue =
-        ((color.blue * brightness) + (255 * (1.0 - brightness))).round();
+    final red = (color.r * brightness) + (1.0 - brightness);
+    final green = (color.g * brightness) + (1.0 - brightness);
+    final blue = (color.b * brightness) + (1.0 - brightness);
 
-    return Color.fromARGB(color.alpha, red, green, blue);
+    return color.withValues(alpha: color.a, red: red, green: green, blue: blue);
   }
 
   /// `adjustColorDarken` - This function darkens a color
@@ -50,11 +48,11 @@ final class AppUtils {
       'Darken must be between 0.0 and 1.0',
     );
 
-    final red = (color.red * (1.0 - darken)).round();
-    final green = (color.green * (1.0 - darken)).round();
-    final blue = (color.blue * (1.0 - darken)).round();
+    final red = (color.r * (1.0 - darken)).round();
+    final green = (color.g * (1.0 - darken)).round();
+    final blue = (color.b * (1.0 - darken)).round();
 
-    return Color.fromARGB(color.alpha, red, green, blue);
+    return Color.fromARGB(color.a.toInt(), red, green, blue);
   }
 
   /// `formatPrettyJson` - This function formats a map of strings as a pretty

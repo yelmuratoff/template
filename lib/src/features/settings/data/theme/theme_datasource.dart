@@ -31,6 +31,7 @@ final class ThemeDataSourceLocal extends PreferencesDao
 
   @override
   Future<void> setTheme(AppTheme theme) async {
+    // ignore: deprecated_member_use
     await _seedColor.setIfNullRemove(theme.seed.value);
     await _themeMode.setIfNullRemove(codec.encode(theme.mode));
   }

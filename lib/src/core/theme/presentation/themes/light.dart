@@ -21,12 +21,12 @@ final class LightThemeData {
         thumbColor: WidgetStateProperty.all<Color>(seed),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return seed.withOpacity(0.8);
+            return seed..withValues(alpha: 0.8);
           }
-          return seed.withOpacity(0.3);
+          return seed..withValues(alpha: 0.3);
         }),
         trackOutlineColor: WidgetStateProperty.all<Color>(
-          seed.withOpacity(0.1),
+          seed..withValues(alpha: 0.1),
         ),
       ),
     );
@@ -46,7 +46,7 @@ final class LightThemeData {
           divider: Colors.grey[300]!,
           text: Colors.black,
           border: Colors.grey[400]!,
-          card: Colors.grey.withOpacity(0.05),
+          card: Colors.grey..withValues(alpha: 0.05),
           shadow: const Color.fromARGB(255, 211, 211, 211),
           success: const Color(0xff4CAF50),
           shimmerBase: const Color(0xffB4B4B4),

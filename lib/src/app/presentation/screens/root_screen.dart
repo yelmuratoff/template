@@ -52,7 +52,9 @@ class _RootScreenState extends ConsumerState<RootScreen> {
             color: context.theme.colorScheme.surface,
             boxShadow: [
               BoxShadow(
-                color: context.theme.colorScheme.onSurface.withOpacity(0.1),
+                color: context.theme.colorScheme.onSurface.withValues(
+                  alpha: 0.1,
+                ),
                 blurRadius: 1,
                 offset: const Offset(0, -1),
               ),

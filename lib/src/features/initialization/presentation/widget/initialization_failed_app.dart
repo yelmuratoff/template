@@ -202,8 +202,8 @@ class _View extends StatelessWidget {
                   splashRadius: 8,
                   color: context.theme.colorScheme.error,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        context.theme.colorScheme.error.withOpacity(0.1),
+                    backgroundColor: context.theme.colorScheme.error
+                      ..withValues(alpha: 0.1),
                   ),
                 ),
               ),

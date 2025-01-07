@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ispect/ispect.dart';
-import 'package:talker_riverpod_logger/talker_riverpod_logger_observer.dart';
 
 /// A class which is responsible for initialization and running the app.
 final class AppRunner {
@@ -38,11 +36,6 @@ final class AppRunner {
 
         runApp(
           ProviderScope(
-            observers: [
-              TalkerRiverpodObserver(
-                talker: ISpect.talker,
-              ),
-            ],
             child: RestartWrapper(
               child: MultiBlocProvider(
                 providers: [

@@ -34,7 +34,7 @@ final class DarkThemeData {
           divider: Colors.grey[700]!,
           text: Colors.white,
           border: Colors.grey[600]!,
-          card: Colors.grey..withValues(alpha: 0.1),
+          card: Colors.grey.withValues(alpha: 0.1),
           shadow: const Color.fromARGB(255, 211, 211, 211),
           success: const Color(0xff4CAF50),
           shimmerBase: const Color(0xffB4B4B4),

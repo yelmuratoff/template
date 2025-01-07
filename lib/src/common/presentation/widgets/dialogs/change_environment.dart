@@ -60,7 +60,7 @@ final class ChangeEnvironmentDialog {
                         ISpect.warning(
                           'Environment changed to ${env.name}',
                         );
-                        ISpect.read(context).setISpect =
+                        ISpect.read(context).isISpectEnabled =
                             env.name == Flavor.dev.name;
                         Navigator.pop(context);
                         RestartWrapper.restartApp(context);

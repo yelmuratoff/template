@@ -50,8 +50,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final versionTextColor = context.theme.colorScheme.onSurface
-      ..withValues(alpha: 0.5);
+    final versionTextColor =
+        context.theme.colorScheme.onSurface.withValues(alpha: 0.5);
     final titleMediumTextStyle = context.textStyles.s18w600.copyWith(
       fontWeight: FontWeight.bold,
     );

@@ -35,10 +35,9 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.24
 
   # Logging
-  talker: ^4.4.6
-  talker_dio_logger: ^4.4.6
-  talker_bloc_logger: ^4.4.6
-  talker_riverpod_logger: ^4.4.6
+  ispect: ^3.0.0-dev.2
+  ispectify_dio: 0.0.1-dev.2
+  ispectify_bloc: 0.0.1-dev.2
 
   # Utils
   pure: ^0.3.0
@@ -57,7 +56,6 @@ dependencies:
   flutter_easyloading: ^3.0.5
   auto_size_text: ^3.0.0
   fluttertoast: ^8.2.8
-  ispect: ^2.0.7
   iconsax_plus: ^1.0.0
 
   # Routing

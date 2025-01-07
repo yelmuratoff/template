@@ -54,7 +54,6 @@
             "args": [
                 "-t",
                 "lib/main_dev.dart",
-               //  "--wasm",
             ],
         },
         {
@@ -64,7 +63,6 @@
             "args": [
                 "-t",
                 "lib/main.dart",
-               //  "--wasm",
             ],
         },
     ]

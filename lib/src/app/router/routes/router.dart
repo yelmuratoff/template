@@ -29,7 +29,7 @@ enum Routes with OctopusRoute {
         Routes.splash => const SplashScreen(),
         Routes.auth => const AuthScreen(),
         Routes.root => const RootScreen(),
-        Routes.home => const HomeScreen(),
+        Routes.home => const HomeScreen().wrappedRoute(context),
         Routes.profile => const ProfileScreen(),
         Routes.settings => SettingsScreen(
             title: node.arguments['title'],

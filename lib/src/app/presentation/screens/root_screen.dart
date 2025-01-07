@@ -3,20 +3,20 @@ import 'package:base_starter/src/common/utils/extensions/context_extension.dart'
 import 'package:base_starter/src/features/home/presentation/home_screen.dart';
 import 'package:base_starter/src/features/profile/presentation/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:octopus/octopus.dart';
 
 /// The root page of the application.
-class RootScreen extends ConsumerStatefulWidget {
+class RootScreen extends StatefulWidget {
   const RootScreen({Key? key})
       : super(key: key ?? const ValueKey<String>('RootScreen'));
 
   @override
-  ConsumerState<RootScreen> createState() => _RootScreenState();
+  State<RootScreen> createState() => _RootScreenState();
 }
 
-class _RootScreenState extends ConsumerState<RootScreen> {
+class _RootScreenState extends State<RootScreen> {
   // Octopus state observer
   late final OctopusStateObserver _octopusStateObserver;
 

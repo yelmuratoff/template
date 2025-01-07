@@ -5,8 +5,10 @@ import 'package:base_starter/src/features/initialization/logic/composition_root.
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:base_starter/src/features/initialization/presentation/widget/initialization_failed_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ispect/ispect.dart';
+import 'package:ispectify_bloc/ispectify_bloc.dart';
 
 // ==================== Entry fields ====================
 
@@ -36,6 +38,11 @@ Future<void> bootstrap() async {
       hook!,
     ),
     iSpectify: iSpectify,
+    onInit: (iSpectify) {
+      Bloc.observer = ISpectifyBlocObserver(
+        iSpectify: iSpectify,
+      );
+    },
     onZonedError: (_, __) {
       debugPrint('Zoned error');
       //     if (kReleaseMode && envType == EnvType.prod) {

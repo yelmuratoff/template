@@ -8,7 +8,6 @@ import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// A class which is responsible for initialization and running the app.
 final class AppRunner {
@@ -35,20 +34,18 @@ final class AppRunner {
         FlutterNativeSplash.remove();
 
         runApp(
-          ProviderScope(
-            child: RestartWrapper(
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider.value(
-                    value: result.dependencies.authBloc,
-                  ),
-                  BlocProvider.value(
-                    value: result.dependencies.userCubit,
-                  ),
-                ],
-                child: App(
-                  result: result,
+          RestartWrapper(
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider.value(
+                  value: result.dependencies.authBloc,
                 ),
+                BlocProvider.value(
+                  value: result.dependencies.userCubit,
+                ),
+              ],
+              child: App(
+                result: result,
               ),
             ),
           ),

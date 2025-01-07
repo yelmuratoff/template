@@ -51,6 +51,8 @@ dependencies:
   device_info_plus: ^10.1.2
 
   # UI
+  ui:
+    path: packages/ui
   gap: ^3.0.1
   group_button: ^5.3.4
   flutter_easyloading: ^3.0.5
@@ -62,10 +64,7 @@ dependencies:
   octopus: ^0.0.9
 
   # Others
-  ui:
-    path: packages/ui
   provider: ^6.1.2
-  flutter_riverpod: ^2.5.1
   flutter_secure_storage: ^9.2.2
   envied: ^0.5.4
   dev: ^1.0.0

@@ -47,5 +47,25 @@
                 "lib/main.dart",
             ]
         },
+        {
+            "name": "Debug [DEV - Web]",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-t",
+                "lib/main_dev.dart",
+               //  "--wasm",
+            ],
+        },
+        {
+            "name": "Debug [PROD - Web]",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-t",
+                "lib/main.dart",
+               //  "--wasm",
+            ],
+        },
     ]
 }

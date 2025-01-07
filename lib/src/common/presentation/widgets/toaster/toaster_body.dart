@@ -28,7 +28,7 @@ class _ToasterBody extends StatelessWidget {
             children: [
               if (hasImage) ...[
                 Image.asset(
-                  Assets.images.icon1024x1024.path,
+                  Assets.images.launcher.path,
                   width: 20,
                   height: 20,
                 ),

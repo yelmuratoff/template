@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:base_starter/src/common/presentation/widgets/toaster/flutter_toast.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 
 part 'toaster_body.dart';
@@ -18,7 +18,7 @@ final class Toaster {
     Color backgroundColor = const Color.fromARGB(255, 43, 42, 42),
     Color textColor = Colors.white,
     bool hasImage = true,
-    bool isDismissable = true,
+    bool isDismissible = true,
     bool isIgnorePointer = true,
     Duration fadeDuration = const Duration(milliseconds: 200),
     Duration toastDuration = const Duration(seconds: 1),
@@ -38,7 +38,7 @@ final class Toaster {
         fadeDuration: fadeDuration,
         toastDuration: toastDuration,
         ignorePointer: isIgnorePointer,
-        isDismissable: isDismissable,
+        isDismissible: isDismissible,
       );
 
     await Future.delayed(toastDuration, () {
@@ -54,7 +54,7 @@ final class Toaster {
     VoidCallback? then,
     Color textColor = Colors.white,
     bool hasImage = false,
-    bool isDismissable = true,
+    bool isDismissible = true,
     bool isIgnorePointer = true,
     Duration fadeDuration = const Duration(milliseconds: 200),
     Duration toastDuration = const Duration(milliseconds: 1500),
@@ -73,7 +73,7 @@ final class Toaster {
         fadeDuration: fadeDuration,
         toastDuration: toastDuration,
         ignorePointer: isIgnorePointer,
-        isDismissable: isDismissable,
+        isDismissible: isDismissible,
       );
 
     await Future.delayed(toastDuration, () {
@@ -89,7 +89,7 @@ final class Toaster {
     VoidCallback? then,
     Color textColor = Colors.white,
     bool hasImage = false,
-    bool isDismissable = true,
+    bool isDismissible = true,
     bool isIgnorePointer = true,
     Duration fadeDuration = const Duration(milliseconds: 200),
     Duration toastDuration = const Duration(milliseconds: 1500),
@@ -108,7 +108,7 @@ final class Toaster {
         fadeDuration: fadeDuration,
         toastDuration: toastDuration,
         ignorePointer: isIgnorePointer,
-        isDismissable: isDismissable,
+        isDismissible: isDismissible,
       );
 
     await Future.delayed(toastDuration, () {

@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:base_starter/src/app/router/routes/router.dart';
-import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
+import 'package:base_starter/src/common/presentation/widgets/toaster/toaster.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';

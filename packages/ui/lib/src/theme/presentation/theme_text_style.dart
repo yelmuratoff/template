@@ -1,6 +1,6 @@
-import 'package:base_starter/src/core/theme/domain/theme_text_styles.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/theme/domain/theme_text_styles.dart';
 
 final class ThemeTextStyle extends Equatable implements ITextStyles {
   const ThemeTextStyle({

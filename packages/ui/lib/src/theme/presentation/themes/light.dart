@@ -1,7 +1,7 @@
-import 'package:base_starter/src/common/utils/utils.dart';
-import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
-import 'package:base_starter/src/core/theme/presentation/theme_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/theme/presentation/theme_colors.dart';
+import 'package:ui/src/theme/presentation/theme_text_style.dart';
+import 'package:ui/src/utils/theme_util.dart';
 
 final class LightThemeData {
   /// `getBaseLightTheme` is a function that
@@ -10,7 +10,7 @@ final class LightThemeData {
     final baseTheme = ThemeData.from(
       colorScheme: ColorScheme.light(
         primary: seed,
-        secondary: AppUtils.adjustColorBrightness(seed, 0.8),
+        secondary: ThemeUtil.adjustColorBrightness(seed, 0.8),
       ),
     ).copyWith(
       appBarTheme: const AppBarTheme(

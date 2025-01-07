@@ -1,6 +1,6 @@
-import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
-import 'package:base_starter/src/core/theme/presentation/theme_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/theme/presentation/theme_colors.dart';
+import 'package:ui/src/theme/presentation/theme_text_style.dart';
 
 final class DarkThemeData {
   /// `getBaseDarkTheme` is a function that

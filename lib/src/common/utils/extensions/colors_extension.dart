@@ -1,5 +1,5 @@
-import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/ui.dart';
 
 /// Optional. If you also want to assign colors in the `ColorScheme`.
 extension ColorSchemeBuilder on ThemeColors {

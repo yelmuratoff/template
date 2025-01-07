@@ -1,6 +1,7 @@
-import 'package:base_starter/src/core/theme/domain/theme_colors.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/theme/domain/theme_colors.dart';
 
 /// It has all required fields from the default Material `ColorScheme`.
 /// But you can add, rename and delete any fields your need.

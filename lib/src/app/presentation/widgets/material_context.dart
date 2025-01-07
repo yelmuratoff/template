@@ -2,6 +2,7 @@ import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/router/guards/tab.dart';
 import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/presentation/screens/error_router_screen.dart';
+import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster/flutter_toast.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
@@ -9,7 +10,6 @@ import 'package:base_starter/src/features/auth/presentation/bloc/user/user_cubit
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ispect/ispect.dart';
 import 'package:octopus/octopus.dart';
 

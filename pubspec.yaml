@@ -55,7 +55,6 @@ dependencies:
   group_button: ^5.3.4
   flutter_easyloading: ^3.0.5
   auto_size_text: ^3.0.0
-  fluttertoast: ^8.2.8
   iconsax_plus: ^1.0.0
 
   # Routing
@@ -63,6 +62,8 @@ dependencies:
   octopus: ^0.0.9
 
   # Others
+  ui:
+    path: packages/ui
   provider: ^6.1.2
   flutter_riverpod: ^2.5.1
   flutter_secure_storage: ^9.2.2

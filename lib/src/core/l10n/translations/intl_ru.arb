@@ -15,7 +15,7 @@
    "somethingWentWrong": "Что-то пошло не так",
    "@_Lang": {},
    "locale": "ru",
-   "appTitle": "base_starter",
+   "appTitle": "BASE_APP_NAME",
    "customColors": "Кастомные цветы",
    "defaultThemes": "Стандартные темы",
    "locales": "Языки",

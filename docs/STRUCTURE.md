@@ -114,7 +114,7 @@
   - **📝 Description**: Directory for image assets.
   - **🔧 Purpose**: Stores image files used in the application, such as icons and splash screens.
 
-  - **`icon-1024x1024.png`**
+  - **`launcher.png`**
     - **📝 Description**: Example image asset.
     - **🔧 Purpose**: Icon image used in the application.
 

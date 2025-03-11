@@ -1,15 +1,23 @@
-import 'package:base_starter/src/core/di/containers/dependencies.dart';
-import 'package:base_starter/src/core/di/dependencies_scope.dart';
-import 'package:base_starter/src/core/theme/domain/theme_colors.dart';
-import 'package:base_starter/src/core/theme/domain/theme_text_styles.dart';
-import 'package:base_starter/src/core/theme/presentation/theme_colors.dart';
+import 'package:base_starter/src/features/initialization/models/dependencies.dart';
+import 'package:base_starter/src/features/initialization/presentation/dependencies_scope.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:octopus/octopus.dart';
 import 'package:provider/provider.dart';
+import 'package:ui/ui.dart';
 
 /// List of extensions for `BuildContext`
 extension ContextExtension on BuildContext {
+  /// `pop` pops the current `BuildContext` from the `Navigator`.
+  void pop() {
+    octopus.pop();
+    if (Navigator.canPop(this)) {
+      Navigator.maybePop(this);
+      return;
+    }
+  }
+
   /// Obtain the nearest widget of the given type T,
   /// which must be the type of a concrete `InheritedWidget` subclass,
   /// and register this build context with that widget such that
@@ -69,7 +77,8 @@ extension ContextExtension on BuildContext {
   IColors get colors => theme.extension<IColors>()!;
 
   /// `textStyles` returns text styles of the `BuildContext`.
-  ITextStyles get textStyles => theme.extension<ITextStyles>()!;
+  ITextStyles get textStyles =>
+      theme.extension<ITextStyles>() ?? LightThemeData.textStyles;
 
   /// `isDark` returns `true` if the current `Theme` is dark.
   bool get isDark => theme.brightness == Brightness.dark;
@@ -100,7 +109,7 @@ extension ContextExtension on BuildContext {
 
   /// `dependencies` returns the nearest `DependenciesScope`
   /// of the given `BuildContext`.
-  Dependencies get dependencies => DependenciesScope.of(this);
+  DependenciesContainer get dependencies => DependenciesScope.of(this);
 
   /// `provide` returns the nearest `Provider` of the given `BuildContext`.
   T provide<T>() => Provider.of<T>(this);

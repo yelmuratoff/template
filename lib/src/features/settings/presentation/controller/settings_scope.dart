@@ -1,4 +1,4 @@
-part of '../settings.dart';
+part of '../settings_screen.dart';
 
 /// A controller that holds and operates the app theme.
 abstract interface class ThemeScopeController {

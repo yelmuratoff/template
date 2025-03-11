@@ -12,7 +12,7 @@ QueryExecutor createExecutor() => DatabaseConnection.delayed(
         );
 
         if (result.missingFeatures.isNotEmpty) {
-          ISpect.warning(
+          ISpect.logger.warning(
             'Using ${result.chosenImplementation} due to missing browser '
             'features: ${result.missingFeatures}',
           );

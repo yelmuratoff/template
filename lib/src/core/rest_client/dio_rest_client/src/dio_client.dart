@@ -2,8 +2,7 @@ import 'package:base_starter/src/core/database/src/preferences/secure_storage_ma
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:dio/dio.dart';
 import 'package:ispect/ispect.dart';
-import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
-import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
+import 'package:ispectify_dio/ispectify_dio.dart';
 
 class DioClient {
   factory DioClient({
@@ -113,9 +112,9 @@ class DioClient {
     /// Adds `TalkerDioLogger` to intercept Dio requests and responses and
     /// log them using Talker service.
     dio.interceptors.add(
-      TalkerDioLogger(
-        talker: ISpect.talker,
-        settings: const TalkerDioLoggerSettings(
+      ISpectifyDioLogger(
+        iSpectify: ISpect.logger,
+        settings: const ISpectifyDioLoggerSettings(
           printRequestHeaders: true,
           printResponseHeaders: true,
           printResponseData: false,

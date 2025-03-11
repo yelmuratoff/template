@@ -1,11 +1,11 @@
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
-/// `DragHandleComponent` - This widget is used to
+/// `DragHandle` - This widget is used to
 /// display the header of the bottom sheet.
 
-class DragHandleComponent extends StatelessWidget {
-  const DragHandleComponent({
+class DragHandle extends StatelessWidget {
+  const DragHandle({
     super.key,
   });
 

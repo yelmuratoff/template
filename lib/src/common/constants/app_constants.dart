@@ -4,7 +4,7 @@ import 'package:base_starter/src/core/env/env.dart';
 /// base `static` constants used in the app.
 final class AppConstants {
   // TODO(Yelaman): Change this to your app name
-  static const String appName = 'Base';
+  static const String appName = 'BASE_APP_NAME';
 
   // TODO(Yelaman): Change this to your app identifier
   static const String appIdentifier = 'kz.app.template';

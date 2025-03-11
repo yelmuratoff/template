@@ -1,27 +1,22 @@
 import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/common/utils/extensions/talker.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
-import 'package:base_starter/src/core/di/containers/dependencies.dart';
-import 'package:base_starter/src/core/di/containers/repositories.dart';
-import 'package:base_starter/src/core/di/dependencies_scope.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
-import 'package:base_starter/src/features/settings/bloc/settings_bloc.dart';
-import 'package:base_starter/src/features/settings/core/data/locale/locale_datasource.dart';
-import 'package:base_starter/src/features/settings/core/data/locale/locale_repository.dart';
-import 'package:base_starter/src/features/settings/core/data/theme/theme_datasource.dart';
-import 'package:base_starter/src/features/settings/core/data/theme/theme_mode_codec.dart';
-import 'package:base_starter/src/features/settings/core/data/theme/theme_repository.dart';
-import 'package:base_starter/src/features/settings/core/domain/locale/locale_repository.dart';
-import 'package:base_starter/src/features/settings/core/domain/theme/theme_repository.dart';
-import 'package:base_starter/src/features/settings/presentation/settings.dart';
+import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
+import 'package:base_starter/src/features/settings/data/locale/locale_repository.dart';
+import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
+import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
+import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/domain/locale/locale_repository.dart';
+import 'package:base_starter/src/features/settings/domain/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:talker/talker.dart';
 
 /// InitializationFailedScreen widget
 class InitializationFailedApp extends StatefulWidget {
@@ -60,7 +55,7 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
   bool _isInitialized = false;
 
   /// ISpect fields
-  final Talker _talker = TalkerFlutter.init();
+  final ISpectify _iSpectify = ISpectifyFlutter.init();
 
   @override
   void initState() {
@@ -107,36 +102,34 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 
   @override
   Widget build(BuildContext context) => _isInitialized
-      ? DependenciesScope(
-          dependencies: Dependencies(),
-          repositories: Repositories(),
-          child: SettingsScope(
-            settingsBloc: SettingsBloc(
-              localeRepository: _localeRepository!,
-              themeRepository: _themeRepository!,
-              initialState: _settingsState!,
+      ? SettingsScope(
+          settingsBloc: SettingsBloc(
+            localeRepository: _localeRepository!,
+            themeRepository: _themeRepository!,
+            initialState: _settingsState!,
+          ),
+          child: MaterialApp(
+            theme: _settingsState?.appTheme?.lightTheme,
+            darkTheme: _settingsState?.appTheme?.darkTheme,
+            themeMode: _settingsState?.appTheme?.mode,
+            locale: _settingsState?.locale,
+            localizationsDelegates: ISpectLocalizations.localizationDelegates(
+              [L10n.delegate],
             ),
-            child: MaterialApp(
-              theme: _settingsState?.appTheme?.lightTheme,
-              darkTheme: _settingsState?.appTheme?.darkTheme,
-              themeMode: _settingsState?.appTheme?.mode,
-              locale: _settingsState?.locale,
-              localizationsDelegates: L10n.delegates,
-              supportedLocales: L10n.supportedLocales,
-              home: _View(
-                error: widget.error,
-                retryInitialization: widget.retryInitialization != null
-                    ? _retryInitialization
-                    : null,
-                stackTrace: widget.stackTrace,
-                talker: _talker,
-                themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
-                lightTheme:
-                    _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
-                darkTheme:
-                    _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
-                locale: _settingsState?.locale ?? const Locale('en'),
-              ),
+            supportedLocales: L10n.supportedLocales,
+            home: _View(
+              error: widget.error,
+              retryInitialization: widget.retryInitialization != null
+                  ? _retryInitialization
+                  : null,
+              stackTrace: widget.stackTrace,
+              iSpectify: _iSpectify,
+              themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
+              lightTheme:
+                  _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
+              darkTheme:
+                  _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
+              locale: _settingsState?.locale ?? const Locale('en'),
             ),
           ),
         )
@@ -155,7 +148,7 @@ class _View extends StatelessWidget {
   const _View({
     required this.error,
     required this.stackTrace,
-    required this.talker,
+    required this.iSpectify,
     required this.themeMode,
     required this.lightTheme,
     required this.darkTheme,
@@ -165,7 +158,7 @@ class _View extends StatelessWidget {
   final Object error;
   final AsyncCallback? retryInitialization;
   final StackTrace stackTrace;
-  final Talker talker;
+  final ISpectify iSpectify;
   final ThemeMode themeMode;
   final ThemeData lightTheme;
   final ThemeData darkTheme;
@@ -190,7 +183,8 @@ class _View extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (_) => ISpectPage(
+                        builder: (_) => ISpectScreen(
+                          appBarTitle: 'ISpect',
                           options: ISpectOptions(
                             locale: locale,
                           ),
@@ -202,7 +196,7 @@ class _View extends StatelessWidget {
                   color: context.theme.colorScheme.error,
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
-                        context.theme.colorScheme.error.withOpacity(0.1),
+                        context.theme.colorScheme.error.withValues(alpha: 0.1),
                   ),
                 ),
               ),

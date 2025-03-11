@@ -1,45 +1,71 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:base_starter/src/app/router/router.dart';
-import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
+import 'dart:async';
+
+import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:octopus/octopus.dart';
 
-class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _initialize();
+    _initialize(context);
   }
 
-  Future<void> _initialize() async {
+  Future<void> _initialize(BuildContext context) async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (AppConfigManager.instance.isFirstRun) {
         await SecureStorageManager.storage.deleteAll();
         await AppConfigManager.instance.setFirstRun(value: false);
       }
-      fToast.init(navigatorKey.currentContext!);
+
       final tokenPair = await SecureStorageManager.getToken();
-      if (tokenPair != null && context.mounted) {
-        const HomeRoute().go(context);
+      await Future<void>.delayed(const Duration(seconds: 1));
+      if (!context.mounted) return;
+
+      if (tokenPair != null) {
+        unawaited(
+          context.octopus.setState(
+            (state) => state
+              ..clear()
+              ..add(
+                Routes.root.node(),
+              ),
+          ),
+        );
       } else {
-        const AuthRoute().go(context);
+        unawaited(
+          context.octopus.setState(
+            (state) => state
+              ..clear()
+              ..add(
+                Routes.auth.node(),
+              ),
+          ),
+        );
       }
     });
   }
 
   @override
-  Widget build(BuildContext context) => Image.asset(
-        Assets.images.splash.path,
-        fit: BoxFit.cover,
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: const Color(0xff1468AD),
+        body: Center(
+          child: Image.asset(
+            Assets.images.icon.path,
+            width: 250,
+          ),
+        ),
       );
 }

@@ -1,32 +1,39 @@
-import 'package:base_starter/src/core/di/containers/dependencies.dart';
-import 'package:base_starter/src/core/di/containers/repositories.dart';
+import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
+import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:base_starter/src/features/auth/presentation/bloc/user/user_cubit.dart';
+import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/// Result of initialization
-final class InitializationResult {
-  const InitializationResult({
-    required this.dependencies,
-    required this.repositories,
-    required this.stepCount,
-    required this.msSpent,
+final class DependenciesContainer {
+  const DependenciesContainer({
+    required this.sharedPreferences,
+    required this.packageInfo,
+    required this.restClient,
+    required this.authBloc,
+    required this.userCubit,
+    required this.settingsBloc,
   });
 
-  /// The dependencies
-  final Dependencies dependencies;
+  // <--- External dependencies --->
+  final SharedPreferences sharedPreferences;
+  final PackageInfo packageInfo;
 
-  /// The repositories
-  final Repositories repositories;
+  // <--- Internal dependencies --->
+  final AuthBloc authBloc;
+  final UserCubit userCubit;
+  final SettingsBloc settingsBloc;
 
-  /// The number of steps
-  final int stepCount;
-
-  /// The number of milliseconds spent
-  final int msSpent;
+  // <--- Network dependencies --->
+  final RestClientBase restClient;
 
   @override
-  String toString() => '$InitializationResult('
-      'dependencies: $dependencies, '
-      'repositories: $repositories, '
-      'stepCount: $stepCount, '
-      'msSpent: $msSpent'
-      ')';
+  String toString() => '''DependenciesContainer(
+      sharedPreferences:$sharedPreferences,
+      packageInfo: $packageInfo,
+      restClient: $restClient,
+      authBloc: $authBloc,
+      userCubit: $userCubit,
+      settingsBloc: $settingsBloc,
+    )''';
 }

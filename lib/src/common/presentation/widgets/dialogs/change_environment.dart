@@ -1,8 +1,7 @@
 import 'package:base_starter/flavors.dart';
-import 'package:base_starter/src/app/router/router.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:base_starter/src/common/presentation/pages/restart_wrapper.dart';
-import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster.dart';
+import 'package:base_starter/src/common/presentation/widgets/restart_wrapper.dart';
+import 'package:base_starter/src/common/presentation/widgets/toaster/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
@@ -58,15 +57,15 @@ final class ChangeEnvironmentDialog {
                           Preferences.environment,
                           env.name,
                         );
-                        ISpect.warning(
+                        ISpect.logger.warning(
                           'Environment changed to ${env.name}',
                         );
-                        ISpect.read(context).setISpect =
+                        ISpect.read(context).isISpectEnabled =
                             env.name == Flavor.dev.name;
                         Navigator.pop(context);
-                        RestartWrapper.restartApp(navigatorKey.currentContext!);
+                        RestartWrapper.restartApp(context);
                       } catch (e, st) {
-                        ISpect.handle(
+                        ISpect.logger.handle(
                           exception: e,
                           stackTrace: st,
                           message: 'Error changing environment',

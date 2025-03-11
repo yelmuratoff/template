@@ -1,19 +1,19 @@
 import 'dart:async';
 
 import 'package:base_starter/src/app/logic/app_runner.dart';
-import 'package:base_starter/src/common/utils/extensions/talker.dart';
-import 'package:base_starter/src/features/initialization/logic/initialization_processor.dart';
-import 'package:base_starter/src/features/initialization/models/dependencies.dart';
+import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:base_starter/src/features/initialization/presentation/widget/initialization_failed_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ispect/ispect.dart';
+import 'package:ispectify_bloc/ispectify_bloc.dart';
 
 // ==================== Entry fields ====================
 
 ///  It is used to handle errors and log messages in the app.
-final talker = TalkerFlutter.init();
+final iSpectify = ISpectifyFlutter.init();
 
 // ==================== Bootstrap ====================
 
@@ -23,9 +23,8 @@ Future<void> bootstrap() async {
   hook = InitializationHook.setup(
     onInitializing: _onInitializing,
     onInitialized: _onInitialized,
-    onError: (step, error, stackTrace) {
+    onError: (error, stackTrace) {
       _onErrorFactory(
-        step,
         error,
         stackTrace,
         hook!,
@@ -38,7 +37,12 @@ Future<void> bootstrap() async {
     () => AppRunner().initializeAndRun(
       hook!,
     ),
-    talker: talker,
+    logger: iSpectify,
+    onInit: () {
+      Bloc.observer = ISpectifyBlocObserver(
+        iSpectify: iSpectify,
+      );
+    },
     onZonedError: (_, __) {
       debugPrint('Zoned error');
       //     if (kReleaseMode && envType == EnvType.prod) {
@@ -60,37 +64,30 @@ Future<void> bootstrap() async {
 
 /// `_onInitializing` is a callback function that is
 /// called when the initialization process is started.
-void _onInitializing(InitializationStepInfo info) {
-  final percentage = ((info.step / info.stepsCount) * 100).toInt();
-  ISpect.info(
-    '🌀 Inited ${info.stepName} in ${info.msSpent} ms | '
-    'Progress: $percentage%',
-  );
+void _onInitializing(String stepName) {
+  ISpect.logger.info('🌀 Inited $stepName');
 }
 
 /// `_onInitialized` is a callback function that is called when
 /// the initialization process is completed.
-void _onInitialized(InitializationResult result) {
-  ISpect.good(
-    '🎉 Initialization completed in ${result.msSpent} ms',
+void _onInitialized(CompositionResult result) {
+  ISpect.logger.good(
+    '''🎉 Initialization completed in ${result.millisecondsSpent} ms\nResult: $result''',
   );
 }
 
 /// `_onErrorFactory` is a factory function that creates an error
 /// handling function.
 void _onErrorFactory(
-  int step,
-  Object error,
+  Object? error,
   StackTrace stackTrace,
   InitializationHook hook,
 ) {
-  ISpect.error(
-    message: '❗️ Initialization failed on step $step with error: $error',
-  );
+  ISpect.logger.error('❗️ Initialization failed with error: $error');
   FlutterNativeSplash.remove();
   runApp(
     InitializationFailedApp(
-      error: error,
+      error: error ?? Exception('Unknown error'),
       stackTrace: stackTrace,
       retryInitialization: () => AppRunner().initializeAndRun(hook),
     ),
@@ -100,5 +97,5 @@ void _onErrorFactory(
 /// `_onInit` is a callback function that is called when the
 /// initialization process is started.
 void _onInit() {
-  talker.info('📱 App started');
+  iSpectify.info('📱 App started');
 }

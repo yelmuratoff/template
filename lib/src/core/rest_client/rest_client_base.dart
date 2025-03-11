@@ -33,7 +33,7 @@ abstract base class RestClientBase implements RestClient {
   @protected
   @visibleForTesting
   Uri buildUri({required String path, Map<String, Object?>? queryParams}) {
-    final finalPath = p.canonicalize(
+    final finalPath = p.url.canonicalize(
       p.join(baseUri.path, path.startsWith('/') ? path.substring(1) : path),
     );
 

@@ -37,8 +37,8 @@ Future<void> bootstrap() async {
     () => AppRunner().initializeAndRun(
       hook!,
     ),
-    iSpectify: iSpectify,
-    onInit: (iSpectify) {
+    logger: iSpectify,
+    onInit: () {
       Bloc.observer = ISpectifyBlocObserver(
         iSpectify: iSpectify,
       );
@@ -65,13 +65,13 @@ Future<void> bootstrap() async {
 /// `_onInitializing` is a callback function that is
 /// called when the initialization process is started.
 void _onInitializing(String stepName) {
-  ISpect.info('🌀 Inited $stepName');
+  ISpect.logger.info('🌀 Inited $stepName');
 }
 
 /// `_onInitialized` is a callback function that is called when
 /// the initialization process is completed.
 void _onInitialized(CompositionResult result) {
-  ISpect.good(
+  ISpect.logger.good(
     '''🎉 Initialization completed in ${result.millisecondsSpent} ms\nResult: $result''',
   );
 }
@@ -83,9 +83,7 @@ void _onErrorFactory(
   StackTrace stackTrace,
   InitializationHook hook,
 ) {
-  ISpect.error(
-    message: '❗️ Initialization failed with error: $error',
-  );
+  ISpect.logger.error('❗️ Initialization failed with error: $error');
   FlutterNativeSplash.remove();
   runApp(
     InitializationFailedApp(

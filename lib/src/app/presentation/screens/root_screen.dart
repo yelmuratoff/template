@@ -29,7 +29,7 @@ class _RootScreenState extends State<RootScreen> {
     _octopusStateObserver = context.octopus.observer;
 
     // Restore tab from router arguments
-    _tab = RootTabsEnum.fromValue(
+    _tab = RootTabsEnum.parse(
       _octopusStateObserver.value.arguments['tab'],
       fallback: RootTabsEnum.home,
     );
@@ -100,7 +100,7 @@ class _RootScreenState extends State<RootScreen> {
 
   // Router state changed
   void _onOctopusStateChanged() {
-    final newTab = RootTabsEnum.fromValue(
+    final newTab = RootTabsEnum.parse(
       _octopusStateObserver.value.arguments['tab'],
       fallback: RootTabsEnum.home,
     );

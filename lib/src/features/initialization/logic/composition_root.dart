@@ -25,7 +25,7 @@ final class CompositionRoot {
   Future<CompositionResult> compose() async {
     final stopwatch = clock.stopwatch()..start();
 
-    ISpect.info('🌀 Initializing dependencies...');
+    ISpect.logger.info('🌀 Initializing dependencies...');
 
     // initialize dependencies
     final dependencies = await DependenciesFactory(

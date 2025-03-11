@@ -146,9 +146,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             .environmentTapNumber(10 - _model.tapNumber),
                       );
                     } else if (_model.tapNumber == 10) {
-                      ISpect.info('ℹ️ Environment change dialog opened');
+                      ISpect.logger.info('ℹ️ Environment change dialog opened');
                       await ChangeEnvironmentDialog.show(context);
-                      ISpect.info(
+                      ISpect.logger.info(
                         '🔙 Environment change dialog closed',
                       );
                       _model.tapNumber = 0;

@@ -173,7 +173,7 @@ class SettingsBlocFactory implements AsyncFactory<SettingsBloc> {
       initialState: initialState,
     );
 
-    ISpect.info(
+    ISpect.logger.info(
       '''Settings BLoC initialized: $settingsBloc with locale: $locale and theme: $theme''',
     );
 

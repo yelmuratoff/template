@@ -51,7 +51,7 @@ class _MaterialContextState extends State<MaterialContext> {
     final routes = _router.config.routes
         .map((key, value) => MapEntry(key, value.toString()));
 
-    ISpect.route('📜 Routes:\n${AppUtils.formatPrettyJson(routes)}');
+    ISpect.logger.route('📜 Routes:\n${AppUtils.formatPrettyJson(routes)}');
 
     context.blocRead<UserCubit>().get();
   }
@@ -61,56 +61,54 @@ class _MaterialContextState extends State<MaterialContext> {
     final theme = SettingsScope.themeOf(context).theme;
     final locale = SettingsScope.localeOf(context).locale;
 
-    return ISpectScopeWrapper(
-      options: ISpectOptions(
-        locale: locale,
-      ),
-      isISpectEnabled: F.isDev,
-      child: MaterialApp.router(
-        title: F.title,
-        onGenerateTitle: (_) => F.title,
-        debugShowCheckedModeBanner: false,
-        theme: theme.lightTheme,
-        darkTheme: theme.darkTheme,
-        themeMode: theme.mode,
-        localizationsDelegates: ISpectLocalizations.localizationDelegates([
-          L10n.delegate,
-        ]),
-        supportedLocales: L10n.supportedLocales,
-        locale: locale,
-        routerConfig: _router.config,
-        builder: (context, child) {
-          child = EasyLoading.init()(context, child);
+    return MaterialApp.router(
+      title: F.title,
+      onGenerateTitle: (_) => F.title,
+      debugShowCheckedModeBanner: false,
+      theme: theme.lightTheme,
+      darkTheme: theme.darkTheme,
+      themeMode: theme.mode,
+      localizationsDelegates: ISpectLocalizations.localizationDelegates([
+        L10n.delegate,
+      ]),
+      supportedLocales: L10n.supportedLocales,
+      locale: locale,
+      routerConfig: _router.config,
+      builder: (context, child) {
+        child = EasyLoading.init()(context, child);
 
-          child = MediaQuery.withClampedTextScaling(
-            minScaleFactor: 1,
-            maxScaleFactor: 2,
+        child = MediaQuery.withClampedTextScaling(
+          minScaleFactor: 1,
+          maxScaleFactor: 2,
+          child: child,
+        );
+
+        child = ISpectBuilder(
+          observer: observer,
+          options: ISpectOptions(
+            locale: locale,
+          ),
+          isISpectEnabled: F.isDev,
+          child: child,
+        );
+
+        child = OctopusTools(
+          enable: F.isDev,
+          child: child,
+        );
+
+        child = FToastBuilder()(context, child);
+
+        if (F.isDev) {
+          child = Banner(
+            message: F.name,
+            location: BannerLocation.topStart,
+            color: Colors.red,
             child: child,
           );
-
-          child = ISpectBuilder(
-            observer: observer,
-            child: child,
-          );
-
-          child = OctopusTools(
-            enable: F.isDev,
-            child: child,
-          );
-
-          child = FToastBuilder()(context, child);
-
-          if (F.isDev) {
-            child = Banner(
-              message: F.name,
-              location: BannerLocation.topStart,
-              color: Colors.red,
-              child: child,
-            );
-          }
-          return child;
-        },
-      ),
+        }
+        return child;
+      },
     );
   }
 }

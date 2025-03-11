@@ -13,7 +13,7 @@ final class AuthRemoteDataSource implements IAuthDataSource {
   Future<UserDTO> getCurrentUser() async {
     try {
       final response = await restClient.get('api/v1/auth/profile');
-      return UserDTO.fromJson(response);
+      return UserDTO.fromMap(response);
     } catch (e) {
       rethrow;
     }

@@ -113,7 +113,7 @@ class DioClient {
     /// log them using Talker service.
     dio.interceptors.add(
       ISpectifyDioLogger(
-        iSpectify: ISpect.iSpectify,
+        iSpectify: ISpect.logger,
         settings: const ISpectifyDioLoggerSettings(
           printRequestHeaders: true,
           printResponseHeaders: true,

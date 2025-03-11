@@ -22,9 +22,9 @@ dependencies:
   analyzer: any
 
   # BLoC
-  flutter_bloc: ^8.1.6
-  bloc: ^8.1.4
-  bloc_concurrency: ^0.2.5
+  flutter_bloc: ^9.1.0
+  bloc: ^9.0.0
+  bloc_concurrency: ^0.3.0
 
   # Networking
   dio: ^5.6.0
@@ -35,9 +35,9 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.24
 
   # Logging
-  ispect: ^3.0.0-dev.2
-  ispectify_dio: 0.0.1-dev.2
-  ispectify_bloc: 0.0.1-dev.2
+  ispect: ^4.0.3
+  ispectify_dio: 4.0.3
+  ispectify_bloc: 4.0.3
 
   # Utils
   pure: ^0.3.0
@@ -60,7 +60,6 @@ dependencies:
   iconsax_plus: ^1.0.0
 
   # Routing
-
   octopus: ^0.0.9
 
   # Others

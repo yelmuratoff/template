@@ -108,34 +108,28 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
             themeRepository: _themeRepository!,
             initialState: _settingsState!,
           ),
-          child: ISpectScopeWrapper(
-            isISpectEnabled: F.isDev,
-            options: ISpectOptions(
-              locale: _settingsState?.locale ?? const Locale('en'),
+          child: MaterialApp(
+            theme: _settingsState?.appTheme?.lightTheme,
+            darkTheme: _settingsState?.appTheme?.darkTheme,
+            themeMode: _settingsState?.appTheme?.mode,
+            locale: _settingsState?.locale,
+            localizationsDelegates: ISpectLocalizations.localizationDelegates(
+              [L10n.delegate],
             ),
-            child: MaterialApp(
-              theme: _settingsState?.appTheme?.lightTheme,
-              darkTheme: _settingsState?.appTheme?.darkTheme,
-              themeMode: _settingsState?.appTheme?.mode,
-              locale: _settingsState?.locale,
-              localizationsDelegates: ISpectLocalizations.localizationDelegates(
-                [L10n.delegate],
-              ),
-              supportedLocales: L10n.supportedLocales,
-              home: _View(
-                error: widget.error,
-                retryInitialization: widget.retryInitialization != null
-                    ? _retryInitialization
-                    : null,
-                stackTrace: widget.stackTrace,
-                iSpectify: _iSpectify,
-                themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
-                lightTheme:
-                    _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
-                darkTheme:
-                    _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
-                locale: _settingsState?.locale ?? const Locale('en'),
-              ),
+            supportedLocales: L10n.supportedLocales,
+            home: _View(
+              error: widget.error,
+              retryInitialization: widget.retryInitialization != null
+                  ? _retryInitialization
+                  : null,
+              stackTrace: widget.stackTrace,
+              iSpectify: _iSpectify,
+              themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
+              lightTheme:
+                  _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
+              darkTheme:
+                  _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
+              locale: _settingsState?.locale ?? const Locale('en'),
             ),
           ),
         )
@@ -189,7 +183,8 @@ class _View extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (_) => ISpectPage(
+                        builder: (_) => ISpectScreen(
+                          appBarTitle: 'ISpect',
                           options: ISpectOptions(
                             locale: locale,
                           ),

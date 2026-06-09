@@ -34,7 +34,7 @@ abstract interface class TokenStorage {
 
 /// [TokenStorage] on top of [SecureStorage].
 final class SecureTokenStorage implements TokenStorage {
-  SecureTokenStorage({required SecureStorage storage}) : _storage = storage;
+  SecureTokenStorage({required this._storage});
 
   final SecureStorage _storage;
   final _changes = StreamController<TokenPair?>.broadcast();

@@ -10,9 +10,8 @@ import 'package:meta/meta.dart';
 /// `DioClient`); constructing transports per request is forbidden — it
 /// re-creates interceptors and breaks the shared auth/refresh state.
 final class RestClientDio extends RestClientBase {
-  RestClientDio({required this.baseUrl, required Dio dio})
-    : _dio = dio,
-      super(baseUrl: baseUrl);
+  RestClientDio({required this.baseUrl, required this._dio})
+    : super(baseUrl: baseUrl);
 
   final Dio _dio;
   final String baseUrl;

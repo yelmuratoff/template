@@ -8,9 +8,8 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc({required this.repository, required TokenStorage tokenStorage})
-    : _tokenStorage = tokenStorage,
-      super(const InitialAuthState()) {
+  AuthBloc({required this.repository, required this._tokenStorage})
+    : super(const InitialAuthState()) {
     on<AuthEvent>(
       (event, emit) => switch (event) {
         final LoginAuthEvent e => _onLogin(e, emit),

@@ -18,8 +18,7 @@ abstract interface class SecureStorage {
 /// [SecureStorage] backed by [FlutterSecureStorage]
 /// (Keychain on iOS, encrypted preferences on Android).
 final class FlutterSecureStorageWrapper implements SecureStorage {
-  const FlutterSecureStorageWrapper({required FlutterSecureStorage storage})
-    : _storage = storage;
+  const FlutterSecureStorageWrapper({required this._storage});
 
   final FlutterSecureStorage _storage;
 

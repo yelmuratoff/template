@@ -22,12 +22,10 @@ import 'package:ispect/ispect.dart';
 ///   connectivity must never sign the user out.
 final class AuthInterceptor extends QueuedInterceptor {
   AuthInterceptor({
-    required TokenStorage tokenStorage,
-    required Dio plainDio,
-    String refreshPath = '/auth/refresh',
-  }) : _tokenStorage = tokenStorage,
-       _plainDio = plainDio,
-       _refreshPath = refreshPath;
+    required this._tokenStorage,
+    required this._plainDio,
+    this._refreshPath = '/auth/refresh',
+  });
 
   final TokenStorage _tokenStorage;
 

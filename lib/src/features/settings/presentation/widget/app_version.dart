@@ -3,8 +3,8 @@ part of '../settings_screen.dart';
 class _AppVersionBody extends StatelessWidget {
   const _AppVersionBody({
     required this.onTapAppVersion,
-    required Color versionTextColor,
-  }) : _versionTextColor = versionTextColor;
+    required this._versionTextColor,
+  });
 
   final VoidCallback onTapAppVersion;
   final Color _versionTextColor;

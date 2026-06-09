@@ -4,8 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Inspired by https://pub.dev/packages/typed_preferences
 
 abstract base class PreferencesDao {
-  const PreferencesDao({required SharedPreferences sharedPreferences})
-    : _sharedPreferences = sharedPreferences;
+  const PreferencesDao({required this._sharedPreferences});
   final SharedPreferences _sharedPreferences;
 
   /// Obtain [bool] entry from the preferences.
@@ -61,9 +60,9 @@ abstract base class PreferencesEntry<T extends Object> {
 
 final class _PreferencesEntry<T extends Object> extends PreferencesEntry<T> {
   _PreferencesEntry({
-    required SharedPreferences sharedPreferences,
+    required this._sharedPreferences,
     required this.key,
-  }) : _sharedPreferences = sharedPreferences;
+  });
 
   final SharedPreferences _sharedPreferences;
 

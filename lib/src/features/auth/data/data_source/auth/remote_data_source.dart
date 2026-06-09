@@ -4,9 +4,7 @@ import 'package:base_starter/src/features/auth/data/data_source/interface/auth/a
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 
 final class AuthRemoteDataSource implements IAuthDataSource {
-  const AuthRemoteDataSource({
-    required this.restClient,
-  });
+  const AuthRemoteDataSource({required this.restClient});
   final RestClientBase restClient;
 
   @override
@@ -27,10 +25,7 @@ final class AuthRemoteDataSource implements IAuthDataSource {
     try {
       final response = await restClient.post(
         'api/v1/auth/login',
-        body: {
-          'email': email,
-          'password': password,
-        },
+        body: {'email': email, 'password': password},
       );
       return TokenPair.fromJson(response);
     } catch (e) {

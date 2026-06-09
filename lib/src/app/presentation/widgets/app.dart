@@ -35,11 +35,11 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) => DependenciesScope(
-        dependencies: widget.result.dependencies,
-        repositories: widget.result.repositories,
-        child: SettingsScope(
-          settingsBloc: widget.result.dependencies.settingsBloc,
-          child: const MaterialContext(),
-        ),
-      );
+    dependencies: widget.result.dependencies,
+    repositories: widget.result.repositories,
+    child: SettingsScope(
+      settingsBloc: widget.result.dependencies.settingsBloc,
+      child: const MaterialContext(),
+    ),
+  );
 }

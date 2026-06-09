@@ -3,9 +3,7 @@ import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:octopus/octopus.dart';
 
 extension OctopusExtensionX on Octopus {
-  Future<void> tabNavigate({
-    required RootTabsEnum tab,
-  }) async =>
+  Future<void> tabNavigate({required RootTabsEnum tab}) async =>
       setState((state) {
         final node = state.find((n) => n.name == tab.bucket);
 
@@ -23,40 +21,27 @@ extension OctopusExtensionX on Octopus {
     RootTabsEnum? tab,
     Map<String, String>? arguments,
   }) async {
-    final currentTab = tab ??
-        RootTabsEnum.tryParse(
-          state.arguments['tab'],
-        );
+    final currentTab = tab ?? RootTabsEnum.tryParse(state.arguments['tab']);
     if (currentTab == null) {
-      return push(
-        route,
-        arguments: arguments,
-      );
+      return push(route, arguments: arguments);
     } else {
       return setState(
         (state) => state
-          ..findByName(currentTab.bucket)?.add(
-            route.node(
-              arguments: arguments,
-            ),
-          ),
+          ..findByName(
+            currentTab.bucket,
+          )?.add(route.node(arguments: arguments)),
       );
     }
   }
 
-  Future<void> toRoot({
-    RootTabsEnum? tab,
-    List<OctopusNode>? children,
-  }) async {
+  Future<void> toRoot({RootTabsEnum? tab, List<OctopusNode>? children}) async {
     final currentTab = tab ?? RootTabsEnum.home;
     return setState(
       (state) => state
         ..clear()
         ..add(
           Routes.root.node(
-            arguments: {
-              'tab': currentTab.value,
-            },
+            arguments: {'tab': currentTab.value},
             children: children,
           ),
         ),
@@ -68,18 +53,11 @@ extension OctopusExtensionX on Octopus {
     RootTabsEnum? tab,
     Map<String, String>? arguments,
   }) async {
-    final currentTab = RootTabsEnum.tryParse(
-      state.arguments['tab'],
-    );
+    final currentTab = RootTabsEnum.tryParse(state.arguments['tab']);
 
     await setState((state) {
       if (currentTab == null) {
-        return state
-          ..add(
-            route.node(
-              arguments: arguments,
-            ),
-          );
+        return state..add(route.node(arguments: arguments));
       }
 
       final node = state.find((n) => n.name == currentTab.bucket);
@@ -89,11 +67,7 @@ extension OctopusExtensionX on Octopus {
       }
 
       node.children.clear();
-      node.add(
-        route.node(
-          arguments: arguments,
-        ),
-      );
+      node.add(route.node(arguments: arguments));
 
       return state;
     });
@@ -107,11 +81,7 @@ extension OctopusExtensionX on Octopus {
     await setState(
       (state) => state
         ..removeLast()
-        ..add(
-          route.node(
-            arguments: arguments,
-          ),
-        ),
+        ..add(route.node(arguments: arguments)),
     );
   }
 
@@ -120,19 +90,13 @@ extension OctopusExtensionX on Octopus {
     RootTabsEnum? tab,
     Map<String, String>? arguments,
   }) async {
-    final currentTab = RootTabsEnum.tryParse(
-      state.arguments['tab'],
-    );
+    final currentTab = RootTabsEnum.tryParse(state.arguments['tab']);
 
     await setState((state) {
       if (currentTab == null) {
         return state
           ..removeLast()
-          ..add(
-            route.node(
-              arguments: arguments,
-            ),
-          );
+          ..add(route.node(arguments: arguments));
       }
 
       final node = state.find((n) => n.name == currentTab.bucket);
@@ -143,11 +107,7 @@ extension OctopusExtensionX on Octopus {
 
       node
         ..removeLast()
-        ..add(
-          route.node(
-            arguments: arguments,
-          ),
-        );
+        ..add(route.node(arguments: arguments));
 
       return state;
     });

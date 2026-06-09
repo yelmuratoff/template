@@ -64,78 +64,66 @@ class OutlinedTextfield extends StatelessWidget {
   // the OutlinedTextfield widget.
   @override
   Widget build(BuildContext context) => TextFormField(
-        // These properties define the basic configuration of the text field.
-        readOnly: readOnly ?? false,
-        focusNode: focusNode,
-        controller: textController,
-        onTap: onTap,
-        enabled: enabled,
-        textAlignVertical: TextAlignVertical.top,
-        maxLength: maxLength,
-        validator: validator,
-        inputFormatters: inputFormatters,
-        textInputAction: textInputAction,
-        onTapOutside: (_) {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        autofocus: autofocusEnabled,
-        onEditingComplete: () {
-          onEditingComplete?.call();
-        },
-        keyboardType: keyboardType ?? TextInputType.text,
-        maxLines: (obsureText ?? false) ? 1 : maxLines,
-        minLines: minLines,
-        onChanged: onChanged,
-        obscureText: obsureText ?? false,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintTextDirection: TextDirection.ltr,
-          labelText: (labelText != '') ? labelText ?? hintText : null,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-            borderSide: BorderSide(
-              color: context.theme.colors.border,
-              width: 1.5,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-            borderSide: BorderSide(
-              color: context.theme.colors.border,
-              width: 1.5,
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-            borderSide: BorderSide(
-              color: context.theme.colors.error,
-              width: 1.5,
-            ),
-          ),
-          alignLabelWithHint: true,
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-            borderSide: BorderSide(
-              color: context.theme.colors.error,
-              width: 1.5,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-            borderSide: BorderSide(
-              color: readOnly ?? false
-                  ? context.theme.colors.border
-                  : context.theme.colors.primary,
-              width: 1.5,
-            ),
-          ),
-          filled: true,
-          suffixIcon: suffixIcon,
-          prefixIcon: prefixIcon,
-          fillColor: !(enabled ?? true)
-              ? context.theme.colors.card
-              : context.theme.colors.background,
-          contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+    // These properties define the basic configuration of the text field.
+    readOnly: readOnly ?? false,
+    focusNode: focusNode,
+    controller: textController,
+    onTap: onTap,
+    enabled: enabled,
+    textAlignVertical: TextAlignVertical.top,
+    maxLength: maxLength,
+    validator: validator,
+    inputFormatters: inputFormatters,
+    textInputAction: textInputAction,
+    onTapOutside: (_) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    },
+    autofocus: autofocusEnabled,
+    onEditingComplete: () {
+      onEditingComplete?.call();
+    },
+    keyboardType: keyboardType ?? TextInputType.text,
+    maxLines: (obsureText ?? false) ? 1 : maxLines,
+    minLines: minLines,
+    onChanged: onChanged,
+    obscureText: obsureText ?? false,
+    decoration: InputDecoration(
+      hintText: hintText,
+      hintTextDirection: TextDirection.ltr,
+      labelText: (labelText != '') ? labelText ?? hintText : null,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
+        borderSide: BorderSide(color: context.theme.colors.border, width: 1.5),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
+        borderSide: BorderSide(color: context.theme.colors.border, width: 1.5),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
+        borderSide: BorderSide(color: context.theme.colors.error, width: 1.5),
+      ),
+      alignLabelWithHint: true,
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
+        borderSide: BorderSide(color: context.theme.colors.error, width: 1.5),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
+        borderSide: BorderSide(
+          color: readOnly ?? false
+              ? context.theme.colors.border
+              : context.theme.colors.primary,
+          width: 1.5,
         ),
-      );
+      ),
+      filled: true,
+      suffixIcon: suffixIcon,
+      prefixIcon: prefixIcon,
+      fillColor: !(enabled ?? true)
+          ? context.theme.colors.card
+          : context.theme.colors.background,
+      contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+    ),
+  );
 }

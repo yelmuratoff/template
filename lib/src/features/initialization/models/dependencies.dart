@@ -28,7 +28,8 @@ final class DependenciesContainer {
   final RestClientBase restClient;
 
   @override
-  String toString() => '''DependenciesContainer(
+  String toString() =>
+      '''DependenciesContainer(
       sharedPreferences:$sharedPreferences,
       packageInfo: $packageInfo,
       restClient: $restClient,

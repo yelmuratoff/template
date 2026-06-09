@@ -3,9 +3,7 @@ import 'package:base_starter/src/features/auth/data/data_source/interface/user/r
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 
 final class UserRemoteDataSource implements IRemoteUserDataSource {
-  const UserRemoteDataSource({
-    required this.restClient,
-  });
+  const UserRemoteDataSource({required this.restClient});
   final RestClientBase restClient;
 
   @override

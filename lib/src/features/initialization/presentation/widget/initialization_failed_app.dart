@@ -138,11 +138,7 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
         )
       : MaterialApp(
           home: Scaffold(
-            body: Center(
-              child: Image.asset(
-                Assets.images.splash.path,
-              ),
-            ),
+            body: Center(child: Image.asset(Assets.images.splash.path)),
           ),
         );
 }
@@ -165,78 +161,76 @@ class _View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            L10n.current.initializationFailed,
-            style: context.textStyles.s20w600.copyWith(
+    appBar: AppBar(
+      title: Text(
+        L10n.current.initializationFailed,
+        style: context.textStyles.s20w600.copyWith(
+          color: context.theme.colorScheme.error,
+        ),
+      ),
+    ),
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            '${L10n.current.errorType}: $error',
+            style: context.textStyles.s16w500.copyWith(
               color: context.theme.colorScheme.error,
+              fontWeight: FontWeight.w500,
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
+          const Gap(16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '${L10n.current.errorType}: $error',
-                style: context.textStyles.s16w500.copyWith(
-                  color: context.theme.colorScheme.error,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Gap(16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (retryInitialization != null)
-                    ElevatedButton(
-                      onPressed: retryInitialization,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: context.theme.colorScheme.error,
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            L10n.current.retry,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          const Gap(8),
-                          const Icon(
-                            IconsaxPlusLinear.refresh_2,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-              const Gap(16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border.fromBorderSide(
-                      BorderSide(
-                        color: context.theme.colorScheme.error,
-                      ),
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+              if (retryInitialization != null)
+                ElevatedButton(
+                  onPressed: retryInitialization,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: context.theme.colorScheme.error,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      'StackTrace: \n$stackTrace',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 50,
-                      style: context.textStyles.s14w400.copyWith(
-                        color: context.theme.colorScheme.error,
+                  child: Row(
+                    children: [
+                      Text(
+                        L10n.current.retry,
+                        style: const TextStyle(color: Colors.white),
                       ),
-                    ),
+                      const Gap(8),
+                      const Icon(
+                        IconsaxPlusLinear.refresh_2,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
-              ),
             ],
           ),
-        ),
-      );
+          const Gap(16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.fromBorderSide(
+                  BorderSide(color: context.theme.colorScheme.error),
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  'StackTrace: \n$stackTrace',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 50,
+                  style: context.textStyles.s14w400.copyWith(
+                    color: context.theme.colorScheme.error,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

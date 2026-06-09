@@ -32,7 +32,8 @@ final class ClientException extends RestClientException {
   });
 
   @override
-  String toString() => '''ClientException('
+  String toString() =>
+      '''ClientException('
       'message: $message,'
       'statusCode: $statusCode,'
       'cause: $cause'
@@ -55,7 +56,8 @@ final class CustomBackendException extends RestClientException {
   final Map<String, Object?> error;
 
   @override
-  String toString() => '''CustomBackendException('
+  String toString() =>
+      '''CustomBackendException('
       'message: $message,'
       'error: $error,'
       'statusCode: $statusCode,'
@@ -69,13 +71,11 @@ final class CustomBackendException extends RestClientException {
 /// is not the expected one
 
 final class WrongResponseTypeException extends RestClientException {
-  const WrongResponseTypeException({
-    required super.message,
-    super.statusCode,
-  });
+  const WrongResponseTypeException({required super.message, super.statusCode});
 
   @override
-  String toString() => '''WrongResponseTypeException('
+  String toString() =>
+      '''WrongResponseTypeException('
       'message: $message,'
       'statusCode: $statusCode,'
       ')''';
@@ -94,7 +94,8 @@ final class ConnectionException extends RestClientException {
   });
 
   @override
-  String toString() => '''ConnectionException('
+  String toString() =>
+      '''ConnectionException('
       'message: $message,'
       'statusCode: $statusCode,'
       'cause: $cause'
@@ -114,7 +115,8 @@ final class InternalServerException extends RestClientException {
   });
 
   @override
-  String toString() => '''InternalServerException('
+  String toString() =>
+      '''InternalServerException('
       'message: $message,'
       'statusCode: $statusCode,'
       'cause: $cause'

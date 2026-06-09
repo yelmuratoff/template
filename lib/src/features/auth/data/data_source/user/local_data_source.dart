@@ -8,17 +8,13 @@ import 'package:ispect/ispect.dart';
 
 final class UserLocalDataSource extends PreferencesDao
     implements ILocalUserDataSource {
-  const UserLocalDataSource({
-    required super.sharedPreferences,
-  });
+  const UserLocalDataSource({required super.sharedPreferences});
 
   PreferencesEntry<String> get _currentUserEntry =>
       stringEntry(Preferences.currentUser);
 
   @override
-  Future<void> write({
-    required UserDTO? user,
-  }) async {
+  Future<void> write({required UserDTO? user}) async {
     try {
       await _currentUserEntry.set(json.encode(user?.toJson()));
     } catch (e, st) {
@@ -35,8 +31,9 @@ final class UserLocalDataSource extends PreferencesDao
   UserDTO? get() {
     try {
       final token = _currentUserEntry.read();
-      final jsonObject =
-          token != null ? json.decode(token) as Map<String, dynamic>? : null;
+      final jsonObject = token != null
+          ? json.decode(token) as Map<String, dynamic>?
+          : null;
       return jsonObject != null ? UserDTO.fromMap(jsonObject) : null;
     } catch (e, st) {
       ISpect.logger.handle(

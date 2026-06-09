@@ -16,9 +16,7 @@ import 'package:octopus/octopus.dart';
 /// [MaterialContext] is an entry point to the material context.
 /// This widget sets locales, themes and routing.
 class MaterialContext extends StatefulWidget {
-  const MaterialContext({
-    super.key,
-  });
+  const MaterialContext({super.key});
 
   @override
   State<MaterialContext> createState() => _MaterialContextState();
@@ -36,20 +34,17 @@ class _MaterialContextState extends State<MaterialContext> {
     _router = Octopus(
       routes: Routes.values,
       defaultRoute: Routes.splash,
-      observers: [
-        observer,
-      ],
-      guards: [
-        TabGuard(),
-      ],
+      observers: [observer],
+      guards: [TabGuard()],
       onError: (error, stackTrace) {},
       notFound: (ctx, name, arguments) => RouterErrorScreen(
         error: 'Route not found: $name with arguments: $arguments',
       ),
     );
 
-    final routes = _router.config.routes
-        .map((key, value) => MapEntry(key, value.toString()));
+    final routes = _router.config.routes.map(
+      (key, value) => MapEntry(key, value.toString()),
+    );
 
     ISpect.logger.route('📜 Routes:\n${AppUtils.formatPrettyJson(routes)}');
 
@@ -76,39 +71,33 @@ class _MaterialContextState extends State<MaterialContext> {
       locale: locale,
       routerConfig: _router.config,
       builder: (context, child) {
-        child = EasyLoading.init()(context, child);
+        var wrapped = EasyLoading.init()(context, child);
 
-        child = MediaQuery.withClampedTextScaling(
+        wrapped = MediaQuery.withClampedTextScaling(
           minScaleFactor: 1,
           maxScaleFactor: 2,
-          child: child,
+          child: wrapped,
         );
 
-        child = ISpectBuilder.wrap(
-          options: ISpectOptions(
-            locale: locale,
-            observer: observer,
-          ),
+        wrapped = ISpectBuilder.wrap(
+          options: ISpectOptions(locale: locale, observer: observer),
           isISpectEnabled: F.isDev,
-          child: child,
+          child: wrapped,
         );
 
-        child = OctopusTools(
-          enable: F.isDev,
-          child: child,
-        );
+        wrapped = OctopusTools(enable: F.isDev, child: wrapped);
 
-        child = FToastBuilder()(context, child);
+        wrapped = FToastBuilder()(context, wrapped);
 
         if (F.isDev) {
-          child = Banner(
+          wrapped = Banner(
             message: F.name,
             location: BannerLocation.topStart,
             color: Colors.red,
-            child: child,
+            child: wrapped,
           );
         }
-        return child;
+        return wrapped;
       },
     );
   }

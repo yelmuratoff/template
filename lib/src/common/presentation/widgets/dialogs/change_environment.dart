@@ -42,10 +42,7 @@ final class ChangeEnvironmentDialog {
                           ),
                           const Gap(8),
                         ],
-                        Text(
-                          env.name,
-                          style: context.textStyles.s18w600,
-                        ),
+                        Text(env.name, style: context.textStyles.s18w600),
                       ],
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),

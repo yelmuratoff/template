@@ -4,16 +4,16 @@ import 'package:ui/ui.dart';
 /// Optional. If you also want to assign colors in the `ColorScheme`.
 extension ColorSchemeBuilder on ThemeColors {
   ColorScheme toColorScheme(Brightness brightness) => ColorScheme(
-        brightness: brightness,
-        primary: primary,
-        onPrimary: onPrimary,
-        secondary: secondary,
-        onSecondary: onSecondary,
-        error: error,
-        onError: onError,
-        surface: surface,
-        onSurface: onSurface,
-      );
+    brightness: brightness,
+    primary: primary,
+    onPrimary: onPrimary,
+    secondary: secondary,
+    onSecondary: onSecondary,
+    error: error,
+    onError: onError,
+    surface: surface,
+    onSurface: onSurface,
+  );
 }
 
 /// `ColorTranslation` extension for converting `Color` to `MaterialColor`.

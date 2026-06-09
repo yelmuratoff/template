@@ -59,9 +59,7 @@ abstract base class RestClientBase implements RestClient {
       Map<String, Object?> result;
       if (body is String) {
         if (body.contains('DOCTYPE html')) {
-          result = {
-            'HTML error': body,
-          };
+          result = {'HTML error': body};
         } else {
           if (body.length > 1000) {
             result = await Isolate.run(

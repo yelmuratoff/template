@@ -23,18 +23,14 @@ class DioInterceptor extends Interceptor {
 
       if (isHtml) {
         // If the error is to be interpreted as HTML and we have a context.
-        computedMessage = DioInterceptor.getErrorMessage(
-          key: errorMessage,
-        );
+        computedMessage = DioInterceptor.getErrorMessage(key: errorMessage);
       } else if (!isHtml && err.response?.data?['msg'] != null) {
         // If the error is not to be interpreted as HTML and the response
         //message exists.
         computedMessage = err.response!.data['msg'].toString();
       } else {
         // Fallback for any other case.
-        computedMessage = DioInterceptor.getErrorMessage(
-          key: errorMessage,
-        );
+        computedMessage = DioInterceptor.getErrorMessage(key: errorMessage);
       }
 
       return DioException(
@@ -48,8 +44,9 @@ class DioInterceptor extends Interceptor {
 
     if (err.response != null &&
         err.response!.data.toString().contains('html')) {
-      return handler
-          .reject(errorMessage(ExceptionKeys.badRequest, isHtml: true));
+      return handler.reject(
+        errorMessage(ExceptionKeys.badRequest, isHtml: true),
+      );
     } else if (err.type == DioExceptionType.connectionError) {
       return handler.reject(errorMessage(ExceptionKeys.noConnection));
     } else if (err.type == DioExceptionType.connectionTimeout) {
@@ -81,9 +78,7 @@ class DioInterceptor extends Interceptor {
 
   /// `getErrorMessage` - This function is used to get error message
   /// from `ExceptionKeys`.
-  static String getErrorMessage({
-    required String key,
-  }) {
+  static String getErrorMessage({required String key}) {
     final appLocalizations = L10n.current;
     switch (key) {
       case ExceptionKeys.noConnection:

@@ -5,32 +5,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract base class PreferencesDao {
   const PreferencesDao({required SharedPreferences sharedPreferences})
-      : _sharedPreferences = sharedPreferences;
+    : _sharedPreferences = sharedPreferences;
   final SharedPreferences _sharedPreferences;
 
   /// Obtain [bool] entry from the preferences.
-  PreferencesEntry<bool> boolEntry(String key) => _PreferencesEntry<bool>(
-        key: key,
-        sharedPreferences: _sharedPreferences,
-      );
+  PreferencesEntry<bool> boolEntry(String key) =>
+      _PreferencesEntry<bool>(key: key, sharedPreferences: _sharedPreferences);
 
   /// Obtain [double] entry from the preferences.
   PreferencesEntry<double> doubleEntry(String key) => _PreferencesEntry<double>(
-        key: key,
-        sharedPreferences: _sharedPreferences,
-      );
+    key: key,
+    sharedPreferences: _sharedPreferences,
+  );
 
   /// Obtain [int] entry from the preferences.
-  PreferencesEntry<int> intEntry(String key) => _PreferencesEntry<int>(
-        key: key,
-        sharedPreferences: _sharedPreferences,
-      );
+  PreferencesEntry<int> intEntry(String key) =>
+      _PreferencesEntry<int>(key: key, sharedPreferences: _sharedPreferences);
 
   /// Obtain [String] entry from the preferences.
   PreferencesEntry<String> stringEntry(String key) => _PreferencesEntry<String>(
-        key: key,
-        sharedPreferences: _sharedPreferences,
-      );
+    key: key,
+    sharedPreferences: _sharedPreferences,
+  );
 
   /// Obtain [Iterable<String>] entry from the preferences.
   PreferencesEntry<Iterable<String>> iterableStringEntry(String key) =>
@@ -82,25 +78,23 @@ final class _PreferencesEntry<T extends Object> extends PreferencesEntry<T> {
 
     if (value is T) return value;
 
-    throw Exception(
-      'The value of $key is not of type ${T.runtimeType}',
-    );
+    throw Exception('The value of $key is not of type ${T.runtimeType}');
   }
 
   @override
   Future<void> set(T value) => switch (value) {
-        final int value => _sharedPreferences.setInt(key, value),
-        final double value => _sharedPreferences.setDouble(key, value),
-        final String value => _sharedPreferences.setString(key, value),
-        final bool value => _sharedPreferences.setBool(key, value),
-        final Iterable<String> value => _sharedPreferences.setStringList(
-            key,
-            value.toList(),
-          ),
-        _ => throw Exception(
-            '$T is not a valid type for a preferences entry value.',
-          ),
-      };
+    final int value => _sharedPreferences.setInt(key, value),
+    final double value => _sharedPreferences.setDouble(key, value),
+    final String value => _sharedPreferences.setString(key, value),
+    final bool value => _sharedPreferences.setBool(key, value),
+    final Iterable<String> value => _sharedPreferences.setStringList(
+      key,
+      value.toList(),
+    ),
+    _ => throw Exception(
+      '$T is not a valid type for a preferences entry value.',
+    ),
+  };
 
   @override
   Future<void> remove() => _sharedPreferences.remove(key);

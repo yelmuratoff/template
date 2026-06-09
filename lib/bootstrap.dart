@@ -24,24 +24,16 @@ Future<void> bootstrap() async {
     onInitializing: _onInitializing,
     onInitialized: _onInitialized,
     onError: (error, stackTrace) {
-      _onErrorFactory(
-        error,
-        stackTrace,
-        hook!,
-      );
+      _onErrorFactory(error, stackTrace, hook!);
     },
     onInit: _onInit,
   );
 
   ISpect.run(
-    () => AppRunner().initializeAndRun(
-      hook!,
-    ),
+    () => AppRunner().initializeAndRun(hook!),
     logger: iSpectify,
     onInit: () {
-      Bloc.observer = ISpectBlocObserver(
-        logger: iSpectify,
-      );
+      Bloc.observer = ISpectBlocObserver(logger: iSpectify);
     },
     onZonedError: (_, __) {
       debugPrint('Zoned error');

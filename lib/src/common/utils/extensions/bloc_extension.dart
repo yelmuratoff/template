@@ -5,24 +5,13 @@ extension BlocExceptionHandlerExtension<T> on BlocBase<T> {
   void handleException({
     required Object? exception,
     required StackTrace? stackTrace,
-    required void Function(
-      String message,
-      Object? cause,
-      int? statusCode,
-    ) onError,
+    required void Function(String message, Object? cause, int? statusCode)
+    onError,
   }) {
     if (exception is RestClientException) {
-      onError(
-        exception.message,
-        exception.cause,
-        exception.statusCode,
-      );
+      onError(exception.message, exception.cause, exception.statusCode);
     } else {
-      onError(
-        exception.toString(),
-        exception,
-        null,
-      );
+      onError(exception.toString(), exception, null);
     }
   }
 }

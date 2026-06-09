@@ -31,15 +31,7 @@ class UserDTO extends Equatable {
 
   @override
   List<Object> get props {
-    return [
-      id,
-      email,
-      name,
-      role,
-      avatar,
-      creationAt,
-      updatedAt,
-    ];
+    return [id, email, name, role, avatar, creationAt, updatedAt];
   }
 
   UserDTO copyWith({

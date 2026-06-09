@@ -12,12 +12,10 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BucketNavigator(
-        bucket: RootTabsEnum.profile.bucket,
-        transitionDelegate: const DefaultTransitionDelegate<void>(),
-        observers: [
-          ISpectNavigatorObserver(),
-        ],
-      );
+    bucket: RootTabsEnum.profile.bucket,
+    transitionDelegate: const DefaultTransitionDelegate<void>(),
+    observers: [ISpectNavigatorObserver()],
+  );
 }
 
 class ProfileScreen extends StatefulWidget {
@@ -35,41 +33,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            L10n.current.profile,
-            style: context.textStyles.s20w600,
-          ),
-          centerTitle: false,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: IconButton.filledTonal(
-                icon: const Icon(
-                  IconsaxPlusLinear.setting_2,
-                  color: Colors.white,
-                ),
-                onPressed: () => context.octopus.setState(
-                  (state) => state
-                    ..findByName(RootTabsEnum.profile.bucket)?.add(
-                      Routes.settings.node(),
-                    ),
-                ),
-                splashRadius: 8,
-              ),
+    appBar: AppBar(
+      title: Text(L10n.current.profile, style: context.textStyles.s20w600),
+      centerTitle: false,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: IconButton.filledTonal(
+            icon: const Icon(IconsaxPlusLinear.setting_2, color: Colors.white),
+            onPressed: () => context.octopus.setState(
+              (state) => state
+                ..findByName(
+                  RootTabsEnum.profile.bucket,
+                )?.add(Routes.settings.node()),
             ),
-          ],
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                L10n.current.profile,
-                style: context.textStyles.s18w600,
-              ),
-            ],
+            splashRadius: 8,
           ),
         ),
-      );
+      ],
+    ),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(L10n.current.profile, style: context.textStyles.s18w600),
+        ],
+      ),
+    ),
+  );
 }

@@ -6,10 +6,10 @@ import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.da
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, Object?> _generateJsonData(int length) => {
-      'data': {
-        'list': List.generate(length, (_) => {'test': 'test'}),
-      },
-    };
+  'data': {
+    'list': List.generate(length, (_) => {'test': 'test'}),
+  },
+};
 
 void main() {
   group('RestClient >', () {

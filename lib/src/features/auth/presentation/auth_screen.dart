@@ -19,43 +19,41 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(L10n.current.login),
-        ),
-        body: BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) async => switch (state) {
-            InitialAuthState() => null,
-            AuthenticatedAuthState() => {
-                AppDialogs.dismiss(),
-                // TODO(Yelaman): Save user to UserManager
-                //context.dependencies.userCubit.write(user: state.user),
-                context.octopus.setState(
-                  (state) => state
-                    ..clear()
-                    ..add(Routes.root.node()),
-                ),
-              },
-            ErrorAuthState() => {
-                AppDialogs.dismiss(),
-                Toaster.showErrorToast(context, title: state.message),
-              },
-            LoadingAuthState() => {
-                AppDialogs.showLoader(context, title: L10n.current.loading),
-              },
-          },
-          child: Center(
-            child: AppButton(
-              onPressed: () {
-                context.dependencies.authBloc.add(
-                  const LoginAuthEvent(
-                    email: 'john@mail.com',
-                    password: 'changeme',
-                  ),
-                );
-              },
-              text: L10n.current.login,
-            ),
+    appBar: AppBar(title: Text(L10n.current.login)),
+    body: BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) async => switch (state) {
+        InitialAuthState() => null,
+        AuthenticatedAuthState() => {
+          AppDialogs.dismiss(),
+          // TODO(Yelaman): Save user to UserManager
+          //context.dependencies.userCubit.write(user: state.user),
+          context.octopus.setState(
+            (state) => state
+              ..clear()
+              ..add(Routes.root.node()),
           ),
+        },
+        ErrorAuthState() => {
+          AppDialogs.dismiss(),
+          Toaster.showErrorToast(context, title: state.message),
+        },
+        LoadingAuthState() => {
+          AppDialogs.showLoader(context, title: L10n.current.loading),
+        },
+      },
+      child: Center(
+        child: AppButton(
+          onPressed: () {
+            context.dependencies.authBloc.add(
+              const LoginAuthEvent(
+                email: 'john@mail.com',
+                password: 'changeme',
+              ),
+            );
+          },
+          text: L10n.current.login,
         ),
-      );
+      ),
+    ),
+  );
 }

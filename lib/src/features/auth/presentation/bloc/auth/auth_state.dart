@@ -17,10 +17,7 @@ final class AuthenticatedAuthState extends AuthState {
 }
 
 final class ErrorAuthState extends AuthState with EquatableMixin {
-  const ErrorAuthState({
-    required this.message,
-    this.cause,
-  }) : super._();
+  const ErrorAuthState({required this.message, this.cause}) : super._();
   final String message;
   final Object? cause;
 

@@ -7,7 +7,7 @@ import 'package:base_starter/src/features/settings/domain/locale/locale_reposito
 final class LocaleRepository implements ILocaleRepository {
   /// Create locale repository
   const LocaleRepository({required ILocaleDataSource localeDataSource})
-      : _localeDataSource = localeDataSource;
+    : _localeDataSource = localeDataSource;
 
   final ILocaleDataSource _localeDataSource;
 

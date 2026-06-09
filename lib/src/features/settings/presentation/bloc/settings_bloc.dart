@@ -14,9 +14,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     required ILocaleRepository localeRepository,
     required IThemeRepository themeRepository,
     required SettingsState initialState,
-  })  : _localeRepo = localeRepository,
-        _themeRepo = themeRepository,
-        super(initialState) {
+  }) : _localeRepo = localeRepository,
+       _themeRepo = themeRepository,
+       super(initialState) {
     on<SettingsEvent>(
       (event, emit) => switch (event) {
         final UpdateThemeSettingsEvent e => _updateTheme(e, emit),
@@ -32,21 +32,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     emit(
-      ProcessingSettingsState(
-        appTheme: state.appTheme,
-        locale: state.locale,
-      ),
+      ProcessingSettingsState(appTheme: state.appTheme, locale: state.locale),
     );
 
     try {
       await _themeRepo.setTheme(event.appTheme);
 
-      emit(
-        IdleSettingsState(
-          appTheme: event.appTheme,
-          locale: state.locale,
-        ),
-      );
+      emit(IdleSettingsState(appTheme: event.appTheme, locale: state.locale));
     } catch (e) {
       emit(
         ErrorSettingsState(
@@ -64,22 +56,14 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     emit(
-      ProcessingSettingsState(
-        appTheme: state.appTheme,
-        locale: state.locale,
-      ),
+      ProcessingSettingsState(appTheme: state.appTheme, locale: state.locale),
     );
 
     try {
       await _localeRepo.setLocale(event.locale);
       L10n.load(event.locale);
 
-      emit(
-        IdleSettingsState(
-          appTheme: state.appTheme,
-          locale: event.locale,
-        ),
-      );
+      emit(IdleSettingsState(appTheme: state.appTheme, locale: event.locale));
     } catch (e) {
       emit(
         ErrorSettingsState(

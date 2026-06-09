@@ -18,11 +18,7 @@ class ProcessingSettingsState extends SettingsState {
 }
 
 class ErrorSettingsState extends SettingsState {
-  const ErrorSettingsState({
-    required this.cause,
-    super.locale,
-    super.appTheme,
-  });
+  const ErrorSettingsState({required this.cause, super.locale, super.appTheme});
   final Object cause;
 
   @override

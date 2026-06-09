@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// tracking, first run, etc.
 final class AppConfigManager extends PreferencesDao {
   AppConfigManager._(SharedPreferences sharedPreferences)
-      : super(sharedPreferences: sharedPreferences);
+    : super(sharedPreferences: sharedPreferences);
 
   factory AppConfigManager.initialize(SharedPreferences sharedPreferences) {
     _instance ??= AppConfigManager._(sharedPreferences);
@@ -31,15 +31,11 @@ final class AppConfigManager extends PreferencesDao {
   bool get isPerformanceTrackingEnabled => _performanceTracking.read() ?? false;
   bool get isFirstRun => _firstRun.read() ?? true;
 
-  Future<void> setPerformanceTracking({
-    required bool value,
-  }) async {
+  Future<void> setPerformanceTracking({required bool value}) async {
     await _performanceTracking.set(value);
   }
 
-  Future<void> setFirstRun({
-    required bool value,
-  }) async {
+  Future<void> setFirstRun({required bool value}) async {
     await _firstRun.set(value);
   }
 }

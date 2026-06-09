@@ -23,8 +23,6 @@ class _RestartWidgetState extends State<RestartWrapper> {
   }
 
   @override
-  Widget build(BuildContext context) => KeyedSubtree(
-        key: _key,
-        child: widget.child,
-      );
+  Widget build(BuildContext context) =>
+      KeyedSubtree(key: _key, child: widget.child);
 }

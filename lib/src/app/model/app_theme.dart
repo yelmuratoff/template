@@ -7,8 +7,8 @@ import 'package:ui/ui.dart';
 @immutable
 final class AppTheme with Diagnosticable {
   AppTheme({required this.mode, required this.seed})
-      : darkTheme = DarkThemeData.getTheme(seed: seed),
-        lightTheme = LightThemeData.getTheme(seed: seed);
+    : darkTheme = DarkThemeData.getTheme(seed: seed),
+      lightTheme = LightThemeData.getTheme(seed: seed);
 
   /// The type of theme to use.
   final ThemeMode mode;
@@ -33,13 +33,13 @@ final class AppTheme with Diagnosticable {
   /// The [ThemeData] for this [AppTheme].
   /// This is computed based on the [mode].
   ThemeData computeTheme() => switch (mode) {
-        ThemeMode.light => lightTheme,
-        ThemeMode.dark => darkTheme,
-        ThemeMode.system =>
-          PlatformDispatcher.instance.platformBrightness == Brightness.dark
-              ? darkTheme
-              : lightTheme,
-      };
+    ThemeMode.light => lightTheme,
+    ThemeMode.dark => darkTheme,
+    ThemeMode.system =>
+      PlatformDispatcher.instance.platformBrightness == Brightness.dark
+          ? darkTheme
+          : lightTheme,
+  };
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

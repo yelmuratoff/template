@@ -4,9 +4,7 @@ import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
 
 final class AuthRepository implements IAuthRepository {
-  const AuthRepository({
-    required this.dataSource,
-  });
+  const AuthRepository({required this.dataSource});
   final IAuthDataSource dataSource;
 
   @override

@@ -31,9 +31,7 @@ enum Routes with OctopusRoute {
         Routes.root => const RootScreen(),
         Routes.home => const HomeScreen().wrappedRoute(context),
         Routes.profile => const ProfileScreen(),
-        Routes.settings => SettingsScreen(
-            title: node.arguments['title'],
-          ),
+        Routes.settings => SettingsScreen(title: node.arguments['title']),
       };
 
   @override
@@ -41,15 +39,14 @@ enum Routes with OctopusRoute {
     BuildContext context,
     OctopusState state,
     OctopusNode node,
-  ) =>
-      CupertinoPage<Object?>(
-        key: createKey(node),
-        child: InheritedOctopusRoute(
-          node: node,
-          child: builder(context, state, node),
-        ),
-        name: node.name,
-        arguments: node.arguments,
-        fullscreenDialog: node.name.endsWith('-dialog'),
-      );
+  ) => CupertinoPage<Object?>(
+    key: createKey(node),
+    child: InheritedOctopusRoute(
+      node: node,
+      child: builder(context, state, node),
+    ),
+    name: node.name,
+    arguments: node.arguments,
+    fullscreenDialog: node.name.endsWith('-dialog'),
+  );
 }

@@ -59,9 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _onGetCurrentUser(
-    Emitter<AuthState> emit,
-  ) async {
+  Future<void> _onGetCurrentUser(Emitter<AuthState> emit) async {
     try {
       emit(const LoadingAuthState());
       await repository.getCurrentUser();

@@ -18,7 +18,8 @@ final class RepositoriesContainer {
   final ILocalUserRepository localUserRepository;
 
   @override
-  String toString() => '''RepositoriesContainer(
+  String toString() =>
+      '''RepositoriesContainer(
       authRepository: $authRepository,
       remoteUserRepository: $remoteUserRepository,
       localUserRepository: $localUserRepository,

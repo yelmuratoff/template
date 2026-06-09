@@ -57,10 +57,9 @@ abstract class PageLifecycleModel {
   PageLifecycleModel setOnUpdate({
     required VoidCallback onUpdate,
     bool updateOnChange = false,
-  }) =>
-      this
-        .._updateCallback = onUpdate
-        .._updateOnChange = updateOnChange;
+  }) => this
+    .._updateCallback = onUpdate
+    .._updateOnChange = updateOnChange;
 
   /// A method `updatePage` that calls provided callback and `_updateCallback`
   /// in sequence.

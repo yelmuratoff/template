@@ -94,12 +94,7 @@ class AppBottomSheet extends StatelessWidget {
                       top: 16,
                       end: 16,
                     ),
-                    child: Column(
-                      children: [
-                        body,
-                        bottom ?? const SizedBox(),
-                      ],
-                    ),
+                    child: Column(children: [body, bottom ?? const SizedBox()]),
                   ),
                 ),
               ),

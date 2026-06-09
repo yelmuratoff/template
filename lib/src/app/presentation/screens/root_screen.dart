@@ -10,7 +10,7 @@ import 'package:octopus/octopus.dart';
 /// The root page of the application.
 class RootScreen extends StatefulWidget {
   const RootScreen({Key? key})
-      : super(key: key ?? const ValueKey<String>('RootScreen'));
+    : super(key: key ?? const ValueKey<String>('RootScreen'));
 
   @override
   State<RootScreen> createState() => _RootScreenState();
@@ -38,48 +38,43 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: NoAnimationScope(
-          child: IndexedStack(
-            index: _tab.index,
-            children: const [
-              HomeTab(),
-              ProfileTab(),
-            ],
+    body: NoAnimationScope(
+      child: IndexedStack(
+        index: _tab.index,
+        children: const [HomeTab(), ProfileTab()],
+      ),
+    ),
+    bottomNavigationBar: DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.theme.colorScheme.surface,
+        boxShadow: [
+          BoxShadow(
+            color: context.theme.colorScheme.onSurface.withValues(alpha: 0.1),
+            blurRadius: 1,
+            offset: const Offset(0, -1),
           ),
-        ),
-        bottomNavigationBar: DecoratedBox(
-          decoration: BoxDecoration(
-            color: context.theme.colorScheme.surface,
-            boxShadow: [
-              BoxShadow(
-                color: context.theme.colorScheme.onSurface.withValues(
-                  alpha: 0.1,
-                ),
-                blurRadius: 1,
-                offset: const Offset(0, -1),
-              ),
-            ],
+        ],
+      ),
+      child: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.home),
+            activeIcon: Icon(IconsaxPlusBold.home),
+            label: 'Home',
           ),
-          child: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(IconsaxPlusLinear.home),
-                activeIcon: Icon(IconsaxPlusBold.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(IconsaxPlusLinear.user_square),
-                activeIcon: Icon(IconsaxPlusBold.user_square),
-                label: 'Profile',
-              ),
-            ],
-            currentIndex: _tab.index,
-            selectedItemColor: context.theme.colorScheme.primary,
-            onTap: _onItemTapped,
-            useLegacyColorScheme: false,
+          BottomNavigationBarItem(
+            icon: Icon(IconsaxPlusLinear.user_square),
+            activeIcon: Icon(IconsaxPlusBold.user_square),
+            label: 'Profile',
           ),
-        ),
-      );
+        ],
+        currentIndex: _tab.index,
+        selectedItemColor: context.theme.colorScheme.primary,
+        onTap: _onItemTapped,
+        useLegacyColorScheme: false,
+      ),
+    ),
+  );
 
   // <--- Methods --->
 

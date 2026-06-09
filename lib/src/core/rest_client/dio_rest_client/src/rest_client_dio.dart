@@ -8,10 +8,7 @@ import 'package:meta/meta.dart';
 
 /// Rest client that uses `Dio` as HTTP library.
 final class RestClientDio extends RestClientBase {
-  RestClientDio({
-    required this.baseUrl,
-    this.dio,
-  }) : super(baseUrl: baseUrl);
+  RestClientDio({required this.baseUrl, this.dio}) : super(baseUrl: baseUrl);
   final Dio? dio;
   final String baseUrl;
 
@@ -115,14 +112,13 @@ final class RestClientDio extends RestClientBase {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,
-  }) =>
-      sendRequest(
-        path: path,
-        method: 'DELETE',
-        headers: headers,
-        queryParams: queryParams,
-        returnFullData: returnFullData,
-      );
+  }) => sendRequest(
+    path: path,
+    method: 'DELETE',
+    headers: headers,
+    queryParams: queryParams,
+    returnFullData: returnFullData,
+  );
 
   @override
   Future<Map<String, Object?>> get(
@@ -130,14 +126,13 @@ final class RestClientDio extends RestClientBase {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,
-  }) =>
-      sendRequest(
-        path: path,
-        method: 'GET',
-        headers: headers,
-        queryParams: queryParams,
-        returnFullData: returnFullData,
-      );
+  }) => sendRequest(
+    path: path,
+    method: 'GET',
+    headers: headers,
+    queryParams: queryParams,
+    returnFullData: returnFullData,
+  );
 
   @override
   Future<Map<String, Object?>> patch(
@@ -146,15 +141,14 @@ final class RestClientDio extends RestClientBase {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,
-  }) =>
-      sendRequest(
-        path: path,
-        method: 'PATCH',
-        body: body,
-        headers: headers,
-        queryParams: queryParams,
-        returnFullData: returnFullData,
-      );
+  }) => sendRequest(
+    path: path,
+    method: 'PATCH',
+    body: body,
+    headers: headers,
+    queryParams: queryParams,
+    returnFullData: returnFullData,
+  );
 
   @override
   Future<Map<String, Object?>> post(
@@ -163,15 +157,14 @@ final class RestClientDio extends RestClientBase {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,
-  }) =>
-      sendRequest(
-        path: path,
-        method: 'POST',
-        body: body,
-        headers: headers,
-        queryParams: queryParams,
-        returnFullData: returnFullData,
-      );
+  }) => sendRequest(
+    path: path,
+    method: 'POST',
+    body: body,
+    headers: headers,
+    queryParams: queryParams,
+    returnFullData: returnFullData,
+  );
 
   @override
   Future<Map<String, Object?>> put(
@@ -180,13 +173,12 @@ final class RestClientDio extends RestClientBase {
     Map<String, Object?>? headers,
     Map<String, Object?>? queryParams,
     bool returnFullData = false,
-  }) =>
-      sendRequest(
-        path: path,
-        method: 'PUT',
-        body: body,
-        headers: headers,
-        queryParams: queryParams,
-        returnFullData: returnFullData,
-      );
+  }) => sendRequest(
+    path: path,
+    method: 'PUT',
+    body: body,
+    headers: headers,
+    queryParams: queryParams,
+    returnFullData: returnFullData,
+  );
 }

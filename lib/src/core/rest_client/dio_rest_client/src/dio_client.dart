@@ -9,28 +9,23 @@ class DioClient {
     required String baseUrl,
     required Interceptor interceptor,
     Dio? initialDio,
-  }) =>
-      DioClient._internal(
-        baseUrl: baseUrl,
-        initialDio: initialDio,
-        interceptor: interceptor,
-      );
+  }) => DioClient._internal(
+    baseUrl: baseUrl,
+    initialDio: initialDio,
+    interceptor: interceptor,
+  );
 
   DioClient._internal({
     required String baseUrl,
     required Interceptor interceptor,
     Dio? initialDio,
   }) : dio = initialDio ?? Dio(BaseOptions(baseUrl: baseUrl)) {
-    _initInterceptors(
-      dioInterceptor: interceptor,
-    );
+    _initInterceptors(dioInterceptor: interceptor);
   }
 
   final Dio dio;
 
-  void _initInterceptors({
-    required Interceptor dioInterceptor,
-  }) {
+  void _initInterceptors({required Interceptor dioInterceptor}) {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -52,27 +47,25 @@ class DioClient {
               }
 
               // ignore: prefer_async_await
-              final newToken = await dio.post<dynamic>(
-                // TODO(Yelaman): Change this to your refresh token endpoint
-                '/auth/refresh',
-                options: Options(
-                  sendTimeout: const Duration(milliseconds: 30000),
-                  receiveTimeout: const Duration(milliseconds: 60000),
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                ),
-                data: {
-                  'token': oldToken.refresh,
-                },
-              ).then(
-                (value) {
-                  if (value.data == null) {
-                    return null;
-                  }
-                  return TokenPair.fromJson(value.data as Map<String, dynamic>);
-                },
-              );
+              final newToken = await dio
+                  .post<dynamic>(
+                    // TODO(Yelaman): Change this to your refresh token endpoint
+                    '/auth/refresh',
+                    options: Options(
+                      sendTimeout: const Duration(milliseconds: 30000),
+                      receiveTimeout: const Duration(milliseconds: 60000),
+                      headers: {'Content-Type': 'application/json'},
+                    ),
+                    data: {'token': oldToken.refresh},
+                  )
+                  .then((value) {
+                    if (value.data == null) {
+                      return null;
+                    }
+                    return TokenPair.fromJson(
+                      value.data as Map<String, dynamic>,
+                    );
+                  });
 
               if (newToken != null) {
                 // Update the request header with the new access token

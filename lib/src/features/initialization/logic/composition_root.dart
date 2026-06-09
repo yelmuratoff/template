@@ -15,9 +15,7 @@ import 'package:ispect/ispect.dart';
 /// easier to manage them and to ensure that they are initialized only once.
 
 final class CompositionRoot {
-  const CompositionRoot({
-    required this.hook,
-  });
+  const CompositionRoot({required this.hook});
 
   final InitializationHook hook;
 
@@ -28,9 +26,7 @@ final class CompositionRoot {
     ISpect.logger.info('🌀 Initializing dependencies...');
 
     // initialize dependencies
-    final dependencies = await DependenciesFactory(
-      hook: hook,
-    ).create();
+    final dependencies = await DependenciesFactory(hook: hook).create();
 
     // initialize repositories
     final repositories = await RepositoriesFactory(
@@ -68,7 +64,8 @@ final class CompositionResult {
   final int millisecondsSpent;
 
   @override
-  String toString() => '$CompositionResult('
+  String toString() =>
+      '$CompositionResult('
       '\ndependencies: $dependencies, '
       '\nrepositories: $repositories, '
       '\nmillisecondsSpent: $millisecondsSpent'
@@ -88,9 +85,7 @@ abstract interface class Factory<T> {
 
 /// Factory that creates an instance of [T] asynchronously.
 abstract interface class AsyncFactory<T> {
-  const AsyncFactory({
-    required this.hook,
-  });
+  const AsyncFactory({required this.hook});
 
   final InitializationHook hook;
 

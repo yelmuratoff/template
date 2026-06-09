@@ -39,9 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context.octopus.setState(
             (state) => state
               ..clear()
-              ..add(
-                Routes.root.node(),
-              ),
+              ..add(Routes.root.node()),
           ),
         );
       } else {
@@ -49,9 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context.octopus.setState(
             (state) => state
               ..clear()
-              ..add(
-                Routes.auth.node(),
-              ),
+              ..add(Routes.auth.node()),
           ),
         );
       }
@@ -60,12 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: const Color(0xff1468AD),
-        body: Center(
-          child: Image.asset(
-            Assets.images.icon.path,
-            width: 250,
-          ),
-        ),
-      );
+    backgroundColor: const Color(0xff1468AD),
+    body: Center(child: Image.asset(Assets.images.icon.path, width: 250)),
+  );
 }

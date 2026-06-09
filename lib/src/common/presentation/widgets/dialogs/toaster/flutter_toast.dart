@@ -10,10 +10,8 @@ import 'package:flutter/material.dart';
 /// [gravity] is the gravity option for the toast which can be used to determine the position.
 /// The function should return a [Widget] that defines the position of the toast.
 /// If the position is not handled by the custom logic, return `null` to fall back to default logic.
-typedef ToastPositionMapping = Widget? Function(
-  Widget child,
-  ToastGravity? gravity,
-);
+typedef ToastPositionMapping =
+    Widget? Function(Widget child, ToastGravity? gravity);
 
 /// Toast Length
 /// Only for Android Platform
@@ -22,7 +20,7 @@ enum Toast {
   LENGTH_SHORT,
 
   /// Show Long toast for 5 sec
-  LENGTH_LONG
+  LENGTH_LONG,
 }
 
 /// ToastGravity
@@ -38,15 +36,12 @@ enum ToastGravity {
   CENTER_LEFT,
   CENTER_RIGHT,
   SNACKBAR,
-  NONE
+  NONE,
 }
 
 /// Signature for a function to buildCustom Toast
-typedef PositionedToastBuilder = Widget Function(
-  BuildContext context,
-  Widget child,
-  ToastGravity? gravity,
-);
+typedef PositionedToastBuilder =
+    Widget Function(BuildContext context, Widget child, ToastGravity? gravity);
 
 /// Runs on dart side this has no interaction with the Native Side
 /// Works with all platforms just in two lines of code
@@ -178,19 +173,19 @@ class FToast {
 
     /// Check for keyboard open
     /// If open will ignore the gravity bottom and change it to center
-    if (gravity == ToastGravity.BOTTOM) {
-      if (MediaQuery.of(context!).viewInsets.bottom != 0) {
-        gravity = ToastGravity.CENTER;
-      }
+    var effectiveGravity = gravity;
+    if (effectiveGravity == ToastGravity.BOTTOM &&
+        MediaQuery.of(context!).viewInsets.bottom != 0) {
+      effectiveGravity = ToastGravity.CENTER;
     }
 
     final newEntry = OverlayEntry(
       builder: (context) {
         if (positionedToastBuilder != null) {
-          return positionedToastBuilder(context, newChild, gravity);
+          return positionedToastBuilder(context, newChild, effectiveGravity);
         }
 
-        return _getPositionWidgetBasedOnGravity(newChild, gravity);
+        return _getPositionWidgetBasedOnGravity(newChild, effectiveGravity);
       },
     );
     _overlayQueue.add(
@@ -252,18 +247,13 @@ class FToast {
 /// Simple builder method to create a [TransitionBuilder]
 /// and for the use in MaterialApp builder method
 // ignore: non_constant_identifier_names
-TransitionBuilder FToastBuilder() => (context, child) => _FToastHolder(
-      context: context,
-      child: child!,
-    );
+TransitionBuilder FToastBuilder() =>
+    (context, child) => _FToastHolder(context: context, child: child!);
 
 /// Simple StatelessWidget which holds the child
 /// and creates an [Overlay] to display the toast
 class _FToastHolder extends StatefulWidget {
-  const _FToastHolder({
-    required this.context,
-    required this.child,
-  });
+  const _FToastHolder({required this.context, required this.child});
 
   final BuildContext context;
   final Widget child;
@@ -280,15 +270,15 @@ class _FToastHolderState extends State<_FToastHolder> {
 
   @override
   Widget build(BuildContext context) => Overlay(
-        initialEntries: <OverlayEntry>[
-          OverlayEntry(
-            builder: (ctx) {
-              fToast.init(ctx);
-              return widget.child;
-            },
-          ),
-        ],
-      );
+    initialEntries: <OverlayEntry>[
+      OverlayEntry(
+        builder: (ctx) {
+          fToast.init(ctx);
+          return widget.child;
+        },
+      ),
+    ],
+  );
 }
 
 /// internal class [_ToastEntry] which maintains
@@ -352,8 +342,10 @@ class ToastStateFulState extends State<_ToastStateFul>
       vsync: this,
       duration: widget.fadeDuration,
     );
-    _fadeAnimation =
-        CurvedAnimation(parent: _animationController!, curve: Curves.easeIn);
+    _fadeAnimation = CurvedAnimation(
+      parent: _animationController!,
+      curve: Curves.easeIn,
+    );
     super.initState();
 
     showIt();
@@ -376,19 +368,16 @@ class ToastStateFulState extends State<_ToastStateFul>
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-        onTap: widget.onDismiss == null ? null : () => widget.onDismiss!(),
-        behavior: HitTestBehavior.translucent,
-        child: IgnorePointer(
-          ignoring: widget.ignorePointer,
-          child: FadeTransition(
-            opacity: _fadeAnimation,
-            child: Center(
-              child: Material(
-                color: Colors.transparent,
-                child: widget.child,
-              ),
-            ),
-          ),
+    onTap: widget.onDismiss == null ? null : () => widget.onDismiss!(),
+    behavior: HitTestBehavior.translucent,
+    child: IgnorePointer(
+      ignoring: widget.ignorePointer,
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: Center(
+          child: Material(color: Colors.transparent, child: widget.child),
         ),
-      );
+      ),
+    ),
+  );
 }

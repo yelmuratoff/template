@@ -23,9 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Factory that creates an instance of [DependenciesContainer].
 class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
-  const DependenciesFactory({
-    required this.hook,
-  });
+  const DependenciesFactory({required this.hook});
 
   @override
   final InitializationHook hook;
@@ -40,9 +38,7 @@ class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
       sharedPreferences: sharedPreferences,
     ).create();
 
-    final restClient = await RestClientFactory(
-      hook: hook,
-    ).create();
+    final restClient = await RestClientFactory(hook: hook).create();
 
     final repositories = await RepositoriesFactory(
       restClient: restClient,
@@ -50,9 +46,7 @@ class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
       hook: hook,
     ).create();
 
-    final authBloc = AuthBloc(
-      repository: repositories.authRepository,
-    );
+    final authBloc = AuthBloc(repository: repositories.authRepository);
 
     final userCubit = UserCubit(
       remoteUserRepository: repositories.remoteUserRepository,
@@ -80,9 +74,7 @@ class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
 
 /// A factory that creates an instance of [RestClientBase].
 class RestClientFactory implements AsyncFactory<RestClientBase> {
-  const RestClientFactory({
-    required this.hook,
-  });
+  const RestClientFactory({required this.hook});
 
   @override
   final InitializationHook hook;

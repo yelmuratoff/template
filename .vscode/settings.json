@@ -3,5 +3,5 @@
     "drift"
   ],
   "dart.lineLength": 80,
-  "dart.flutterSdkPath": ".fvm/versions/3.27.0"
+  "dart.flutterSdkPath": ".fvm/versions/3.44.1"
 }

@@ -50,8 +50,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final versionTextColor =
-        context.theme.colorScheme.onSurface.withValues(alpha: 0.5);
+    final versionTextColor = context.theme.colorScheme.onSurface.withValues(
+      alpha: 0.5,
+    );
     final titleMediumTextStyle = context.textStyles.s18w600.copyWith(
       fontWeight: FontWeight.bold,
     );
@@ -62,14 +63,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           onPressed: () {
             context.pop();
           },
-          icon: const Icon(
-            IconsaxPlusLinear.arrow_square_left,
-          ),
+          icon: const Icon(IconsaxPlusLinear.arrow_square_left),
         ),
-        title: Text(
-          L10n.current.settings,
-          style: context.textStyles.s24w700,
-        ),
+        title: Text(L10n.current.settings, style: context.textStyles.s24w700),
       ),
       body: CustomScrollView(
         slivers: [
@@ -77,10 +73,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             delegate: SliverChildListDelegate.fixed([
               Padding(
                 padding: const EdgeInsets.all(8),
-                child: Text(
-                  L10n.current.locales,
-                  style: titleMediumTextStyle,
-                ),
+                child: Text(L10n.current.locales, style: titleMediumTextStyle),
               ),
               _LanguagesSelector(
                 languages: L10n.supportedLocales,
@@ -103,9 +96,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 value: SettingsScope.themeOf(context).isDarkMode,
                 onChanged: (value) {
-                  SettingsScope.themeOf(context).setThemeMode(
-                    value ? ThemeMode.dark : ThemeMode.light,
-                  );
+                  SettingsScope.themeOf(
+                    context,
+                  ).setThemeMode(value ? ThemeMode.dark : ThemeMode.light);
                 },
               ),
             ]),
@@ -142,15 +135,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                     if (_model.tapNumber > 5 && _model.tapNumber < 10) {
                       await Toaster.showToast(
-                        title: L10n.current
-                            .environmentTapNumber(10 - _model.tapNumber),
+                        title: L10n.current.environmentTapNumber(
+                          10 - _model.tapNumber,
+                        ),
                       );
                     } else if (_model.tapNumber == 10) {
                       ISpect.logger.info('ℹ️ Environment change dialog opened');
                       await ChangeEnvironmentDialog.show(context);
-                      ISpect.logger.info(
-                        '🔙 Environment change dialog closed',
-                      );
+                      ISpect.logger.info('🔙 Environment change dialog closed');
                       _model.tapNumber = 0;
                     }
                   },
@@ -160,23 +152,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 BlocListener<AuthBloc, AuthState>(
                   listener: (context, state) => switch (state) {
                     LoadingAuthState() => AppDialogs.showLoader(
-                        context,
-                        title: L10n.current.loading,
-                      ),
+                      context,
+                      title: L10n.current.loading,
+                    ),
                     InitialAuthState() => {
-                        AppDialogs.dismiss(),
-                        context.octopus.setState(
-                          (state) => state
-                            ..clear()
-                            ..add(Routes.auth.node()),
-                        ),
-                      },
+                      AppDialogs.dismiss(),
+                      context.octopus.setState(
+                        (state) => state
+                          ..clear()
+                          ..add(Routes.auth.node()),
+                      ),
+                    },
                     _ => AppDialogs.dismiss(),
                   },
                   child: AppButton(
                     onPressed: () {
-                      context.dependencies.authBloc
-                          .add(const LogoutAuthEvent());
+                      context.dependencies.authBloc.add(
+                        const LogoutAuthEvent(),
+                      );
                     },
                     text: L10n.current.logout,
                   ),

@@ -26,15 +26,19 @@ class TabGuard extends OctopusGuard {
       recursive: false,
     );
     // Upsert home tab node if not exists.
-    final home =
-        root.putIfAbsent(_homeTab, () => OctopusNode.mutable(_homeTab));
+    final home = root.putIfAbsent(
+      _homeTab,
+      () => OctopusNode.mutable(_homeTab),
+    );
     if (!home.hasChildren) {
       home.add(OctopusNode.mutable(Routes.home.name));
     }
 
     // Upsert basket tab node if not exists.
-    final profile =
-        root.putIfAbsent(_profileTab, () => OctopusNode.mutable(_profileTab));
+    final profile = root.putIfAbsent(
+      _profileTab,
+      () => OctopusNode.mutable(_profileTab),
+    );
     if (!profile.hasChildren) {
       profile.add(OctopusNode.mutable(Routes.profile.name));
     }

@@ -33,7 +33,7 @@ enum _SettingsScopeAspect {
   theme,
 
   /// The locale aspect.
-  locale;
+  locale,
 }
 
 /// Settings scope is responsible for handling settings-related stuff.
@@ -59,8 +59,7 @@ class SettingsScope extends StatefulWidget {
   static SettingsScopeController of(
     BuildContext context, {
     bool listen = true,
-  }) =>
-      context.inhOf<_InheritedSettingsScope>(listen: listen).controller;
+  }) => context.inhOf<_InheritedSettingsScope>(listen: listen).controller;
 
   /// Get the [ThemeScopeController] of the closest [SettingsScope] ancestor.
   static ThemeScopeController themeOf(BuildContext context) => context
@@ -90,17 +89,17 @@ class _SettingsScopeState extends State<SettingsScope>
 
   @override
   void setThemeMode(ThemeMode themeMode) => widget.settingsBloc.add(
-        UpdateThemeSettingsEvent(
-          appTheme: AppTheme(mode: themeMode, seed: theme.seed),
-        ),
-      );
+    UpdateThemeSettingsEvent(
+      appTheme: AppTheme(mode: themeMode, seed: theme.seed),
+    ),
+  );
 
   @override
   void setThemeSeedColor(Color color) => widget.settingsBloc.add(
-        UpdateThemeSettingsEvent(
-          appTheme: AppTheme(mode: theme.mode, seed: color),
-        ),
-      );
+    UpdateThemeSettingsEvent(
+      appTheme: AppTheme(mode: theme.mode, seed: color),
+    ),
+  );
 
   @override
   Locale get locale =>

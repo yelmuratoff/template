@@ -32,16 +32,15 @@ class WrapBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Wrap(
-        direction: direction ?? Axis.horizontal,
-        alignment: alignment ?? WrapAlignment.start,
-        spacing: spacing ?? 10,
-        runSpacing: runSpacing ?? 10,
-        runAlignment: runAlignment ?? WrapAlignment.start,
-        crossAxisAlignment: crossAxisAlignment ?? WrapCrossAlignment.start,
-        textDirection: textDirection ?? TextDirection.ltr,
-        verticalDirection: verticalDirection ?? VerticalDirection.down,
-        clipBehavior: clipBehavior ?? Clip.none,
-        children:
-            List.generate(itemCount, (index) => itemBuilder(context, index)),
-      );
+    direction: direction ?? Axis.horizontal,
+    alignment: alignment ?? WrapAlignment.start,
+    spacing: spacing ?? 10,
+    runSpacing: runSpacing ?? 10,
+    runAlignment: runAlignment ?? WrapAlignment.start,
+    crossAxisAlignment: crossAxisAlignment ?? WrapCrossAlignment.start,
+    textDirection: textDirection ?? TextDirection.ltr,
+    verticalDirection: verticalDirection ?? VerticalDirection.down,
+    clipBehavior: clipBehavior ?? Clip.none,
+    children: List.generate(itemCount, (index) => itemBuilder(context, index)),
+  );
 }

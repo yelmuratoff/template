@@ -18,22 +18,20 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialButton(
-        onPressed: onPressed,
-        color: backgroundColor ?? context.theme.colorScheme.primary,
-        highlightElevation: 0,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
-          side: BorderSide(
-            color: borderColor ?? context.theme.colorScheme.primary,
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
-        child: Text(
-          text,
-          style: context.textStyles.s16w600.copyWith(
-            color: textColor ?? context.theme.colorScheme.surface,
-          ),
-        ),
-      );
+    onPressed: onPressed,
+    color: backgroundColor ?? context.theme.colorScheme.primary,
+    highlightElevation: 0,
+    elevation: 0,
+    shape: RoundedRectangleBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
+      side: BorderSide(color: borderColor ?? context.theme.colorScheme.primary),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+    child: Text(
+      text,
+      style: context.textStyles.s16w600.copyWith(
+        color: textColor ?? context.theme.colorScheme.surface,
+      ),
+    ),
+  );
 }

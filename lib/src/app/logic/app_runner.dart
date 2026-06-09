@@ -12,9 +12,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 /// A class which is responsible for initialization and running the app.
 final class AppRunner {
   /// Start the initialization and in case of success run application
-  Future<void> initializeAndRun(
-    InitializationHook hook,
-  ) async {
+  Future<void> initializeAndRun(InitializationHook hook) async {
     final binding = WidgetsFlutterBinding.ensureInitialized()
       ..deferFirstFrame();
 
@@ -25,9 +23,7 @@ final class AppRunner {
     Bloc.transformer = bloc_concurrency.sequential();
     Future<void> initializeAndRun(InitializationHook hook) async {
       try {
-        final result = await CompositionRoot(
-          hook: hook,
-        ).compose();
+        final result = await CompositionRoot(hook: hook).compose();
 
         hook.onInitialized?.call(result);
 
@@ -37,16 +33,10 @@ final class AppRunner {
           RestartWrapper(
             child: MultiBlocProvider(
               providers: [
-                BlocProvider.value(
-                  value: result.dependencies.authBloc,
-                ),
-                BlocProvider.value(
-                  value: result.dependencies.userCubit,
-                ),
+                BlocProvider.value(value: result.dependencies.authBloc),
+                BlocProvider.value(value: result.dependencies.userCubit),
               ],
-              child: App(
-                result: result,
-              ),
+              child: App(result: result),
             ),
           ),
         );

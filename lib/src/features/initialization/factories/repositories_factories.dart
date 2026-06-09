@@ -27,13 +27,9 @@ class RepositoriesFactory implements AsyncFactory<RepositoriesContainer> {
   Future<RepositoriesContainer> create() async {
     // <--- Data sources initialization --->
 
-    final authRemoteDS = AuthRemoteDataSource(
-      restClient: restClient,
-    );
+    final authRemoteDS = AuthRemoteDataSource(restClient: restClient);
 
-    final userRemoteDS = UserRemoteDataSource(
-      restClient: restClient,
-    );
+    final userRemoteDS = UserRemoteDataSource(restClient: restClient);
 
     final userLocalDS = UserLocalDataSource(
       sharedPreferences: sharedPreferences,
@@ -41,17 +37,11 @@ class RepositoriesFactory implements AsyncFactory<RepositoriesContainer> {
 
     // <--- Repositories initialization --->
 
-    final authRepository = AuthRepository(
-      dataSource: authRemoteDS,
-    );
+    final authRepository = AuthRepository(dataSource: authRemoteDS);
 
-    final userRemoteRepository = RemoteUserRepository(
-      dataSource: userRemoteDS,
-    );
+    final userRemoteRepository = RemoteUserRepository(dataSource: userRemoteDS);
 
-    final userLocalRepository = LocalUserRepository(
-      dataSource: userLocalDS,
-    );
+    final userLocalRepository = LocalUserRepository(dataSource: userLocalDS);
 
     hook.onInitializing?.call(name);
 

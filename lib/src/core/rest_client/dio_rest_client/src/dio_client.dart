@@ -109,12 +109,10 @@ class DioClient {
       ),
     );
 
-    /// Adds `TalkerDioLogger` to intercept Dio requests and responses and
-    /// log them using Talker service.
     dio.interceptors.add(
-      ISpectifyDioLogger(
-        iSpectify: ISpect.logger,
-        settings: const ISpectifyDioLoggerSettings(
+      ISpectDioInterceptor(
+        logger: ISpect.logger,
+        settings: const ISpectDioInterceptorSettings(
           printRequestHeaders: true,
           printResponseHeaders: true,
           printResponseData: false,

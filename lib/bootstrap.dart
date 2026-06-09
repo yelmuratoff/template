@@ -13,7 +13,7 @@ import 'package:ispectify_bloc/ispectify_bloc.dart';
 // ==================== Entry fields ====================
 
 ///  It is used to handle errors and log messages in the app.
-final iSpectify = ISpectifyFlutter.init();
+final iSpectify = ISpectFlutter.init();
 
 // ==================== Bootstrap ====================
 
@@ -39,8 +39,8 @@ Future<void> bootstrap() async {
     ),
     logger: iSpectify,
     onInit: () {
-      Bloc.observer = ISpectifyBlocObserver(
-        iSpectify: iSpectify,
+      Bloc.observer = ISpectBlocObserver(
+        logger: iSpectify,
       );
     },
     onZonedError: (_, __) {

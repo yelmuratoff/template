@@ -63,6 +63,12 @@ Simple example of use `ISpect`<br>
 You can manage ISpect using `ISpect.read(context)`.
 Put this code in your project at an screen and learn how it works. 😊
 
+Since ISpect 4.7.0 the tool is compiled out of the binary by default. Run the app with the build flag to enable it (already wired into the `[DEV]` launch configurations in `.vscode/launch.json`):
+
+```bash
+flutter run --dart-define=ISPECT_ENABLED=true
+```
+
 <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start;">
   <img src="https://github.com/K1yoshiSho/packages_assets/blob/main/assets/ispect/preview_usage.gif?raw=true"
   alt="ISpect's example" width="250" style="margin-right: 10px;"/>

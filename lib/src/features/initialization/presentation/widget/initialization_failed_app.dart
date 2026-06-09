@@ -54,9 +54,6 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 
   bool _isInitialized = false;
 
-  /// ISpect fields
-  final ISpectify _iSpectify = ISpectifyFlutter.init();
-
   @override
   void initState() {
     super.initState();
@@ -113,23 +110,29 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
             darkTheme: _settingsState?.appTheme?.darkTheme,
             themeMode: _settingsState?.appTheme?.mode,
             locale: _settingsState?.locale,
-            localizationsDelegates: ISpectLocalizations.localizationDelegates(
-              [L10n.delegate],
-            ),
+            localizationsDelegates: [
+              ...L10n.delegates,
+              ...ISpectLocalizations.delegate(),
+            ],
             supportedLocales: L10n.supportedLocales,
+            builder: (context, child) => ISpectBuilder.wrap(
+              isISpectEnabled: F.isDev,
+              options: ISpectOptions(
+                locale: _settingsState?.locale ?? const Locale('en'),
+              ),
+              child: child!,
+            ),
             home: _View(
               error: widget.error,
               retryInitialization: widget.retryInitialization != null
                   ? _retryInitialization
                   : null,
               stackTrace: widget.stackTrace,
-              iSpectify: _iSpectify,
               themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
               lightTheme:
                   _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
               darkTheme:
                   _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
-              locale: _settingsState?.locale ?? const Locale('en'),
             ),
           ),
         )
@@ -148,7 +151,6 @@ class _View extends StatelessWidget {
   const _View({
     required this.error,
     required this.stackTrace,
-    required this.iSpectify,
     required this.themeMode,
     required this.lightTheme,
     required this.darkTheme,
@@ -158,7 +160,6 @@ class _View extends StatelessWidget {
   final Object error;
   final AsyncCallback? retryInitialization;
   final StackTrace stackTrace;
-  final ISpectify iSpectify;
   final ThemeMode themeMode;
   final ThemeData lightTheme;
   final ThemeData darkTheme;
@@ -173,35 +174,6 @@ class _View extends StatelessWidget {
               color: context.theme.colorScheme.error,
             ),
           ),
-          actions: [
-            if (F.isDev) ...[
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: IconButton.filledTonal(
-                  icon: const Icon(IconsaxPlusLinear.activity),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (_) => ISpectScreen(
-                          appBarTitle: 'ISpect',
-                          options: ISpectOptions(
-                            locale: locale,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  splashRadius: 8,
-                  color: context.theme.colorScheme.error,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        context.theme.colorScheme.error.withValues(alpha: 0.1),
-                  ),
-                ),
-              ),
-            ],
-          ],
         ),
         body: SingleChildScrollView(
           child: Column(

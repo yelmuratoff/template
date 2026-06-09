@@ -68,9 +68,10 @@ class _MaterialContextState extends State<MaterialContext> {
       theme: theme.lightTheme,
       darkTheme: theme.darkTheme,
       themeMode: theme.mode,
-      localizationsDelegates: ISpectLocalizations.localizationDelegates([
-        L10n.delegate,
-      ]),
+      localizationsDelegates: [
+        ...L10n.delegates,
+        ...ISpectLocalizations.delegate(),
+      ],
       supportedLocales: L10n.supportedLocales,
       locale: locale,
       routerConfig: _router.config,
@@ -83,10 +84,10 @@ class _MaterialContextState extends State<MaterialContext> {
           child: child,
         );
 
-        child = ISpectBuilder(
-          observer: observer,
+        child = ISpectBuilder.wrap(
           options: ISpectOptions(
             locale: locale,
+            observer: observer,
           ),
           isISpectEnabled: F.isDev,
           child: child,

@@ -3,8 +3,8 @@
 import 'dart:async';
 
 import 'package:base_starter/src/app/router/routes/router.dart';
+import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
-import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
@@ -25,9 +25,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _initialize(BuildContext context) async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (AppConfigManager.instance.isFirstRun) {
-        await SecureStorageManager.storage.deleteAll();
-        await AppConfigManager.instance.setFirstRun(value: false);
+      final dependencies = context.dependencies;
+      if (dependencies.appConfig.isFirstRun) {
+        await dependencies.secureStorage.deleteAll();
+        await dependencies.appConfig.setFirstRun(value: false);
       }
 
       final tokenPair = await SecureStorageManager.getToken();

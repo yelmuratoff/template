@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' show PlatformDispatcher;
 
 import 'package:base_starter/src/app/logic/app_runner.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
@@ -29,27 +30,43 @@ Future<void> bootstrap() async {
     onInit: _onInit,
   );
 
+  // ISpect.run installs its own FlutterError/PlatformDispatcher/zone handlers
+  // only when ISpect is compiled in; these fallbacks keep failures observable
+  // in builds where it is tree-shaken out (and a crash reporter plugs in here).
+  _installRootErrorHandlers();
+
   ISpect.run(
     () => AppRunner().initializeAndRun(hook!),
     logger: iSpectify,
     onInit: () {
       Bloc.observer = ISpectBlocObserver(logger: iSpectify);
     },
-    onZonedError: (_, __) {
-      debugPrint('Zoned error');
-      //     if (kReleaseMode && envType == EnvType.prod) {
-      // FirebaseCrashlytics.instance
-      //     .recordError(
-      //       error,
-      //       stack,
-      //       reason: 'runZonedGuarded',
-      //     )
-      //     .whenComplete(
-      //       () => FirebaseCrashlytics.instance.sendUnsentReports(),
-      //     );
-      // }
+    onZonedError: (error, stackTrace) {
+      ISpect.logger.handle(
+        exception: error,
+        stackTrace: stackTrace,
+        message: 'Uncaught zone error',
+      );
     },
   );
+}
+
+void _installRootErrorHandlers() {
+  FlutterError.onError = (details) {
+    ISpect.logger.handle(
+      exception: details.exception,
+      stackTrace: details.stack,
+      message: details.context?.toDescription(),
+    );
+  };
+  PlatformDispatcher.instance.onError = (error, stackTrace) {
+    ISpect.logger.handle(
+      exception: error,
+      stackTrace: stackTrace,
+      message: 'Uncaught platform error',
+    );
+    return true;
+  };
 }
 
 // ==================== Initialization Callbacks ====================

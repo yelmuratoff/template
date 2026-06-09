@@ -15,23 +15,23 @@ fvm flutter test      # green
 
 ## Фаза 1 — pubspec: обновление + чистка
 
-- [ ] `flutter pub outdated` → обновить все пакеты до последних stable (dio, flutter_secure_storage, ispect-семейство с dev-пинов, drift, envied, lint-цепочка)
-- [ ] `mocktail`, `custom_lint` → dev_dependencies; добавить dev: `checks`, `fake_async`
-- [ ] Добавить `clock` в dependencies (используется composition_root, сейчас транзитивный)
-- [ ] Удалить: `analyzer: any`, `rxdart`, `stream_transform`, `group_button`, `pure`, `platform_info`, `share_plus`, `device_info_plus`; `meta` → `^1.x`
-- [ ] `provider` и `octopus` пока оставить (уходят в Фазах 7 и 6)
-- [ ] `build_runner build --delete-conflicting-outputs`; починить компиляцию (secure storage options, ispect API)
-- [ ] Чекпоинт + коммит
+- [x] `flutter pub outdated` → обновить все пакеты до последних stable (dio, flutter_secure_storage, ispect-семейство с dev-пинов, drift, envied, lint-цепочка)
+- [x] `mocktail`, `custom_lint` → dev_dependencies; добавить dev: `checks`, `fake_async`
+- [x] Добавить `clock` в dependencies (используется composition_root, сейчас транзитивный)
+- [x] Удалить: `analyzer: any`, `rxdart`, `stream_transform`, `group_button`, `pure`, `platform_info`, `share_plus`, `device_info_plus`; `meta` → `^1.x`
+- [x] `provider` и `octopus` пока оставить (уходят в Фазах 7 и 6)
+- [x] `build_runner build --delete-conflicting-outputs`; починить компиляцию (secure storage options, ispect API)
+- [x] Чекпоинт + коммит
 
 ## Фаза 2 — исключения, инжектируемый secure storage, root error handlers
 
-- [ ] Part-файлы `app_exception.dart`: `NetworkException`, `TimeoutAppException`, `ParseException`, `CacheException`, `RevokedTokenException` (message, cause, statusCode?)
-- [ ] `core/database/src/preferences/secure_storage.dart`: интерфейс `SecureStorage` + `FlutterSecureStorageWrapper` (try/catch → `ISpect.logger.handle` → `Error.throwWithStackTrace(CacheException)`)
-- [ ] `bootstrap.dart`: `onZonedError` → `ISpect.logger.handle`; явные `FlutterError.onError` / `PlatformDispatcher.onError`; удалить закомментированный Firebase-код
-- [ ] `AppConfigManager`: убрать static singleton → конструкторная инъекция через контейнер
-- [ ] `SecureStorage` в `DependenciesContainer`
-- [ ] Тест: `test/core/storage/secure_storage_test.dart`
-- [ ] Чекпоинт + коммит
+- [x] Part-файлы `app_exception.dart`: `NetworkException`, `TimeoutAppException`, `ParseException`, `CacheException`, `RevokedTokenException` (message, cause, statusCode?)
+- [x] `core/database/src/preferences/secure_storage.dart`: интерфейс `SecureStorage` + `FlutterSecureStorageWrapper` (try/catch → `ISpect.logger.handle` → `Error.throwWithStackTrace(CacheException)`)
+- [x] `bootstrap.dart`: `onZonedError` → `ISpect.logger.handle`; явные `FlutterError.onError` / `PlatformDispatcher.onError`; удалить закомментированный Firebase-код
+- [x] `AppConfigManager`: убрать static singleton → конструкторная инъекция через контейнер
+- [x] `SecureStorage` в `DependenciesContainer`
+- [x] Тест: `test/core/storage/secure_storage_test.dart`
+- [x] Чекпоинт + коммит
 
 ## Фаза 3 — RestClient + token refresh (критический поток)
 

@@ -2,6 +2,7 @@ import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
+import 'package:base_starter/src/core/database/src/preferences/secure_storage.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/core/rest_client/dio_rest_client/src/rest_client_dio.dart';
@@ -17,6 +18,7 @@ import 'package:base_starter/src/features/settings/data/theme/theme_datasource.d
 import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ispect/ispect.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +35,13 @@ class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
     final sharedPreferences = await SharedPreferences.getInstance();
     final packageInfo = await PackageInfo.fromPlatform();
 
-    await ConfigManagerFactory(
+    const secureStorage = FlutterSecureStorageWrapper(
+      storage: FlutterSecureStorage(
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+      ),
+    );
+
+    final appConfig = await ConfigManagerFactory(
       hook: hook,
       sharedPreferences: sharedPreferences,
     ).create();
@@ -61,6 +69,8 @@ class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
     return DependenciesContainer(
       packageInfo: packageInfo,
       sharedPreferences: sharedPreferences,
+      secureStorage: secureStorage,
+      appConfig: appConfig,
       restClient: restClient,
       authBloc: authBloc,
       userCubit: userCubit,
@@ -92,7 +102,7 @@ class RestClientFactory implements AsyncFactory<RestClientBase> {
   String get name => 'REST Client';
 }
 
-class ConfigManagerFactory implements AsyncFactory<void> {
+class ConfigManagerFactory implements AsyncFactory<AppConfigManager> {
   const ConfigManagerFactory({
     required this.hook,
     required this.sharedPreferences,
@@ -104,8 +114,8 @@ class ConfigManagerFactory implements AsyncFactory<void> {
   final SharedPreferences sharedPreferences;
 
   @override
-  Future<void> create() async {
-    AppConfigManager.initialize(sharedPreferences);
+  Future<AppConfigManager> create() async {
+    final appConfig = AppConfigManager(sharedPreferences: sharedPreferences);
 
     final environment = sharedPreferences.getString(Preferences.environment);
 
@@ -118,7 +128,7 @@ class ConfigManagerFactory implements AsyncFactory<void> {
 
     hook.onInitializing?.call(name);
 
-    return;
+    return appConfig;
   }
 
   @override

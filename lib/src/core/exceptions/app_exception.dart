@@ -2,8 +2,13 @@
 
 import 'package:equatable/equatable.dart';
 
+part 'cache_exception.dart';
 part 'invalid_data_format.dart';
+part 'network_exception.dart';
 part 'no_data_exception.dart';
+part 'parse_exception.dart';
+part 'revoked_token_exception.dart';
+part 'timeout_exception.dart';
 
 sealed class AppException extends Equatable implements Exception {
   const AppException([this.debugMessage]);

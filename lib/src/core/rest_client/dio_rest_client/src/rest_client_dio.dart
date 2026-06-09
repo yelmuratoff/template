@@ -1,15 +1,20 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
 import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
-import 'package:base_starter/src/core/rest_client/dio_rest_client/src/dio_client.dart';
-import 'package:base_starter/src/core/rest_client/dio_rest_client/src/interceptor/dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 /// Rest client that uses `Dio` as HTTP library.
+///
+/// Operates on a single externally configured [Dio] instance (see
+/// `DioClient`); constructing transports per request is forbidden — it
+/// re-creates interceptors and breaks the shared auth/refresh state.
 final class RestClientDio extends RestClientBase {
-  RestClientDio({required this.baseUrl, this.dio}) : super(baseUrl: baseUrl);
-  final Dio? dio;
+  RestClientDio({required this.baseUrl, required Dio dio})
+    : _dio = dio,
+      super(baseUrl: baseUrl);
+
+  final Dio _dio;
   final String baseUrl;
 
   /// Send [Dio] request
@@ -32,18 +37,8 @@ final class RestClientDio extends RestClientBase {
         contentType: 'application/json',
         responseType: ResponseType.json,
       );
-      final dioClient = (dio != null)
-          ? DioClient(
-              baseUrl: dio!.options.baseUrl,
-              initialDio: dio,
-              interceptor: dio!.interceptors.first,
-            ).dio
-          : DioClient(
-              baseUrl: baseUrl,
-              interceptor: const DioInterceptor(),
-            ).dio;
 
-      final response = await dioClient.request<T>(
+      final response = await _dio.request<T>(
         uri.toString(),
         data: body,
         options: options,
@@ -65,9 +60,19 @@ final class RestClientDio extends RestClientBase {
     } on RestClientException {
       rethrow;
     } on DioException catch (e) {
-      if (e.type == DioExceptionType.connectionError ||
+      if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.sendTimeout ||
           e.type == DioExceptionType.receiveTimeout) {
+        Error.throwWithStackTrace(
+          RequestTimeoutException(
+            message: e.message ?? 'Request timed out',
+            statusCode: e.response?.statusCode,
+            cause: e,
+          ),
+          e.stackTrace,
+        );
+      }
+      if (e.type == DioExceptionType.connectionError) {
         Error.throwWithStackTrace(
           ConnectionException(
             message: e.message ?? 'Connection exception',

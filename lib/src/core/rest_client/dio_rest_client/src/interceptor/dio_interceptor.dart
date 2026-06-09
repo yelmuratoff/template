@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:base_starter/src/common/constants/exception_keys.dart';
-import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:dio/dio.dart';
 
@@ -58,7 +57,6 @@ class DioInterceptor extends Interceptor {
     } else if (response.statusCode == 400) {
       return handler.reject(errorMessage(ExceptionKeys.badRequest));
     } else if (response.statusCode == 418 || response.statusCode == 401) {
-      await AppUtils.exit();
       if (response.data.toString().contains('Invalid login details')) {
         return handler.reject(errorMessage(ExceptionKeys.passwordNotCorrect));
       } else {

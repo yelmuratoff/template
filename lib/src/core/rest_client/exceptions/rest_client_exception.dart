@@ -84,6 +84,28 @@ final class WrongResponseTypeException extends RestClientException {
   List<Object?> get props => [message, statusCode];
 }
 
+/// [RequestTimeoutException] is thrown when the request exceeded a
+/// connect/send/receive timeout — distinct from [ConnectionException] so the
+/// repository layer can map it to the app-level timeout type.
+final class RequestTimeoutException extends RestClientException {
+  const RequestTimeoutException({
+    required super.message,
+    super.statusCode,
+    super.cause,
+  });
+
+  @override
+  String toString() =>
+      '''RequestTimeoutException('
+      'message: $message,'
+      'statusCode: $statusCode,'
+      'cause: $cause'
+      ')''';
+
+  @override
+  List<Object?> get props => [message, statusCode, cause];
+}
+
 /// [ConnectionException] is thrown if there are problems with the connection
 
 final class ConnectionException extends RestClientException {

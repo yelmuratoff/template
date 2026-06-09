@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
-import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
 
@@ -31,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         await dependencies.appConfig.setFirstRun(value: false);
       }
 
-      final tokenPair = await SecureStorageManager.getToken();
+      final tokenPair = await dependencies.tokenStorage.read();
       await Future<void>.delayed(const Duration(seconds: 1));
       if (!context.mounted) return;
 

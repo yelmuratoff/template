@@ -4,7 +4,10 @@ import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
+import 'package:base_starter/src/core/rest_client/auth/auth_interceptor.dart';
+import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
 import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
+import 'package:base_starter/src/core/rest_client/dio_rest_client/src/dio_client.dart';
 import 'package:base_starter/src/core/rest_client/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/user/user_cubit.dart';
@@ -12,26 +15,35 @@ import 'package:base_starter/src/features/initialization/factories/repositories_
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
+import 'package:base_starter/src/features/initialization/models/repositories.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
 import 'package:base_starter/src/features/settings/data/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
 import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ispect/ispect.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The full result of dependency composition: the app-wide container plus
+/// the repositories the BLoCs inside it were built from.
+typedef ComposedDependencies = ({
+  DependenciesContainer dependencies,
+  RepositoriesContainer repositories,
+});
+
 /// Factory that creates an instance of [DependenciesContainer].
-class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
+class DependenciesFactory implements AsyncFactory<ComposedDependencies> {
   const DependenciesFactory({required this.hook});
 
   @override
   final InitializationHook hook;
 
   @override
-  Future<DependenciesContainer> create() async {
+  Future<ComposedDependencies> create() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     final packageInfo = await PackageInfo.fromPlatform();
 
@@ -46,15 +58,21 @@ class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
       sharedPreferences: sharedPreferences,
     ).create();
 
-    final restClient = await RestClientFactory(hook: hook).create();
+    final network = await RestClientFactory(
+      hook: hook,
+      secureStorage: secureStorage,
+    ).create();
 
     final repositories = await RepositoriesFactory(
-      restClient: restClient,
+      restClient: network.restClient,
       sharedPreferences: sharedPreferences,
       hook: hook,
     ).create();
 
-    final authBloc = AuthBloc(repository: repositories.authRepository);
+    final authBloc = AuthBloc(
+      repository: repositories.authRepository,
+      tokenStorage: network.tokenStorage,
+    );
 
     final userCubit = UserCubit(
       remoteUserRepository: repositories.remoteUserRepository,
@@ -66,36 +84,66 @@ class DependenciesFactory implements AsyncFactory<DependenciesContainer> {
       hook: hook,
     ).create();
 
-    return DependenciesContainer(
+    final dependencies = DependenciesContainer(
       packageInfo: packageInfo,
       sharedPreferences: sharedPreferences,
       secureStorage: secureStorage,
+      tokenStorage: network.tokenStorage,
       appConfig: appConfig,
-      restClient: restClient,
+      restClient: network.restClient,
       authBloc: authBloc,
       userCubit: userCubit,
       settingsBloc: settingsBloc,
     );
+
+    return (dependencies: dependencies, repositories: repositories);
   }
 
   @override
   String get name => 'Dependencies';
 }
 
-/// A factory that creates an instance of [RestClientBase].
-class RestClientFactory implements AsyncFactory<RestClientBase> {
-  const RestClientFactory({required this.hook});
+/// Builds the networking stack exactly once: token storage, the bare
+/// refresh/retry [Dio], the authorized [Dio] and the [RestClientBase] on top.
+class RestClientFactory
+    implements
+        AsyncFactory<({RestClientBase restClient, TokenStorage tokenStorage})> {
+  const RestClientFactory({required this.hook, required this.secureStorage});
 
   @override
   final InitializationHook hook;
 
+  final SecureStorage secureStorage;
+
   @override
-  Future<RestClientBase> create() async {
-    final restClient = RestClientDio(baseUrl: AppConstants.baseUrl);
+  Future<({RestClientBase restClient, TokenStorage tokenStorage})>
+  create() async {
+    final tokenStorage = SecureTokenStorage(storage: secureStorage);
+
+    final plainDio = Dio(
+      BaseOptions(
+        baseUrl: AppConstants.baseUrl,
+        connectTimeout: const Duration(seconds: 15),
+        sendTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+      ),
+    );
+
+    final dioClient = DioClient(
+      baseUrl: AppConstants.baseUrl,
+      interceptors: [
+        AuthInterceptor(tokenStorage: tokenStorage, plainDio: plainDio),
+      ],
+    );
+
+    final restClient = RestClientDio(
+      baseUrl: AppConstants.baseUrl,
+      dio: dioClient.dio,
+    );
 
     hook.onInitializing?.call(name);
 
-    return restClient;
+    return (restClient: restClient, tokenStorage: tokenStorage);
   }
 
   @override

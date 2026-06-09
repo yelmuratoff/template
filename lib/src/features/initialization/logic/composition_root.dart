@@ -1,5 +1,4 @@
 import 'package:base_starter/src/features/initialization/factories/dependencies_factories.dart';
-import 'package:base_starter/src/features/initialization/factories/repositories_factories.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:base_starter/src/features/initialization/models/repositories.dart';
@@ -25,20 +24,12 @@ final class CompositionRoot {
 
     ISpect.logger.info('🌀 Initializing dependencies...');
 
-    // initialize dependencies
-    final dependencies = await DependenciesFactory(hook: hook).create();
-
-    // initialize repositories
-    final repositories = await RepositoriesFactory(
-      hook: hook,
-      restClient: dependencies.restClient,
-      sharedPreferences: dependencies.sharedPreferences,
-    ).create();
+    final composed = await DependenciesFactory(hook: hook).create();
 
     stopwatch.stop();
     final result = CompositionResult(
-      dependencies: dependencies,
-      repositories: repositories,
+      dependencies: composed.dependencies,
+      repositories: composed.repositories,
       millisecondsSpent: stopwatch.elapsedMilliseconds,
     );
 

@@ -154,7 +154,6 @@ class _View extends StatelessWidget {
     required this.themeMode,
     required this.lightTheme,
     required this.darkTheme,
-    required this.locale,
     this.retryInitialization,
   });
   final Object error;
@@ -163,7 +162,6 @@ class _View extends StatelessWidget {
   final ThemeMode themeMode;
   final ThemeData lightTheme;
   final ThemeData darkTheme;
-  final Locale locale;
 
   @override
   Widget build(BuildContext context) => Scaffold(

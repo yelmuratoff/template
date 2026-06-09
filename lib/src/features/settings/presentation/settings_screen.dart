@@ -116,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 dimension: 100,
                 child: Theme(
                   data: context.theme.copyWith(
-                    cardTheme: CardTheme(
+                    cardTheme: CardThemeData(
                       color: context.theme.colorScheme.primaryContainer,
                       elevation: 0,
                     ),

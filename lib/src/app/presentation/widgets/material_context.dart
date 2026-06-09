@@ -2,7 +2,7 @@ import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/router/guards/tab.dart';
 import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/presentation/screens/error_router_screen.dart';
-import 'package:base_starter/src/common/presentation/widgets/dialogs/toaster/flutter_toast.dart';
+import 'package:base_starter/src/common/presentation/widgets/toaster/flutter_toast.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';

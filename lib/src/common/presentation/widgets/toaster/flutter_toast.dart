@@ -77,28 +77,21 @@ class FToast {
       _entry = null;
       return;
     }
-    if (context == null) {
+    final toastContext = context;
+    if (toastContext == null) {
       /// Need to clear queue
       removeQueuedCustomToasts();
       throw 'Error: Context is null, Please call init(context) before showing toast.';
     }
 
-    /// To prevent exception "Looking up a deactivated widget's ancestor is unsafe."
-    /// which can be thrown if context was unmounted (e.g. screen with given context was popped)
-    /// TODO: revert this change when envoirment will be Flutter >= 3.7.0
-    // if (context?.mounted != true) {
-    //   if (kDebugMode) {
-    //     print(
-    //         'FToast: Context was unmuted, can not show ${_overlayQueue.length} toast.');
-    //   }
+    if (!toastContext.mounted) {
+      removeQueuedCustomToasts();
+      return;
+    }
 
-    //   /// Need to clear queue
-    //   removeQueuedCustomToasts();
-    //   return; // Or maybe thrown error too
-    // }
     OverlayState? overlay;
     try {
-      overlay = Overlay.of(context!);
+      overlay = Overlay.of(toastContext);
     } catch (err) {
       removeQueuedCustomToasts();
       throw """Error: Overlay is null. 
@@ -161,7 +154,8 @@ class FToast {
     bool ignorePointer = false,
     bool isDismissible = false,
   }) {
-    if (context == null) {
+    final toastContext = context;
+    if (toastContext == null) {
       throw 'Error: Context is null, Please call init(context) before showing toast.';
     }
     final Widget newChild = _ToastStateFul(
@@ -176,7 +170,7 @@ class FToast {
     /// If open will ignore the gravity bottom and change it to center
     var effectiveGravity = gravity;
     if (effectiveGravity == ToastGravity.BOTTOM &&
-        MediaQuery.of(context!).viewInsets.bottom != 0) {
+        MediaQuery.viewInsetsOf(toastContext).bottom != 0) {
       effectiveGravity = ToastGravity.CENTER;
     }
 
@@ -231,7 +225,7 @@ class FToast {
         return Positioned(bottom: 50, right: 24, child: child);
       case ToastGravity.SNACKBAR:
         return Positioned(
-          bottom: MediaQuery.of(context!).viewInsets.bottom,
+          bottom: MediaQuery.viewInsetsOf(context!).bottom,
           left: 0,
           right: 0,
           child: child,
@@ -265,11 +259,6 @@ class _FToastHolder extends StatefulWidget {
 
 class _FToastHolderState extends State<_FToastHolder> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) => Overlay(
     initialEntries: <OverlayEntry>[
       OverlayEntry(
@@ -286,7 +275,7 @@ class _FToastHolderState extends State<_FToastHolder> {
 /// each [OverlayEntry] and [Duration] for every toast user
 /// triggered
 class _ToastEntry {
-  _ToastEntry({
+  const _ToastEntry({
     required this.entry,
     required this.duration,
     required this.fadeDuration,
@@ -314,19 +303,19 @@ class _ToastStateFul extends StatefulWidget {
   final VoidCallback? onDismiss;
 
   @override
-  ToastStateFulState createState() => ToastStateFulState();
+  State<_ToastStateFul> createState() => _ToastStateFulState();
 }
 
 /// State for [_ToastStateFul]
-class ToastStateFulState extends State<_ToastStateFul>
+class _ToastStateFulState extends State<_ToastStateFul>
     with SingleTickerProviderStateMixin {
   /// Start the showing animations for the toast
-  void showIt() {
+  void _show() {
     _animationController!.forward();
   }
 
   /// Start the hidding animations for the toast
-  void hideIt() {
+  void _hide() {
     _animationController!.reverse();
     _timer?.cancel();
   }
@@ -339,6 +328,7 @@ class ToastStateFulState extends State<_ToastStateFul>
 
   @override
   void initState() {
+    super.initState();
     _animationController = AnimationController(
       vsync: this,
       duration: widget.fadeDuration,
@@ -347,10 +337,9 @@ class ToastStateFulState extends State<_ToastStateFul>
       parent: _animationController!,
       curve: Curves.easeIn,
     );
-    super.initState();
 
-    showIt();
-    _timer = Timer(widget.duration, hideIt);
+    _show();
+    _timer = Timer(widget.duration, _hide);
   }
 
   @override

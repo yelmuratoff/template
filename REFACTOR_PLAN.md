@@ -18,15 +18,15 @@ fvm flutter test      # green
 ## ✅ Фаза 1 — pubspec: обновление + чистка (DONE, commit `e303e1d`)
 
 - [x] **Flutter SDK 3.35.7 → 3.44.1** (Dart 3.12.1) через `fvm use 3.44.1` — без этого новые версии пакетов не резолвились (старый SDK капал analyzer 7.x, build_runner 2.7 и т.д.)
-- [x] `flutter pub upgrade --major-versions` — обновлено 73 пакета (dio, drift 2.33, flutter_secure_storage 10.x, envied 1.3, build_runner 2.15, custom_lint 0.8, flutter_gen_runner 5.14)
-- [x] `mocktail`, `custom_lint` → dev_dependencies; добавлены dev: `checks`, `fake_async`
+- [x] `flutter pub upgrade --major-versions` — обновлено 73 пакета (dio, drift 2.33, flutter_secure_storage 10.x, envied 1.3, build_runner 2.15, flutter_gen_runner 5.14)
+- [x] `pyramid_lint` 3.0 переведён на новый analyzer plugin API; добавлены dev: `checks`, `fake_async`
 - [x] Добавлен `clock` в dependencies (использовался транзитивно), `meta` запинен `^1.16.0`
 - [x] Удалены: `analyzer: any`, `rxdart`, `stream_transform`, `group_button`, `pure`, `platform_info`, `share_plus`, `device_info_plus`
 - [x] Кодген перегенерирован; `l10n.yaml` без deprecated `synthetic-package`
 - [x] Починки под новый тулчейн: 5 удалённых lint-правил из analysis_options; `parameter_assignments` в material_context и двух vendored flutter_toast; deprecated `encryptedSharedPreferences`
 - [x] Чекпоинт + коммит
 
-Отклонения: ispect остался `5.2.0-dev.19` (осознанный пин автора); pyramid_lint `2.4.0`, не 3.0.0 (3.x требует analyzer_plugin ^0.14.9, несовместим с custom_lint 0.8).
+Отклонения: ispect остался `5.2.0-dev.19` (осознанный пин автора).
 
 ## ✅ Фаза 2 — исключения, secure storage, root error handlers (DONE, commit `81c8ca1`)
 
@@ -110,7 +110,7 @@ fvm flutter test      # green
 |---|---|
 | yx_navigation ~1 месяц, доки по табам/outlet неполные | Spike в Фазе 6 Шаг 0; fallback-лестница вплоть до отмены фазы |
 | ispect dev-пин vs новый dio | Обновлены вместе в Фазе 1 — analyze чистый ✅ |
-| pyramid_lint vs новый analyzer | Взят 2.4.0 (максимум совместимого) ✅ |
+| pyramid_lint vs новый analyzer | Миграция на pyramid_lint 3.0 и новый analyzer plugin API ✅ |
 | flutter_secure_storage v10 breaking | Изолировано интерфейсом `SecureStorage` (1 файл) ✅ |
 | Ложный логаут на флаки-сети | Revoke только на 401/403 от refresh; покрыто тестом ✅ |
 

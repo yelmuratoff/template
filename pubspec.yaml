@@ -35,9 +35,9 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.24
 
   # Logging
-  ispect: ^4.0.3
-  ispectify_dio: 4.0.3
-  ispectify_bloc: 4.0.3
+  ispect: 5.2.0-dev.19
+  ispectify_dio: 5.2.0-dev.19
+  ispectify_bloc: 5.2.0-dev.19
 
   # Utils
   pure: ^0.3.0

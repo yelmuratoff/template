@@ -56,8 +56,20 @@ final class NavigationManager {
   final UserBloc _userBloc;
   late final StreamSubscription<AuthState> _authSubscription;
 
-  /// Swaps the top-level destination to the authenticated shell.
-  void openRoot() => stateManager.setChildren([AppRoutes.root.toNode()]);
+  /// Swaps the top-level destination to the authenticated shell, opening on the
+  /// home tab.
+  ///
+  /// The indexed stack treats its last child as the active tab; tab seeding
+  /// appends in declaration order, leaving the profile tab last (active), so
+  /// move the home tab to the end after the shell is seeded.
+  void openRoot() => stateManager
+    ..setChildren([AppRoutes.root.toNode()])
+    ..mutate(
+      (root) => root
+        ..findByRoute(
+          AppRoutes.root,
+        )?.addOrMoveToEnd(AppRoutes.homeTab.toNode()),
+    );
 
   /// Swaps the top-level destination to the sign-in screen.
   void openAuth() => stateManager.setChildren([AppRoutes.auth.toNode()]);

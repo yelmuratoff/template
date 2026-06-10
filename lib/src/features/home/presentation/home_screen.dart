@@ -53,6 +53,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const Gap(24),
                 // TEMP: yx_navigation pop repro — remove after verifying.
+                // Both buttons must open fine; closing must assert
+                // "RouteNode cannot be popped" in debug.
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
@@ -60,6 +62,26 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   child: const Text('Repro: push imperative route'),
+                ),
+                const Gap(8),
+                ElevatedButton(
+                  onPressed: () => showDialog<void>(
+                    context: context,
+                    builder: (dialogContext) => AlertDialog(
+                      title: const Text('Repro dialog'),
+                      content: const Text(
+                        'Tap "Close" or the barrier — both call '
+                        'Navigator.pop and should get stuck.',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(dialogContext).pop(),
+                          child: const Text('Close'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  child: const Text('Repro: showDialog'),
                 ),
               ],
             ),

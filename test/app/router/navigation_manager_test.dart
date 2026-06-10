@@ -65,6 +65,17 @@ void main() {
       },
     );
 
+    test('authenticated state opens with the home tab active', () async {
+      when(() => authBloc.state).thenReturn(const AuthenticatedAuthState());
+
+      states.add(const AuthenticatedAuthState());
+      await _settle();
+
+      final rootNode = manager.stateManager.state.findByRoute(AppRoutes.root);
+      check(rootNode).isNotNull();
+      check(rootNode!.children.last.route).equals(AppRoutes.homeTab);
+    });
+
     test('authenticated state triggers the user fetch', () async {
       when(() => authBloc.state).thenReturn(const AuthenticatedAuthState());
 

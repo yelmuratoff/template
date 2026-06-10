@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:ispect/ispect.dart';
 import 'package:yx_navigation_flutter/yx_navigation_flutter.dart';
+import 'package:yx_navigation_flutter/yx_navigation_flutter_compatibility.dart';
 
 /// [MaterialContext] is an entry point to the material context.
 /// This widget sets locales, themes and routing.
@@ -48,48 +49,51 @@ class _MaterialContextState extends State<MaterialContext> {
     final theme = SettingsScope.themeOf(context).theme;
     final locale = SettingsScope.localeOf(context).locale;
 
-    return MaterialApp.router(
-      title: F.title,
-      onGenerateTitle: (_) => F.title,
-      debugShowCheckedModeBanner: false,
-      theme: theme.lightTheme,
-      darkTheme: theme.darkTheme,
-      themeMode: theme.mode,
+    return NavigationConfigProvider(
+      navigatorOverrides: const NavigatorCompatibilityOverrides(),
+      child: MaterialApp.router(
+        title: F.title,
+        onGenerateTitle: (_) => F.title,
+        debugShowCheckedModeBanner: false,
+        theme: theme.lightTheme,
+        darkTheme: theme.darkTheme,
+        themeMode: theme.mode,
 
-      localizationsDelegates: [
-        ...L10n.delegates,
-        ...ISpectLocalizations.delegate(),
-      ],
-      supportedLocales: L10n.supportedLocales,
-      locale: locale,
-      routerConfig: _routerConfig,
-      builder: (context, child) {
-        var wrapped = EasyLoading.init()(context, child);
+        localizationsDelegates: [
+          ...L10n.delegates,
+          ...ISpectLocalizations.delegate(),
+        ],
+        supportedLocales: L10n.supportedLocales,
+        locale: locale,
+        routerConfig: _routerConfig,
+        builder: (context, child) {
+          var wrapped = EasyLoading.init()(context, child);
 
-        wrapped = MediaQuery.withClampedTextScaling(
-          minScaleFactor: 1,
-          maxScaleFactor: 2,
-          child: wrapped,
-        );
-
-        wrapped = ISpectBuilder.wrap(
-          options: ISpectOptions(locale: locale, observer: _observer),
-          isISpectEnabled: F.isDev,
-          child: wrapped,
-        );
-
-        wrapped = FToastBuilder()(context, wrapped);
-
-        if (F.isDev) {
-          wrapped = Banner(
-            message: F.name,
-            location: BannerLocation.topStart,
-            color: Colors.red,
+          wrapped = MediaQuery.withClampedTextScaling(
+            minScaleFactor: 1,
+            maxScaleFactor: 2,
             child: wrapped,
           );
-        }
-        return wrapped;
-      },
+
+          wrapped = ISpectBuilder.wrap(
+            options: ISpectOptions(locale: locale, observer: _observer),
+            isISpectEnabled: F.isDev,
+            child: wrapped,
+          );
+
+          wrapped = FToastBuilder()(context, wrapped);
+
+          if (F.isDev) {
+            wrapped = Banner(
+              message: F.name,
+              location: BannerLocation.topStart,
+              color: Colors.red,
+              child: wrapped,
+            );
+          }
+          return wrapped;
+        },
+      ),
     );
   }
 }

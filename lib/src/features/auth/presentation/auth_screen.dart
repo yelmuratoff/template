@@ -23,10 +23,9 @@ class _AuthScreenState extends State<AuthScreen> {
     body: BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async => switch (state) {
         InitialAuthState() => null,
+        UnauthenticatedAuthState() => null,
         AuthenticatedAuthState() => {
           AppDialogs.dismiss(),
-          // TODO(Yelaman): Save user to UserManager
-          //context.dependencies.userCubit.write(user: state.user),
           context.octopus.setState(
             (state) => state
               ..clear()

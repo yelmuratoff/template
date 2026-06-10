@@ -34,7 +34,7 @@ final class AppRunner {
             child: MultiBlocProvider(
               providers: [
                 BlocProvider.value(value: result.dependencies.authBloc),
-                BlocProvider.value(value: result.dependencies.userCubit),
+                BlocProvider.value(value: result.dependencies.userBloc),
               ],
               child: App(result: result),
             ),

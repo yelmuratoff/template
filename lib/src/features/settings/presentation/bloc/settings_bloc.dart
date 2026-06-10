@@ -1,10 +1,13 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
+import 'package:base_starter/src/core/exceptions/app_exception.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/domain/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/domain/theme/theme_repository.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ispect/ispect.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
@@ -17,12 +20,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   }) : _localeRepo = localeRepository,
        _themeRepo = themeRepository,
        super(initialState) {
-    on<SettingsEvent>(
-      (event, emit) => switch (event) {
-        final UpdateThemeSettingsEvent e => _updateTheme(e, emit),
-        final UpdateLocaleSettingsEvent e => _updateLocale(e, emit),
-      },
-    );
+    on<UpdateThemeSettingsEvent>(_updateTheme, transformer: sequential());
+    on<UpdateLocaleSettingsEvent>(_updateLocale, transformer: sequential());
   }
   final ILocaleRepository _localeRepo;
   final IThemeRepository _themeRepo;
@@ -39,15 +38,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       await _themeRepo.setTheme(event.appTheme);
 
       emit(IdleSettingsState(appTheme: event.appTheme, locale: state.locale));
-    } catch (e) {
-      emit(
-        ErrorSettingsState(
-          appTheme: state.appTheme,
-          locale: state.locale,
-          cause: e,
-        ),
-      );
-      rethrow;
+    } on AppException catch (e, st) {
+      _emitError(e, st, emit);
+    } on Object catch (e, st) {
+      _emitError(e, st, emit);
+      onError(e, st);
     }
   }
 
@@ -64,15 +59,26 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       L10n.load(event.locale);
 
       emit(IdleSettingsState(appTheme: state.appTheme, locale: event.locale));
-    } catch (e) {
-      emit(
-        ErrorSettingsState(
-          appTheme: state.appTheme,
-          locale: state.locale,
-          cause: e,
-        ),
-      );
-      rethrow;
+    } on AppException catch (e, st) {
+      _emitError(e, st, emit);
+    } on Object catch (e, st) {
+      _emitError(e, st, emit);
+      onError(e, st);
     }
+  }
+
+  void _emitError(Object e, StackTrace st, Emitter<SettingsState> emit) {
+    ISpect.logger.handle(
+      exception: e,
+      stackTrace: st,
+      message: 'Failed to update settings.',
+    );
+    emit(
+      ErrorSettingsState(
+        appTheme: state.appTheme,
+        locale: state.locale,
+        cause: e,
+      ),
+    );
   }
 }

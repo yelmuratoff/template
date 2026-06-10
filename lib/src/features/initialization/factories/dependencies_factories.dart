@@ -10,7 +10,7 @@ import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.da
 import 'package:base_starter/src/core/rest_client/dio_rest_client/src/dio_client.dart';
 import 'package:base_starter/src/core/rest_client/dio_rest_client/src/rest_client_dio.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
-import 'package:base_starter/src/features/auth/presentation/bloc/user/user_cubit.dart';
+import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';
 import 'package:base_starter/src/features/initialization/factories/repositories_factories.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
@@ -74,7 +74,7 @@ class DependenciesFactory implements AsyncFactory<ComposedDependencies> {
       tokenStorage: network.tokenStorage,
     );
 
-    final userCubit = UserCubit(userRepository: repositories.userRepository);
+    final userBloc = UserBloc(userRepository: repositories.userRepository);
 
     final settingsBloc = await SettingsBlocFactory(
       sharedPreferences: sharedPreferences,
@@ -89,7 +89,7 @@ class DependenciesFactory implements AsyncFactory<ComposedDependencies> {
       appConfig: appConfig,
       restClient: network.restClient,
       authBloc: authBloc,
-      userCubit: userCubit,
+      userBloc: userBloc,
       settingsBloc: settingsBloc,
     );
 

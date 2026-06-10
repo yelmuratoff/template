@@ -90,16 +90,16 @@ fvm flutter test      # green
 - [x] Тесты: `test/features/auth/auth_repository_test.dart` (каждый подтип RestClientException → ожидаемый AppException + сохранённый cause/statusCode/stack; CustomBackendException пролетает as-is; success-пути), `test/features/auth/user_repository_test.dart` (cached без remote; fresh обновляет кэш; transport-fail → AppException без записи кэша; corrupt cache → CacheException; clear делегирует). Добавлены в `base_test.dart`. Итого 78 тестов зелёные
 - [x] Чекпоинт + коммит
 
-## ⬜ Фаза 5 — BLoC
+## ✅ Фаза 5 — BLoC (DONE)
 
-- [ ] `AuthBloc` (part-файлы `auth_event.dart`/`auth_state.dart` остаются): states → `Initial/Loading/Authenticated/Unauthenticated/Error(message, cause)`; вместо одного `on<AuthEvent>` — per-event регистрации с трансформерами: `LoginAuthEvent`+`LogoutAuthEvent` → `droppable()` (спам кнопки), `CheckStatusAuthEvent` (новое, заменяет чтение токена в splash) → `restartable()`
-- [ ] Revoke-цепочка: в конструкторе подписка на `tokenStorage.changes`; `null` при Authenticated → внутреннее `_TokenRevokedAuthEvent` → emit `Unauthenticated`; отписка в `close()`. Это замыкает E2E: 401 на refresh → interceptor clear → stream null → AuthBloc → Unauthenticated → (Фаза 6) гард уводит на /auth
-- [ ] Двухуровневый catch в каждом handler: `on AppException catch (e, st)` → Error state (известные); `on Object catch (e, st)` → Error state + `onError(e, st)` (баги — в observer)
-- [ ] `UserCubit` → `UserBloc`: sealed states `Initial/Loading/Loaded(user)/Error`, событие `FetchUserEvent` с `restartable()`, cached-then-fresh через слитый `UserRepository`
-- [ ] `SettingsBloc`: форма states остаётся (соответствует правилам — multi-step с сохранением payload); добавить двухуровневый catch + `ISpect.logger.handle` (сейчас голый rethrow после emit), явный `sequential()` на каждом событии
-- [ ] Wiring: `dependencies.dart` (`userCubit` → `userBloc`), фабрики, `material_context.dart:56` (`blocRead<UserCubit>().get()`), `auth_screen.dart` (listener arms)
-- [ ] Тесты: `auth_bloc_test.dart` (login success → [Loading, Authenticated] + save вызван; NetworkException → [Loading, Error]; два быстрых Login → репозиторий 1 раз (droppable); changes emits null → Unauthenticated), `user_bloc_test.dart` (порядок cached→fresh; fresh-fail при наличии кэша), `settings_bloc_test.dart` (theme/locale success + failure)
-- [ ] Чекпоинт + коммит
+- [x] `AuthBloc` (part-файлы `auth_event.dart`/`auth_state.dart` остаются): states → `Initial/Loading/Authenticated/Unauthenticated/Error(message, cause)`; вместо одного `on<AuthEvent>` — per-event регистрации с трансформерами: `LoginAuthEvent`+`LogoutAuthEvent` → `droppable()` (спам кнопки), `CheckStatusAuthEvent` (новое, читает `tokenStorage.read()`; splash переключится в Фазе 6) → `restartable()`. `GetCurrentUserAuthEvent` удалён (мёртвый)
+- [x] Revoke-цепочка: в конструкторе подписка на `tokenStorage.changes`; `null` при Authenticated → внутреннее `_TokenRevokedAuthEvent` → emit `Unauthenticated`; отписка в `close()`. Замыкает E2E: 401 на refresh → interceptor clear → stream null → AuthBloc → Unauthenticated → (Фаза 6) гард уводит на /auth
+- [x] Двухуровневый catch в каждом handler: `on AppException catch (e, st)` → Error state (через общий `handleException`, лог один раз); `on Object catch (e, st)` → Error state + `onError(e, st)` (баги — в observer)
+- [x] `UserCubit` → `UserBloc`: sealed states `Initial/Loading/Loaded(user)/Error`, события `FetchUserEvent` (`restartable()`, cached-then-fresh через слитый `UserRepository`) и `ClearUserEvent` (`sequential()`, замена `clear()` из кубита); `user_cubit.dart` удалён
+- [x] `SettingsBloc`: форма states остаётся (multi-step с сохранением payload); per-event `sequential()`, двухуровневый catch + `ISpect.logger.handle` через `_emitError` (голый `rethrow` после emit убран)
+- [x] Wiring: `dependencies.dart` (`userCubit` → `userBloc` + toString), обе фабрики, `app_runner.dart` (`BlocProvider.value`), `material_context.dart` (`blocRead<UserBloc>().add(FetchUserEvent())`), `auth_screen.dart` (arm `UnauthenticatedAuthState`, мёртвый комментарий про `userCubit.write` убран)
+- [x] Тесты: `auth_bloc_test.dart` (login → [Loading, Authenticated] + save; NetworkException → [Loading, Error] + save не вызван; два быстрых Login → репозиторий 1 раз; CheckStatus с/без токена; revoke через `changes`→null → Unauthenticated; logout → clear + Unauthenticated), `user_bloc_test.dart` (cached→fresh; fresh-fail при кэше → Loaded+Error; без кэша Loading→Loaded; clear), `settings_bloc_test.dart` (theme/locale success + CacheException failure). Итого 116 тестов зелёные
+- [x] Чекпоинт + коммит
 
 ## ⬜ Фаза 6 — роутер: Octopus → yx_navigation 1.0.0
 

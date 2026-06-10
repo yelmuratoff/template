@@ -6,7 +6,7 @@ import 'package:base_starter/src/common/presentation/widgets/toaster/flutter_toa
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
-import 'package:base_starter/src/features/auth/presentation/bloc/user/user_cubit.dart';
+import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -48,7 +48,7 @@ class _MaterialContextState extends State<MaterialContext> {
 
     ISpect.logger.route('📜 Routes:\n${AppUtils.formatPrettyJson(routes)}');
 
-    context.blocRead<UserCubit>().get();
+    context.blocRead<UserBloc>().add(const FetchUserEvent());
   }
 
   @override

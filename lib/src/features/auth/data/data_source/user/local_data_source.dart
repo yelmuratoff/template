@@ -20,15 +20,7 @@ final class UserLocalDataSource extends PreferencesDao
       final encoded = user == null ? null : json.encode(user.toMap());
       await _currentUserEntry.setIfNullRemove(encoded);
     } on Object catch (e, st) {
-      ISpect.logger.handle(
-        exception: e,
-        stackTrace: st,
-        message: 'Write local user failed.',
-      );
-      Error.throwWithStackTrace(
-        CacheException(message: 'Failed to write local user.', cause: e),
-        st,
-      );
+      _throwCacheException('write', e, st);
     }
   }
 
@@ -37,18 +29,9 @@ final class UserLocalDataSource extends PreferencesDao
     try {
       final source = _currentUserEntry.read();
       if (source == null) return null;
-      final jsonObject = json.decode(source) as Map<String, dynamic>;
-      return UserDTO.fromMap(jsonObject);
+      return UserDTO.fromMap(json.decode(source) as Map<String, dynamic>);
     } on Object catch (e, st) {
-      ISpect.logger.handle(
-        exception: e,
-        stackTrace: st,
-        message: 'Get local user failed.',
-      );
-      Error.throwWithStackTrace(
-        CacheException(message: 'Failed to read local user.', cause: e),
-        st,
-      );
+      _throwCacheException('read', e, st);
     }
   }
 
@@ -57,15 +40,13 @@ final class UserLocalDataSource extends PreferencesDao
     try {
       await _currentUserEntry.remove();
     } on Object catch (e, st) {
-      ISpect.logger.handle(
-        exception: e,
-        stackTrace: st,
-        message: 'Clear local user failed.',
-      );
-      Error.throwWithStackTrace(
-        CacheException(message: 'Failed to clear local user.', cause: e),
-        st,
-      );
+      _throwCacheException('clear', e, st);
     }
+  }
+
+  Never _throwCacheException(String operation, Object e, StackTrace st) {
+    final message = 'Local user $operation failed';
+    ISpect.logger.handle(exception: e, stackTrace: st, message: message);
+    Error.throwWithStackTrace(CacheException(message: message, cause: e), st);
   }
 }

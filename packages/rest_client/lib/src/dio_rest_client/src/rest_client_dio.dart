@@ -1,6 +1,6 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
-import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
+import 'package:rest_client/src/dio_rest_client/rest_client.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 

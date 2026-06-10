@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:database/database.dart';
 import 'package:core/core.dart';
-import 'package:base_starter/src/core/rest_client/token_pair.dart';
+import 'package:database/database.dart';
 import 'package:ispect/ispect.dart';
+import 'package:rest_client/src/token_pair.dart';
+
+/// Secure-storage key under which the session [TokenPair] is persisted.
+const String _tokenStorageKey = 'tokenPair';
 
 /// Persistent storage for the session [TokenPair].
 ///
@@ -44,7 +46,7 @@ final class SecureTokenStorage implements TokenStorage {
 
   @override
   Future<TokenPair?> read() async {
-    final raw = await _storage.read(key: Preferences.tokenPair);
+    final raw = await _storage.read(key: _tokenStorageKey);
     if (raw == null) return null;
     try {
       return TokenPair.fromJson(json.decode(raw) as Map<String, dynamic>);
@@ -64,7 +66,7 @@ final class SecureTokenStorage implements TokenStorage {
   @override
   Future<void> save(TokenPair pair) async {
     await _storage.write(
-      key: Preferences.tokenPair,
+      key: _tokenStorageKey,
       value: json.encode(pair.toJson()),
     );
     _changes.add(pair);
@@ -72,7 +74,7 @@ final class SecureTokenStorage implements TokenStorage {
 
   @override
   Future<void> clear() async {
-    await _storage.delete(key: Preferences.tokenPair);
+    await _storage.delete(key: _tokenStorageKey);
     _changes.add(null);
   }
 

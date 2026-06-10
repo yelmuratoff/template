@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:base_starter/src/common/utils/extensions/bloc_extension.dart';
-import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
-import 'package:base_starter/src/core/rest_client/token_pair.dart';
+import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';

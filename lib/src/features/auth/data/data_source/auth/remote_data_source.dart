@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
-import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
-import 'package:base_starter/src/core/rest_client/token_pair.dart';
+import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/auth/auth_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 

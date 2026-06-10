@@ -1,4 +1,4 @@
-import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception_mapper.dart';
+import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';

@@ -12,6 +12,7 @@ workspace:
   - packages/ui
   - packages/core
   - packages/database
+  - packages/rest_client
 
 dependencies:
   # Flutter SDK
@@ -52,6 +53,8 @@ dependencies:
     path: packages/core
   database:
     path: packages/database
+  rest_client:
+    path: packages/rest_client
 
   # UI
   ui:

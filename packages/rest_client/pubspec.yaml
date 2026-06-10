@@ -1,0 +1,27 @@
+name: rest_client
+description: HTTP networking — Dio-backed REST client, auth interceptor, token storage.
+version: 0.0.1
+publish_to: "none"
+resolution: workspace
+
+environment:
+  sdk: ">=3.12.0 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core:
+    path: ../core
+  database:
+    path: ../database
+  dio: ^5.6.0
+  ispect: 5.2.0-dev.19
+  ispectify_dio: 5.2.0-dev.19
+  meta: ^1.16.0
+  equatable: ^2.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0

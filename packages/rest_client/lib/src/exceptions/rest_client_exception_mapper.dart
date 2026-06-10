@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
+import 'package:rest_client/src/exceptions/rest_client_exception.dart';
 
 extension RestClientExceptionMapper on RestClientException {
   /// Translates a transport-level [RestClientException] into a

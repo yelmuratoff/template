@@ -1,598 +1,231 @@
-# Project Structure Documentation
+# Architecture & Project Structure
 
-## 📂 Root Directory
+`base_starter` is a single-module Flutter starter built on **feature-first
+Clean Architecture**. Each feature owns its layers and the dependency direction
+is strict:
 
-- **`.env`**
-  - **📝 Description**: Configuration file for environment variables.
-  - **🔧 Purpose**: Stores key-value pairs for setting up environment-specific variables for the application.
+```
+presentation  →  (domain)  →  data
+```
 
-- **`.env.example`**
-  - **📝 Description**: Example configuration file for environment variables.
-  - **🔧 Purpose**: Provides a template to help developers create their own `.env` file with appropriate environment variables.
+- **presentation** — widgets, BLoCs/Cubits, scopes. Depends on domain contracts
+  (when present) or directly on data repositories.
+- **domain** *(optional)* — pure repository interfaces / models, zero Flutter
+  imports. Added only where a real contract earns the boundary.
+- **data** — DTOs, datasources, repositories; all I/O lives here.
 
-- **`.fvmrc`**
-  - **📝 Description**: Configuration file for Flutter Version Management (FVM).
-  - **🔧 Purpose**: Specifies the Flutter version to use for this project, ensuring consistency across different development environments.
+State management is **BLoC** (async/business flows) with `Cubit`/`ValueNotifier`
+reserved for ephemeral UI state. Dependency injection is **Pure DI** — a single
+hand-rolled composition root, no service locator.
 
-- **`.gitignore`**
-  - **📝 Description**: Specifies files and directories that should be ignored by Git.
-  - **🔧 Purpose**: Prevents unnecessary files and directories from being tracked in version control.
+---
 
-- **`.gitignore-dev`**
-  - **📝 Description**: Development-specific gitignore settings.
-  - **🔧 Purpose**: Contains additional patterns to ignore during development to keep the repository clean.
+## 🚀 Startup flow
 
-- **`CONTRIBUTING.md`**
-  - **📝 Description**: Guidelines for contributing to the project.
-  - **🔧 Purpose**: Provides instructions on how to contribute to the project, including coding standards and submission procedures.
+```
+main.dart / main_dev.dart
+  └─ bootstrap.dart            ISpect.run + _installRootErrorHandlers
+       └─ AppRunner.initializeAndRun        lib/src/app/logic/app_runner.dart
+            └─ CompositionRoot.compose()     builds the whole object graph once
+                 └─ runApp(App(result))
+                      └─ DependenciesScope    context.dependencies
+                           └─ SettingsScope   theme + locale
+                                └─ AuthScope        auth state + actions
+                                     └─ UserScope    user state + actions
+                                          └─ MaterialContext  MaterialApp.router
+```
 
-- **`LICENSE`**
-  - **📝 Description**: The license under which the project is distributed.
-  - **🔧 Purpose**: Details the legal terms and conditions for using, copying, and distributing the software.
+Root error handlers (`FlutterError.onError`, `PlatformDispatcher.onError`,
+`runZonedGuarded`) all funnel to `ISpect.logger.handle`, so nothing uncaught is
+lost — even in a release build where ISpect itself is compiled out.
 
-- **`README.md`**
-  - **📝 Description**: Project description and usage instructions.
-  - **🔧 Purpose**: Offers an overview of the project, installation instructions, usage examples, and other relevant information.
+---
 
-- **`Taskfile.yaml`**
-  - **📝 Description**: Configuration file for task automation.
-  - **🔧 Purpose**: Defines tasks that can be run using a task runner for build, clean, and other automation processes.
+## 📂 `lib/src` layout
 
-- **`analysis_options.yaml`**
-  - **📝 Description**: Configuration for Dart analysis options.
-  - **🔧 Purpose**: Specifies linter rules and analysis options to maintain code quality and consistency.
+```
+app/                         app shell — wiring, no feature logic
+  logic/app_runner.dart      defer first frame, compose, runApp
+  model/app_theme.dart       AppTheme (seed + mode → light/dark ThemeData)
+  presentation/
+    screens/root_screen.dart RootView: bottom-nav over the tab IndexedStack
+    widgets/app.dart          mounts the scope stack
+    widgets/material_context.dart  MaterialApp.router + theme/locale/observers
+  router/                    yx_navigation (see Routing below)
+    app_router_schema.dart   route → widget map
+    navigation_manager.dart  owns RouteNodeStateManager + guard pipeline
+    routes/app_routes.dart   YxRoute constants
+    guards/                  auth_guard.dart, tab_init_guard.dart
 
-- **`devtools_options.yaml`**
-  - **📝 Description**: Configuration for development tools.
-  - **🔧 Purpose**: Contains settings for various development tools used in the project.
+common/                      cross-feature, non-platform helpers
+  constants/                 app colours, constants, preference keys
+  presentation/              shared widgets (buttons, dialogs, toaster, …)
+  services/file/             file service (interface + impl)
+  utils/extensions/          context_extension, bloc_extension, …
+  utils/mixins/              scope_mixin
 
-- **`flutter_native_splash.yaml`**
-  - **📝 Description**: Configuration for native splash screen.
-  - **🔧 Purpose**: Defines settings for generating a native splash screen for the application.
+core/                        platform & infrastructure
+  database/                  Drift (app_database) + preferences + secure storage
+    src/preferences/secure_storage.dart   SecureStorage + FlutterSecureStorageWrapper
+    src/preferences/preferences_dao.dart  typed SharedPreferences wrapper
+  env/                       envied-generated environment config
+  exceptions/                sealed AppException family (see Exceptions below)
+  l10n/                      gen-l10n setup + ARB (en/ru/kk)
+  rest_client/               RestClient wrapper, Dio stack, token refresh
 
-- **`l10n.yaml`**
-  - **📝 Description**: Localization configuration.
-  - **🔧 Purpose**: Contains settings for localization and internationalization of the app.
+features/<feature>/          presentation / (domain) / data per feature
+  auth/                      login, session restore, user, scopes
+  home/                      counter demo (Cubit)
+  initialization/            CompositionRoot, containers, splash
+  profile/                   profile screen (consumes Auth/User scopes)
+  settings/                  theme + locale (SettingsScope / SettingsBloc)
+```
 
-- **`pubspec.yaml`**
-  - **📝 Description**: Dart and Flutter package dependencies.
-  - **🔧 Purpose**: Lists the dependencies, dev_dependencies, and other metadata for the Flutter project.
+---
 
-## 📁 .fvm Directory
+## 🧩 Dependency Injection
 
-- **`fvm_config.json`**
-  - **📝 Description**: FVM configuration settings.
-  - **🔧 Purpose**: Manages Flutter SDK versions for the project.
+Everything is created **once** in `CompositionRoot.compose()`
+(`features/initialization/logic/composition_root.dart`) and returned as a
+`CompositionResult` (`dependencies` + `repositories` + build time). No factory
+hierarchy — the graph is small and built linearly by private async methods
+(`_createConfig` / `_createRestClient` / `_createRepositories` /
+`_createSettingsBloc`).
 
-## 📁 .github Directory
+| Container | Holds |
+|---|---|
+| `DependenciesContainer` | `sharedPreferences`, `secureStorage`, `tokenStorage`, `appConfig`, `packageInfo`, `restClient`, `authBloc`, `userBloc`, `settingsBloc`, `navigationManager` |
+| `RepositoriesContainer` | `authRepository`, `userRepository` |
 
-- **`dependabot.yml`**
-  - **📝 Description**: Configuration for Dependabot.
-  - **🔧 Purpose**: Specifies settings for automated dependency updates.
+The result is exposed through `InheritedWidget`s, not static accessors:
 
-- **`ISSUE_TEMPLATE`**
-  - **📝 Description**: Contains issue templates.
-  - **🔧 Purpose**: Provides structured templates for reporting bugs and requesting features.
+- `context.dependencies` → `DependenciesContainer` (via `DependenciesScope`).
+- Feature **scopes** wrap a single bloc and expose reactive reads + actions
+  through a typed controller, so screens never touch the bloc directly:
+  - `SettingsScope.of/themeOf/localeOf` — theme & locale.
+  - `AuthScope.of(context)` → `AuthController {state, login, logout}`;
+    `AuthScope.stateOf(context)` for reactive state.
+  - `UserScope.of(context)` → `UserController {state, user, fetch}`;
+    `UserScope.userOf(context)` for the loaded `UserDTO?`.
 
-  - **`bug_report.md`**
-    - **📝 Description**: Template for reporting bugs.
-    - **🔧 Purpose**: Provides a form for users to report bugs with sections for description, steps to reproduce, and expected behavior.
+Each scope is injected its bloc from `result.dependencies` at mount time
+(mirroring `SettingsScope`), which keeps it unit-testable with a fake bloc.
 
-  - **`feature_request.md`**
-    - **📝 Description**: Template for requesting features.
-    - **🔧 Purpose**: Provides a form for users to request new features with sections for description and use case.
+> **No service locator.** `GetIt`/`riverpod`/`getx` are intentionally absent —
+> dependencies are explicit, compile-time-checked, and constructor-injected.
 
-- **`workflows`**
-  - **📝 Description**: GitHub Actions workflows.
-  - **🔧 Purpose**: Defines CI/CD workflows to automate processes like code analysis, testing, and deployment.
+---
 
-  - **`code-analysis.yml`**
-    - **📝 Description**: Workflow for code analysis.
-    - **🔧 Purpose**: Defines steps for automated code analysis and linting using GitHub Actions.
+## 🗺️ Routing — `yx_navigation`
 
-## 📁 .vscode Directory
+Navigation uses `yx_navigation` + `yx_navigation_flutter` (Pure-Dart routing
+core with a Flutter binding), following a **business-logic-first** approach: the
+`RouteNodeStateManager` is injected and the guard pipeline is built from routes,
+so navigation runs without a `BuildContext`.
 
-- **`extensions.json`**
-  - **📝 Description**: Recommended VS Code extensions.
-  - **🔧 Purpose**: Lists extensions recommended for development in this project to enhance the development experience.
+- `app_router_schema.dart` — `AppRouterSchema` maps each `AppRoutes` entry to its
+  widget: `splash`, `auth`, and an `indexedStack(root)` with `homeTab`/
+  `profileTab` outlets. Declaration-level guards are ignored when a state manager
+  is injected — guards live in the manager.
+- `navigation_manager.dart` — `NavigationManager` owns the root
+  `RouteNodeStateManager` and its guards (`RedirectRouteNodeGuard` + `AuthGuard`
+  + `NavigateToIndexedStackNodeGuard` + two `TabInitGuard`s). It subscribes to
+  `AuthBloc.stream`:
+  - `Authenticated` → `openRoot()` + dispatch `FetchUserEvent`.
+  - `Unauthenticated` → `openAuth()`.
+  - `openSettings()` pushes settings onto the profile tab.
+- `auth_guard.dart` — redirects unauthenticated users to `auth` and keeps
+  authenticated users off `auth`; `isAuthenticated` is a closure over
+  `AuthBloc.state`, so the guard is a pure-Dart unit.
 
-- **`launch.json`**
-  - **📝 Description**: VS Code launch configurations.
-  - **🔧 Purpose**: Defines debug configurations for launching the application in different environments.
+`MaterialContext` builds the schema with the injected state manager and wires
+`ISpectNavigatorObserver`. `NavigatorCompatibilityOverrides` is layered over
+`MaterialApp.router` so imperative `showDialog`/picker `push`/`pop` pairs work.
 
-- **`settings.json`**
-  - **📝 Description**: VS Code settings.
-  - **🔧 Purpose**: Contains workspace settings for VS Code to standardize the development environment.
+---
 
-- **`tasks.json`**
-  - **📝 Description**: VS Code tasks configuration.
-  - **🔧 Purpose**: Defines tasks that can be run within VS Code to streamline development workflows.
+## ⚠️ Exception scheme
 
-## 📁 assets Directory
+A single sealed family in `core/exceptions/` is the app-wide error vocabulary:
 
-- **`images`**
-  - **📝 Description**: Directory for image assets.
-  - **🔧 Purpose**: Stores image files used in the application, such as icons and splash screens.
+```
+sealed AppException implements Exception
+ ├─ NetworkException        (message, cause, statusCode)
+ ├─ TimeoutAppException
+ ├─ ParseException
+ ├─ CacheException          storage/secure-storage/db failure
+ ├─ BackendException        (message, error payload, statusCode)
+ ├─ RevokedTokenException   session died
+ ├─ InvalidDataException
+ └─ NoDataException
+```
 
-  - **`launcher.png`**
-    - **📝 Description**: Example image asset.
-    - **🔧 Purpose**: Icon image used in the application.
+**Where errors are mapped:**
 
-  - **`splash.png`**
-    - **📝 Description**: Splash screen image.
-    - **🔧 Purpose**: Image displayed as the splash screen when the app is launched.
+- Datasources throw typed exceptions (parse failures →
+  `Error.throwWithStackTrace(ParseException)`); transport exceptions pass
+  through.
+- The transport layer has its own `RestClientException` family
+  (`core/rest_client/exceptions/`). Repositories translate it to an
+  `AppException` at their boundary via the total `RestClientExceptionMapper`
+  (`toAppException()`), so transport types never leak past `core/rest_client`.
+- BLoCs handle errors through one helper, `guard`
+  (`common/utils/extensions/bloc_extension.dart`), with two tiers:
+  - `on AppException` → emit an error state (the repository mapper is total, so
+    this is one family).
+  - `on Object` → emit an error state **and** report to the bloc observer (it is
+    a programming bug). `handleException` normalizes `(message, cause,
+    statusCode)` and logs each failure exactly once via `ISpect.logger.handle`.
 
-## 📁 bash Directory
+> Session restore is the deliberate exception: `_onCheckStatus` does **not** go
+> through `guard`. An unreadable token store recovers to `Unauthenticated`
+> (logged) rather than an error state the splash router would ignore — so a
+> corrupt secure store never strands the user on the splash screen.
 
-- **`adb_connect.sh`**
-  - **📝 Description**: Script for connecting ADB.
-  - **🔧 Purpose**: Shell script to connect Android Debug Bridge for testing on Android devices.
+---
 
-- **`build_apk.sh`**
-  - **📝 Description**: Script for building APK.
-  - **🔧 Purpose**: Shell script to build an Android APK from the Flutter project.
+## 🔐 Networking & token refresh
 
-- **`build_appbundle.sh`**
-  - **📝 Description**: Script for building app bundle.
-  - **🔧 Purpose**: Shell script to build an Android app bundle (AAB) for distribution.
+`core/rest_client/` owns all HTTP details behind one wrapper.
 
-- **`build_ipa.sh`**
-  - **📝 Description**: Script for building IPA.
-  - **🔧 Purpose**: Shell script to build an iOS IPA for distribution.
+- A single `RestClientBase` (`RestClientDio`) wraps a ready-made `Dio` (base URL,
+  headers, decoding, backend-error parsing, `Isolate.run` for large JSON).
+  Datasources depend on the wrapper, never on raw `Dio`. Explicit timeouts live
+  in `BaseOptions` (connect 15s, send/receive 30s).
+- Tokens live **only** in `flutter_secure_storage`, behind `SecureTokenStorage`
+  (`auth/token_storage.dart`), which exposes a broadcast `Stream<TokenPair?>
+  changes` — the single "session changed / died" channel.
+- `AuthInterceptor extends QueuedInterceptor` (`auth/auth_interceptor.dart`)
+  holds the refresh invariants:
+  - N concurrent `401`s trigger **exactly one** refresh (the queue serializes
+    error handling; dedup compares the stale access token from the failed
+    request's header against current storage — "already rotated" → reuse).
+  - Exactly **one** retry per original request, replayed through a bare `Dio`
+    (`plainDio`) so there is structurally no interceptor recursion.
+  - `401/403` from the refresh endpoint, or a `401` on the retry, →
+    `tokenStorage.clear()` (stream emits `null`) + `RevokedTokenException`.
+  - A transport error during refresh is rethrown **without** revoking — flaky
+    networks must not sign the user out.
 
-- **`build_web.sh`**
-  - **📝 Description**: Script for building web application.
-  - **🔧 Purpose**: Shell script to build a web version of the Flutter app.
+**Revoke loop (no navigation from the data layer):** interceptor clears the
+store → `changes` emits `null` → `AuthBloc` (subscribed in its constructor)
+emits `Unauthenticated` → `NavigationManager` routes to `auth`.
 
-- **`create_app.sh`**
-  - **📝 Description**: Script for creating a new application.
-  - **🔧 Purpose**: Shell script to scaffold a new Flutter application with necessary configurations.
+---
 
-- **`firebase_init.sh`**
-  - **📝 Description**: Script for initializing Firebase.
-  - **🔧 Purpose**: Shell script to set up Firebase services for the Flutter project.
+## 🧱 Conventions worth knowing
 
-- **`setup.sh`**
-  - **📝 Description**: Script for setting up the environment.
-  - **🔧 Purpose**: Shell script to set up the development environment for the project.
-
-- **`setup_ios.sh`**
-  - **📝 Description**: Script for setting up iOS environment.
-  - **🔧 Purpose**: Shell script to configure the iOS development environment.
-
-## 📁 lib Directory
-
-- **`bootstrap.dart`**
-  - **📝 Description**: Bootstrap file for initializing the application.
-  - **🔧 Purpose**: Contains code for setting up initial configurations and running the app.
-
-- **`main.dart`**
-  - **📝 Description**: Entry point of the Flutter application.
-  - **🔧 Purpose**: Main function to run the Flutter app.
-
-- **`src`**
-  - **📝 Description**: Contains application source code.
-  - **🔧 Purpose**: Directory structure for organizing the application's core logic, common utilities, and feature-specific code.
-
-  ### 📂 src Directory Structure
-
-  - **`app`**
-    - **📝 Description**: Application-specific logic and UI components.
-    - **Subdirectories and Files**:
-      - **`logic`**
-        - **`app_runner.dart`**
-          - **📝 Description**: Logic for running the application.
-          - **🔧 Purpose**: Contains the code to start the application.
-      - **`model`**
-        - **`app_theme.dart`**
-          - **📝 Description**: Application theme model.
-          - **🔧 Purpose**: Defines theme data and configurations.
-      - **`router`**
-        - **`extras.dart`**
-          - **📝 Description**: Extra routing configurations.
-          - **🔧 Purpose**: Additional configurations for routing.
-        - **`observer.dart`**
-          - **📝 Description**: Routing observer.
-          - **🔧 Purpose**: Contains code for observing route changes.
-        - **`router.dart`**
-          - **📝 Description**: Main router configuration.
-          - **🔧 Purpose**: Defines the application's routing logic.
-      - **`ui`**
-        - **`page`**
-          - **`root.dart`**
-            - **📝 Description**: Root page.
-            - **🔧 Purpose**: Code for the root page of the application.
-        - **`view`**
-          - **`root_view.dart`**
-            - **📝 Description**: View for the root page.
-            - **🔧 Purpose**: UI code for displaying the root page.
-      - **`widget`**
-        - **`app.dart`**
-          - **📝 Description**: Main application widget.
-          - **🔧 Purpose**: Contains the main app widget code.
-        - **`material_context.dart`**
-          - **📝 Description**: Material context widget.
-          - **🔧 Purpose**: Provides material design context to the app.
-
-  - **`common`**
-    - **📝 Description**: Common functionalities and utilities.
-    - **Subdirectories and Files**:
-      - **`configs`**
-        - **`constants.dart`**
-          - **📝 Description**: Application constants.
-          - **🔧 Purpose**: Defines constant values used throughout the app.
-        - **`env`**
-          - **`env.dart`**
-            - **📝 Description**: Environment configurations.
-            - **🔧 Purpose**: Contains environment-specific settings.
-        - **`style`**
-          - **`themes`**
-            - **`dark.dart`**
-              - **📝 Description**: Dark theme.
-              - **🔧 Purpose**: Defines the dark theme for the app.
-            - **`light.dart`**
-              - **📝 Description**: Light theme.
-              - **🔧 Purpose**: Defines the light theme for the app.
-      - **`di`**
-        - **`dependencies_scope.dart`**
-          - **📝 Description**: Scope for dependencies.
-          - **🔧 Purpose**: Manages the scope of dependencies within the application.
-        - **`containers`**
-          - **`dependencies.dart`**
-            - **📝 Description**: Dependency definitions.
-            - **🔧 Purpose**: Lists and configures the dependencies used throughout the application.
-          - **`repositories.dart`**
-            - **📝 Description**: Repository definitions.
-            - **🔧 Purpose**: Lists and configures the repositories for data access.
-      - **`services`**
-        - **`app_config.dart`**
-          - **📝 Description**: Application configuration service.
-          - **🔧 Purpose**: Manages app configuration settings.
-        - **`page_model.dart`**
-          - **📝 Description**: Page model service.
-          - **🔧 Purpose**: Provides data models for pages in the application.
-        - **`router_service.dart`**
-          - **📝 Description**: Router service.
-          - **🔧 Purpose**: Manages navigation and routing within the application.
-        - **`file`**
-          - **`file_service.dart`**
-            - **📝 Description**: File service implementation.
-            - **🔧 Purpose**: Provides methods for file operations.
-          - **`src`**
-            - **`base_service.dart`**
-              - **📝 Description**: Base file service.
-              - **🔧 Purpose**: Base class for file services, providing common functionalities.
-            - **`file_service.dart`**
-              - **📝 Description**: File service implementation.
-              - **🔧 Purpose**: Implements file service functionalities using the base service.
-      - **`ui`**
-        - **`pages`**
-          - **`error_router_page.dart`**
-            - **📝 Description**: Error router page.
-            - **🔧 Purpose**: UI for displaying error messages related to routing.
-          - **`restart_wrapper.dart`**
-            - **📝 Description**: Restart wrapper page.
-            - **🔧 Purpose**: Provides functionality to restart the application.
-          - **`view`**
-            - **`error_page_view.dart`**
-              - **📝 Description**: Error page view.
-              - **🔧 Purpose**: UI for displaying error messages.
-        - **`widgets`**
-          - **`outlined_textfield.dart`**
-            - **📝 Description**: Outlined text field widget.
-            - **🔧 Purpose**: Custom styled text field widget.
-          - **`builder`**
-            - **`column_builder.dart`**
-              - **📝 Description**: Column builder widget.
-              - **🔧 Purpose**: Provides a builder for column-based layouts.
-            - **`performance_builder.dart`**
-              - **📝 Description**: Performance builder widget.
-              - **🔧 Purpose**: Optimizes widget rebuilds for performance.
-            - **`row_builder.dart`**
-              - **📝 Description**: Row builder widget.
-              - **🔧 Purpose**: Provides a builder for row-based layouts.
-            - **`wrap_builder.dart`**
-              - **📝 Description**: Wrap builder widget.
-              - **🔧 Purpose**: Provides a builder for wrap-based layouts.
-          - **`dialogs`**
-            - **`app_dialogs.dart`**
-              - **📝 Description**: Application dialogs.
-              - **🔧 Purpose**: Provides various dialog widgets.
-            - **`change_environment.dart`**
-              - **📝 Description**: Change environment dialog.
-              - **🔧 Purpose**: Dialog for changing the application environment.
-            - **`toaster.dart`**
-              - **📝 Description**: Toaster widget.
-              - **🔧 Purpose**: Widget for displaying toast messages.
-            - **`toaster_body.dart`**
-              - **📝 Description**: Toaster body widget.
-              - **🔧 Purpose**: Body of the toaster widget.
-          - **`other`**
-            - **`nil.dart`**
-              - **📝 Description**: Nil widget.
-              - **🔧 Purpose**: Represents a nil widget for placeholder purposes.
-      - **`utils`**
-        - **`preferences_dao.dart`**
-          - **📝 Description**: Preferences Data Access Object.
-          - **🔧 Purpose**: Manages the app's preferences storage.
-        - **`utils.dart`**
-          - **📝 Description**: General utility functions.
-          - **🔧 Purpose**: Provides helper functions used throughout the app.
-        - **`extensions`**
-          - **`colors_extension.dart`**
-            - **📝 Description**: Color extensions.
-            - **🔧 Purpose**: Provides additional functionalities for color manipulation.
-          - **`context_extension.dart`**
-            - **📝 Description**: Context extensions.
-            - **🔧 Purpose**: Adds utility methods to the BuildContext.
-          - **`string_extension.dart`**
-            - **📝 Description**: String extensions.
-            - **🔧 Purpose**: Adds utility methods to the String class.
-          - **`talker.dart`**
-            - **📝 Description**: Talker extensions.
-            - **🔧 Purpose**: Extensions for logging and debugging.
-        - **`mixins`**
-          - **`scope_mixin.dart`**
-            - **📝 Description**: Scope mixin.
-            - **🔧 Purpose**: Mixin for managing widget lifecycle and scope.
-
-  - **`core`**
-    - **📝 Description**: Core functionalities.
-    - **Subdirectories and Files**:
-      - **`localization`**
-        - **`localization.dart`**
-          - **📝 Description**: Localization setup.
-          - **🔧 Purpose**: Manages localization and internationalization settings.
-        - **`translations`**
-          - **`intl_en.arb`**
-            - **📝 Description**: English translations.
-            - **🔧 Purpose**: Contains English language translations.
-          - **`intl_ru.arb`**
-            - **📝 Description**: Russian translations.
-            - **🔧 Purpose**: Contains Russian language translations.
-      - **`resource`**
-        - **`data`**
-          - **`database`**
-            - **`database.dart`**
-              - **📝 Description**: Database setup.
-              - **🔧 Purpose**: Configures the app's database.
-            - **`src`**
-              - **`app_database.dart`**
-                - **📝 Description**: Application database.
-                - **🔧 Purpose**: Defines the app's database schema.
-              - **`secure_storage.dart`**
-                - **📝 Description**: Secure storage.
-                - **🔧 Purpose**: Provides methods for secure data storage.
-              - **`executor`**
-                - **`db_executor.dart`**
-                  - **📝 Description**: Database executor.
-                  - **🔧 Purpose**: Manages database operations.
-                - **`db_executor_native.dart`**
-                  - **📝 Description**: Native database executor.
-                  - **🔧 Purpose**: Executor for native platforms.
-                - **`db_executor_stub.dart`**
-                  - **📝 Description**: Stub database executor.
-                  - **🔧 Purpose**: Executor for testing.
-                - **`db_executor_web.dart`**
-                  - **📝 Description**: Web database executor.
-                  - **🔧 Purpose**: Executor for web platforms.
-              - **`tables`**
-                - **`todos_table.dart`**
-                  - **📝 Description**: Todos table.
-                  - **🔧 Purpose**: Defines the schema for a todos table.
-          - **`dio_rest_client`**
-            - **`rest_client.dart`**
-              - **📝 Description**: REST client setup.
-              - **🔧 Purpose**: Configures the REST client for API calls.
-            - **`src`**
-              - **`rest_client_dio.dart`**
-                - **📝 Description**: Dio REST client.
-                - **🔧 Purpose**: Implements REST client using Dio.
-              - **`auth`**
-                - **`auth_interceptor.dart`**
-                  - **📝 Description**: Auth interceptor.
-                  - **🔧 Purpose**: Intercepts requests to add authentication headers.
-                - **`refresh_client.dart`**
-                  - **📝 Description**: Refresh client.
-                  - **🔧 Purpose**: Manages token refresh operations.
-                - **`token_storage.dart`**
-                  - **📝 Description**: Token storage.
-                  - **🔧 Purpose**: Manages storage of authentication tokens.
-              - **`exception`**
-                - **`network_exception.dart`**
-                  - **📝 Description**: Network exception.
-                  - **🔧 Purpose**: Defines network-related exceptions.
-              - **`interceptor`**
-                - **`dio_interceptor.dart`**
-                  - **📝 Description**: Dio interceptor.
-                  - **🔧 Purpose**: Manages request and response interception using Dio.
-          - **`api`**
-            - **`rest_client.dart`**
-              - **📝 Description**: API REST client.
-              - **🔧 Purpose**: Configures the REST client for API endpoints.
-            - **`rest_client_base.dart`**
-              - **📝 Description**: Base REST client.
-              - **🔧 Purpose**: Provides base implementation for REST clients.
-          - **`token`**
-            - **`token_pair.dart`**
-              - **📝 Description**: Token pair.
-              - **🔧 Purpose**: Defines a pair of access and refresh tokens.
-      - **`domain`**
-        - **📝 Description**: Domain layer of the application.
-
-## 📁 features Directory
-
-- **`auth`**
-  - **📝 Description**: Authentication feature.
-  - **Subdirectories and Files**:
-    - **`bloc`**
-      - **`auth_bloc.dart`**
-        - **📝 Description**: Auth BLoC.
-        - **🔧 Purpose**: Manages the state of authentication.
-      - **`auth_event.dart`**
-        - **📝 Description**: Auth events.
-        - **🔧 Purpose**: Defines events for the authentication BLoC.
-      - **`auth_state.dart`**
-        - **📝 Description**: Auth states.
-        - **🔧 Purpose**: Defines states for the authentication BLoC.
-    - **`resource`**
-      - **`data`**
-        - **`data_auth_repository.dart`**
-          - **📝 Description**: Data authentication repository.
-          - **🔧 Purpose**: Provides data access for authentication.
-      - **`domain`**
-        - **`models`**
-          - **`user_model.dart`**
-            - **📝 Description**: User model.
-            - **🔧 Purpose**: Defines the user data model.
-        - **`repositories`**
-          - **`auth_repository.dart`**
-            - **📝 Description**: Authentication repository.
-            - **🔧 Purpose**: Interface for authentication operations.
-        - **`use_cases`**
-          - **`auth_use_cases.dart`**
-            - **📝 Description**: Authentication use cases.
-            - **🔧 Purpose**: Implements business logic for authentication.
-    - **`ui`**
-      - **`page`**
-        - **`auth.dart`**
-          - **📝 Description**: Authentication page.
-          - **🔧 Purpose**: UI for the authentication page.
-        - **`view`**
-          - **`auth_view.dart`**
-            - **📝 Description**: Authentication view.
-            - **🔧 Purpose**: UI components for the authentication page.
-
-- **`home`**
-  - **📝 Description**: Home feature.
-  - **Subdirectories and Files**:
-    - **`state`**
-      - **`counter.dart`**
-        - **📝 Description**: Counter state management.
-        - **🔧 Purpose**: Manages the state of a counter feature within the home module.
-    - **`ui`**
-      - **`page`**
-        - **`home.dart`**
-          - **📝 Description**: Home page.
-          - **🔧 Purpose**: Main UI for the home page of the application.
-        - **`view`**
-          - **`home_view.dart`**
-            - **📝 Description**: Home view.
-            - **🔧 Purpose**: UI components for displaying the home page.
-
-- **`initialization`**
-  - **📝 Description**: Initialization feature.
-  - **Subdirectories and Files**:
-    - **`logic`**
-      - **`base_config.dart`**
-        - **📝 Description**: Base configuration for initialization.
-        - **🔧 Purpose**: Provides base settings and configurations for the initialization process.
-      - **`initialization_factory.dart`**
-        - **📝 Description**: Initialization factory.
-        - **🔧 Purpose**: Factory class for creating initialization processes.
-      - **`initialization_processor.dart`**
-        - **📝 Description**: Initialization processor.
-        - **🔧 Purpose**: Handles the processing of initialization steps.
-      - **`initialization_steps.dart`**
-        - **📝 Description**: Initialization steps.
-        - **🔧 Purpose**: Defines the steps involved in initializing the application.
-    - **`model`**
-      - **`dependencies.dart`**
-        - **📝 Description**: Initialization dependencies.
-        - **🔧 Purpose**: Manages dependencies required during initialization.
-      - **`environment.dart`**
-        - **📝 Description**: Initialization environment.
-        - **🔧 Purpose**: Defines the environment settings for initialization.
-      - **`environment_store.dart`**
-        - **📝 Description**: Environment store.
-        - **🔧 Purpose**: Stores the environment configuration for initialization.
-      - **`initialization_hook.dart`**
-        - **📝 Description**: Initialization hook.
-        - **🔧 Purpose**: Provides hooks for custom initialization processes.
-      - **`initialization_progress.dart`**
-        - **📝 Description**: Initialization progress.
-        - **🔧 Purpose**: Tracks the progress of the initialization process.
-    - **`ui`**
-      - **`page`**
-        - **`splash.dart`**
-          - **📝 Description**: Splash page.
-          - **🔧 Purpose**: UI for the splash screen displayed during initialization.
-        - **`view`**
-          - **`splash_view.dart`**
-            - **📝 Description**: Splash view.
-            - **🔧 Purpose**: UI components for the splash screen.
-      - **`widget`**
-        - **`environment_scope.dart`**
-          - **📝 Description**: Environment scope widget.
-          - **🔧 Purpose**: Provides scope for environment configuration in the UI.
-        - **`initialization_failed_app.dart`**
-          - **📝 Description**: Initialization failed widget.
-          - **🔧 Purpose**: UI displayed when initialization fails.
-
-- **`settings`**
-  - **📝 Description**: Settings feature.
-  - **Subdirectories and Files**:
-    - **`bloc`**
-      - **`settings_bloc.dart`**
-        - **📝 Description**: Settings BLoC.
-        - **🔧 Purpose**: Manages the state of application settings.
-      - **`settings_event.dart`**
-        - **📝 Description**: Settings events.
-        - **🔧 Purpose**: Defines events for the settings BLoC.
-      - **`settings_state.dart`**
-        - **📝 Description**: Settings states.
-        - **🔧 Purpose**: Defines states for the settings BLoC.
-    - **`data`**
-      - **`configs`**
-        - **`app_configs_data_source.dart`**
-          - **📝 Description**: App configurations data source.
-          - **🔧 Purpose**: Provides data access for application configurations.
-        - **`app_configs_repository.dart`**
-          - **📝 Description**: App configurations repository.
-          - **🔧 Purpose**: Manages access to application configuration data.
-      - **`locale`**
-        - **`locale_datasource.dart`**
-          - **📝 Description**: Locale data source.
-          - **🔧 Purpose**: Provides data access for localization settings.
-        - **`locale_repository.dart`**
-          - **📝 Description**: Locale repository.
-          - **🔧 Purpose**: Manages access to localization data.
-      - **`theme`**
-        - **`theme_datasource.dart`**
-          - **📝 Description**: Theme data source.
-          - **🔧 Purpose**: Provides data access for theme settings.
-        - **`theme_mode_codec.dart`**
-          - **📝 Description**: Theme mode codec.
-          - **🔧 Purpose**: Encodes and decodes theme mode settings.
-        - **`theme_repository.dart`**
-          - **📝 Description**: Theme repository.
-          - **🔧 Purpose**: Manages access to theme data.
-    - **`state`**
-      - **`app_config.dart`**
-        - **📝 Description**: Application configuration state.
-        - **🔧 Purpose**: Manages the state of application configurations.
-    - **`ui`**
-      - **`settings.dart`**
-        - **📝 Description**: Settings page.
-        - **🔧 Purpose**: Main UI for the settings page of the application.
-      - **`controller`**
-        - **`settings_scope.dart`**
-          - **📝 Description**: Settings scope controller.
-          - **🔧 Purpose**: Manages the scope and state of settings within the UI.
-      - **`view`**
-        - **`settings_view.dart`**
-          - **📝 Description**: Settings view.
-          - **🔧 Purpose**: UI components for displaying and managing settings.
-      - **`widget`**
-        - **`language_card.dart`**
-          - **📝 Description**: Language card widget.
-          - **🔧 Purpose**: UI widget for selecting application language.
-        - **`language_selector.dart`**
-          - **📝 Description**: Language selector widget.
-          - **🔧 Purpose**: Dropdown for selecting application language.
-        - **`theme_card.dart`**
-          - **📝 Description**: Theme card widget.
-          - **🔧 Purpose**: UI widget for selecting application theme.
-        - **`theme_selector.dart`**
-          - **📝 Description**: Theme selector widget.
-          - **🔧 Purpose**: Dropdown for selecting application theme.
+- **Models & BLoCs are hand-written** (no `freezed`). DTOs use the Dart Data
+  Class Generator (`fromMap`/`toMap`); states/events are sealed hierarchies with
+  exhaustive `switch`.
+- **Constructors use private named parameters** (Dart 3.10+):
+  `AuthBloc({required this.repository, required this._tokenStorage})`.
+- **Persistence:** Drift (queryable/offline), `TypedPreferencesDao` over
+  SharedPreferences (small flags), `flutter_secure_storage` (secrets only).
+- **Localization:** gen-l10n; ARB files in `core/l10n/translations` (en/ru/kk).
+  All user-visible strings come from `L10n.current`.
+- **Theming:** centralized `ThemeData` via `ColorScheme.fromSeed`; design tokens
+  through the `packages/ui` `ThemeExtension`s (`IColors`, `ITextStyles`).
+- **Logging:** everything through `ISpect.logger`; caught exceptions via
+  `ISpect.logger.handle(exception, stackTrace, message)`.
+- **Flavors:** `prod` (`lib/main.dart`) and `dev` (`lib/main_dev.dart`).

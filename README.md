@@ -18,8 +18,8 @@ To utilize this repository, simply click on the "Use this template" button. The 
 
 - 🔥 Included in the ISpect tool
    - ✅ Draggable button for route to ISpect page, manage Inspector tools
-   - ✅ Localizations: ru, en. (I will add more translations in the future.)
-   - ✅ Talker logger implementation: BLoC, Dio, Routing, Provider
+   - ✅ Localizations: en, ru, kk. (I will add more translations in the future.)
+   - ✅ Talker logger implementation: BLoC, Dio, Routing
    - ✅ Feedback builder
    - ✅ Debug tools
    - ✅ Cache manager
@@ -32,13 +32,33 @@ To utilize this repository, simply click on the "Use this template" button. The 
 - 🐛 Bug reporting, error tracking, and analytical capabilities
 - 😌 Themes and additional amenities
 
+## Architecture
+
+Feature-first Clean Architecture (`presentation → (domain) → data`) with
+**BLoC** state management and **Pure DI** (a single composition root, no service
+locator). The full picture — startup flow, directory layout, DI graph, routing,
+the exception scheme, and token refresh — lives in
+[`docs/STRUCTURE.md`](docs/STRUCTURE.md). At a glance:
+
+- **DI** — everything is built once in `CompositionRoot.compose()` and exposed
+  through `InheritedWidget` scopes; read it with `context.dependencies` and the
+  feature scopes (`AuthScope`, `UserScope`, `SettingsScope`).
+- **Routing** — `yx_navigation`; `NavigationManager` owns the route state and
+  guard pipeline and reacts to `AuthBloc` (no navigation from the data layer).
+- **Errors** — one sealed `AppException` family; the transport
+  `RestClientException` is mapped to it at the repository boundary, and BLoCs
+  funnel failures through a single `guard` helper.
+- **Auth** — tokens live only in `flutter_secure_storage`; a `QueuedInterceptor`
+  serializes refresh (one refresh for N concurrent 401s, one retry) and a
+  broadcast `TokenStorage.changes` stream drives the revoke loop.
+
 ## How to guides
 
 ### .env config
 1. You must add .env file to .gitignore
 2. Add you API url and other configs to .env file
 3. Add fields also to .env.example file
-4. Configure env in `lib/src/common/configs/env/env.dart`. Like this:
+4. Configure env in `lib/src/core/env/env.dart`. Like this:
 ```dart
 final class Env {
  @EnviedField(varName: 'FIELD_NAME', useConstantCase: true)
@@ -89,13 +109,11 @@ flutter run --dart-define=ISPECT_ENABLED=true
 
 ### How to add a new dependency
 
-**This section describes how to add a new dependency to your app.** Please, check the [initialization](#initialization) section before.
+**This section describes how to add a new app-wide dependency.**
 
-1. Open `lib/src/common/di/containers/dependencies.dart`
-2. Add new dependency to `Dependencies` container
-3. Go to `lib/src/feature/initialization/logic/initialization_steps.dart`
-4. Add new entry to the map and write down all the logic needed to initialize your dependency and set it in the `Dependencies` object
-5. Now, you can use the dependency in the app receiving it from context: `context.dependencies.name`
+1. Add a field for it to `DependenciesContainer` in `lib/src/features/initialization/models/dependencies.dart` (or `RepositoriesContainer` in `repositories.dart` for a repository).
+2. Create and wire it inside `CompositionRoot.compose()` in `lib/src/features/initialization/logic/composition_root.dart` — add it to the relevant `_create*` method and pass it into the container.
+3. Now you can read it anywhere from context: `context.dependencies.name`.
 
 ### How do add flavors correctly:
 You can use template from `very_good_cli``.

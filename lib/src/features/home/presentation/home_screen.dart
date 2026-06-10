@@ -41,16 +41,49 @@ class HomeScreen extends StatelessWidget {
         SliverFillRemaining(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Text(
-              L10n.current.counterTimesText(
-                context.watch<CounterCubit>().state,
-              ),
-              textAlign: TextAlign.center,
-              style: context.textStyles.s18w600,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  L10n.current.counterTimesText(
+                    context.watch<CounterCubit>().state,
+                  ),
+                  textAlign: TextAlign.center,
+                  style: context.textStyles.s18w600,
+                ),
+                const Gap(24),
+                // TEMP: yx_navigation pop repro — remove after verifying.
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const _PopReproScreen(),
+                    ),
+                  ),
+                  child: const Text('Repro: push imperative route'),
+                ),
+              ],
             ),
           ),
         ),
       ],
+    ),
+  );
+}
+
+// TEMP: yx_navigation pop repro — remove after verifying.
+// Pressing back (AppBar arrow or the button) calls Navigator.of(context).pop(),
+// which under yx_navigation asserts "RouteNode cannot be popped".
+class _PopReproScreen extends StatelessWidget {
+  const _PopReproScreen();
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Imperative route')),
+    body: Center(
+      child: ElevatedButton(
+        onPressed: () => Navigator.of(context).pop(),
+        child: const Text('Pop me'),
+      ),
     ),
   );
 }

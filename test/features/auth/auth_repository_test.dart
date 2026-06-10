@@ -73,6 +73,20 @@ void main() {
         );
       });
 
+      test('ClientException becomes NetworkException '
+          'because it is a responseless client-side failure', () async {
+        const cause = 'request cancelled';
+        when(
+          () => dataSource.getCurrentUser(),
+        ).thenThrow(const ClientException(message: 'cancelled', cause: cause));
+
+        await check(repository.getCurrentUser()).throws<NetworkException>(
+          (e) => e
+            ..has((it) => it.message, 'message').equals('cancelled')
+            ..has((it) => it.cause, 'cause').equals(cause),
+        );
+      });
+
       test('CustomBackendException becomes BackendException '
           'so the UI keeps the backend payload', () async {
         const backend = CustomBackendException(

@@ -129,24 +129,3 @@ final class ConnectionException extends RestClientException {
   @override
   List<Object?> get props => [message, statusCode, cause];
 }
-
-/// If something went wrong on the server side
-
-final class InternalServerException extends RestClientException {
-  const InternalServerException({
-    required super.message,
-    super.statusCode,
-    super.cause,
-  });
-
-  @override
-  String toString() =>
-      '''InternalServerException('
-      'message: $message,'
-      'statusCode: $statusCode,'
-      'cause: $cause'
-      ')''';
-
-  @override
-  List<Object?> get props => [message, statusCode, cause];
-}

@@ -6,9 +6,11 @@ extension RestClientExceptionMapper on RestClientException {
   /// feature-meaningful [AppException] for the repository boundary.
   ///
   /// The mapping is total: every subtype becomes an [AppException], so no
-  /// transport type leaks past the data layer. Backend-origin failures
-  /// (structured error, client 4xx, server 5xx) collapse into
-  /// [BackendException], which keeps the backend payload for the UI.
+  /// transport type leaks past the data layer. A backend rejection carrying a
+  /// structured payload ([CustomBackendException]) becomes a [BackendException]
+  /// that keeps the payload for the UI; a responseless client-side failure
+  /// ([ClientException] — cancelled, bad certificate, encode/decode error)
+  /// becomes a [NetworkException].
   AppException toAppException() => switch (this) {
     ConnectionException(:final message, :final cause, :final statusCode) =>
       NetworkException(message: message, cause: cause, statusCode: statusCode),
@@ -20,9 +22,7 @@ extension RestClientExceptionMapper on RestClientException {
     CustomBackendException(:final message, :final error, :final statusCode) =>
       BackendException(message: message, error: error, statusCode: statusCode),
     ClientException(:final message, :final statusCode, :final cause) =>
-      BackendException(message: message, statusCode: statusCode, cause: cause),
-    InternalServerException(:final message, :final statusCode, :final cause) =>
-      BackendException(message: message, statusCode: statusCode, cause: cause),
+      NetworkException(message: message, cause: cause, statusCode: statusCode),
   };
 }
 

@@ -23,7 +23,7 @@ final class AppRunner {
     Bloc.transformer = bloc_concurrency.sequential();
     Future<void> initializeAndRun(InitializationHook hook) async {
       try {
-        final result = await CompositionRoot(hook: hook).compose();
+        final result = await const CompositionRoot().compose();
 
         hook.onInitialized?.call(result);
 

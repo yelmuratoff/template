@@ -22,12 +22,10 @@ final iSpectify = ISpectFlutter.init();
 Future<void> bootstrap() async {
   InitializationHook? hook;
   hook = InitializationHook.setup(
-    onInitializing: _onInitializing,
     onInitialized: _onInitialized,
     onError: (error, stackTrace) {
       _onErrorFactory(error, stackTrace, hook!);
     },
-    onInit: _onInit,
   );
 
   // ISpect.run installs its own FlutterError/PlatformDispatcher/zone handlers
@@ -71,12 +69,6 @@ void _installRootErrorHandlers() {
 
 // ==================== Initialization Callbacks ====================
 
-/// `_onInitializing` is a callback function that is
-/// called when the initialization process is started.
-void _onInitializing(String stepName) {
-  ISpect.logger.info('🌀 Inited $stepName');
-}
-
 /// `_onInitialized` is a callback function that is called when
 /// the initialization process is completed.
 void _onInitialized(CompositionResult result) {
@@ -101,10 +93,4 @@ void _onErrorFactory(
       retryInitialization: () => AppRunner().initializeAndRun(hook),
     ),
   );
-}
-
-/// `_onInit` is a callback function that is called when the
-/// initialization process is started.
-void _onInit() {
-  iSpectify.info('📱 App started');
 }

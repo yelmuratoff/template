@@ -59,19 +59,18 @@ app/                         app shell — wiring, no feature logic
 
 common/                      cross-feature, non-platform helpers
   constants/                 app colours, constants, preference keys
-  presentation/              shared widgets (buttons, dialogs, toaster, …)
-  services/file/             file service (interface + impl)
+  presentation/              app-specific shared UI (change-environment dialog,
+                             error router screen) — reusable widgets live in
+                             the `ui` package
   utils/extensions/          context_extension, bloc_extension, …
   utils/mixins/              scope_mixin
 
-core/                        platform & infrastructure
-  database/                  Drift (app_database) + preferences + secure storage
-    src/preferences/secure_storage.dart   SecureStorage + FlutterSecureStorageWrapper
-    src/preferences/preferences_dao.dart  typed SharedPreferences wrapper
+core/                        app-specific platform glue
+  assets/                    flutter_gen output
+  database/                  concrete AppDatabase + TodosTable + AppConfigManager
+                             (generic infra lives in the `database` package)
   env/                       envied-generated environment config
-  exceptions/                sealed AppException family (see Exceptions below)
   l10n/                      gen-l10n setup + ARB (en/ru/kk)
-  rest_client/               RestClient wrapper, Dio stack, token refresh
 
 features/<feature>/          presentation / (domain) / data per feature
   auth/                      login, session restore, user, scopes
@@ -79,6 +78,22 @@ features/<feature>/          presentation / (domain) / data per feature
   initialization/            CompositionRoot, containers, splash
   profile/                   profile screen (consumes Auth/User scopes)
   settings/                  theme + locale (SettingsScope / SettingsBloc)
+```
+
+Shared, app-agnostic code lives in Pub Workspace packages under `packages/`
+(`resolution: workspace`, one root lockfile). Dependencies flow one way and a
+package never imports app code:
+
+```
+core  ◄── database  ◄── rest_client          ui
+  ▲          ▲              ▲                  ▲
+  └──────────┴──────────────┴──────────────────┴──── base_starter (app)
+
+packages/
+  core/         sealed AppException family + platform FileService
+  database/     Drift QueryExecutor, PreferencesDao, SecureStorage
+  rest_client/  RestClient wrapper, Dio stack, SecureTokenStorage, token refresh
+  ui/           theme (IColors/ITextStyles) + reusable widgets
 ```
 
 ---
@@ -146,7 +161,7 @@ so navigation runs without a `BuildContext`.
 
 ## ⚠️ Exception scheme
 
-A single sealed family in `core/exceptions/` is the app-wide error vocabulary:
+A single sealed family in the `core` package is the app-wide error vocabulary:
 
 ```
 sealed AppException implements Exception
@@ -165,10 +180,10 @@ sealed AppException implements Exception
 - Datasources throw typed exceptions (parse failures →
   `Error.throwWithStackTrace(ParseException)`); transport exceptions pass
   through.
-- The transport layer has its own `RestClientException` family
-  (`core/rest_client/exceptions/`). Repositories translate it to an
-  `AppException` at their boundary via the total `RestClientExceptionMapper`
-  (`toAppException()`), so transport types never leak past `core/rest_client`.
+- The transport layer has its own `RestClientException` family (in the
+  `rest_client` package). Repositories translate it to an `AppException` at their
+  boundary via the total `RestClientExceptionMapper` (`toAppException()`), so
+  transport types never leak past the `rest_client` package.
 - BLoCs handle errors through one helper, `guard`
   (`common/utils/extensions/bloc_extension.dart`), with two tiers:
   - `on AppException` → emit an error state (the repository mapper is total, so
@@ -186,7 +201,7 @@ sealed AppException implements Exception
 
 ## 🔐 Networking & token refresh
 
-`core/rest_client/` owns all HTTP details behind one wrapper.
+The `rest_client` package owns all HTTP details behind one wrapper.
 
 - A single `RestClientBase` (`RestClientDio`) wraps a ready-made `Dio` (base URL,
   headers, decoding, backend-error parsing, `Isolate.run` for large JSON).

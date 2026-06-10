@@ -37,7 +37,6 @@ dependencies:
 
   # Logging
   ispect: 5.2.0-dev.19
-  ispectify_dio: 5.2.0-dev.19
   ispectify_bloc: 5.2.0-dev.19
 
   # Utils

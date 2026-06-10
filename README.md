@@ -52,6 +52,34 @@ the exception scheme, and token refresh — lives in
   serializes refresh (one refresh for N concurrent 401s, one retry) and a
   broadcast `TokenStorage.changes` stream drives the revoke loop.
 
+### Packages (monorepo)
+
+App-agnostic, independently testable code lives in [Pub Workspace](https://dart.dev/tools/pub/workspaces)
+members under `packages/` (single shared lockfile, `resolution: workspace`). The
+app (`base_starter`) keeps only features and app-specific wiring. Dependencies
+flow one way — a package never imports app code:
+
+```
+core  ◄── database  ◄── rest_client          ui
+  ▲          ▲              ▲                  ▲
+  └──────────┴──────────────┴──────────────────┴──── base_starter (app)
+```
+
+- **`core`** — shared kernel: the sealed `AppException` family and the platform
+  `FileService`. Zero app coupling; everything else depends on it.
+- **`database`** — persistence infrastructure: Drift `QueryExecutor` (native/web),
+  the typed `PreferencesDao`, and `SecureStorage`. The concrete `AppDatabase`
+  schema and `AppConfigManager` stay in the app.
+- **`rest_client`** — Dio-backed REST client, auth interceptor, and
+  `SecureTokenStorage`. Maps transport errors to `core`'s `AppException`.
+- **`ui`** — design system: theme (`IColors`/`ITextStyles`), shimmer, and the
+  reusable widgets (toaster, dialogs, buttons, text field, bottom sheet,
+  builders). Widgets are theme-driven and take strings/images as parameters, so
+  they hold no l10n or asset coupling back to the app.
+
+Graduate a folder to a package only when it is shared across features, needs an
+independent test cycle, or wants separate ownership — not by default.
+
 ## How to guides
 
 ### .env config

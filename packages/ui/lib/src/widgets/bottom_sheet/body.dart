@@ -65,7 +65,9 @@ class AppBottomSheet extends StatelessWidget {
                           minFontSize: 16,
                           overflow: TextOverflow.ellipsis,
                           style:
-                              Theme.of(context).extension<ITextStyles>()?.s18w600 ??
+                              Theme.of(
+                                context,
+                              ).extension<ITextStyles>()?.s18w600 ??
                               LightThemeData.textStyles.s18w600,
                         ),
                       ),

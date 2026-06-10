@@ -5,7 +5,7 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.gr.dart"
     - "**/*.gen.dart"
-    - "lib/src/core/localization/generated/**"
+    - "lib/src/core/l10n/generated/**"
   language:
     strict-casts: true
     strict-inference: true

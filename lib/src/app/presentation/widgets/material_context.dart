@@ -30,7 +30,9 @@ class _MaterialContextState extends State<MaterialContext> {
         stateManager: context.dependencies.navigationManager.stateManager,
       ),
       navigatorConfiguration: NavigatorConfiguration(
-        navigatorObservers: [_observer],
+        navigatorObservers: ISpectNavigatorObserver.observers(
+          observer: _observer,
+        ),
       ),
     );
   }
@@ -53,6 +55,7 @@ class _MaterialContextState extends State<MaterialContext> {
       theme: theme.lightTheme,
       darkTheme: theme.darkTheme,
       themeMode: theme.mode,
+
       localizationsDelegates: [
         ...L10n.delegates,
         ...ISpectLocalizations.delegate(),

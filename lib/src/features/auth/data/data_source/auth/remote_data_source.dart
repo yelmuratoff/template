@@ -1,7 +1,7 @@
-import 'package:core/core.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/auth/auth_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
+import 'package:core/core.dart';
+import 'package:rest_client/rest_client.dart';
 
 final class AuthRemoteDataSource implements IAuthDataSource {
   const AuthRemoteDataSource({required this.restClient});

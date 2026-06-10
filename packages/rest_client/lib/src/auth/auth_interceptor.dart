@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:core/core.dart';
-import 'package:rest_client/src/auth/token_storage.dart';
-import 'package:rest_client/src/token_pair.dart';
 import 'package:dio/dio.dart';
 import 'package:ispect/ispect.dart';
+import 'package:rest_client/src/auth/token_storage.dart';
+import 'package:rest_client/src/token_pair.dart';
 
 /// Attaches the access token to every request and transparently refreshes it
 /// when the backend answers 401.

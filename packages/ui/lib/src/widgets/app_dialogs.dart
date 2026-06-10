@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:ui/src/widgets/app_loading_indicator.dart';
 import 'package:ui/ui.dart';
 
 /// `AppDialogs` is a class that provides a set of methods

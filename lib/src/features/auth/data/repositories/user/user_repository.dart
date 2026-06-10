@@ -1,8 +1,8 @@
-import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/user/user_repository.dart';
+import 'package:rest_client/rest_client.dart';
 
 final class UserRepository implements IUserRepository {
   const UserRepository({

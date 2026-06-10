@@ -2,8 +2,8 @@
 
 import 'dart:convert';
 
-import 'package:rest_client/rest_client.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rest_client/rest_client.dart';
 
 Map<String, Object?> _generateJsonData(int length) => {
   'data': {

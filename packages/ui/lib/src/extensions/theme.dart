@@ -9,10 +9,7 @@ extension ThemeDataX on ThemeData {
   ///   light: () => AppLightColors.main,
   ///  )
   /// ```
-  T when<T>({
-    required T Function() light,
-    required T Function() dark,
-  }) {
+  T when<T>({required T Function() light, required T Function() dark}) {
     switch (brightness) {
       case Brightness.light:
         return light();
@@ -21,10 +18,7 @@ extension ThemeDataX on ThemeData {
     }
   }
 
-  T whenByValue<T extends Object?>({
-    required T light,
-    required T dark,
-  }) {
+  T whenByValue<T extends Object?>({required T light, required T dark}) {
     switch (brightness) {
       case Brightness.light:
         return light;
@@ -37,11 +31,7 @@ extension ThemeDataX on ThemeData {
     required T orElse,
     T? light,
     T? dark,
-  }) =>
-      whenByValue<T>(
-        light: light ?? orElse,
-        dark: dark ?? orElse,
-      );
+  }) => whenByValue<T>(light: light ?? orElse, dark: dark ?? orElse);
 
   void setSystemUiOverlayStyle() {
     final style = whenByValue(
@@ -53,9 +43,9 @@ extension ThemeDataX on ThemeData {
   }
 
   SystemUiOverlayStyle get systemUiOverlayStyle => when(
-        light: () => SystemUiOverlayStyle.dark,
-        dark: () => SystemUiOverlayStyle.light,
-      );
+    light: () => SystemUiOverlayStyle.dark,
+    dark: () => SystemUiOverlayStyle.light,
+  );
 
   bool get isDark => brightness == Brightness.dark;
 }

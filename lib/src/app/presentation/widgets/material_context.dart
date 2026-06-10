@@ -1,12 +1,12 @@
 import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/router/app_router_schema.dart';
-import 'package:ui/ui.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:ispect/ispect.dart';
+import 'package:ui/ui.dart';
 import 'package:yx_navigation_flutter/yx_navigation_flutter.dart';
 import 'package:yx_navigation_flutter/yx_navigation_flutter_compatibility.dart';
 

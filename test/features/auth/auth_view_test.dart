@@ -1,8 +1,8 @@
-import 'package:ui/ui.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/auth/presentation/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ui/ui.dart';
 
 void main() {
   setUpAll(() => L10n.load(const Locale('en')));

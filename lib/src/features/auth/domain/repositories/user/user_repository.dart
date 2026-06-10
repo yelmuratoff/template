@@ -1,5 +1,5 @@
-import 'package:core/core.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
+import 'package:core/core.dart';
 
 abstract interface class IUserRepository {
   /// Reads the locally cached user without hitting the network.

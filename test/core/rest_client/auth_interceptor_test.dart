@@ -1,9 +1,9 @@
-import 'package:core/core.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:checks/checks.dart';
+import 'package:core/core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rest_client/rest_client.dart';
 
 class _MockTokenStorage extends Mock implements TokenStorage {}
 

@@ -4,9 +4,7 @@ import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/database/database.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
-import 'package:database/database.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/data/data_source/auth/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/data/data_source/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/data_source/user/remote_data_source.dart';
@@ -23,10 +21,12 @@ import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.d
 import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:clock/clock.dart';
+import 'package:database/database.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ispect/ispect.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rest_client/rest_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// The single composition root: every app-wide dependency is created and wired

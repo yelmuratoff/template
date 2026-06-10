@@ -1,12 +1,12 @@
 import 'package:base_starter/src/app/router/navigation_manager.dart';
 import 'package:base_starter/src/core/database/database.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
-import 'package:database/database.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:database/database.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rest_client/rest_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final class DependenciesContainer {

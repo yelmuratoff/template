@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:ui/src/widgets/toaster/flutter_toast.dart';
 import 'package:ui/ui.dart';
 
 part 'toaster_body.dart';

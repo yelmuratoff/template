@@ -1,8 +1,8 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
-import 'package:rest_client/src/dio_rest_client/rest_client.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:rest_client/src/dio_rest_client/rest_client.dart';
 
 /// Rest client that uses `Dio` as HTTP library.
 ///

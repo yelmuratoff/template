@@ -1,12 +1,12 @@
-import 'package:core/core.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:base_starter/src/features/auth/data/repositories/user/user_repository.dart';
 import 'package:checks/checks.dart';
+import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rest_client/rest_client.dart';
 
 class _MockRemoteDataSource extends Mock implements IRemoteUserDataSource {}
 

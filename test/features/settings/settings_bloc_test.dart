@@ -1,9 +1,9 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:core/core.dart';
 import 'package:base_starter/src/features/settings/domain/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/domain/theme/theme_repository.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:checks/checks.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

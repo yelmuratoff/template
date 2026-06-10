@@ -1,12 +1,12 @@
 import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:ui/ui.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
+import 'package:ui/ui.dart';
 
 final class ChangeEnvironmentDialog {
   const ChangeEnvironmentDialog();

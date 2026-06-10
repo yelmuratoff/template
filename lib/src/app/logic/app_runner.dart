@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:base_starter/src/app/presentation/widgets/app.dart';
-import 'package:ui/ui.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:ui/ui.dart';
 
 /// A class which is responsible for initialization and running the app.
 final class AppRunner {

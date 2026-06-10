@@ -2,8 +2,8 @@
 
 import 'dart:async';
 
-import 'package:ui/src/widgets/toaster/toaster.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/src/widgets/toaster/toaster.dart';
 
 /// Signature for a function that defines custom position mapping for a toast
 ///

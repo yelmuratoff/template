@@ -1,4 +1,5 @@
-/// Persistence infrastructure: Drift executors, typed preferences DAO, secure storage.
+/// Persistence infrastructure: Drift executors, typed preferences DAO,
+/// secure storage.
 library;
 
 export 'src/executor/db_executor.dart';

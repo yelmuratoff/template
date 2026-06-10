@@ -1,5 +1,4 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:ui/ui.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/change_environment.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
+import 'package:ui/ui.dart';
 
 part 'controller/settings_scope.dart';
 part 'widget/app_version.dart';

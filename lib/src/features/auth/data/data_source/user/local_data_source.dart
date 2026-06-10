@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:database/database.dart';
-import 'package:core/core.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
+import 'package:core/core.dart';
+import 'package:database/database.dart';
 import 'package:ispect/ispect.dart';
 
 final class UserLocalDataSource extends PreferencesDao

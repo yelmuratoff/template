@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:database/database.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:checks/checks.dart';
+import 'package:database/database.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rest_client/rest_client.dart';
 
 class _MockSecureStorage extends Mock implements SecureStorage {}
 

@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:core/core.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:checks/checks.dart';
+import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rest_client/rest_client.dart';
 
 class _MockAuthRepository extends Mock implements IAuthRepository {}
 

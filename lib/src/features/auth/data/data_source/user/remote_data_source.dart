@@ -1,7 +1,7 @@
-import 'package:core/core.dart';
-import 'package:rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
+import 'package:core/core.dart';
+import 'package:rest_client/rest_client.dart';
 
 final class UserRemoteDataSource implements IRemoteUserDataSource {
   const UserRemoteDataSource({required this.restClient});

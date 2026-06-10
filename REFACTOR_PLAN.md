@@ -133,15 +133,15 @@ fvm flutter test      # green
 - [x] Тесты: `auth_scope_test.dart` (отдаёт state; ребилд зависимых при смене state; `login()`/`logout()` диспатчат событие в mock bloc), `user_scope_test.dart` (`userOf` отдаёт загруженного юзера / null; `fetch()` диспатчит), `auth_view_test.dart` (tap login → колбэк), `profile_view_test.dart` (рендер name/email; tap настроек/logout → колбэки). Добавлены в `base_test.dart`. Полный прогон зелёный (178 тестов)
 - [x] Чекпоинт (format/analyze 0 issues/test green) + коммит
 
-## ⬜ Фаза 8 — финальный проход
+## ✅ Фаза 8 — финальный проход (DONE)
 
 - [x] (сделано досрочно в рамках Фазы 5) Удалён мёртвый `DioInterceptor` (локализовал ошибки через `L10n` на транспортном слое — нарушение слоёв; после Фазы 3 никем не создавался) вместе с `ExceptionKeys` и блоком `@_Errors_messages` в трёх ARB; l10n перегенерирован
-- [ ] `fvm flutter pub outdated` повторно; убедиться что `flutter_easyloading`, `iconsax_plus`, `auto_size_text`, `gap` ещё используются (иначе удалить)
+- [x] `fvm flutter pub outdated` повторно: все четыре (`flutter_easyloading`, `iconsax_plus`, `auto_size_text`, `gap`) ещё используются — удалять нечего. Из прямых зависимостей позади только `drift`/`drift_dev` 2.31→2.33 (тот же мажор), но 2.33 достижим лишь широким `pub upgrade` (тянет analyzer 8.4→12.1 и весь dev-тулчейн) — для финального прохода это вне scope и рискованно; основной мажорный апгрейд сделан в Фазе 1. Оставлено как есть
 - [x] Хвосты ревью Фазы 7: `App` → `StatelessWidget` (мёртвый `App.attach()` и no-op `_AppState.dispose()` удалены); `'Home'`/`'Profile'` в `root_screen.dart` → `L10n.current.home`/`.profile` (items больше не `const`; `root_view_test` грузит `L10n.load(en)`); `splash.dart` — `Color(0xff1468AD)` → `context.theme.colorScheme.primary`
 - [x] **Решено** (трактуем как `Unauthenticated`, consistent с recover-from-corruption): `_onCheckStatus` больше не идёт через `guard` — приватный `_readSession()` ловит `on Exception` (вкл. `CacheException`), логирует через `ISpect.logger.handle` и возвращает `UnauthenticatedAuthState`; `Error`-подтипы пролетают (краш → репорт). Сплэш не зависает. Тест `recovers to [Loading, Unauthenticated] when the token read fails` (+ observer НЕ получает onError) добавлен
-- [ ] Актуализировать `docs/STRUCTURE.md` и `README.md`: новый роутер, схема исключений, DI-граф, секция token refresh
-- [ ] Полная верификация: format, analyze, полный `flutter test`, debug-сборки обоих flavors, ручной smoke-сценарий из Фазы 6
-- [ ] Финальный коммит
+- [x] Актуализированы `docs/STRUCTURE.md` (переписан: 829 → 231 строка — startup flow, layout, DI-граф, yx_navigation, схема исключений, token refresh, конвенции) и `README.md` (секция Architecture, актуальные пути env/DI, локали en/ru/kk) — commit `6447787`; упомянутые пути/символы сверены с кодом (`RestClientExceptionMapper.toAppException`, `app/model/app_theme.dart`, `common/services/file/`, `IColors`/`ITextStyles`)
+- [x] Полная верификация: format 0 изменений, analyze 0 issues, 180 тестов зелёные; debug-сборки обоих flavors собираются (`app-dev-debug.apk`, `app-prod-debug.apk`); ручной smoke пройден в Фазе 6 (login → табы → settings push → диалоги через compat overrides)
+- [x] Финальный коммит
 
 ---
 

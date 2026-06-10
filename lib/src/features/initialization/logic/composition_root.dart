@@ -2,6 +2,7 @@ import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/router/navigation_manager.dart';
 import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
+import 'package:base_starter/src/core/database/database.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:database/database.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
@@ -57,6 +58,8 @@ final class CompositionRoot {
       await appConfig.setFirstRun(value: false);
     }
 
+    final appDatabase = AppDatabase();
+
     final network = _createRestClient(secureStorage);
     final repositories = _createRepositories(
       restClient: network.restClient,
@@ -76,6 +79,7 @@ final class CompositionRoot {
       secureStorage: secureStorage,
       tokenStorage: network.tokenStorage,
       appConfig: appConfig,
+      appDatabase: appDatabase,
       restClient: network.restClient,
       authBloc: authBloc,
       userBloc: userBloc,

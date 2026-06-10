@@ -1,4 +1,5 @@
 import 'package:base_starter/src/app/router/navigation_manager.dart';
+import 'package:base_starter/src/core/database/database.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:database/database.dart';
 import 'package:rest_client/rest_client.dart';
@@ -14,6 +15,7 @@ final class DependenciesContainer {
     required this.secureStorage,
     required this.tokenStorage,
     required this.appConfig,
+    required this.appDatabase,
     required this.packageInfo,
     required this.restClient,
     required this.authBloc,
@@ -27,6 +29,7 @@ final class DependenciesContainer {
   final SecureStorage secureStorage;
   final TokenStorage tokenStorage;
   final AppConfigManager appConfig;
+  final AppDatabase appDatabase;
   final PackageInfo packageInfo;
 
   // <--- Internal dependencies --->
@@ -44,6 +47,7 @@ final class DependenciesContainer {
       sharedPreferences:$sharedPreferences,
       secureStorage: $secureStorage,
       appConfig: $appConfig,
+      appDatabase: $appDatabase,
       packageInfo: $packageInfo,
       restClient: $restClient,
       authBloc: $authBloc,

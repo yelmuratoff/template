@@ -109,7 +109,7 @@ hierarchy — the graph is small and built linearly by private async methods
 
 | Container | Holds |
 |---|---|
-| `DependenciesContainer` | `sharedPreferences`, `secureStorage`, `tokenStorage`, `appConfig`, `packageInfo`, `restClient`, `authBloc`, `userBloc`, `settingsBloc`, `navigationManager` |
+| `DependenciesContainer` | `sharedPreferences`, `secureStorage`, `tokenStorage`, `appConfig`, `appDatabase`, `packageInfo`, `restClient`, `authBloc`, `userBloc`, `settingsBloc`, `navigationManager` |
 | `RepositoriesContainer` | `authRepository`, `userRepository` |
 
 The result is exposed through `InheritedWidget`s, not static accessors:

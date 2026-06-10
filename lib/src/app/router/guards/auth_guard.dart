@@ -31,14 +31,15 @@ final class AuthGuard implements RouteNodeGuard {
         destination == null ||
         destination == AppRoutes.auth ||
         destination == AppRoutes.splash;
+    final authenticated = isAuthenticated();
 
-    if (!isAuthenticated() && !inAuthZone) {
+    if (!authenticated && !inAuthZone) {
       return GuardResult.redirect(
         target: target.copyWith(children: [AppRoutes.auth.toNode()]),
       );
     }
 
-    if (isAuthenticated() && destination == AppRoutes.auth) {
+    if (authenticated && destination == AppRoutes.auth) {
       return GuardResult.redirect(
         target: target.copyWith(children: [AppRoutes.root.toNode()]),
       );

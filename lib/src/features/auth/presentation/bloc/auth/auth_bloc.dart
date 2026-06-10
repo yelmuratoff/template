@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:base_starter/src/common/utils/extensions/bloc_extension.dart';
 import 'package:base_starter/src/core/exceptions/app_exception.dart';
 import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
+import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -46,6 +47,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthenticatedAuthState());
     } on AppException catch (e, st) {
       _emitError(e, st, emit);
+    } on RestClientException catch (e, st) {
+      _emitError(e, st, emit);
     } on Object catch (e, st) {
       _emitError(e, st, emit);
       onError(e, st);
@@ -58,6 +61,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _tokenStorage.clear();
       emit(const UnauthenticatedAuthState());
     } on AppException catch (e, st) {
+      _emitError(e, st, emit);
+    } on RestClientException catch (e, st) {
       _emitError(e, st, emit);
     } on Object catch (e, st) {
       _emitError(e, st, emit);
@@ -78,6 +83,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             : const UnauthenticatedAuthState(),
       );
     } on AppException catch (e, st) {
+      _emitError(e, st, emit);
+    } on RestClientException catch (e, st) {
       _emitError(e, st, emit);
     } on Object catch (e, st) {
       _emitError(e, st, emit);

@@ -1,5 +1,6 @@
 import 'package:base_starter/src/common/utils/extensions/bloc_extension.dart';
 import 'package:base_starter/src/core/exceptions/app_exception.dart';
+import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/user/user_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -32,6 +33,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     } on AppException catch (e, st) {
       _emitError(e, st, emit);
+    } on RestClientException catch (e, st) {
+      _emitError(e, st, emit);
     } on Object catch (e, st) {
       _emitError(e, st, emit);
       onError(e, st);
@@ -43,6 +46,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await userRepository.clearCache();
       emit(const InitialUserState());
     } on AppException catch (e, st) {
+      _emitError(e, st, emit);
+    } on RestClientException catch (e, st) {
       _emitError(e, st, emit);
     } on Object catch (e, st) {
       _emitError(e, st, emit);

@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:base_starter/src/core/exceptions/app_exception.dart';
 import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
+import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:checks/checks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -12,6 +14,16 @@ import 'package:mocktail/mocktail.dart';
 class _MockAuthRepository extends Mock implements IAuthRepository {}
 
 class _MockTokenStorage extends Mock implements TokenStorage {}
+
+class _RecordingBlocObserver extends BlocObserver {
+  final errors = <Object>[];
+
+  @override
+  void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
+    errors.add(error);
+    super.onError(bloc, error, stackTrace);
+  }
+}
 
 void main() {
   const tokenPair = TokenPair(access: 'access', refresh: 'refresh');
@@ -99,6 +111,44 @@ void main() {
             .has((s) => s.message, 'message')
             .equals('offline');
         verifyNever(() => tokenStorage.save(any()));
+        await bloc.close();
+      },
+    );
+
+    test(
+      'login with a backend rejection emits Error without notifying observer',
+      () async {
+        final observer = _RecordingBlocObserver();
+        final previousObserver = Bloc.observer;
+        Bloc.observer = observer;
+        addTearDown(() => Bloc.observer = previousObserver);
+
+        when(
+          () => repository.login(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenThrow(
+          const CustomBackendException(
+            message: 'invalid password',
+            error: {},
+            statusCode: 401,
+          ),
+        );
+
+        final bloc = buildBloc();
+        final states = await recordStates(
+          bloc,
+          () =>
+              bloc.add(const LoginAuthEvent(email: 'a@b.c', password: 'wrong')),
+        );
+
+        check(states.first).isA<LoadingAuthState>();
+        check(states.last)
+            .isA<ErrorAuthState>()
+            .has((s) => s.message, 'message')
+            .equals('invalid password');
+        check(observer.errors).isEmpty();
         await bloc.close();
       },
     );

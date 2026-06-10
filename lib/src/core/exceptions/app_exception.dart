@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
+part 'backend_exception.dart';
 part 'cache_exception.dart';
 part 'invalid_data_format.dart';
 part 'network_exception.dart';

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:base_starter/src/core/exceptions/app_exception.dart';
 import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
-import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
@@ -129,9 +128,9 @@ void main() {
             password: any(named: 'password'),
           ),
         ).thenThrow(
-          const CustomBackendException(
+          const BackendException(
             message: 'invalid password',
-            error: {},
+            error: {'code': 'AUTH_001'},
             statusCode: 401,
           ),
         );

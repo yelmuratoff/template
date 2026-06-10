@@ -5,9 +5,11 @@ extension RestClientExceptionMapper on RestClientException {
   /// Translates a transport-level [RestClientException] into a
   /// feature-meaningful [AppException] for the repository boundary.
   ///
-  /// [CustomBackendException] and the other unmapped subtypes are returned
-  /// unchanged because the presentation layer needs the backend payload.
-  Object toAppException() => switch (this) {
+  /// The mapping is total: every subtype becomes an [AppException], so no
+  /// transport type leaks past the data layer. Backend-origin failures
+  /// (structured error, client 4xx, server 5xx) collapse into
+  /// [BackendException], which keeps the backend payload for the UI.
+  AppException toAppException() => switch (this) {
     ConnectionException(:final message, :final cause, :final statusCode) =>
       NetworkException(message: message, cause: cause, statusCode: statusCode),
     RequestTimeoutException(:final message, :final cause) =>
@@ -15,9 +17,12 @@ extension RestClientExceptionMapper on RestClientException {
     WrongResponseTypeException(:final message) => ParseException(
       message: message,
     ),
-    CustomBackendException() => this,
-    ClientException() => this,
-    InternalServerException() => this,
+    CustomBackendException(:final message, :final error, :final statusCode) =>
+      BackendException(message: message, error: error, statusCode: statusCode),
+    ClientException(:final message, :final statusCode, :final cause) =>
+      BackendException(message: message, statusCode: statusCode, cause: cause),
+    InternalServerException(:final message, :final statusCode, :final cause) =>
+      BackendException(message: message, statusCode: statusCode, cause: cause),
   };
 }
 

@@ -73,7 +73,7 @@ void main() {
         );
       });
 
-      test('CustomBackendException is rethrown unchanged '
+      test('CustomBackendException becomes BackendException '
           'so the UI keeps the backend payload', () async {
         const backend = CustomBackendException(
           message: 'invalid credentials',
@@ -86,7 +86,12 @@ void main() {
 
         await check(
           repository.login(email: 'a@b.c', password: 'pw'),
-        ).throws<CustomBackendException>((e) => e.equals(backend));
+        ).throws<BackendException>(
+          (e) => e
+            ..has((it) => it.message, 'message').equals('invalid credentials')
+            ..has((it) => it.error, 'error').deepEquals({'code': 'AUTH_001'})
+            ..has((it) => it.statusCode, 'statusCode').equals(400),
+        );
       });
     });
 

@@ -1,5 +1,4 @@
 import 'package:base_starter/src/core/exceptions/app_exception.dart';
-import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ispect/ispect.dart';
 
@@ -36,13 +35,16 @@ extension BlocExceptionHandlerExtension<T> on BlocBase<T> {
         ),
         ParseException(:final message, :final cause) => (message, cause, null),
         CacheException(:final message, :final cause) => (message, cause, null),
+        BackendException(:final message, :final cause, :final statusCode) => (
+          message,
+          cause,
+          statusCode,
+        ),
         RevokedTokenException(:final cause) => ('Session revoked', cause, null),
         InvalidDataException() => (exception.toString(), exception, null),
         NoDataException() => (exception.toString(), exception, null),
       };
       onError(message, cause, statusCode);
-    } else if (exception is RestClientException) {
-      onError(exception.message, exception.cause, exception.statusCode);
     } else {
       onError(exception.toString(), exception, null);
     }
@@ -50,16 +52,16 @@ extension BlocExceptionHandlerExtension<T> on BlocBase<T> {
 }
 
 extension BlocGuardExtension<State> on BlocBase<State> {
-  /// Error boundary for event handlers: known failures become an error state,
-  /// while an unexpected one is additionally reported as a programming bug.
+  /// Error boundary for event handlers: a known [AppException] becomes an
+  /// error state, while an unexpected one is also reported as a programming
+  /// bug.
   ///
-  /// Two known tiers are recovered the same way — [AppException] (mapped at
-  /// the repository) and [RestClientException] (a backend rejection that
-  /// deliberately reaches the BLoC untranslated, e.g. a wrong password). The
-  /// [Object] tier signals a bug: it is emitted as an error state and routed
-  /// to [reportBug] (pass the BLoC's own `onError` so the observer reports
-  /// it). The message/cause/statusCode are normalized by [handleException],
-  /// which also logs the failure exactly once.
+  /// Every transport failure is mapped to an [AppException] at the repository
+  /// (including a backend rejection, now a [BackendException]), so the known
+  /// tier is a single family. The [Object] tier signals a bug: it is emitted
+  /// as an error state and routed to [reportBug] (pass the BLoC's own
+  /// `onError` so the observer reports it). The message/cause/statusCode are
+  /// normalized by [handleException], which also logs the failure once.
   ///
   /// [body] is awaited so the handler does not return before its work
   /// finishes; an [emit] after the await would otherwise throw.
@@ -85,8 +87,6 @@ extension BlocGuardExtension<State> on BlocBase<State> {
     try {
       await body();
     } on AppException catch (e, st) {
-      emitError(e, st);
-    } on RestClientException catch (e, st) {
       emitError(e, st);
     } on Object catch (e, st) {
       emitError(e, st);

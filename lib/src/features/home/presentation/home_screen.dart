@@ -51,61 +51,11 @@ class HomeScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: context.textStyles.s18w600,
                 ),
-                const Gap(24),
-                // TEMP: yx_navigation pop repro — remove after verifying.
-                // Both buttons must open fine; closing must assert
-                // "RouteNode cannot be popped" in debug.
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const _PopReproScreen(),
-                    ),
-                  ),
-                  child: const Text('Repro: push imperative route'),
-                ),
-                const Gap(8),
-                ElevatedButton(
-                  onPressed: () => showDialog<void>(
-                    context: context,
-                    builder: (dialogContext) => AlertDialog(
-                      title: const Text('Repro dialog'),
-                      content: const Text(
-                        'Tap "Close" or the barrier — both call '
-                        'Navigator.pop and should get stuck.',
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(dialogContext).pop(),
-                          child: const Text('Close'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  child: const Text('Repro: showDialog'),
-                ),
               ],
             ),
           ),
         ),
       ],
-    ),
-  );
-}
-
-// TEMP: yx_navigation pop repro — remove after verifying.
-// Pressing back (AppBar arrow or the button) calls Navigator.of(context).pop(),
-// which under yx_navigation asserts "RouteNode cannot be popped".
-class _PopReproScreen extends StatelessWidget {
-  const _PopReproScreen();
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Imperative route')),
-    body: Center(
-      child: ElevatedButton(
-        onPressed: () => Navigator.of(context).pop(),
-        child: const Text('Pop me'),
-      ),
     ),
   );
 }

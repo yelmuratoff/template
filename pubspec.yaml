@@ -10,6 +10,7 @@ environment:
 
 workspace:
   - packages/ui
+  - packages/core
 
 dependencies:
   # Flutter SDK
@@ -44,6 +45,10 @@ dependencies:
   path_provider: ^2.1.4
   equatable: ^2.0.5
   package_info_plus: ^10.1.0
+
+  # Local packages
+  core:
+    path: packages/core
 
   # UI
   ui:

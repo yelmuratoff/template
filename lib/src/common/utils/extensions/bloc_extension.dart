@@ -1,4 +1,4 @@
-import 'package:base_starter/src/core/exceptions/app_exception.dart';
+import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ispect/ispect.dart';
 

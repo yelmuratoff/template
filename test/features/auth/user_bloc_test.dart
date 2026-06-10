@@ -1,4 +1,4 @@
-import 'package:base_starter/src/core/exceptions/app_exception.dart';
+import 'package:core/core.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/user/user_repository.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';

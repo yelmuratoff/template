@@ -1,4 +1,4 @@
-import 'package:base_starter/src/core/exceptions/app_exception.dart';
+import 'package:core/core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Encrypted-at-rest key-value storage for secrets, tokens and credentials.

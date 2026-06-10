@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:base_starter/src/core/exceptions/app_exception.dart';
+import 'package:core/core.dart';
 import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:dio/dio.dart';

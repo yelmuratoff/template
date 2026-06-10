@@ -1,4 +1,4 @@
-import 'package:base_starter/src/core/exceptions/app_exception.dart';
+import 'package:core/core.dart';
 import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/auth/auth_data_source.dart';

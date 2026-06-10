@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:base_starter/src/common/services/file/src/base_service.dart';
+import 'package:core/src/file_service/base_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 class FileService implements BaseFileService {

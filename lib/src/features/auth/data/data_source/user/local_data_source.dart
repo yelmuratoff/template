@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/database/src/preferences/preferences_dao.dart';
-import 'package:base_starter/src/core/exceptions/app_exception.dart';
+import 'package:core/core.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:ispect/ispect.dart';

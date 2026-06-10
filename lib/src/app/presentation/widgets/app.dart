@@ -1,4 +1,6 @@
 import 'package:base_starter/src/app/presentation/widgets/material_context.dart';
+import 'package:base_starter/src/features/auth/presentation/auth_scope.dart';
+import 'package:base_starter/src/features/auth/presentation/user_scope.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/presentation/dependencies_scope.dart';
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
@@ -39,7 +41,13 @@ class _AppState extends State<App> {
     repositories: widget.result.repositories,
     child: SettingsScope(
       settingsBloc: widget.result.dependencies.settingsBloc,
-      child: const MaterialContext(),
+      child: AuthScope(
+        authBloc: widget.result.dependencies.authBloc,
+        child: UserScope(
+          userBloc: widget.result.dependencies.userBloc,
+          child: const MaterialContext(),
+        ),
+      ),
     ),
   );
 }

@@ -2,8 +2,6 @@ import 'package:base_starter/src/features/initialization/models/dependencies.dar
 import 'package:base_starter/src/features/initialization/presentation/dependencies_scope.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:ui/ui.dart';
 import 'package:yx_navigation_flutter/yx_navigation_flutter.dart';
 
@@ -103,41 +101,6 @@ extension ContextExtension on BuildContext {
   /// `dependencies` returns the nearest `DependenciesScope`
   /// of the given `BuildContext`.
   DependenciesContainer get dependencies => DependenciesScope.of(this);
-
-  /// `provide` returns the nearest `Provider` of the given `BuildContext`.
-  T provide<T>() => Provider.of<T>(this);
-
-  /// `blocProvide` returns the nearest `BlocProvider` of the
-  /// given `BuildContext`.
-  T blocWatch<T extends StateStreamableSource<Object?>>() =>
-      BlocProvider.of<T>(this, listen: true);
-
-  /// `provideOnce` returns the nearest `Provider` of the given `BuildContext`
-  /// without listening to changes.
-  T provideOnce<T>() => Provider.of<T>(this, listen: false);
-
-  T blocRead<T extends StateStreamableSource<Object?>>() =>
-      BlocProvider.of<T>(this);
-
-  /// `provideOrNull` returns the nearest `Provider` of the given `BuildContext`
-  /// or `null` if not found.
-  T? provideOrNull<T>() {
-    try {
-      return provide<T>();
-    } catch (error) {
-      return null;
-    }
-  }
-
-  /// `provideOnceOrNull` returns the nearest `Provider` of the given
-  /// `BuildContext` without listening to changes or `null` if not found.
-  T? provideOnceOrNull<T>() {
-    try {
-      return provideOnce<T>();
-    } catch (error) {
-      return null;
-    }
-  }
 }
 
 /// List of extensions for `ThemeData`

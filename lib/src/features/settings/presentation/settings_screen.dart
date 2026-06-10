@@ -3,12 +3,10 @@ import 'package:base_starter/src/common/presentation/widgets/buttons/app_button.
 import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/change_environment.dart';
 import 'package:base_starter/src/common/presentation/widgets/toaster/toaster.dart';
-import 'package:base_starter/src/common/services/page_lifecycle_model.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
-import 'package:base_starter/src/features/settings/presentation/controller/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -30,19 +28,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late final SettingsScreenModel _model;
-
-  @override
-  void initState() {
-    super.initState();
-    _model = PageLifecycleModel.createModel(context, SettingsScreenModel.new);
-  }
-
-  @override
-  void dispose() {
-    _model.dispose();
-    super.dispose();
-  }
+  int _tapNumber = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -127,25 +113,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 _AppVersionBody(
                   onTapAppVersion: () async {
-                    _model.tapNumber++;
+                    _tapNumber++;
 
-                    if (_model.tapNumber > 5 && _model.tapNumber < 10) {
+                    if (_tapNumber > 5 && _tapNumber < 10) {
                       await Toaster.showToast(
                         title: L10n.current.environmentTapNumber(
-                          10 - _model.tapNumber,
+                          10 - _tapNumber,
                         ),
                       );
-                    } else if (_model.tapNumber == 10) {
+                    } else if (_tapNumber == 10) {
                       ISpect.logger.info('ℹ️ Environment change dialog opened');
                       await ChangeEnvironmentDialog.show(context);
                       ISpect.logger.info('🔙 Environment change dialog closed');
-                      _model.tapNumber = 0;
+                      _tapNumber = 0;
                     }
                   },
                   versionTextColor: versionTextColor,
                 ),
                 const Gap(24),
                 BlocListener<AuthBloc, AuthState>(
+                  bloc: context.dependencies.authBloc,
                   listener: (context, state) {
                     if (state is LoadingAuthState) {
                       AppDialogs.showLoader(

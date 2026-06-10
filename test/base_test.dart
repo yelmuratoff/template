@@ -7,11 +7,15 @@ import 'core/rest_client/token_storage_test.dart' as token_storage_test;
 import 'core/storage/secure_storage_test.dart' as secure_storage_test;
 import 'features/auth/auth_bloc_test.dart' as auth_bloc_test;
 import 'features/auth/auth_repository_test.dart' as auth_repository_test;
+import 'features/auth/auth_scope_test.dart' as auth_scope_test;
+import 'features/auth/auth_view_test.dart' as auth_view_test;
 import 'features/auth/user_bloc_test.dart' as user_bloc_test;
 import 'features/auth/user_dto_test.dart' as user_dto_test;
 import 'features/auth/user_local_data_source_test.dart'
     as user_local_data_source_test;
 import 'features/auth/user_repository_test.dart' as user_repository_test;
+import 'features/auth/user_scope_test.dart' as user_scope_test;
+import 'features/profile/profile_view_test.dart' as profile_view_test;
 import 'features/settings/settings_bloc_test.dart' as settings_bloc_test;
 
 void main() {
@@ -26,7 +30,11 @@ void main() {
   user_repository_test.main();
   user_local_data_source_test.main();
   auth_bloc_test.main();
+  auth_scope_test.main();
+  auth_view_test.main();
   user_bloc_test.main();
+  user_scope_test.main();
   user_dto_test.main();
+  profile_view_test.main();
   settings_bloc_test.main();
 }

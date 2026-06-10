@@ -15,6 +15,36 @@ fvm flutter test      # green
 
 ---
 
+## Контекст для новой сессии (прочитать перед работой)
+
+**Проект**: `base_starter` — Flutter starter-шаблон, feature-first Clean Architecture (presentation → optional domain → data). Flutter **3.44.1 / Dart 3.12.1 через fvm** — все команды с префиксом `fvm`. Flavors: prod (`lib/main.dart`) и dev (`lib/main_dev.dart`). Линт очень строгий (analysis_options: strict-casts/inference/raw-types + pyramid_lint + custom_lint, 80 символов строка).
+
+**Режим работы**: выполнять **по одной фазе за сессию** (у пользователя лимиты), после фазы — чекпоинт, коммит, обновить чекбоксы и секцию DONE этого файла. Коммиты — Conventional Commits, без AI-атрибуции.
+
+**Конвенция кода (важно)**: пользователь перевёл конструкторы на **private named parameters** (Dart 3.10+): `AuthBloc({required this.repository, required this._tokenStorage})` — новый код писать так же, без ручных `: _field = field` инициализаторов. Модели/BLoC пишутся руками (без freezed); DTO — hand-written `fromMap`/`toMap`.
+
+**Поток инициализации**: `main.dart` → `bootstrap.dart` (`ISpect.run`, root error handlers `_installRootErrorHandlers`) → `AppRunner.initializeAndRun` (`lib/src/app/logic/app_runner.dart`) → `CompositionRoot.compose()` (`lib/src/features/initialization/logic/composition_root.dart`) → `DependenciesFactory.create()` (`.../factories/dependencies_factories.dart`) возвращает `ComposedDependencies` record (dependencies + repositories) → `App` widget оборачивает `DependenciesScope` (InheritedWidget, доступ `context.dependencies` через `lib/src/common/utils/extensions/context_extension.dart`) → `SettingsScope` → `MaterialContext` (`lib/src/app/presentation/widgets/material_context.dart`) с Octopus-роутером.
+
+**Что уже есть после Фаз 1–3** (новые/переработанные файлы):
+- `lib/src/core/exceptions/` — sealed `AppException` + part-файлы: `network_exception.dart`, `timeout_exception.dart` (`TimeoutAppException`), `parse_exception.dart`, `cache_exception.dart`, `revoked_token_exception.dart` (+ старые `invalid_data_format.dart`, `no_data_exception.dart`)
+- `lib/src/core/database/src/preferences/secure_storage.dart` — `SecureStorage` + `FlutterSecureStorageWrapper`
+- `lib/src/core/rest_client/auth/token_storage.dart` — `TokenStorage` + `SecureTokenStorage` (broadcast `changes`)
+- `lib/src/core/rest_client/auth/auth_interceptor.dart` — `AuthInterceptor extends QueuedInterceptor` (инварианты в dartdoc файла)
+- `lib/src/core/rest_client/exceptions/rest_client_exception.dart` — семейство + новый `RequestTimeoutException`
+- `lib/src/core/rest_client/dio_rest_client/src/dio_client.dart` — единый Dio с таймаутами; `.../rest_client_dio.dart` — требует готовый `Dio`
+- `DependenciesContainer` (`lib/src/features/initialization/models/dependencies.dart`) теперь держит: sharedPreferences, **secureStorage, tokenStorage, appConfig**, packageInfo, restClient, authBloc, userCubit, settingsBloc
+- Тесты: `test/core/rest_client/{auth_interceptor,token_storage,rest_client_base}_test.dart`, `test/core/storage/secure_storage_test.dart`; агрегатор `test/base_test.dart`. Стек: mocktail + package:checks, Given/When/Then-имена
+
+**Карта файлов для оставшихся фаз**:
+- Фаза 4: `lib/src/features/auth/data/data_source/{auth/remote_data_source.dart, user/remote_data_source.dart, user/local_data_source.dart}` + интерфейсы в `data_source/interface/`; репозитории `lib/src/features/auth/data/repositories/{auth/auth_repository.dart, user/local_repository.dart, user/remote_repository.dart}`; домен-интерфейсы `lib/src/features/auth/domain/repositories/`; DTO `lib/src/features/auth/data/models/user.dart` (`UserDTO`); контейнер `lib/src/features/initialization/models/repositories.dart` + фабрика `repositories_factories.dart`; helper `lib/src/common/utils/extensions/bloc_extension.dart` (`handleException`)
+- Фаза 5: `lib/src/features/auth/presentation/bloc/auth/{auth_bloc,auth_event,auth_state}.dart` (bloc + part-файлы), `lib/src/features/auth/presentation/bloc/user/user_cubit.dart` (state = `UserDTO?`, заменить на UserBloc), `lib/src/features/settings/presentation/bloc/settings_bloc.dart`; `Bloc.transformer = sequential()` глобально стоит в `app_runner.dart` — per-event трансформеры его уточняют
+- Фаза 6: роутер в `lib/src/app/router/` (`routes/router.dart` — enum Routes с OctopusRoute, `guards/`, `enums/root_tabs_enum.dart`, `widgets/route_wrapper.dart`); `RootScreen` с табами — `lib/src/app/presentation/screens/root_screen.dart`; splash — `lib/src/features/initialization/presentation/page/splash.dart` (сейчас сам читает tokenStorage и роутит); 12 файлов импортируют octopus
+- Фаза 7: эталон скоупа — `lib/src/features/settings/presentation/controller/settings_scope.dart` (InheritedModel + контроллер-интерфейс); `PageLifecycleModel` — `lib/src/common/services/page_lifecycle_model.dart`; `SettingsScreenModel` — `.../settings/presentation/controller/settings_model.dart`
+
+**yx_navigation справка (Фаза 6)**: пакеты `yx_navigation` + `yx_navigation_flutter` ^1.0.0 (pub.dev, publisher dev.go.yandex, MIT). Pure-Dart ядро: `RouteNode` (иммутабельное дерево), `RouteNodeStateManager` (мутации/подписки), `NavigationController`, guards (`GuardResult next/redirect/cancel`), URI-сериализация для deep links. Flutter-слой: `RouterSchema`, `RouteDeclaration.routeBuilder()/scheme()/indexedStack`, `RouteBuilder.widget()/outlet`, `NavigatorOutlet`, интеграция `MaterialApp.router`, compat-слой Navigator 1.0. `RouteNodeStateManager` инжектится через `schema.build(stateManagerConfiguration: ...)` — навигация без BuildContext. Доки в репозитории: github.com/yandex/city-services-pub.
+
+---
+
 ## ✅ Фаза 1 — pubspec: обновление + чистка (DONE, commit `e303e1d`)
 
 - [x] **Flutter SDK 3.35.7 → 3.44.1** (Dart 3.12.1) через `fvm use 3.44.1` — без этого новые версии пакетов не резолвились (старый SDK капал analyzer 7.x, build_runner 2.7 и т.д.)
@@ -119,3 +149,5 @@ fvm flutter test      # green
 - **Refresh-мьютекс**: `QueuedInterceptor` сериализует обработку ошибок; дедупликация — сравнением stale access-токена из заголовка упавшего запроса с текущим в storage («уже ротирован» → реюз). Completer-лок не нужен: ретраи идут через bare Dio и не реентерят интерцептор.
 - **Revoke-канал**: `TokenStorage.changes` (broadcast stream) — единственный канал «сессия умерла»; interceptor пишет, AuthBloc слушает, роутер реагирует на state. Никаких навигаций из data-слоя.
 - **Composition**: всё строится один раз в `DependenciesFactory` → `ComposedDependencies` record; репозитории больше не создаются дважды.
+- **Сохраняем как есть** (уже соответствует правилам, не трогать): hand-written DTO, `PreferencesDao` (typed-обёртка над SharedPreferences), `Isolate.run` для JSON >1000 байт в `RestClientBase.decodeResponse`, `SettingsScope`, локальный пакет `packages/ui` (темы через ThemeExtension), gen-l10n (ARB в `lib/src/core/l10n/translations`, en/ru/kk), Drift (`lib/src/core/database/src/app_database.dart`, TodosTable), envied (`lib/src/core/env/`).
+- **Известные нюансы**: два vendored файла `flutter_toast.dart` (в `common/presentation/widgets/toaster/` и `.../dialogs/toaster/`) — форкнутый код, стиль не выравнивать; `DioInterceptor` (`dio_rest_client/src/interceptor/dio_interceptor.dart`) локализует сообщения об ошибках через `L10n` — спорное место, но трогаем только в рамках Фазы 4 (если станет мёртвым — удалить); `.env` объявлен в pubspec assets.

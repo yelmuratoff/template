@@ -1,9 +1,8 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:base_starter/src/common/presentation/widgets/buttons/app_button.dart';
-import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs.dart';
+import 'package:ui/ui.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/change_environment.dart';
-import 'package:base_starter/src/common/presentation/widgets/toaster/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
@@ -120,6 +119,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         title: L10n.current.environmentTapNumber(
                           10 - _tapNumber,
                         ),
+                        leadingImage: AssetImage(Assets.images.launcher.path),
                       );
                     } else if (_tapNumber == 10) {
                       ISpect.logger.info('ℹ️ Environment change dialog opened');

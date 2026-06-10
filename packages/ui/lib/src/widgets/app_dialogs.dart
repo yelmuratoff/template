@@ -1,8 +1,7 @@
-import 'package:base_starter/src/common/presentation/widgets/app_loading_indicator.dart';
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:ui/src/widgets/app_loading_indicator.dart';
+import 'package:ui/ui.dart';
 
 /// `AppDialogs` is a class that provides a set of methods
 /// to show different types of dialogs.
@@ -17,18 +16,22 @@ final class AppDialogs {
     BuildContext context,
     EasyLoadingIndicatorType indicatorType,
   ) {
+    final theme = Theme.of(context);
+    final textStyles =
+        theme.extension<ITextStyles>() ?? LightThemeData.textStyles;
+    final colors = theme.extension<IColors>()!;
     EasyLoading.instance
       ..displayDuration = const Duration(milliseconds: 1500)
       ..indicatorType = indicatorType
       ..loadingStyle = EasyLoadingStyle.custom
       ..indicatorSize = 45
       ..radius = 16
-      ..textStyle = context.textStyles.s16w500
-      ..progressColor = context.theme.primaryColor
-      ..backgroundColor = context.theme.colorScheme.surface
-      ..indicatorColor = context.theme.primaryColor
-      ..textColor = context.colors.text
-      ..maskColor = context.theme.colorScheme.surface
+      ..textStyle = textStyles.s16w500
+      ..progressColor = theme.primaryColor
+      ..backgroundColor = theme.colorScheme.surface
+      ..indicatorColor = theme.primaryColor
+      ..textColor = colors.text
+      ..maskColor = theme.colorScheme.surface
       ..userInteractions = true
       ..toastPosition = EasyLoadingToastPosition.bottom
       ..dismissOnTap = false;
@@ -39,7 +42,7 @@ final class AppDialogs {
 
     EasyLoading.dismiss();
     EasyLoading.showError(
-      title ?? L10n.current.error,
+      title ?? 'Error',
       duration: const Duration(seconds: 2),
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: true,
@@ -51,7 +54,7 @@ final class AppDialogs {
     EasyLoading.dismiss();
 
     EasyLoading.show(
-      status: title ?? L10n.current.loading,
+      status: title ?? 'Loading',
       indicator: const AppLoadingIndicator(),
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: false,
@@ -63,7 +66,7 @@ final class AppDialogs {
     EasyLoading.dismiss();
 
     EasyLoading.showSuccess(
-      title ?? L10n.current.requestSuccess,
+      title ?? 'Success',
       duration: const Duration(seconds: 1),
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: true,

@@ -1,8 +1,8 @@
 // ignore_for_file: inference_failure_on_function_return_type
 
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ui/ui.dart';
 
 /// `OutlinedTextField` is a custom widget which
 /// is used for return custom textfield with custom style.
@@ -93,27 +93,27 @@ class OutlinedTextfield extends StatelessWidget {
       labelText: (labelText != '') ? labelText ?? hintText : null,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-        borderSide: BorderSide(color: context.theme.colors.border, width: 1.5),
+        borderSide: BorderSide(color: context._colors.border, width: 1.5),
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-        borderSide: BorderSide(color: context.theme.colors.border, width: 1.5),
+        borderSide: BorderSide(color: context._colors.border, width: 1.5),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-        borderSide: BorderSide(color: context.theme.colors.error, width: 1.5),
+        borderSide: BorderSide(color: context._colors.error, width: 1.5),
       ),
       alignLabelWithHint: true,
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
-        borderSide: BorderSide(color: context.theme.colors.error, width: 1.5),
+        borderSide: BorderSide(color: context._colors.error, width: 1.5),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 16)),
         borderSide: BorderSide(
           color: readOnly ?? false
-              ? context.theme.colors.border
-              : context.theme.colors.primary,
+              ? context._colors.border
+              : context._colors.primary,
           width: 1.5,
         ),
       ),
@@ -121,9 +121,13 @@ class OutlinedTextfield extends StatelessWidget {
       suffixIcon: suffixIcon,
       prefixIcon: prefixIcon,
       fillColor: !(enabled ?? true)
-          ? context.theme.colors.card
-          : context.theme.colors.background,
+          ? context._colors.card
+          : context._colors.background,
       contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
     ),
   );
+}
+
+extension _ThemeAccess on BuildContext {
+  IColors get _colors => Theme.of(this).extension<IColors>()!;
 }

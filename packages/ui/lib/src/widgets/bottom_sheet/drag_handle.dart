@@ -1,5 +1,5 @@
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/ui.dart';
 
 /// `DragHandle` - This widget is used to
 /// display the header of the bottom sheet.
@@ -12,7 +12,7 @@ class DragHandle extends StatelessWidget {
     width: 32,
     height: 4,
     decoration: BoxDecoration(
-      color: context.colors.divider,
+      color: Theme.of(context).extension<IColors>()!.divider,
       borderRadius: const BorderRadius.all(Radius.circular(8)),
     ),
   );

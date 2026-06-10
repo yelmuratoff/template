@@ -1,8 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:ui/ui.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({
@@ -27,7 +26,7 @@ class AppBottomSheet extends StatelessWidget {
 
     return RepaintBoundary(
       child: Material(
-        color: context.theme.scaffoldBackgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         elevation: 5,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -65,7 +64,9 @@ class AppBottomSheet extends StatelessWidget {
                           maxLines: 2,
                           minFontSize: 16,
                           overflow: TextOverflow.ellipsis,
-                          style: context.textStyles.s18w600,
+                          style:
+                              Theme.of(context).extension<ITextStyles>()?.s18w600 ??
+                              LightThemeData.textStyles.s18w600,
                         ),
                       ),
                     ),

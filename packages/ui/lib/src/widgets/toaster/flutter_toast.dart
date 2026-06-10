@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:base_starter/src/common/presentation/widgets/toaster/toaster.dart';
+import 'package:ui/src/widgets/toaster/toaster.dart';
 import 'package:flutter/material.dart';
 
 /// Signature for a function that defines custom position mapping for a toast

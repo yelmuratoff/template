@@ -1,9 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:base_starter/src/common/presentation/widgets/toaster/flutter_toast.dart';
-import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:ui/src/widgets/toaster/flutter_toast.dart';
+import 'package:ui/ui.dart';
 
 part 'toaster_body.dart';
 
@@ -17,7 +16,7 @@ final class Toaster {
     required String title,
     Color backgroundColor = const Color.fromARGB(255, 43, 42, 42),
     Color textColor = Colors.white,
-    bool hasImage = true,
+    ImageProvider? leadingImage,
     bool isDismissible = true,
     bool isIgnorePointer = true,
     Duration fadeDuration = const Duration(milliseconds: 200),
@@ -32,7 +31,7 @@ final class Toaster {
           title: title,
           backgroundColor: backgroundColor,
           textColor: textColor,
-          hasImage: hasImage,
+          leadingImage: leadingImage,
         ),
         gravity: gravity,
         fadeDuration: fadeDuration,
@@ -53,7 +52,7 @@ final class Toaster {
     required String title,
     VoidCallback? then,
     Color textColor = Colors.white,
-    bool hasImage = false,
+    ImageProvider? leadingImage,
     bool isDismissible = true,
     bool isIgnorePointer = true,
     Duration fadeDuration = const Duration(milliseconds: 200),
@@ -65,9 +64,9 @@ final class Toaster {
       ..showToast(
         child: _ToasterBody(
           title: title,
-          backgroundColor: context.colors.success,
+          backgroundColor: Theme.of(context).extension<IColors>()!.success,
           textColor: textColor,
-          hasImage: hasImage,
+          leadingImage: leadingImage,
         ),
         gravity: gravity,
         fadeDuration: fadeDuration,
@@ -88,7 +87,7 @@ final class Toaster {
     required String title,
     VoidCallback? then,
     Color textColor = Colors.white,
-    bool hasImage = false,
+    ImageProvider? leadingImage,
     bool isDismissible = true,
     bool isIgnorePointer = true,
     Duration fadeDuration = const Duration(milliseconds: 200),
@@ -100,9 +99,9 @@ final class Toaster {
       ..showToast(
         child: _ToasterBody(
           title: title,
-          backgroundColor: context.colors.error,
+          backgroundColor: Theme.of(context).extension<IColors>()!.error,
           textColor: textColor,
-          hasImage: hasImage,
+          leadingImage: leadingImage,
         ),
         gravity: gravity,
         fadeDuration: fadeDuration,

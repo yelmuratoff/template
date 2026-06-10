@@ -3,9 +3,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-/// Base class for all rest client exceptions
+/// Base class for all rest client exceptions.
+///
+/// Sealed so the repository-boundary mapper switches exhaustively over every
+/// subtype — adding a new one is a compile error until it is handled.
 @immutable
-abstract base class RestClientException extends Equatable implements Exception {
+sealed class RestClientException extends Equatable implements Exception {
   const RestClientException({
     required this.message,
     this.cause,

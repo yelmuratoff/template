@@ -5,7 +5,7 @@ extension RestClientExceptionMapper on RestClientException {
   /// Translates a transport-level [RestClientException] into a
   /// feature-meaningful [AppException] for the repository boundary.
   ///
-  /// [CustomBackendException] and any other unmapped subtype are returned
+  /// [CustomBackendException] and the other unmapped subtypes are returned
   /// unchanged because the presentation layer needs the backend payload.
   Object toAppException() => switch (this) {
     ConnectionException(:final message, :final cause, :final statusCode) =>
@@ -15,13 +15,19 @@ extension RestClientExceptionMapper on RestClientException {
     WrongResponseTypeException(:final message) => ParseException(
       message: message,
     ),
-    _ => this,
+    CustomBackendException() => this,
+    ClientException() => this,
+    InternalServerException() => this,
   };
 }
 
 /// Runs [action] at a repository boundary, re-typing any
 /// [RestClientException] into the matching [AppException] via
 /// [RestClientExceptionMapper.toAppException] while preserving the stack.
+///
+/// Use it only inside repositories: that is the one layer responsible for
+/// translating transport failures. Calling it from a BLoC or a datasource
+/// smears the layer boundaries.
 ///
 /// The transport layer (dio interceptors) already logs the failure, so this
 /// only re-types it — it must not log again.

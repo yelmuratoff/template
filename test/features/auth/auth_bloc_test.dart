@@ -154,6 +154,36 @@ void main() {
     );
 
     test(
+      'login with an unexpected error emits Error and reaches the observer',
+      () async {
+        final observer = _RecordingBlocObserver();
+        final previousObserver = Bloc.observer;
+        Bloc.observer = observer;
+        addTearDown(() => Bloc.observer = previousObserver);
+
+        final bug = Exception('unexpected boom');
+        when(
+          () => repository.login(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenThrow(bug);
+
+        final bloc = buildBloc();
+        final states = await recordStates(
+          bloc,
+          () =>
+              bloc.add(const LoginAuthEvent(email: 'a@b.c', password: 'wrong')),
+        );
+
+        check(states.first).isA<LoadingAuthState>();
+        check(states.last).isA<ErrorAuthState>();
+        check(observer.errors).deepEquals([bug]);
+        await bloc.close();
+      },
+    );
+
+    test(
       'drops a second login while the first is in flight (droppable)',
       () async {
         final completer = Completer<TokenPair?>();

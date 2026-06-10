@@ -1,6 +1,4 @@
 import 'package:base_starter/src/common/utils/extensions/bloc_extension.dart';
-import 'package:base_starter/src/core/exceptions/app_exception.dart';
-import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/user/user_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -18,49 +16,27 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   final IUserRepository userRepository;
 
-  Future<void> _onFetch(FetchUserEvent event, Emitter<UserState> emit) async {
-    try {
-      final cachedUser = userRepository.getCachedUser();
-      emit(
-        cachedUser != null
-            ? LoadedUserState(user: cachedUser)
-            : const LoadingUserState(),
-      );
+  static UserState _error(Object _, String message, Object? cause, int? _) =>
+      ErrorUserState(message: message, cause: cause);
 
-      final freshUser = await userRepository.getFreshUser();
-      if (freshUser != null && freshUser != cachedUser) {
-        emit(LoadedUserState(user: freshUser));
-      }
-    } on AppException catch (e, st) {
-      _emitError(e, st, emit);
-    } on RestClientException catch (e, st) {
-      _emitError(e, st, emit);
-    } on Object catch (e, st) {
-      _emitError(e, st, emit);
-      onError(e, st);
-    }
-  }
+  Future<void> _onFetch(FetchUserEvent event, Emitter<UserState> emit) =>
+      guard(emit: emit, errorState: _error, reportBug: onError, () async {
+        final cachedUser = userRepository.getCachedUser();
+        emit(
+          cachedUser != null
+              ? LoadedUserState(user: cachedUser)
+              : const LoadingUserState(),
+        );
 
-  Future<void> _onClear(ClearUserEvent event, Emitter<UserState> emit) async {
-    try {
-      await userRepository.clearCache();
-      emit(const InitialUserState());
-    } on AppException catch (e, st) {
-      _emitError(e, st, emit);
-    } on RestClientException catch (e, st) {
-      _emitError(e, st, emit);
-    } on Object catch (e, st) {
-      _emitError(e, st, emit);
-      onError(e, st);
-    }
-  }
+        final freshUser = await userRepository.getFreshUser();
+        if (freshUser != null && freshUser != cachedUser) {
+          emit(LoadedUserState(user: freshUser));
+        }
+      });
 
-  void _emitError(Object e, StackTrace st, Emitter<UserState> emit) {
-    handleException(
-      exception: e,
-      stackTrace: st,
-      onError: (message, cause, _) =>
-          emit(ErrorUserState(message: message, cause: cause)),
-    );
-  }
+  Future<void> _onClear(ClearUserEvent event, Emitter<UserState> emit) =>
+      guard(emit: emit, errorState: _error, reportBug: onError, () async {
+        await userRepository.clearCache();
+        emit(const InitialUserState());
+      });
 }

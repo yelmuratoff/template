@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:base_starter/src/common/utils/extensions/bloc_extension.dart';
-import 'package:base_starter/src/core/exceptions/app_exception.dart';
 import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
-import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -32,77 +30,46 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final TokenStorage _tokenStorage;
   late final StreamSubscription<TokenPair?> _revocationSubscription;
 
-  Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) async {
-    emit(const LoadingAuthState());
-    try {
-      final tokenPair = await repository.login(
-        email: event.email,
-        password: event.password,
-      );
-      if (tokenPair == null) {
-        emit(const UnauthenticatedAuthState());
-        return;
-      }
-      await _tokenStorage.save(tokenPair);
-      emit(const AuthenticatedAuthState());
-    } on AppException catch (e, st) {
-      _emitError(e, st, emit);
-    } on RestClientException catch (e, st) {
-      _emitError(e, st, emit);
-    } on Object catch (e, st) {
-      _emitError(e, st, emit);
-      onError(e, st);
-    }
-  }
+  static AuthState _error(Object _, String message, Object? cause, int? _) =>
+      ErrorAuthState(message: message, cause: cause);
 
-  Future<void> _onLogout(LogoutAuthEvent event, Emitter<AuthState> emit) async {
-    emit(const LoadingAuthState());
-    try {
-      await _tokenStorage.clear();
-      emit(const UnauthenticatedAuthState());
-    } on AppException catch (e, st) {
-      _emitError(e, st, emit);
-    } on RestClientException catch (e, st) {
-      _emitError(e, st, emit);
-    } on Object catch (e, st) {
-      _emitError(e, st, emit);
-      onError(e, st);
-    }
-  }
+  Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) =>
+      guard(emit: emit, errorState: _error, reportBug: onError, () async {
+        emit(const LoadingAuthState());
+        final tokenPair = await repository.login(
+          email: event.email,
+          password: event.password,
+        );
+        if (tokenPair == null) {
+          emit(const UnauthenticatedAuthState());
+          return;
+        }
+        await _tokenStorage.save(tokenPair);
+        emit(const AuthenticatedAuthState());
+      });
+
+  Future<void> _onLogout(LogoutAuthEvent event, Emitter<AuthState> emit) =>
+      guard(emit: emit, errorState: _error, reportBug: onError, () async {
+        emit(const LoadingAuthState());
+        await _tokenStorage.clear();
+        emit(const UnauthenticatedAuthState());
+      });
 
   Future<void> _onCheckStatus(
     CheckStatusAuthEvent event,
     Emitter<AuthState> emit,
-  ) async {
+  ) => guard(emit: emit, errorState: _error, reportBug: onError, () async {
     emit(const LoadingAuthState());
-    try {
-      final tokenPair = await _tokenStorage.read();
-      emit(
-        tokenPair != null
-            ? const AuthenticatedAuthState()
-            : const UnauthenticatedAuthState(),
-      );
-    } on AppException catch (e, st) {
-      _emitError(e, st, emit);
-    } on RestClientException catch (e, st) {
-      _emitError(e, st, emit);
-    } on Object catch (e, st) {
-      _emitError(e, st, emit);
-      onError(e, st);
-    }
-  }
+    final tokenPair = await _tokenStorage.read();
+    emit(
+      tokenPair != null
+          ? const AuthenticatedAuthState()
+          : const UnauthenticatedAuthState(),
+    );
+  });
 
   void _onTokenRevoked(_TokenRevokedAuthEvent event, Emitter<AuthState> emit) {
     emit(const UnauthenticatedAuthState());
-  }
-
-  void _emitError(Object e, StackTrace st, Emitter<AuthState> emit) {
-    handleException(
-      exception: e,
-      stackTrace: st,
-      onError: (message, cause, _) =>
-          emit(ErrorAuthState(message: message, cause: cause)),
-    );
   }
 
   @override

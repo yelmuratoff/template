@@ -10,11 +10,10 @@ import 'package:flutter/material.dart';
 ///
 /// Scopes that don't depend on widgets returned by `MaterialApp`
 /// (`Directionality`, `MediaQuery`, `Localizations`) should be placed here.
-
 class App extends StatelessWidget {
   const App({required this.result, super.key});
 
-  /// The initialization result from the `InitializationProcessor`
+  /// The initialization result from `CompositionRoot.compose()`
   /// which contains initialized dependencies.
   final CompositionResult result;
 

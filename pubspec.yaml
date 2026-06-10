@@ -11,6 +11,7 @@ environment:
 workspace:
   - packages/ui
   - packages/core
+  - packages/database
 
 dependencies:
   # Flutter SDK
@@ -49,6 +50,8 @@ dependencies:
   # Local packages
   core:
     path: packages/core
+  database:
+    path: packages/database
 
   # UI
   ui:

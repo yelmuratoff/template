@@ -3,7 +3,7 @@ import 'package:base_starter/src/app/router/navigation_manager.dart';
 import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
-import 'package:base_starter/src/core/database/src/preferences/secure_storage.dart';
+import 'package:database/database.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/core/rest_client/auth/auth_interceptor.dart';
 import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';

@@ -1,4 +1,4 @@
-import 'package:base_starter/src/core/database/src/preferences/secure_storage.dart';
+import 'package:database/database.dart';
 import 'package:core/core.dart';
 import 'package:checks/checks.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

@@ -1,5 +1,5 @@
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:base_starter/src/core/database/src/preferences/preferences_dao.dart';
+import 'package:database/database.dart';
 
 /// `AppConfigManager` - A class to manage the app configurations.
 /// This class is used to manage the app configurations like performance

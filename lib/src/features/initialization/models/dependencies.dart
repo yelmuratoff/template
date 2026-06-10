@@ -1,6 +1,6 @@
 import 'package:base_starter/src/app/router/navigation_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
-import 'package:base_starter/src/core/database/src/preferences/secure_storage.dart';
+import 'package:database/database.dart';
 import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
 import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';

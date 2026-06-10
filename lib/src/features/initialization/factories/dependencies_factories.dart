@@ -120,9 +120,9 @@ class RestClientFactory
     final plainDio = Dio(
       BaseOptions(
         baseUrl: AppConstants.baseUrl,
-        connectTimeout: const Duration(seconds: 15),
-        sendTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
+        connectTimeout: RestClientTimeouts.connect,
+        sendTimeout: RestClientTimeouts.send,
+        receiveTimeout: RestClientTimeouts.receive,
       ),
     );
 

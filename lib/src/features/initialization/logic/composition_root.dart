@@ -1,4 +1,5 @@
 import 'package:base_starter/flavors.dart';
+import 'package:base_starter/src/app/router/navigation_manager.dart';
 import 'package:base_starter/src/common/constants/app_constants.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
@@ -54,12 +55,24 @@ final class CompositionRoot {
     );
 
     final appConfig = await _createConfig(sharedPreferences);
+
+    if (appConfig.isFirstRun) {
+      await secureStorage.deleteAll();
+      await appConfig.setFirstRun(value: false);
+    }
+
     final network = _createRestClient(secureStorage);
     final repositories = _createRepositories(
       restClient: network.restClient,
       sharedPreferences: sharedPreferences,
     );
     final settingsBloc = await _createSettingsBloc(sharedPreferences);
+
+    final authBloc = AuthBloc(
+      repository: repositories.authRepository,
+      tokenStorage: network.tokenStorage,
+    );
+    final userBloc = UserBloc(userRepository: repositories.userRepository);
 
     final dependencies = DependenciesContainer(
       packageInfo: packageInfo,
@@ -68,12 +81,13 @@ final class CompositionRoot {
       tokenStorage: network.tokenStorage,
       appConfig: appConfig,
       restClient: network.restClient,
-      authBloc: AuthBloc(
-        repository: repositories.authRepository,
-        tokenStorage: network.tokenStorage,
-      ),
-      userBloc: UserBloc(userRepository: repositories.userRepository),
+      authBloc: authBloc,
+      userBloc: userBloc,
       settingsBloc: settingsBloc,
+      navigationManager: NavigationManager(
+        authBloc: authBloc,
+        userBloc: userBloc,
+      ),
     );
 
     stopwatch.stop();

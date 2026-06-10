@@ -1,5 +1,3 @@
-import 'package:base_starter/src/app/router/enums/root_tabs_enum.dart';
-import 'package:base_starter/src/app/router/widgets/route_wrapper.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/common/utils/extensions/string_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
@@ -8,28 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-import 'package:ispect/ispect.dart';
-import 'package:octopus/octopus.dart';
 
-class HomeTab extends StatelessWidget {
-  const HomeTab({super.key});
-
-  @override
-  Widget build(BuildContext context) => BucketNavigator(
-    bucket: RootTabsEnum.home.bucket,
-    transitionDelegate: const DefaultTransitionDelegate<void>(),
-    observers: [ISpectNavigatorObserver()],
-  );
-}
-
-class HomeScreen extends StatelessWidget implements RouteWrapper {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
-    providers: [BlocProvider(create: (context) => CounterCubit())],
-    child: this,
-  );
 
   @override
   Widget build(BuildContext context) => Scaffold(

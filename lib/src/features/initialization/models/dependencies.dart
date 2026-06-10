@@ -1,3 +1,4 @@
+import 'package:base_starter/src/app/router/navigation_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/core/database/src/preferences/secure_storage.dart';
 import 'package:base_starter/src/core/rest_client/auth/token_storage.dart';
@@ -19,6 +20,7 @@ final class DependenciesContainer {
     required this.authBloc,
     required this.userBloc,
     required this.settingsBloc,
+    required this.navigationManager,
   });
 
   // <--- External dependencies --->
@@ -32,6 +34,7 @@ final class DependenciesContainer {
   final AuthBloc authBloc;
   final UserBloc userBloc;
   final SettingsBloc settingsBloc;
+  final NavigationManager navigationManager;
 
   // <--- Network dependencies --->
   final RestClientBase restClient;
@@ -47,5 +50,6 @@ final class DependenciesContainer {
       authBloc: $authBloc,
       userBloc: $userBloc,
       settingsBloc: $settingsBloc,
+      navigationManager: $navigationManager,
     )''';
 }

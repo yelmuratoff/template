@@ -1,5 +1,4 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/presentation/widgets/buttons/app_button.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/app_dialogs.dart';
 import 'package:base_starter/src/common/presentation/widgets/dialogs/change_environment.dart';
@@ -15,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
-import 'package:octopus/octopus.dart';
 
 part 'controller/settings_scope.dart';
 part 'widget/app_version.dart';
@@ -25,9 +23,7 @@ part 'widget/theme_card.dart';
 part 'widget/theme_selector.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({required this.title, super.key});
-
-  final String? title;
+  const SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -150,20 +146,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const Gap(24),
                 BlocListener<AuthBloc, AuthState>(
-                  listener: (context, state) => switch (state) {
-                    LoadingAuthState() => AppDialogs.showLoader(
-                      context,
-                      title: L10n.current.loading,
-                    ),
-                    InitialAuthState() => {
-                      AppDialogs.dismiss(),
-                      context.octopus.setState(
-                        (state) => state
-                          ..clear()
-                          ..add(Routes.auth.node()),
-                      ),
-                    },
-                    _ => AppDialogs.dismiss(),
+                  listener: (context, state) {
+                    if (state is LoadingAuthState) {
+                      AppDialogs.showLoader(
+                        context,
+                        title: L10n.current.loading,
+                      );
+                    } else {
+                      AppDialogs.dismiss();
+                    }
                   },
                   child: AppButton(
                     onPressed: () {

@@ -3,20 +3,14 @@ import 'package:base_starter/src/features/initialization/presentation/dependenci
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:octopus/octopus.dart';
 import 'package:provider/provider.dart';
 import 'package:ui/ui.dart';
+import 'package:yx_navigation_flutter/yx_navigation_flutter.dart';
 
 /// List of extensions for `BuildContext`
 extension ContextExtension on BuildContext {
-  /// `pop` pops the current `BuildContext` from the `Navigator`.
-  void pop() {
-    octopus.pop();
-    if (Navigator.canPop(this)) {
-      Navigator.maybePop(this);
-      return;
-    }
-  }
+  /// Pops the nearest navigation outlet, or no-ops when it cannot pop.
+  void pop() => YxNavigation.navigatorOf(this, listen: false).maybePop();
 
   /// Obtain the nearest widget of the given type T,
   /// which must be the type of a concrete `InheritedWidget` subclass,

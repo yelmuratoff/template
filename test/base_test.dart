@@ -1,3 +1,6 @@
+import 'app/router/auth_guard_test.dart' as auth_guard_test;
+import 'app/router/navigation_manager_test.dart' as navigation_manager_test;
+import 'app/router/root_view_test.dart' as root_view_test;
 import 'core/rest_client/auth_interceptor_test.dart' as auth_interceptor_test;
 import 'core/rest_client/rest_client_base_test.dart' as rest_client_base_test;
 import 'core/rest_client/token_storage_test.dart' as token_storage_test;
@@ -11,6 +14,9 @@ import 'features/auth/user_repository_test.dart' as user_repository_test;
 import 'features/settings/settings_bloc_test.dart' as settings_bloc_test;
 
 void main() {
+  auth_guard_test.main();
+  navigation_manager_test.main();
+  root_view_test.main();
   rest_client_base_test.main();
   token_storage_test.main();
   auth_interceptor_test.main();

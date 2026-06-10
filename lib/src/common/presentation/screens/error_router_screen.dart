@@ -1,10 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:base_starter/src/app/router/routes/router.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:octopus/octopus.dart';
 
 class RouterErrorScreen extends StatelessWidget {
   const RouterErrorScreen({required this.error, super.key});
@@ -54,13 +52,7 @@ class RouterErrorScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ElevatedButton(
             child: Text(L10n.current.backToHome),
-            onPressed: () {
-              context.octopus.setState(
-                (state) => state
-                  ..clear()
-                  ..add(Routes.home.node()),
-              );
-            },
+            onPressed: () => context.dependencies.navigationManager.openRoot(),
           ),
         ),
         const Gap(50),

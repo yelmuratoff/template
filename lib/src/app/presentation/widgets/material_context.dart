@@ -1,17 +1,13 @@
 import 'package:base_starter/flavors.dart';
-import 'package:base_starter/src/app/router/guards/tab.dart';
-import 'package:base_starter/src/app/router/routes/router.dart';
-import 'package:base_starter/src/common/presentation/screens/error_router_screen.dart';
+import 'package:base_starter/src/app/router/app_router_schema.dart';
 import 'package:base_starter/src/common/presentation/widgets/toaster/flutter_toast.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
-import 'package:base_starter/src/common/utils/utils.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
-import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:ispect/ispect.dart';
-import 'package:octopus/octopus.dart';
+import 'package:yx_navigation_flutter/yx_navigation_flutter.dart';
 
 /// [MaterialContext] is an entry point to the material context.
 /// This widget sets locales, themes and routing.
@@ -23,32 +19,26 @@ class MaterialContext extends StatefulWidget {
 }
 
 class _MaterialContextState extends State<MaterialContext> {
-  late final Octopus _router;
-
-  final observer = ISpectNavigatorObserver();
+  final _observer = ISpectNavigatorObserver();
+  late final YxRouterConfig _routerConfig;
 
   @override
   void initState() {
     super.initState();
-
-    _router = Octopus(
-      routes: Routes.values,
-      defaultRoute: Routes.splash,
-      observers: [observer],
-      guards: [TabGuard()],
-      onError: (error, stackTrace) {},
-      notFound: (ctx, name, arguments) => RouterErrorScreen(
-        error: 'Route not found: $name with arguments: $arguments',
+    _routerConfig = AppRouterSchema().build(
+      stateManagerConfiguration: StateManagerConfiguration(
+        stateManager: context.dependencies.navigationManager.stateManager,
+      ),
+      navigatorConfiguration: NavigatorConfiguration(
+        navigatorObservers: [_observer],
       ),
     );
+  }
 
-    final routes = _router.config.routes.map(
-      (key, value) => MapEntry(key, value.toString()),
-    );
-
-    ISpect.logger.route('📜 Routes:\n${AppUtils.formatPrettyJson(routes)}');
-
-    context.blocRead<UserBloc>().add(const FetchUserEvent());
+  @override
+  void dispose() {
+    _routerConfig.dispose();
+    super.dispose();
   }
 
   @override
@@ -69,7 +59,7 @@ class _MaterialContextState extends State<MaterialContext> {
       ],
       supportedLocales: L10n.supportedLocales,
       locale: locale,
-      routerConfig: _router.config,
+      routerConfig: _routerConfig,
       builder: (context, child) {
         var wrapped = EasyLoading.init()(context, child);
 
@@ -80,12 +70,10 @@ class _MaterialContextState extends State<MaterialContext> {
         );
 
         wrapped = ISpectBuilder.wrap(
-          options: ISpectOptions(locale: locale, observer: observer),
+          options: ISpectOptions(locale: locale, observer: _observer),
           isISpectEnabled: F.isDev,
           child: wrapped,
         );
-
-        wrapped = OctopusTools(enable: F.isDev, child: wrapped);
 
         wrapped = FToastBuilder()(context, wrapped);
 

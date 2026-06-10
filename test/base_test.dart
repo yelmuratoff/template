@@ -8,6 +8,7 @@ import 'core/storage/secure_storage_test.dart' as secure_storage_test;
 import 'features/auth/auth_bloc_test.dart' as auth_bloc_test;
 import 'features/auth/auth_repository_test.dart' as auth_repository_test;
 import 'features/auth/user_bloc_test.dart' as user_bloc_test;
+import 'features/auth/user_dto_test.dart' as user_dto_test;
 import 'features/auth/user_local_data_source_test.dart'
     as user_local_data_source_test;
 import 'features/auth/user_repository_test.dart' as user_repository_test;
@@ -26,5 +27,6 @@ void main() {
   user_local_data_source_test.main();
   auth_bloc_test.main();
   user_bloc_test.main();
+  user_dto_test.main();
   settings_bloc_test.main();
 }

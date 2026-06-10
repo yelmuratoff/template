@@ -5,7 +5,6 @@ import 'package:base_starter/src/core/database/src/preferences/preferences_dao.d
 import 'package:base_starter/src/core/exceptions/app_exception.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
-import 'package:ispect/ispect.dart';
 
 final class UserLocalDataSource extends PreferencesDao
     implements ILocalUserDataSource {
@@ -44,9 +43,9 @@ final class UserLocalDataSource extends PreferencesDao
     }
   }
 
-  Never _throwCacheException(String operation, Object e, StackTrace st) {
-    final message = 'Local user $operation failed';
-    ISpect.logger.handle(exception: e, stackTrace: st, message: message);
-    Error.throwWithStackTrace(CacheException(message: message, cause: e), st);
-  }
+  Never _throwCacheException(String operation, Object e, StackTrace st) =>
+      Error.throwWithStackTrace(
+        CacheException(message: 'Local user $operation failed', cause: e),
+        st,
+      );
 }

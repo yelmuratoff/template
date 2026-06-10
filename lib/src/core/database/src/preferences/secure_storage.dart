@@ -1,6 +1,5 @@
 import 'package:base_starter/src/core/exceptions/app_exception.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:ispect/ispect.dart';
 
 /// Encrypted-at-rest key-value storage for secrets, tokens and credentials.
 ///
@@ -46,9 +45,10 @@ final class FlutterSecureStorageWrapper implements SecureStorage {
     try {
       return await action();
     } on Exception catch (e, st) {
-      final message = 'Secure storage $operation failed';
-      ISpect.logger.handle(exception: e, stackTrace: st, message: message);
-      Error.throwWithStackTrace(CacheException(message: message, cause: e), st);
+      Error.throwWithStackTrace(
+        CacheException(message: 'Secure storage $operation failed', cause: e),
+        st,
+      );
     }
   }
 }

@@ -42,14 +42,7 @@ final class AuthInterceptor extends QueuedInterceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    TokenPair? pair;
-    try {
-      pair = await _tokenStorage.read();
-    } on CacheException {
-      // Already logged by the storage layer; an unreadable token store must
-      // not block the request — it proceeds unauthenticated.
-      pair = null;
-    }
+    final pair = await _read();
     if (pair != null) {
       options.headers[_authHeader] = 'Bearer ${pair.access}';
     }
@@ -129,7 +122,12 @@ final class AuthInterceptor extends QueuedInterceptor {
   Future<TokenPair?> _read() async {
     try {
       return await _tokenStorage.read();
-    } on CacheException {
+    } on CacheException catch (e, st) {
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Token store unreadable, proceeding unauthenticated',
+      );
       return null;
     }
   }
@@ -142,8 +140,12 @@ final class AuthInterceptor extends QueuedInterceptor {
     );
     try {
       await _tokenStorage.clear();
-    } on CacheException {
-      // Logged by the storage layer; revocation still propagates to callers.
+    } on CacheException catch (e, st) {
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Failed to clear tokens during revoke',
+      );
     }
   }
 

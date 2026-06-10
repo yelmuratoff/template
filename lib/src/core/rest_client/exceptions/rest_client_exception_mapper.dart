@@ -18,3 +18,17 @@ extension RestClientExceptionMapper on RestClientException {
     _ => this,
   };
 }
+
+/// Runs [action] at a repository boundary, re-typing any
+/// [RestClientException] into the matching [AppException] via
+/// [RestClientExceptionMapper.toAppException] while preserving the stack.
+///
+/// The transport layer (dio interceptors) already logs the failure, so this
+/// only re-types it — it must not log again.
+Future<T> mapRestErrors<T>(Future<T> Function() action) async {
+  try {
+    return await action();
+  } on RestClientException catch (e, st) {
+    Error.throwWithStackTrace(e.toAppException(), st);
+  }
+}

@@ -7,15 +7,21 @@ extension BlocExceptionHandlerExtension<T> on BlocBase<T> {
   /// Routes a caught exception to [onError] with a normalized
   /// `(message, cause, statusCode)` triple.
   ///
-  /// Known [AppException]s and [RestClientException]s carry their own message;
-  /// anything else is an unexpected (programming) error, so it is reported to
-  /// [ISpect.logger] before falling back to its `toString()`.
+  /// This is the recovery boundary where a failure becomes a UI state, so it
+  /// logs every caught exception exactly once via [ISpect.logger]. The data
+  /// layer that re-types and rethrows the exception stays silent to avoid
+  /// duplicate log entries for one failure.
   void handleException({
     required Object? exception,
     required StackTrace? stackTrace,
     required void Function(String message, Object? cause, int? statusCode)
     onError,
   }) {
+    ISpect.logger.handle(
+      exception: exception ?? 'Unknown null exception',
+      stackTrace: stackTrace,
+      message: 'Handled exception in BLoC.',
+    );
     if (exception is AppException) {
       final (message, cause, statusCode) = switch (exception) {
         NetworkException(:final message, :final cause, :final statusCode) => (
@@ -38,11 +44,6 @@ extension BlocExceptionHandlerExtension<T> on BlocBase<T> {
     } else if (exception is RestClientException) {
       onError(exception.message, exception.cause, exception.statusCode);
     } else {
-      ISpect.logger.handle(
-        exception: exception ?? 'Unknown null exception',
-        stackTrace: stackTrace,
-        message: 'Unhandled exception in BLoC.',
-      );
       onError(exception.toString(), exception, null);
     }
   }

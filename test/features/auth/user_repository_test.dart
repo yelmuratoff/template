@@ -68,10 +68,10 @@ void main() {
       verifyNever(() => localDataSource.write(user: any(named: 'user')));
     });
 
-    test('getCachedUser surfaces a corrupt cache as CacheException', () {
+    test('getCachedUser surfaces a storage failure as CacheException', () {
       when(
         localDataSource.get,
-      ).thenThrow(const CacheException(message: 'corrupt'));
+      ).thenThrow(const CacheException(message: 'keychain unavailable'));
 
       check(repository.getCachedUser).throws<CacheException>();
     });

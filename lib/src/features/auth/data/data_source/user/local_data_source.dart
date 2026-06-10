@@ -5,6 +5,7 @@ import 'package:base_starter/src/core/database/src/preferences/preferences_dao.d
 import 'package:base_starter/src/core/exceptions/app_exception.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
+import 'package:ispect/ispect.dart';
 
 final class UserLocalDataSource extends PreferencesDao
     implements ILocalUserDataSource {
@@ -25,12 +26,23 @@ final class UserLocalDataSource extends PreferencesDao
 
   @override
   UserDTO? get() {
+    final String? source;
     try {
-      final source = _currentUserEntry.read();
-      if (source == null) return null;
-      return UserDTO.fromMap(json.decode(source) as Map<String, dynamic>);
+      source = _currentUserEntry.read();
     } on Object catch (e, st) {
       _throwCacheException('read', e, st);
+    }
+    if (source == null) return null;
+    try {
+      return UserDTO.fromMap(json.decode(source) as Map<String, dynamic>);
+    } on Object catch (e, st) {
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Cached user is corrupt, resetting',
+      );
+      _currentUserEntry.remove().ignore();
+      return null;
     }
   }
 

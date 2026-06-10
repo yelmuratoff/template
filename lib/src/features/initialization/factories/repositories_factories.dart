@@ -3,8 +3,7 @@ import 'package:base_starter/src/features/auth/data/data_source/auth/remote_data
 import 'package:base_starter/src/features/auth/data/data_source/user/local_data_source.dart';
 import 'package:base_starter/src/features/auth/data/data_source/user/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/data/repositories/auth/auth_repository.dart';
-import 'package:base_starter/src/features/auth/data/repositories/user/local_repository.dart';
-import 'package:base_starter/src/features/auth/data/repositories/user/remote_repository.dart';
+import 'package:base_starter/src/features/auth/data/repositories/user/user_repository.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:base_starter/src/features/initialization/models/repositories.dart';
@@ -39,16 +38,16 @@ class RepositoriesFactory implements AsyncFactory<RepositoriesContainer> {
 
     final authRepository = AuthRepository(dataSource: authRemoteDS);
 
-    final userRemoteRepository = RemoteUserRepository(dataSource: userRemoteDS);
-
-    final userLocalRepository = LocalUserRepository(dataSource: userLocalDS);
+    final userRepository = UserRepository(
+      remoteDataSource: userRemoteDS,
+      localDataSource: userLocalDS,
+    );
 
     hook.onInitializing?.call(name);
 
     return RepositoriesContainer(
       authRepository: authRepository,
-      remoteUserRepository: userRemoteRepository,
-      localUserRepository: userLocalRepository,
+      userRepository: userRepository,
     );
   }
 

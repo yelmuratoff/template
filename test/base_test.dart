@@ -2,10 +2,14 @@ import 'core/rest_client/auth_interceptor_test.dart' as auth_interceptor_test;
 import 'core/rest_client/rest_client_base_test.dart' as rest_client_base_test;
 import 'core/rest_client/token_storage_test.dart' as token_storage_test;
 import 'core/storage/secure_storage_test.dart' as secure_storage_test;
+import 'features/auth/auth_repository_test.dart' as auth_repository_test;
+import 'features/auth/user_repository_test.dart' as user_repository_test;
 
 void main() {
   rest_client_base_test.main();
   token_storage_test.main();
   auth_interceptor_test.main();
   secure_storage_test.main();
+  auth_repository_test.main();
+  user_repository_test.main();
 }

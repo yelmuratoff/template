@@ -80,15 +80,15 @@ fvm flutter test      # green
 - [x] Тесты: `auth_interceptor_test.dart` — 8 сценариев (header attach; unauthenticated при сломанном store; refresh+retry; 3×401 → 1 refresh; revoke при 401 на ретрае; revoke при 401 от refresh-эндпоинта; НЕ-revoke при сетевой ошибке; non-401 не трогается); `token_storage_test.dart` — 5 сценариев (round-trip, null, corrupt→reset+emit, save→emit, clear→emit). Итого 56 тестов зелёные
 - [x] Чекпоинт + коммит
 
-## ⬜ Фаза 4 — data layer: маппинг ошибок, cache/fresh split
+## ✅ Фаза 4 — data layer: маппинг ошибок, cache/fresh split (DONE)
 
-- [ ] Datasources (`features/auth/data/data_source/**`): убрать бессмысленные `catch (e) { rethrow; }`; падение `UserDTO.fromMap` → `Error.throwWithStackTrace(ParseException, st)`
-- [ ] **Фикс бага**: `UserLocalDataSource.write` двойное кодирование — `json.encode(user?.toJson())`, где `toJson()` уже возвращает String; чтение кэша юзера из-за этого сломано. Писать `json.encode(user?.toMap())`, null → удаление ключа
-- [ ] Репозитории (`auth_repository.dart` и user): на границе `on RestClientException catch (e, st)` → `ISpect.logger.handle` → маппинг: `ConnectionException`→`NetworkException`, `RequestTimeoutException`→`TimeoutAppException`, `WrongResponseTypeException`→`ParseException`, `CustomBackendException` остаётся (UI нужен payload бэкенда). Бросать через `Error.throwWithStackTrace`
-- [ ] Слить user-репозитории: `LocalUserRepository`+`RemoteUserRepository` → один `UserRepository` с `getCachedUser()` / `getFreshUser()` (fresh пишет кэш) / `clearCache()`; интерфейс в `domain/repositories/user/user_repository.dart`; обновить `RepositoriesContainer`, фабрики, `UserCubit`
-- [ ] `bloc_extension.dart` `handleException`: сначала exhaustive switch по sealed `AppException`, затем `RestClientException`, затем fallback `onError(e.toString(), e, null)` + `ISpect.logger.handle` для unknown-tier
-- [ ] Тесты: `auth_repository_test.dart` (каждый подтип RestClientException → ожидаемый AppException, stack сохранён, logger вызван), `user_repository_test.dart` (cached без remote; fresh обновляет кэш; corrupt cache → CacheException)
-- [ ] Чекпоинт + коммит
+- [x] Datasources (`features/auth/data/data_source/**`): убраны бессмысленные `catch (e) { rethrow; }`; в remote-датасорсах (`auth`, `user`) падение парсинга (`UserDTO.fromMap`, `TokenPair.fromJson`) → `Error.throwWithStackTrace(ParseException, st)`; RestClientException теперь пролетает в репозиторий без обёртки
+- [x] **Фикс бага**: `UserLocalDataSource.write` — двойное кодирование устранено (`json.encode(user.toMap())`, null → удаление ключа через `setIfNullRemove`); чтение/запись кэша юзера восстановлены. Интерфейс `ILocalUserDataSource` уточнён (`Future<void>` для write/clear)
+- [x] Репозитории (`auth_repository.dart`, `user_repository.dart`): на границе `on RestClientException catch (e, st)` → `ISpect.logger.handle` → `e.toAppException()` → `Error.throwWithStackTrace`. Маппинг вынесен в **общий extension** `RestClientExceptionMapper` (`core/rest_client/exceptions/rest_client_exception_mapper.dart`, реальное дублирование на 2 репо): `ConnectionException`→`NetworkException`, `RequestTimeoutException`→`TimeoutAppException`, `WrongResponseTypeException`→`ParseException`, `CustomBackendException` и прочие — возвращаются как есть (UI нужен payload бэкенда)
+- [x] Слиты user-репозитории: `LocalUserRepository`+`RemoteUserRepository` → один `UserRepository` (`getCachedUser()` / `getFreshUser()` пишет кэш / `clearCache()`); интерфейс `IUserRepository` в `domain/repositories/user/user_repository.dart`; старые 4 файла (data+domain local/remote) удалены; обновлены `RepositoriesContainer`, обе фабрики, `UserCubit` (мёртвый `write()` удалён — был только в закомментированном вызове). Local-датасорс на повреждённом кэше бросает `CacheException` (storage-сбой), репозиторий его пропускает
+- [x] `bloc_extension.dart` `handleException`: exhaustive switch по sealed `AppException` (record-деструктуризация → `onError`), затем `RestClientException`, затем unknown-tier `ISpect.logger.handle` + `onError(e.toString(), e, null)`
+- [x] Тесты: `test/features/auth/auth_repository_test.dart` (каждый подтип RestClientException → ожидаемый AppException + сохранённый cause/statusCode/stack; CustomBackendException пролетает as-is; success-пути), `test/features/auth/user_repository_test.dart` (cached без remote; fresh обновляет кэш; transport-fail → AppException без записи кэша; corrupt cache → CacheException; clear делегирует). Добавлены в `base_test.dart`. Итого 78 тестов зелёные
+- [x] Чекпоинт + коммит
 
 ## ⬜ Фаза 5 — BLoC
 

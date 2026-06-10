@@ -1,7 +1,10 @@
+import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception.dart';
+import 'package:base_starter/src/core/rest_client/exceptions/rest_client_exception_mapper.dart';
 import 'package:base_starter/src/core/rest_client/token_pair.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/auth/auth_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
+import 'package:ispect/ispect.dart';
 
 final class AuthRepository implements IAuthRepository {
   const AuthRepository({required this.dataSource});
@@ -10,10 +13,14 @@ final class AuthRepository implements IAuthRepository {
   @override
   Future<UserDTO> getCurrentUser() async {
     try {
-      final user = await dataSource.getCurrentUser();
-      return user;
-    } catch (e) {
-      rethrow;
+      return await dataSource.getCurrentUser();
+    } on RestClientException catch (e, st) {
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Get current user failed.',
+      );
+      Error.throwWithStackTrace(e.toAppException(), st);
     }
   }
 
@@ -23,13 +30,14 @@ final class AuthRepository implements IAuthRepository {
     required String password,
   }) async {
     try {
-      final tokenPair = await dataSource.login(
-        email: email,
-        password: password,
+      return await dataSource.login(email: email, password: password);
+    } on RestClientException catch (e, st) {
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Login failed.',
       );
-      return tokenPair;
-    } catch (e) {
-      rethrow;
+      Error.throwWithStackTrace(e.toAppException(), st);
     }
   }
 }

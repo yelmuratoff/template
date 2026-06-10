@@ -74,10 +74,7 @@ class DependenciesFactory implements AsyncFactory<ComposedDependencies> {
       tokenStorage: network.tokenStorage,
     );
 
-    final userCubit = UserCubit(
-      remoteUserRepository: repositories.remoteUserRepository,
-      localUserRepository: repositories.localUserRepository,
-    );
+    final userCubit = UserCubit(userRepository: repositories.userRepository);
 
     final settingsBloc = await SettingsBlocFactory(
       sharedPreferences: sharedPreferences,

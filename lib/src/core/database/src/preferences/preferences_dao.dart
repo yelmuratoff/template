@@ -59,10 +59,7 @@ abstract base class PreferencesEntry<T extends Object> {
 }
 
 final class _PreferencesEntry<T extends Object> extends PreferencesEntry<T> {
-  _PreferencesEntry({
-    required this._sharedPreferences,
-    required this.key,
-  });
+  _PreferencesEntry({required this._sharedPreferences, required this.key});
 
   final SharedPreferences _sharedPreferences;
 

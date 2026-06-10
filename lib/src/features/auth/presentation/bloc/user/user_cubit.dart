@@ -1,46 +1,23 @@
 import 'package:base_starter/src/features/auth/data/models/user.dart';
-import 'package:base_starter/src/features/auth/domain/repositories/user/local_repository.dart';
-import 'package:base_starter/src/features/auth/domain/repositories/user/remote_repository.dart';
+import 'package:base_starter/src/features/auth/domain/repositories/user/user_repository.dart';
 import 'package:bloc/bloc.dart';
 
 class UserCubit extends Cubit<UserDTO?> {
-  UserCubit({
-    required this.remoteUserRepository,
-    required this.localUserRepository,
-  }) : super(null);
+  UserCubit({required this.userRepository}) : super(null);
 
-  final IRemoteUserRepository remoteUserRepository;
-  final ILocalUserRepository localUserRepository;
+  final IUserRepository userRepository;
 
   Future<void> get() async {
-    try {
-      final localUser = localUserRepository.get();
-      emit(localUser);
-      final remoteUser = await remoteUserRepository.get();
-      if (remoteUser != null && remoteUser != localUser) {
-        localUserRepository.write(user: remoteUser);
-        emit(remoteUser);
-      }
-    } catch (e) {
-      rethrow;
+    final cachedUser = userRepository.getCachedUser();
+    emit(cachedUser);
+    final freshUser = await userRepository.getFreshUser();
+    if (freshUser != null && freshUser != cachedUser) {
+      emit(freshUser);
     }
   }
 
-  void write({required UserDTO user}) {
-    try {
-      localUserRepository.write(user: user);
-      emit(user);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  void clear() {
-    try {
-      localUserRepository.clear();
-      emit(null);
-    } catch (e) {
-      rethrow;
-    }
+  Future<void> clear() async {
+    await userRepository.clearCache();
+    emit(null);
   }
 }

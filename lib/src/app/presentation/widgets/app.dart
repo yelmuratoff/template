@@ -11,40 +11,23 @@ import 'package:flutter/material.dart';
 /// Scopes that don't depend on widgets returned by `MaterialApp`
 /// (`Directionality`, `MediaQuery`, `Localizations`) should be placed here.
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({required this.result, super.key});
-
-  @override
-  State<App> createState() => _AppState();
 
   /// The initialization result from the `InitializationProcessor`
   /// which contains initialized dependencies.
   final CompositionResult result;
 
-  /// Running this function will result in attaching
-  /// corresponding `RenderObject` to the root of the tree.
-  void attach([VoidCallback? callback]) {
-    callback?.call();
-    runApp(this);
-  }
-}
-
-class _AppState extends State<App> {
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) => DependenciesScope(
-    dependencies: widget.result.dependencies,
-    repositories: widget.result.repositories,
+    dependencies: result.dependencies,
+    repositories: result.repositories,
     child: SettingsScope(
-      settingsBloc: widget.result.dependencies.settingsBloc,
+      settingsBloc: result.dependencies.settingsBloc,
       child: AuthScope(
-        authBloc: widget.result.dependencies.authBloc,
+        authBloc: result.dependencies.authBloc,
         child: UserScope(
-          userBloc: widget.result.dependencies.userBloc,
+          userBloc: result.dependencies.userBloc,
           child: const MaterialContext(),
         ),
       ),

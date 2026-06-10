@@ -249,6 +249,33 @@ void main() {
     );
 
     test(
+      'recovers to [Loading, Unauthenticated] when the token read fails',
+      () async {
+        final observer = _RecordingBlocObserver();
+        final previousObserver = Bloc.observer;
+        Bloc.observer = observer;
+        addTearDown(() => Bloc.observer = previousObserver);
+
+        when(
+          tokenStorage.read,
+        ).thenThrow(const CacheException(message: 'keystore unavailable'));
+
+        final bloc = buildBloc();
+        final states = await recordStates(
+          bloc,
+          () => bloc.add(const CheckStatusAuthEvent()),
+        );
+
+        check(states).deepEquals([
+          const LoadingAuthState(),
+          const UnauthenticatedAuthState(),
+        ]);
+        check(observer.errors).isEmpty();
+        await bloc.close();
+      },
+    );
+
+    test(
       'emits Unauthenticated when the session is revoked while authenticated',
       () async {
         when(tokenStorage.read).thenAnswer((_) async => tokenPair);

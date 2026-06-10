@@ -3,6 +3,7 @@
 // upstream; the bottom-nav tabs depend on it.
 import 'package:base_starter/src/app/router/routes/app_routes.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:yx_navigation/yx_navigation.dart';
@@ -39,16 +40,16 @@ class RootView extends StatelessWidget {
           ],
         ),
         child: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusLinear.home),
-              activeIcon: Icon(IconsaxPlusBold.home),
-              label: 'Home',
+              icon: const Icon(IconsaxPlusLinear.home),
+              activeIcon: const Icon(IconsaxPlusBold.home),
+              label: L10n.current.home,
             ),
             BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusLinear.user_square),
-              activeIcon: Icon(IconsaxPlusBold.user_square),
-              label: 'Profile',
+              icon: const Icon(IconsaxPlusLinear.user_square),
+              activeIcon: const Icon(IconsaxPlusBold.user_square),
+              label: L10n.current.profile,
             ),
           ],
           currentIndex: currentIndex,

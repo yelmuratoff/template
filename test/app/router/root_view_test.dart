@@ -2,6 +2,7 @@
 
 import 'package:base_starter/src/app/presentation/screens/root_screen.dart';
 import 'package:base_starter/src/app/router/routes/app_routes.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:checks/checks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,6 +29,8 @@ class _FakeActiveRouteController implements ActiveRouteController {
 }
 
 void main() {
+  setUpAll(() => L10n.load(const Locale('en')));
+
   group('RootView', () {
     testWidgets('renders the home and profile tabs', (tester) async {
       await tester.pumpWidget(
@@ -39,8 +42,8 @@ void main() {
         ),
       );
 
-      expect(find.text('Home'), findsOneWidget);
-      expect(find.text('Profile'), findsOneWidget);
+      expect(find.text(L10n.current.home), findsOneWidget);
+      expect(find.text(L10n.current.profile), findsOneWidget);
     });
 
     testWidgets('tapping a tab switches the active route', (tester) async {

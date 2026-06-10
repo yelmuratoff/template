@@ -7,6 +7,7 @@ import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_r
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
+import 'package:ispect/ispect.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -58,15 +59,31 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onCheckStatus(
     CheckStatusAuthEvent event,
     Emitter<AuthState> emit,
-  ) => guard(emit: emit, errorState: _error, reportBug: onError, () async {
+  ) async {
     emit(const LoadingAuthState());
-    final tokenPair = await _tokenStorage.read();
-    emit(
-      tokenPair != null
+    emit(await _readSession());
+  }
+
+  /// Resolves the restored session state.
+  ///
+  /// An unreadable token store recovers to [UnauthenticatedAuthState] rather
+  /// than an error state: the splash screen routes only off the authenticated/
+  /// unauthenticated split, so surfacing an error here would strand the user.
+  Future<AuthState> _readSession() async {
+    try {
+      final tokenPair = await _tokenStorage.read();
+      return tokenPair != null
           ? const AuthenticatedAuthState()
-          : const UnauthenticatedAuthState(),
-    );
-  });
+          : const UnauthenticatedAuthState();
+    } on Exception catch (e, st) {
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Session check failed; treating as signed out.',
+      );
+      return const UnauthenticatedAuthState();
+    }
+  }
 
   void _onTokenRevoked(_TokenRevokedAuthEvent event, Emitter<AuthState> emit) {
     emit(const UnauthenticatedAuthState());

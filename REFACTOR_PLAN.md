@@ -137,8 +137,8 @@ fvm flutter test      # green
 
 - [x] (сделано досрочно в рамках Фазы 5) Удалён мёртвый `DioInterceptor` (локализовал ошибки через `L10n` на транспортном слое — нарушение слоёв; после Фазы 3 никем не создавался) вместе с `ExceptionKeys` и блоком `@_Errors_messages` в трёх ARB; l10n перегенерирован
 - [ ] `fvm flutter pub outdated` повторно; убедиться что `flutter_easyloading`, `iconsax_plus`, `auto_size_text`, `gap` ещё используются (иначе удалить)
-- [ ] Хвосты ревью Фазы 7: удалить мёртвый `App.attach()` и no-op `_AppState.dispose()` (`app.dart`); локализовать `'Home'`/`'Profile'` в `root_screen.dart` (правило localization: все user-visible строки из l10n); `splash.dart` — хардкод `Color(0xff1468AD)` → тема/токен
-- [ ] **Решить**: `ErrorAuthState` при `CheckStatusAuthEvent` (например, `CacheException` из secure storage) — `NavigationManager` его игнорирует → юзер застревает на сплэше. Варианты: трактовать как `Unauthenticated` (consistent с recover-from-corruption правилом) или retry-UI на сплэше
+- [x] Хвосты ревью Фазы 7: `App` → `StatelessWidget` (мёртвый `App.attach()` и no-op `_AppState.dispose()` удалены); `'Home'`/`'Profile'` в `root_screen.dart` → `L10n.current.home`/`.profile` (items больше не `const`; `root_view_test` грузит `L10n.load(en)`); `splash.dart` — `Color(0xff1468AD)` → `context.theme.colorScheme.primary`
+- [x] **Решено** (трактуем как `Unauthenticated`, consistent с recover-from-corruption): `_onCheckStatus` больше не идёт через `guard` — приватный `_readSession()` ловит `on Exception` (вкл. `CacheException`), логирует через `ISpect.logger.handle` и возвращает `UnauthenticatedAuthState`; `Error`-подтипы пролетают (краш → репорт). Сплэш не зависает. Тест `recovers to [Loading, Unauthenticated] when the token read fails` (+ observer НЕ получает onError) добавлен
 - [ ] Актуализировать `docs/STRUCTURE.md` и `README.md`: новый роутер, схема исключений, DI-граф, секция token refresh
 - [ ] Полная верификация: format, analyze, полный `flutter test`, debug-сборки обоих flavors, ручной smoke-сценарий из Фазы 6
 - [ ] Финальный коммит

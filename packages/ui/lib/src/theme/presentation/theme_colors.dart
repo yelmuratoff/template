@@ -100,33 +100,29 @@ final class ThemeColors extends Equatable implements IColors {
     Color? success,
     Color? shimmerBase,
     Color? shimmerHighlight,
-  }) =>
-      ThemeColors(
-        card: card ?? this.card,
-        divider: divider ?? this.divider,
-        text: text ?? this.text,
-        primary: primary ?? this.primary,
-        onPrimary: onPrimary ?? this.onPrimary,
-        secondary: secondary ?? this.secondary,
-        onSecondary: onSecondary ?? this.onSecondary,
-        error: error ?? this.error,
-        onError: onError ?? this.onError,
-        background: background ?? this.background,
-        onBackground: onBackground ?? this.onBackground,
-        surface: surface ?? this.surface,
-        onSurface: onSurface ?? this.onSurface,
-        border: border ?? this.border,
-        shadow: shadow ?? this.shadow,
-        success: success ?? this.success,
-        shimmerBase: shimmerBase ?? this.shimmerBase,
-        shimmerHighlight: shimmerHighlight ?? this.shimmerHighlight,
-      );
+  }) => ThemeColors(
+    card: card ?? this.card,
+    divider: divider ?? this.divider,
+    text: text ?? this.text,
+    primary: primary ?? this.primary,
+    onPrimary: onPrimary ?? this.onPrimary,
+    secondary: secondary ?? this.secondary,
+    onSecondary: onSecondary ?? this.onSecondary,
+    error: error ?? this.error,
+    onError: onError ?? this.onError,
+    background: background ?? this.background,
+    onBackground: onBackground ?? this.onBackground,
+    surface: surface ?? this.surface,
+    onSurface: onSurface ?? this.onSurface,
+    border: border ?? this.border,
+    shadow: shadow ?? this.shadow,
+    success: success ?? this.success,
+    shimmerBase: shimmerBase ?? this.shimmerBase,
+    shimmerHighlight: shimmerHighlight ?? this.shimmerHighlight,
+  );
 
   @override
-  ThemeColors lerp(
-    covariant ThemeColors? other,
-    double t,
-  ) {
+  ThemeColors lerp(covariant ThemeColors? other, double t) {
     if (other is! ThemeColors) {
       return this;
     }
@@ -149,32 +145,35 @@ final class ThemeColors extends Equatable implements IColors {
       shadow: Color.lerp(shadow, other.shadow, t)!,
       success: Color.lerp(success, other.success, t)!,
       shimmerBase: Color.lerp(shimmerBase, other.shimmerBase, t)!,
-      shimmerHighlight:
-          Color.lerp(shimmerHighlight, other.shimmerHighlight, t)!,
+      shimmerHighlight: Color.lerp(
+        shimmerHighlight,
+        other.shimmerHighlight,
+        t,
+      )!,
     );
   }
 
   @override
   List<Object?> get props => [
-        card,
-        divider,
-        text,
-        primary,
-        onPrimary,
-        secondary,
-        onSecondary,
-        error,
-        onError,
-        background,
-        onBackground,
-        surface,
-        onSurface,
-        border,
-        shadow,
-        success,
-        shimmerBase,
-        shimmerHighlight,
-      ];
+    card,
+    divider,
+    text,
+    primary,
+    onPrimary,
+    secondary,
+    onSecondary,
+    error,
+    onError,
+    background,
+    onBackground,
+    surface,
+    onSurface,
+    border,
+    shadow,
+    success,
+    shimmerBase,
+    shimmerHighlight,
+  ];
 
   @override
   Object get type => IColors;

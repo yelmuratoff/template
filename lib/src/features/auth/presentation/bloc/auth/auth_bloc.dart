@@ -1,80 +1,96 @@
+import 'dart:async';
+
 import 'package:base_starter/src/common/utils/extensions/bloc_extension.dart';
-import 'package:base_starter/src/common/utils/utils.dart';
-import 'package:base_starter/src/core/database/src/preferences/secure_storage_manager.dart';
 import 'package:base_starter/src/features/auth/domain/repositories/auth/remote_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
+import 'package:ispect/ispect.dart';
+import 'package:rest_client/rest_client.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc({required this.repository}) : super(const InitialAuthState()) {
-    on<AuthEvent>(
-      (event, emit) => switch (event) {
-        final LoginAuthEvent e => _onLogin(e, emit),
-        final GetCurrentUserAuthEvent _ => _onGetCurrentUser(emit),
-        final LogoutAuthEvent _ => _onLogout(emit),
-      },
-    );
-  }
-  final IAuthRepository repository;
+  AuthBloc({required this.repository, required this._tokenStorage})
+    : super(const InitialAuthState()) {
+    on<LoginAuthEvent>(_onLogin, transformer: droppable());
+    on<LogoutAuthEvent>(_onLogout, transformer: droppable());
+    on<CheckStatusAuthEvent>(_onCheckStatus, transformer: restartable());
+    on<_TokenRevokedAuthEvent>(_onTokenRevoked);
 
-  Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) async {
-    try {
-      emit(const LoadingAuthState());
-      final tokenPair = await repository.login(
-        email: event.email,
-        password: event.password,
-      );
-      if (tokenPair != null) {
-        await SecureStorageManager.setToken(value: tokenPair);
-
-        emit(const AuthenticatedAuthState());
+    _revocationSubscription = _tokenStorage.changes.listen((pair) {
+      if (pair == null && state is AuthenticatedAuthState) {
+        add(const _TokenRevokedAuthEvent());
       }
-    } catch (e, st) {
-      handleException(
-        exception: e,
-        stackTrace: st,
-        onError: (message, cause, _) {
-          emit(ErrorAuthState(cause: cause, message: message));
-        },
-      );
-    }
+    });
   }
 
-  Future<void> _onLogout(Emitter<AuthState> emit) async {
-    try {
-      emit(const LoadingAuthState());
-      await AppUtils.exit();
-      emit(const InitialAuthState());
-    } catch (e, st) {
-      handleException(
-        exception: e,
-        stackTrace: st,
-        onError: (message, cause, _) {
-          emit(ErrorAuthState(cause: cause, message: message));
-        },
-      );
-    }
-  }
+  final IAuthRepository repository;
+  final TokenStorage _tokenStorage;
+  late final StreamSubscription<TokenPair?> _revocationSubscription;
 
-  Future<void> _onGetCurrentUser(
+  static AuthState _error(Object _, String message, Object? cause, int? _) =>
+      ErrorAuthState(message: message, cause: cause);
+
+  Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) =>
+      guard(emit: emit, errorState: _error, reportBug: onError, () async {
+        emit(const LoadingAuthState());
+        final tokenPair = await repository.login(
+          email: event.email,
+          password: event.password,
+        );
+        if (tokenPair == null) {
+          emit(const UnauthenticatedAuthState());
+          return;
+        }
+        await _tokenStorage.save(tokenPair);
+        emit(const AuthenticatedAuthState());
+      });
+
+  Future<void> _onLogout(LogoutAuthEvent event, Emitter<AuthState> emit) =>
+      guard(emit: emit, errorState: _error, reportBug: onError, () async {
+        emit(const LoadingAuthState());
+        await _tokenStorage.clear();
+        emit(const UnauthenticatedAuthState());
+      });
+
+  Future<void> _onCheckStatus(
+    CheckStatusAuthEvent event,
     Emitter<AuthState> emit,
   ) async {
-    try {
-      emit(const LoadingAuthState());
-      await repository.getCurrentUser();
+    emit(const LoadingAuthState());
+    emit(await _readSession());
+  }
 
-      emit(const AuthenticatedAuthState());
-    } catch (e, st) {
-      handleException(
+  /// Resolves the restored session state.
+  ///
+  /// An unreadable token store recovers to [UnauthenticatedAuthState] rather
+  /// than an error state: the splash screen routes only off the authenticated/
+  /// unauthenticated split, so surfacing an error here would strand the user.
+  Future<AuthState> _readSession() async {
+    try {
+      final tokenPair = await _tokenStorage.read();
+      return tokenPair != null
+          ? const AuthenticatedAuthState()
+          : const UnauthenticatedAuthState();
+    } on Exception catch (e, st) {
+      ISpect.logger.handle(
         exception: e,
         stackTrace: st,
-        onError: (message, cause, _) {
-          emit(ErrorAuthState(cause: cause, message: message));
-        },
+        message: 'Session check failed; treating as signed out.',
       );
+      return const UnauthenticatedAuthState();
     }
+  }
+
+  void _onTokenRevoked(_TokenRevokedAuthEvent event, Emitter<AuthState> emit) {
+    emit(const UnauthenticatedAuthState());
+  }
+
+  @override
+  Future<void> close() {
+    _revocationSubscription.cancel();
+    return super.close();
   }
 }

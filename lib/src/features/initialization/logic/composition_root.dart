@@ -1,56 +1,202 @@
-import 'package:base_starter/src/features/initialization/factories/dependencies_factories.dart';
-import 'package:base_starter/src/features/initialization/factories/repositories_factories.dart';
+import 'package:base_starter/flavors.dart';
+import 'package:base_starter/src/app/router/navigation_manager.dart';
+import 'package:base_starter/src/common/constants/app_constants.dart';
+import 'package:base_starter/src/common/constants/preferences.dart';
+import 'package:base_starter/src/core/database/database.dart';
+import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
+import 'package:base_starter/src/features/auth/data/data_source/auth/remote_data_source.dart';
+import 'package:base_starter/src/features/auth/data/data_source/user/local_data_source.dart';
+import 'package:base_starter/src/features/auth/data/data_source/user/remote_data_source.dart';
+import 'package:base_starter/src/features/auth/data/repositories/auth/auth_repository.dart';
+import 'package:base_starter/src/features/auth/data/repositories/user/user_repository.dart';
+import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
-import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:base_starter/src/features/initialization/models/repositories.dart';
+import 'package:base_starter/src/features/settings/data/locale/locale_datasource.dart';
+import 'package:base_starter/src/features/settings/data/locale/locale_repository.dart';
+import 'package:base_starter/src/features/settings/data/theme/theme_datasource.dart';
+import 'package:base_starter/src/features/settings/data/theme/theme_mode_codec.dart';
+import 'package:base_starter/src/features/settings/data/theme/theme_repository.dart';
+import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:clock/clock.dart';
+import 'package:database/database.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ispect/ispect.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rest_client/rest_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/// A place where all dependencies are initialized.
+/// The single composition root: every app-wide dependency is created and wired
+/// here, exactly once, so the whole object graph lives in one place.
 ///
-/// Composition of dependencies is a process of creating and configuring
-/// instances of classes that are required for the application to work.
-///
-/// It is a good practice to keep all dependencies in one place to make it
-/// easier to manage them and to ensure that they are initialized only once.
-
+/// Composition is plain async functions rather than a factory hierarchy — the
+/// graph is small and built linearly, so the indirection earned nothing.
 final class CompositionRoot {
-  const CompositionRoot({
-    required this.hook,
-  });
+  const CompositionRoot();
 
-  final InitializationHook hook;
-
-  /// Composes dependencies and returns result of composition.
+  /// Builds the dependency graph and reports how long it took.
   Future<CompositionResult> compose() async {
     final stopwatch = clock.stopwatch()..start();
-
     ISpect.logger.info('🌀 Initializing dependencies...');
 
-    // initialize dependencies
-    final dependencies = await DependenciesFactory(
-      hook: hook,
-    ).create();
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final packageInfo = await PackageInfo.fromPlatform();
 
-    // initialize repositories
-    final repositories = await RepositoriesFactory(
-      hook: hook,
-      restClient: dependencies.restClient,
-      sharedPreferences: dependencies.sharedPreferences,
-    ).create();
+    const secureStorage = FlutterSecureStorageWrapper(
+      storage: FlutterSecureStorage(
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+      ),
+    );
+
+    final appConfig = await _createConfig(sharedPreferences);
+
+    if (appConfig.isFirstRun) {
+      await secureStorage.deleteAll();
+      await appConfig.setFirstRun(value: false);
+    }
+
+    final appDatabase = AppDatabase();
+
+    final network = _createRestClient(secureStorage);
+    final repositories = _createRepositories(
+      restClient: network.restClient,
+      sharedPreferences: sharedPreferences,
+    );
+    final settingsBloc = await _createSettingsBloc(sharedPreferences);
+
+    final authBloc = AuthBloc(
+      repository: repositories.authRepository,
+      tokenStorage: network.tokenStorage,
+    );
+    final userBloc = UserBloc(userRepository: repositories.userRepository);
+
+    final dependencies = DependenciesContainer(
+      packageInfo: packageInfo,
+      sharedPreferences: sharedPreferences,
+      secureStorage: secureStorage,
+      tokenStorage: network.tokenStorage,
+      appConfig: appConfig,
+      appDatabase: appDatabase,
+      restClient: network.restClient,
+      authBloc: authBloc,
+      userBloc: userBloc,
+      settingsBloc: settingsBloc,
+      navigationManager: NavigationManager(
+        authBloc: authBloc,
+        userBloc: userBloc,
+      ),
+    );
 
     stopwatch.stop();
-    final result = CompositionResult(
+    return CompositionResult(
       dependencies: dependencies,
       repositories: repositories,
       millisecondsSpent: stopwatch.elapsedMilliseconds,
     );
+  }
 
-    return result;
+  Future<AppConfigManager> _createConfig(
+    SharedPreferences sharedPreferences,
+  ) async {
+    final appConfig = AppConfigManager(sharedPreferences: sharedPreferences);
+
+    final environment = sharedPreferences.getString(Preferences.environment);
+    if (environment == null) {
+      await sharedPreferences.setString(
+        Preferences.environment,
+        Flavor.prod.name,
+      );
+    }
+
+    return appConfig;
+  }
+
+  /// Builds the networking stack exactly once: token storage, the bare
+  /// refresh/retry [Dio], the authorized [Dio] and the [RestClientBase] on top.
+  ({RestClientBase restClient, TokenStorage tokenStorage}) _createRestClient(
+    SecureStorage secureStorage,
+  ) {
+    final tokenStorage = SecureTokenStorage(storage: secureStorage);
+
+    final plainDio = Dio(
+      BaseOptions(
+        baseUrl: AppConstants.baseUrl,
+        connectTimeout: RestClientTimeouts.connect,
+        sendTimeout: RestClientTimeouts.send,
+        receiveTimeout: RestClientTimeouts.receive,
+      ),
+    );
+
+    final dioClient = DioClient(
+      baseUrl: AppConstants.baseUrl,
+      interceptors: [
+        AuthInterceptor(tokenStorage: tokenStorage, plainDio: plainDio),
+      ],
+    );
+
+    final restClient = RestClientDio(
+      baseUrl: AppConstants.baseUrl,
+      dio: dioClient.dio,
+    );
+
+    return (restClient: restClient, tokenStorage: tokenStorage);
+  }
+
+  RepositoriesContainer _createRepositories({
+    required RestClientBase restClient,
+    required SharedPreferences sharedPreferences,
+  }) {
+    final authRepository = AuthRepository(
+      dataSource: AuthRemoteDataSource(restClient: restClient),
+    );
+
+    final userRepository = UserRepository(
+      remoteDataSource: UserRemoteDataSource(restClient: restClient),
+      localDataSource: UserLocalDataSource(
+        sharedPreferences: sharedPreferences,
+      ),
+    );
+
+    return RepositoriesContainer(
+      authRepository: authRepository,
+      userRepository: userRepository,
+    );
+  }
+
+  Future<SettingsBloc> _createSettingsBloc(
+    SharedPreferences sharedPreferences,
+  ) async {
+    final localeRepository = LocaleRepository(
+      localeDataSource: LocaleDataSourceLocal(
+        sharedPreferences: sharedPreferences,
+      ),
+    );
+
+    final themeRepository = ThemeRepository(
+      themeDataSource: ThemeDataSourceLocal(
+        sharedPreferences: sharedPreferences,
+        codec: const ThemeModeCodec(),
+      ),
+    );
+
+    final localeFuture = localeRepository.getLocale();
+    final theme = await themeRepository.getTheme();
+    final locale = await localeFuture ?? L10n.computeDefaultLocale;
+
+    L10n.load(locale);
+
+    return SettingsBloc(
+      localeRepository: localeRepository,
+      themeRepository: themeRepository,
+      initialState: IdleSettingsState(appTheme: theme, locale: locale),
+    );
   }
 }
 
-/// Result of composition
+/// Result of composition.
 final class CompositionResult {
   const CompositionResult({
     required this.dependencies,
@@ -58,45 +204,20 @@ final class CompositionResult {
     required this.millisecondsSpent,
   });
 
-  /// The dependencies container
+  /// The dependencies container.
   final DependenciesContainer dependencies;
 
-  /// The repositories container
+  /// The repositories container.
   final RepositoriesContainer repositories;
 
-  /// The number of milliseconds spent
+  /// The number of milliseconds spent composing.
   final int millisecondsSpent;
 
   @override
-  String toString() => '$CompositionResult('
+  String toString() =>
+      '$CompositionResult('
       '\ndependencies: $dependencies, '
       '\nrepositories: $repositories, '
       '\nmillisecondsSpent: $millisecondsSpent'
       ')';
-}
-
-/// Factory that creates an instance of [T].
-abstract interface class Factory<T> {
-  const Factory();
-
-  /// Creates an instance of [T].
-  T create();
-
-  /// Name of the factory.
-  String get name => throw UnimplementedError();
-}
-
-/// Factory that creates an instance of [T] asynchronously.
-abstract interface class AsyncFactory<T> {
-  const AsyncFactory({
-    required this.hook,
-  });
-
-  final InitializationHook hook;
-
-  /// Creates an instance of [T].
-  Future<T> create();
-
-  /// Name of the factory.
-  String get name => throw UnimplementedError();
 }

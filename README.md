@@ -18,8 +18,8 @@ To utilize this repository, simply click on the "Use this template" button. The 
 
 - 🔥 Included in the ISpect tool
    - ✅ Draggable button for route to ISpect page, manage Inspector tools
-   - ✅ Localizations: ru, en. (I will add more translations in the future.)
-   - ✅ Talker logger implementation: BLoC, Dio, Routing, Provider
+   - ✅ Localizations: en, ru, kk. (I will add more translations in the future.)
+   - ✅ Talker logger implementation: BLoC, Dio, Routing
    - ✅ Feedback builder
    - ✅ Debug tools
    - ✅ Cache manager
@@ -32,13 +32,61 @@ To utilize this repository, simply click on the "Use this template" button. The 
 - 🐛 Bug reporting, error tracking, and analytical capabilities
 - 😌 Themes and additional amenities
 
+## Architecture
+
+Feature-first Clean Architecture (`presentation → (domain) → data`) with
+**BLoC** state management and **Pure DI** (a single composition root, no service
+locator). The full picture — startup flow, directory layout, DI graph, routing,
+the exception scheme, and token refresh — lives in
+[`docs/STRUCTURE.md`](docs/STRUCTURE.md). At a glance:
+
+- **DI** — everything is built once in `CompositionRoot.compose()` and exposed
+  through `InheritedWidget` scopes; read it with `context.dependencies` and the
+  feature scopes (`AuthScope`, `UserScope`, `SettingsScope`).
+- **Routing** — `yx_navigation`; `NavigationManager` owns the route state and
+  guard pipeline and reacts to `AuthBloc` (no navigation from the data layer).
+- **Errors** — one sealed `AppException` family; the transport
+  `RestClientException` is mapped to it at the repository boundary, and BLoCs
+  funnel failures through a single `guard` helper.
+- **Auth** — tokens live only in `flutter_secure_storage`; a `QueuedInterceptor`
+  serializes refresh (one refresh for N concurrent 401s, one retry) and a
+  broadcast `TokenStorage.changes` stream drives the revoke loop.
+
+### Packages (monorepo)
+
+App-agnostic, independently testable code lives in [Pub Workspace](https://dart.dev/tools/pub/workspaces)
+members under `packages/` (single shared lockfile, `resolution: workspace`). The
+app (`base_starter`) keeps only features and app-specific wiring. Dependencies
+flow one way — a package never imports app code:
+
+```
+core  ◄── database  ◄── rest_client          ui
+  ▲          ▲              ▲                  ▲
+  └──────────┴──────────────┴──────────────────┴──── base_starter (app)
+```
+
+- **`core`** — shared kernel: the sealed `AppException` family and the platform
+  `FileService`. Zero app coupling; everything else depends on it.
+- **`database`** — persistence infrastructure: Drift `QueryExecutor` (native/web),
+  the typed `PreferencesDao`, and `SecureStorage`. The concrete `AppDatabase`
+  schema and `AppConfigManager` stay in the app.
+- **`rest_client`** — Dio-backed REST client, auth interceptor, and
+  `SecureTokenStorage`. Maps transport errors to `core`'s `AppException`.
+- **`ui`** — design system: theme (`IColors`/`ITextStyles`), shimmer, and the
+  reusable widgets (toaster, dialogs, buttons, text field, bottom sheet,
+  builders). Widgets are theme-driven and take strings/images as parameters, so
+  they hold no l10n or asset coupling back to the app.
+
+Graduate a folder to a package only when it is shared across features, needs an
+independent test cycle, or wants separate ownership — not by default.
+
 ## How to guides
 
 ### .env config
 1. You must add .env file to .gitignore
 2. Add you API url and other configs to .env file
 3. Add fields also to .env.example file
-4. Configure env in `lib/src/common/configs/env/env.dart`. Like this:
+4. Configure env in `lib/src/core/env/env.dart`. Like this:
 ```dart
 final class Env {
  @EnviedField(varName: 'FIELD_NAME', useConstantCase: true)
@@ -63,6 +111,12 @@ Simple example of use `ISpect`<br>
 You can manage ISpect using `ISpect.read(context)`.
 Put this code in your project at an screen and learn how it works. 😊
 
+Since ISpect 4.7.0 the tool is compiled out of the binary by default. Run the app with the build flag to enable it (already wired into the `[DEV]` launch configurations in `.vscode/launch.json`):
+
+```bash
+flutter run --dart-define=ISPECT_ENABLED=true
+```
+
 <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start;">
   <img src="https://github.com/K1yoshiSho/packages_assets/blob/main/assets/ispect/preview_usage.gif?raw=true"
   alt="ISpect's example" width="250" style="margin-right: 10px;"/>
@@ -83,13 +137,11 @@ Put this code in your project at an screen and learn how it works. 😊
 
 ### How to add a new dependency
 
-**This section describes how to add a new dependency to your app.** Please, check the [initialization](#initialization) section before.
+**This section describes how to add a new app-wide dependency.**
 
-1. Open `lib/src/common/di/containers/dependencies.dart`
-2. Add new dependency to `Dependencies` container
-3. Go to `lib/src/feature/initialization/logic/initialization_steps.dart`
-4. Add new entry to the map and write down all the logic needed to initialize your dependency and set it in the `Dependencies` object
-5. Now, you can use the dependency in the app receiving it from context: `context.dependencies.name`
+1. Add a field for it to `DependenciesContainer` in `lib/src/features/initialization/models/dependencies.dart` (or `RepositoriesContainer` in `repositories.dart` for a repository).
+2. Create and wire it inside `CompositionRoot.compose()` in `lib/src/features/initialization/logic/composition_root.dart` — add it to the relevant `_create*` method and pass it into the container.
+3. Now you can read it anywhere from context: `context.dependencies.name`.
 
 ### How do add flavors correctly:
 You can use template from `very_good_cli``.

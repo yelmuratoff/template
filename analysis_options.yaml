@@ -1,14 +1,11 @@
 analyzer:
-  plugins:
-    - custom_lint
-
   exclude:
     - build/**
     - "**/*.freezed.dart"
     - "**/*.g.dart"
     - "**/*.gr.dart"
     - "**/*.gen.dart"
-    - "lib/src/core/localization/generated/**"
+    - "lib/src/core/l10n/generated/**"
   language:
     strict-casts: true
     strict-inference: true
@@ -27,7 +24,6 @@ linter:
   rules:
     - always_declare_return_types
     - always_put_required_named_parameters_first
-    - always_require_non_null_named_parameters
     - always_use_package_imports
     - annotate_overrides
     - avoid_annotating_with_dynamic
@@ -46,7 +42,6 @@ linter:
     - avoid_init_to_null
     - avoid_js_rounded_ints
     - avoid_multiple_declarations_per_line
-    - avoid_null_checks_in_equality_operators
     - avoid_positional_boolean_parameters
     - avoid_print
     - avoid_returning_this
@@ -56,7 +51,6 @@ linter:
     - avoid_renaming_method_parameters
     - avoid_types_on_closure_parameters
     - avoid_return_types_on_setters
-    - avoid_returning_null_for_future
     - avoid_returning_null_for_void
     - avoid_setters_without_getters
     - avoid_shadowing_type_parameters
@@ -98,7 +92,6 @@ linter:
     - implementation_imports
     - implicit_reopen
     - invalid_case_patterns
-    - iterable_contains_unrelated_type
     - join_return_with_assignment
     # - leading_newlines_in_multiline_strings
     - library_names
@@ -108,7 +101,6 @@ linter:
     - library_private_types_in_public_api
     - matching_super_parameters
     - missing_whitespace_between_adjacent_strings
-    - list_remove_unrelated_type
     - literal_only_boolean_expressions
     - no_adjacent_strings_in_list
     - no_leading_underscores_for_library_prefixes
@@ -135,7 +127,6 @@ linter:
     - prefer_constructors_over_static_methods
     - prefer_contains
     - prefer_expression_function_bodies
-    - prefer_equal_for_default_values
     - prefer_adjacent_string_concatenation
     - prefer_final_fields
     - prefer_final_in_for_each
@@ -166,6 +157,7 @@ linter:
     - recursive_getters
     - require_trailing_commas
     - secure_pubspec_urls
+    - simplify_variable_pattern
     - sized_box_for_whitespace
     - sized_box_shrink_expand
     - slash_for_doc_comments
@@ -205,14 +197,12 @@ linter:
     - unreachable_from_main
     - unnecessary_this
     - unrelated_type_equality_checks
-    - unsafe_html
     - use_build_context_synchronously
     - use_colored_box
     - use_enums
     - use_decorated_box
     - use_full_hex_values_for_flutter_colors
     - use_function_type_syntax_for_parameters
-    - use_if_null_to_convert_nulls_to_bools
     - use_is_even_rather_than_modulo
     - use_named_constants
     - use_raw_strings
@@ -321,45 +311,36 @@ dart_code_metrics:
     - prefer-single-widget-per-file:
         ignore-private-widgets: true
 
-custom_lint:
-  debug: false,
-  verbose: false,
-  rules:
-    - always_put_doc_comments_before_annotations
-    - always_specify_parameter_names
-    # - avoid_abbreviations_in_doc_comments
-    # - avoid_dynamic
-    - avoid_empty_blocks
-    - avoid_inverted_boolean_expressions
-    # - avoid_mutable_global_variables
-    # - avoid_nested_if
-    - avoid_positional_fields_in_records
-    - avoid_redundant_pattern_field_names
-    - avoid_unused_parameters
-    - no_duplicate_imports
-    - no_self_comparisons
-    - prefer_async_await
-    - prefer_const_constructor_declarations
-    - prefer_iterable_any
-    - prefer_iterable_every
-    - prefer_iterable_first
-    - prefer_iterable_last
-    - prefer_library_prefixes
-    - prefer_underscore_for_unused_callback_parameters
-    - unnecessary_nullable_return_type
-    - avoid_returning_widgets
-    # - avoid_single_child_in_flex
-    - avoid_public_members_in_states
-    - dispose_controllers
-    - prefer_async_callback
-    - prefer_border_from_border_side
-    - prefer_border_radius_all
-    - prefer_dedicated_media_query_functions
-    - prefer_text_rich
-    - prefer_void_callback
-    - proper_edge_insets_constructors
-    - proper_expanded_and_flexible
-    - proper_from_environment
-    - proper_super_dispose
-    - proper_super_init_state
-    - use_spacer
+plugins:
+  pyramid_lint:
+    version: ^3.0.0
+    diagnostics:
+      always_put_doc_comments_before_annotations: true
+      always_specify_parameter_names: true
+      avoid_empty_blocks: true
+      avoid_positional_fields_in_records: true
+      avoid_unused_parameters: true
+      no_duplicate_imports: true
+      no_self_comparisons: true
+      prefer_async_await: true
+      prefer_iterable_any: true
+      prefer_iterable_every: true
+      prefer_iterable_first: true
+      prefer_iterable_last: true
+      prefer_library_prefixes: true
+      prefer_underscore_for_unused_callback_parameters: true
+      unnecessary_nullable_return_type: true
+      avoid_public_members_in_states: true
+      dispose_controllers: true
+      prefer_async_callback: true
+      prefer_border_from_border_side: true
+      prefer_border_radius_all: true
+      prefer_dedicated_media_query_functions: true
+      prefer_text_rich: true
+      prefer_void_callback: true
+      proper_edge_insets_constructors: true
+      proper_expanded_and_flexible: true
+      proper_from_environment: true
+      proper_super_dispose: true
+      proper_super_init_state: true
+      use_spacer: true

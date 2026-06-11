@@ -19,16 +19,15 @@ class ShimmerBox extends StatelessWidget {
     double radius = 12,
     ShimmerDirection? direction,
     BoxBorder? border,
-  }) =>
-      ShimmerBox(
-        width: width,
-        height: height,
-        radius: radius,
-        color: const Color(0xffEAECED),
-        backgroundColor: const Color(0xFFFFFFFF),
-        direction: direction,
-        border: border,
-      );
+  }) => ShimmerBox(
+    width: width,
+    height: height,
+    radius: radius,
+    color: const Color(0xffEAECED),
+    backgroundColor: const Color(0xFFFFFFFF),
+    direction: direction,
+    border: border,
+  );
 
   factory ShimmerBox.dark({
     double? width,
@@ -36,16 +35,15 @@ class ShimmerBox extends StatelessWidget {
     double radius = 12,
     ShimmerDirection? direction,
     BoxBorder? border,
-  }) =>
-      ShimmerBox(
-        width: width,
-        height: height,
-        radius: radius,
-        color: const Color(0xff505051),
-        backgroundColor: const Color(0xFF000000),
-        direction: direction,
-        border: border,
-      );
+  }) => ShimmerBox(
+    width: width,
+    height: height,
+    radius: radius,
+    color: const Color(0xff505051),
+    backgroundColor: const Color(0xFF000000),
+    direction: direction,
+    border: border,
+  );
 
   final double? width;
   final double? height;
@@ -57,28 +55,30 @@ class ShimmerBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Shimmer(
-        color: backgroundColor ??
-            Theme.of(context).whenByValue(
-              light: const Color(0xFFFFFFFF),
-              dark: const Color(0xFF000000),
-            ),
-        colorOpacity: 0.4,
-        cornerRadius: radius,
-        direction: direction ?? const ShimmerDirection.fromLeftToRight(),
-        child: SizedBox(
-          width: width,
-          height: height,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: border,
-              borderRadius: BorderRadius.all(Radius.circular(radius)),
-              color: color ??
-                  Theme.of(context).whenByValue(
-                    light: const Color(0xffEAECED),
-                    dark: const Color(0xff505051),
-                  ),
-            ),
-          ),
+    color:
+        backgroundColor ??
+        Theme.of(context).whenByValue(
+          light: const Color(0xFFFFFFFF),
+          dark: const Color(0xFF000000),
         ),
-      );
+    colorOpacity: 0.4,
+    cornerRadius: radius,
+    direction: direction ?? const ShimmerDirection.fromLeftToRight(),
+    child: SizedBox(
+      width: width,
+      height: height,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          border: border,
+          borderRadius: BorderRadius.all(Radius.circular(radius)),
+          color:
+              color ??
+              Theme.of(context).whenByValue(
+                light: const Color(0xffEAECED),
+                dark: const Color(0xff505051),
+              ),
+        ),
+      ),
+    ),
+  );
 }

@@ -7,29 +7,28 @@ final class LightThemeData {
   /// `getBaseLightTheme` is a function that
   /// returns a Light `ThemeData` for the app.
   static ThemeData getTheme({required Color seed}) {
-    final baseTheme = ThemeData.from(
-      colorScheme: ColorScheme.light(
-        primary: seed,
-        secondary: ThemeUtil.adjustColorBrightness(seed, 0.8),
-      ),
-    ).copyWith(
-      appBarTheme: const AppBarTheme(
-        scrolledUnderElevation: 0,
-      ),
-      dividerColor: Colors.grey[300],
-      switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.all<Color>(seed),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return seed.withValues(alpha: 0.8);
-          }
-          return seed.withValues(alpha: 0.3);
-        }),
-        trackOutlineColor: WidgetStateProperty.all<Color>(
-          seed.withValues(alpha: 0.1),
-        ),
-      ),
-    );
+    final baseTheme =
+        ThemeData.from(
+          colorScheme: ColorScheme.light(
+            primary: seed,
+            secondary: ThemeUtil.adjustColorBrightness(seed, 0.8),
+          ),
+        ).copyWith(
+          appBarTheme: const AppBarTheme(scrolledUnderElevation: 0),
+          dividerColor: Colors.grey[300],
+          switchTheme: SwitchThemeData(
+            thumbColor: WidgetStateProperty.all<Color>(seed),
+            trackColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return seed.withValues(alpha: 0.8);
+              }
+              return seed.withValues(alpha: 0.3);
+            }),
+            trackOutlineColor: WidgetStateProperty.all<Color>(
+              seed.withValues(alpha: 0.1),
+            ),
+          ),
+        );
     return baseTheme.copyWith(
       extensions: [
         ThemeColors(
@@ -58,28 +57,26 @@ final class LightThemeData {
   }
 
   static ThemeTextStyle get textStyles => const ThemeTextStyle(
-        error: TextStyle(
-          color: Color.fromARGB(255, 239, 83, 80),
-        ),
-        s9w600: TextStyle(fontSize: 9, fontWeight: FontWeight.w600),
-        s10w400: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
-        s12w400: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-        s12w500: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-        s12w600: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-        s12w700: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
-        s14w400: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-        s14w500: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        s14w600: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-        s14w700: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-        s16w400: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-        s16w500: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        s16w600: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        s16w700: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-        s18w600: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-        s20w400: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-        s20w500: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-        s20w600: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        s24w700: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-        s36w400: TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
-      );
+    error: TextStyle(color: Color.fromARGB(255, 239, 83, 80)),
+    s9w600: TextStyle(fontSize: 9, fontWeight: FontWeight.w600),
+    s10w400: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+    s12w400: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+    s12w500: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+    s12w600: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+    s12w700: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+    s14w400: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+    s14w500: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    s14w600: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+    s14w700: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+    s16w400: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+    s16w500: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+    s16w600: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+    s16w700: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+    s18w600: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+    s20w400: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+    s20w500: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+    s20w600: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+    s24w700: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+    s36w400: TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
+  );
 }

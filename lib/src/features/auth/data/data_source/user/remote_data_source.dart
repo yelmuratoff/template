@@ -1,20 +1,22 @@
-import 'package:base_starter/src/core/rest_client/dio_rest_client/rest_client.dart';
 import 'package:base_starter/src/features/auth/data/data_source/interface/user/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/data/models/user.dart';
+import 'package:core/core.dart';
+import 'package:rest_client/rest_client.dart';
 
 final class UserRemoteDataSource implements IRemoteUserDataSource {
-  const UserRemoteDataSource({
-    required this.restClient,
-  });
+  const UserRemoteDataSource({required this.restClient});
   final RestClientBase restClient;
 
   @override
   Future<UserDTO?> get() async {
+    final response = await restClient.get('api/v1/auth/profile');
     try {
-      final response = await restClient.get('api/v1/auth/profile');
       return UserDTO.fromMap(response);
-    } catch (e) {
-      rethrow;
+    } on Object catch (e, st) {
+      Error.throwWithStackTrace(
+        ParseException(message: 'Failed to parse user profile.', cause: e),
+        st,
+      );
     }
   }
 }

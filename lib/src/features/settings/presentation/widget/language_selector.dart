@@ -11,21 +11,21 @@ class _LanguagesSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        height: 100,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: languages.length,
-          itemBuilder: (_, index) {
-            final language = languages.elementAt(index);
+    height: 100,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: languages.length,
+      itemBuilder: (_, index) {
+        final language = languages.elementAt(index);
 
-            return Padding(
-              padding: const EdgeInsets.all(8),
-              child: _LanguageCard(
-                language: language,
-                onLocaleTapped: onLocaleTapped,
-              ),
-            );
-          },
-        ),
-      );
+        return Padding(
+          padding: const EdgeInsets.all(8),
+          child: _LanguageCard(
+            language: language,
+            onLocaleTapped: onLocaleTapped,
+          ),
+        );
+      },
+    ),
+  );
 }

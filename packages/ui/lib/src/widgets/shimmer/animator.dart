@@ -4,13 +4,13 @@ import 'package:ui/src/widgets/shimmer/shimmer.dart';
 
 class ShimmerAnimator extends StatefulWidget {
   const ShimmerAnimator({
-    super.key,
     required this.child,
     required this.color,
     required this.opacity,
     required this.duration,
     required this.direction,
     required this.cornerRadius,
+    super.key,
   });
   final Color color;
   final double opacity;
@@ -34,16 +34,14 @@ class _ShimmerAnimatorState extends State<ShimmerAnimator>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: widget.duration);
-    _animation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0, 1),
-      ),
-    )..addListener(() {
-        if (_controller.isCompleted) {
-          _controller.forward(from: 0);
-        }
-      });
+    _animation =
+        Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(parent: _controller, curve: const Interval(0, 1)),
+        )..addListener(() {
+          if (_controller.isCompleted) {
+            _controller.forward(from: 0);
+          }
+        });
     _controller.forward();
   }
 
@@ -56,18 +54,18 @@ class _ShimmerAnimatorState extends State<ShimmerAnimator>
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-        listenable: _controller,
-        builder: (context, child) => CustomPaint(
-          foregroundPainter: CustomSplashAnimation(
-            context: context,
-            position: _animation.value,
-            color: widget.color,
-            opacity: widget.opacity,
-            begin: widget.direction.begin,
-            end: widget.direction.end,
-            cornerRadius: widget.cornerRadius,
-          ),
-          child: widget.child,
-        ),
-      );
+    listenable: _controller,
+    builder: (context, child) => CustomPaint(
+      foregroundPainter: CustomSplashAnimation(
+        context: context,
+        position: _animation.value,
+        color: widget.color,
+        opacity: widget.opacity,
+        begin: widget.direction.begin,
+        end: widget.direction.end,
+        cornerRadius: widget.cornerRadius,
+      ),
+      child: widget.child,
+    ),
+  );
 }

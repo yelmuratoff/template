@@ -31,15 +31,7 @@ class UserDTO extends Equatable {
 
   @override
   List<Object> get props {
-    return [
-      id,
-      email,
-      name,
-      role,
-      avatar,
-      creationAt,
-      updatedAt,
-    ];
+    return [id, email, name, role, avatar, creationAt, updatedAt];
   }
 
   UserDTO copyWith({
@@ -69,8 +61,8 @@ class UserDTO extends Equatable {
       'name': name,
       'role': role,
       'avatar': avatar,
-      'creation_at': creationAt,
-      'updated_at': updatedAt,
+      'creationAt': creationAt,
+      'updatedAt': updatedAt,
     };
   }
 
@@ -84,8 +76,8 @@ class UserDTO extends Equatable {
       name: cast<String>('name'),
       role: cast<String>('role'),
       avatar: cast<String>('avatar'),
-      creationAt: cast<String>('creation_at'),
-      updatedAt: cast<String>('updated_at'),
+      creationAt: cast<String>('creationAt'),
+      updatedAt: cast<String>('updatedAt'),
     );
   }
 

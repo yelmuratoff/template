@@ -6,18 +6,17 @@ final class DarkThemeData {
   /// `getBaseDarkTheme` is a function that
   /// returns a Dark `ThemeData` for the app.
   static ThemeData getTheme({required Color seed}) {
-    final baseTheme = ThemeData.from(
-      colorScheme: ColorScheme.fromSeed(
-        primary: seed,
-        seedColor: seed,
-        brightness: Brightness.dark,
-      ),
-    ).copyWith(
-      appBarTheme: const AppBarTheme(
-        scrolledUnderElevation: 0,
-      ),
-      dividerColor: Colors.grey[700],
-    );
+    final baseTheme =
+        ThemeData.from(
+          colorScheme: ColorScheme.fromSeed(
+            primary: seed,
+            seedColor: seed,
+            brightness: Brightness.dark,
+          ),
+        ).copyWith(
+          appBarTheme: const AppBarTheme(scrolledUnderElevation: 0),
+          dividerColor: Colors.grey[700],
+        );
     return baseTheme.copyWith(
       extensions: [
         ThemeColors(
@@ -46,28 +45,26 @@ final class DarkThemeData {
   }
 
   static ThemeTextStyle get textStyles => const ThemeTextStyle(
-        error: TextStyle(
-          color: Color.fromARGB(255, 239, 83, 80),
-        ),
-        s9w600: TextStyle(fontSize: 9, fontWeight: FontWeight.w600),
-        s10w400: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
-        s12w400: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-        s12w500: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-        s12w600: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-        s12w700: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
-        s14w400: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-        s14w500: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        s14w600: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-        s14w700: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-        s16w400: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-        s16w500: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        s16w600: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        s16w700: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-        s18w600: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-        s20w400: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-        s20w500: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-        s20w600: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        s24w700: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-        s36w400: TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
-      );
+    error: TextStyle(color: Color.fromARGB(255, 239, 83, 80)),
+    s9w600: TextStyle(fontSize: 9, fontWeight: FontWeight.w600),
+    s10w400: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+    s12w400: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+    s12w500: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+    s12w600: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+    s12w700: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+    s14w400: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+    s14w500: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    s14w600: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+    s14w700: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+    s16w400: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+    s16w500: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+    s16w600: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+    s16w700: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+    s18w600: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+    s20w400: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+    s20w500: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+    s20w600: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+    s24w700: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+    s36w400: TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
+  );
 }

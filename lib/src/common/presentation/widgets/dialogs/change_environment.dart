@@ -1,13 +1,12 @@
 import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/common/constants/preferences.dart';
-import 'package:base_starter/src/common/presentation/widgets/restart_wrapper.dart';
-import 'package:base_starter/src/common/presentation/widgets/toaster/toaster.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:ispect/ispect.dart';
+import 'package:ui/ui.dart';
 
 final class ChangeEnvironmentDialog {
   const ChangeEnvironmentDialog();
@@ -42,10 +41,7 @@ final class ChangeEnvironmentDialog {
                           ),
                           const Gap(8),
                         ],
-                        Text(
-                          env.name,
-                          style: context.textStyles.s18w600,
-                        ),
+                        Text(env.name, style: context.textStyles.s18w600),
                       ],
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),

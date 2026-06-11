@@ -5,8 +5,7 @@ import 'package:base_starter/src/features/settings/domain/theme/theme_repository
 /// Theme repository implementation
 final class ThemeRepository implements IThemeRepository {
   /// Create theme repository
-  const ThemeRepository({required IThemeDataSource themeDataSource})
-      : _themeDataSource = themeDataSource;
+  const ThemeRepository({required this._themeDataSource});
 
   final IThemeDataSource _themeDataSource;
 

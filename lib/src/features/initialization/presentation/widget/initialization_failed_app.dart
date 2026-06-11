@@ -54,9 +54,6 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
 
   bool _isInitialized = false;
 
-  /// ISpect fields
-  final ISpectify _iSpectify = ISpectifyFlutter.init();
-
   @override
   void initState() {
     super.initState();
@@ -113,33 +110,35 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
             darkTheme: _settingsState?.appTheme?.darkTheme,
             themeMode: _settingsState?.appTheme?.mode,
             locale: _settingsState?.locale,
-            localizationsDelegates: ISpectLocalizations.localizationDelegates(
-              [L10n.delegate],
-            ),
+            localizationsDelegates: [
+              ...L10n.delegates,
+              ...ISpectLocalizations.delegate(),
+            ],
             supportedLocales: L10n.supportedLocales,
+            builder: (context, child) => ISpectBuilder.wrap(
+              isISpectEnabled: F.isDev,
+              options: ISpectOptions(
+                locale: _settingsState?.locale ?? const Locale('en'),
+              ),
+              child: child!,
+            ),
             home: _View(
               error: widget.error,
               retryInitialization: widget.retryInitialization != null
                   ? _retryInitialization
                   : null,
               stackTrace: widget.stackTrace,
-              iSpectify: _iSpectify,
               themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
               lightTheme:
                   _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
               darkTheme:
                   _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
-              locale: _settingsState?.locale ?? const Locale('en'),
             ),
           ),
         )
       : MaterialApp(
           home: Scaffold(
-            body: Center(
-              child: Image.asset(
-                Assets.images.splash.path,
-              ),
-            ),
+            body: Center(child: Image.asset(Assets.images.splash.path)),
           ),
         );
 }
@@ -148,125 +147,90 @@ class _View extends StatelessWidget {
   const _View({
     required this.error,
     required this.stackTrace,
-    required this.iSpectify,
     required this.themeMode,
     required this.lightTheme,
     required this.darkTheme,
-    required this.locale,
     this.retryInitialization,
   });
   final Object error;
   final AsyncCallback? retryInitialization;
   final StackTrace stackTrace;
-  final ISpectify iSpectify;
   final ThemeMode themeMode;
   final ThemeData lightTheme;
   final ThemeData darkTheme;
-  final Locale locale;
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            L10n.current.initializationFailed,
-            style: context.textStyles.s20w600.copyWith(
+    appBar: AppBar(
+      title: Text(
+        L10n.current.initializationFailed,
+        style: context.textStyles.s20w600.copyWith(
+          color: context.theme.colorScheme.error,
+        ),
+      ),
+    ),
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            '${L10n.current.errorType}: $error',
+            style: context.textStyles.s16w500.copyWith(
               color: context.theme.colorScheme.error,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          actions: [
-            if (F.isDev) ...[
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: IconButton.filledTonal(
-                  icon: const Icon(IconsaxPlusLinear.activity),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (_) => ISpectScreen(
-                          appBarTitle: 'ISpect',
-                          options: ISpectOptions(
-                            locale: locale,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  splashRadius: 8,
-                  color: context.theme.colorScheme.error,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        context.theme.colorScheme.error.withValues(alpha: 0.1),
-                  ),
-                ),
-              ),
-            ],
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
+          const Gap(16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '${L10n.current.errorType}: $error',
-                style: context.textStyles.s16w500.copyWith(
-                  color: context.theme.colorScheme.error,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const Gap(16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (retryInitialization != null)
-                    ElevatedButton(
-                      onPressed: retryInitialization,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: context.theme.colorScheme.error,
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            L10n.current.retry,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          const Gap(8),
-                          const Icon(
-                            IconsaxPlusLinear.refresh_2,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-              const Gap(16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border.fromBorderSide(
-                      BorderSide(
-                        color: context.theme.colorScheme.error,
-                      ),
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+              if (retryInitialization != null)
+                ElevatedButton(
+                  onPressed: retryInitialization,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: context.theme.colorScheme.error,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      'StackTrace: \n$stackTrace',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 50,
-                      style: context.textStyles.s14w400.copyWith(
-                        color: context.theme.colorScheme.error,
+                  child: Row(
+                    children: [
+                      Text(
+                        L10n.current.retry,
+                        style: const TextStyle(color: Colors.white),
                       ),
-                    ),
+                      const Gap(8),
+                      const Icon(
+                        IconsaxPlusLinear.refresh_2,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
-              ),
             ],
           ),
-        ),
-      );
+          const Gap(16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.fromBorderSide(
+                  BorderSide(color: context.theme.colorScheme.error),
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  'StackTrace: \n$stackTrace',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 50,
+                  style: context.textStyles.s14w400.copyWith(
+                    color: context.theme.colorScheme.error,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

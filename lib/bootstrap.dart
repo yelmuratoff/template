@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' show PlatformDispatcher;
 
 import 'package:base_starter/src/app/logic/app_runner.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
@@ -13,7 +14,7 @@ import 'package:ispectify_bloc/ispectify_bloc.dart';
 // ==================== Entry fields ====================
 
 ///  It is used to handle errors and log messages in the app.
-final iSpectify = ISpectifyFlutter.init();
+final iSpectify = ISpectFlutter.init();
 
 // ==================== Bootstrap ====================
 
@@ -21,52 +22,52 @@ final iSpectify = ISpectifyFlutter.init();
 Future<void> bootstrap() async {
   InitializationHook? hook;
   hook = InitializationHook.setup(
-    onInitializing: _onInitializing,
     onInitialized: _onInitialized,
     onError: (error, stackTrace) {
-      _onErrorFactory(
-        error,
-        stackTrace,
-        hook!,
-      );
+      _onErrorFactory(error, stackTrace, hook!);
     },
-    onInit: _onInit,
   );
 
+  // ISpect.run installs its own FlutterError/PlatformDispatcher/zone handlers
+  // only when ISpect is compiled in; these fallbacks keep failures observable
+  // in builds where it is tree-shaken out (and a crash reporter plugs in here).
+  _installRootErrorHandlers();
+
   ISpect.run(
-    () => AppRunner().initializeAndRun(
-      hook!,
-    ),
+    () => AppRunner().initializeAndRun(hook!),
     logger: iSpectify,
     onInit: () {
-      Bloc.observer = ISpectifyBlocObserver(
-        iSpectify: iSpectify,
+      Bloc.observer = ISpectBlocObserver(logger: iSpectify);
+    },
+    onZonedError: (error, stackTrace) {
+      ISpect.logger.handle(
+        exception: error,
+        stackTrace: stackTrace,
+        message: 'Uncaught zone error',
       );
     },
-    onZonedError: (_, __) {
-      debugPrint('Zoned error');
-      //     if (kReleaseMode && envType == EnvType.prod) {
-      // FirebaseCrashlytics.instance
-      //     .recordError(
-      //       error,
-      //       stack,
-      //       reason: 'runZonedGuarded',
-      //     )
-      //     .whenComplete(
-      //       () => FirebaseCrashlytics.instance.sendUnsentReports(),
-      //     );
-      // }
-    },
   );
+}
+
+void _installRootErrorHandlers() {
+  FlutterError.onError = (details) {
+    ISpect.logger.handle(
+      exception: details.exception,
+      stackTrace: details.stack,
+      message: details.context?.toDescription(),
+    );
+  };
+  PlatformDispatcher.instance.onError = (error, stackTrace) {
+    ISpect.logger.handle(
+      exception: error,
+      stackTrace: stackTrace,
+      message: 'Uncaught platform error',
+    );
+    return true;
+  };
 }
 
 // ==================== Initialization Callbacks ====================
-
-/// `_onInitializing` is a callback function that is
-/// called when the initialization process is started.
-void _onInitializing(String stepName) {
-  ISpect.logger.info('🌀 Inited $stepName');
-}
 
 /// `_onInitialized` is a callback function that is called when
 /// the initialization process is completed.
@@ -92,10 +93,4 @@ void _onErrorFactory(
       retryInitialization: () => AppRunner().initializeAndRun(hook),
     ),
   );
-}
-
-/// `_onInit` is a callback function that is called when the
-/// initialization process is started.
-void _onInit() {
-  iSpectify.info('📱 App started');
 }

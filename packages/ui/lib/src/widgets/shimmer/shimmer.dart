@@ -3,24 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:ui/src/widgets/shimmer/animator.dart';
 
-/// Creates simple yet beautiful shimmer animations
+/// Creates simple yet beautiful shimmer animations.
 ///
-/// Shimmer is very widely used as the default animation for skeleton loaders or placeholder widgets throughout the development community.
-/// Therefore, having an easy to use, yet customizable widget ready to use for Android, iOS and Web, gives developers an advantage to focus on their actual functionality, let shimmer make the loading experience smoother.
-///
-/// By default, the widget will select the preset config but it can be easily customized as shown below:
-///
-/// - @required [child] : accepts a child [Widget] over which the animation is to be displayed
-/// - [color] : accepts a [Color] and sets the color of the animation overlay. Default value is [Colors.white]
-/// - [colorOpacity] : accepts a [double] and sets the Opacity of the color of the animation overlay. Default value is [0.3]
-/// - [enabled] : accepts a [bool] which toggles the animation on/off. Default value is [true]
-/// - [duration] : accepts a [Duration] that would be the time period of animation. Default value is [Duration(seconds: 3)]
-/// - [interval] : accepts a [Duration] that would be the interval between the repeating animation. Default value is [Duration(seconds: 0)]
-/// - [direction] : accepts a [ShimmerDirection] and aligns the animation accordingly. Default value is [ShimmerDirection.fromLBRT()]
+/// Shimmer is widely used as the default animation for skeleton loaders and
+/// placeholder widgets. Wrap any [child] to overlay a moving highlight while
+/// its real content is loading; see the field docs for the available knobs
+/// ([color], [colorOpacity], [enabled], [duration], [direction]).
 class Shimmer extends StatelessWidget {
   const Shimmer({
-    super.key,
     required this.child,
+    super.key,
     this.enabled = true,
     this.color = Colors.white,
     this.colorOpacity = 0.3,
@@ -32,22 +24,23 @@ class Shimmer extends StatelessWidget {
   /// Accepts a child [Widget] over which the animation is to be displayed
   final Widget child;
 
-  /// Accepts a [bool] which toggles the animation on/off. Default value is [true]
+  /// Toggles the animation on/off. Defaults to true.
   final bool enabled;
 
-  /// Accepts a parameter of type [Color] and sets the color of the animation overlay. Default value is [Colors.white]
+  /// Color of the animation overlay. Defaults to [Colors.white].
   final Color color;
 
-  /// Accepts a parameter of type [double] and sets the Opacity of the color of the animation overlay. Default value is [0.3]
+  /// Opacity of the animation overlay color. Defaults to 0.3.
   final double colorOpacity;
 
-  /// Accepts a [Duration] that would be the time period of animation. Default value is [Duration(seconds: 3)]
+  /// Time period of one animation sweep. Defaults to 1500 milliseconds.
   final Duration duration;
 
-  /// Accepts a [ShimmerDirection] and aligns the animation accordingly. Default value is [ShimmerDirection.fromLBRT()]
+  /// Direction along which the animation travels. Defaults to
+  /// [ShimmerDirection.fromLTRB].
   final ShimmerDirection direction;
 
-  /// Accepts a [double] and sets the corner radius of the animation overlay. Default value is [12]
+  /// Corner radius of the animation overlay. Defaults to 12.
   final double cornerRadius;
 
   @override
@@ -67,20 +60,13 @@ class Shimmer extends StatelessWidget {
   }
 }
 
-/// A direction along which the shimmer animation will travel
+/// A direction along which the shimmer animation travels.
 ///
-///
-/// Shimmer animation can travel in 6 possible directions:
-///
-/// Diagonal Directions:
-/// - [ShimmerDirection.fromLTRB] : animation starts from Left Top and moves towards the Right Bottom. This is also the default behaviour if no direction is specified.
-/// - [ShimmerDirection.fromRTLB] : animation starts from Right Top and moves towards the Left Bottom
-/// - [ShimmerDirection.fromLBRT] : animation starts from Left Bottom and moves towards the Right Top
-/// - [ShimmerDirection.fromRBLT] : animation starts from Right Bottom and moves towards the Left Top
-///
-/// Directions along the axes:
-/// - [ShimmerDirection.fromLeftToRight] : animation starts from Left Center and moves towards the Right Center
-/// - [ShimmerDirection.fromRightToLeft] : animation starts from Right Center and moves towards the Left Center
+/// Diagonal: [ShimmerDirection.fromLTRB] (default),
+/// [ShimmerDirection.fromRTLB], [ShimmerDirection.fromLBRT],
+/// [ShimmerDirection.fromRBLT].
+/// Along the axes: [ShimmerDirection.fromLeftToRight],
+/// [ShimmerDirection.fromRightToLeft].
 class ShimmerDirection {
   factory ShimmerDirection() => const ShimmerDirection._fromLTRB();
   const ShimmerDirection._fromLTRB({

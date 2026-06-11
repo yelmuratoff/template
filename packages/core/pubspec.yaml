@@ -1,0 +1,19 @@
+name: core
+description: Shared kernel for the app — typed exceptions and platform file service.
+version: 0.0.1
+publish_to: "none"
+resolution: workspace
+
+environment:
+  sdk: ">=3.12.0 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.5
+  path_provider: ^2.1.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

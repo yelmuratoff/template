@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:base_starter/src/app/model/app_theme.dart';
-import 'package:base_starter/src/core/database/src/preferences/preferences_dao.dart';
+import 'package:database/database.dart';
 import 'package:flutter/material.dart' show Color, ThemeMode;
 
 /// `ThemeDataSource` is a data source that provides theme data.
@@ -31,8 +31,7 @@ final class ThemeDataSourceLocal extends PreferencesDao
 
   @override
   Future<void> setTheme(AppTheme theme) async {
-    // ignore: deprecated_member_use
-    await _seedColor.setIfNullRemove(theme.seed.value);
+    await _seedColor.setIfNullRemove(theme.seed.toARGB32());
     await _themeMode.setIfNullRemove(codec.encode(theme.mode));
   }
 

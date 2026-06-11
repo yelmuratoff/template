@@ -58,7 +58,7 @@ app/                         app shell — wiring, no feature logic
     guards/                  auth_guard.dart, tab_init_guard.dart
 
 common/                      cross-feature, non-platform helpers
-  constants/                 app colours, constants, preference keys
+  constants/                 app constants, preference keys
   presentation/              app-specific shared UI (change-environment dialog,
                              error router screen) — reusable widgets live in
                              the `ui` package

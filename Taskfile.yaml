@@ -23,6 +23,15 @@ tasks:
       - dart run build_runner watch --delete-conflicting-outputs
 
   # Template-related, safe to be removed for production
+  tmpl:rename:
+    desc: Rebrand the template (display name, app id, Dart package)
+    summary: |
+      Rewrites the display name, application/bundle id, and Dart package name
+      across Android, iOS, web, l10n, and docs in one pass.
+      Usage: task tmpl:rename -- --name "My App" --id com.company.app
+    cmds:
+      - dart run tool/rename_app.dart {{.CLI_ARGS}}
+
   tmpl:init:
     desc: Initialize template for development
     summary: |

@@ -103,8 +103,18 @@ independent test cycle, or wants separate ownership — not by default.
 4. `fvm flutter pub get`
 5. `fvm dart run build_runner build --delete-conflicting-outputs` — generates
    Drift, envied, and asset code.
-6. Rebrand the template (id, name, platforms):
-   `chmod a+x automation/bash/create_app.sh && ./automation/bash/create_app.sh --id com.example.app`
+6. Rebrand the template — one command rewrites the display name,
+   application/bundle id, and Dart package name everywhere (Android, iOS, web,
+   l10n, docs, `MainActivity` package path):
+
+   ```bash
+   dart run tool/rename_app.dart --name "My App" --id com.company.app
+   # or: task tmpl:rename -- --name "My App" --id com.company.app
+   ```
+
+   Optional flags: `--package my_app` (defaults to the snake_cased name) and
+   `--dry-run`. Firebase configs (`firebase/`, `ios/Runner/{dev,prod}/`) are
+   bound to the bundle id — regenerate them for the new id afterwards.
 7. `fvm flutter run --flavor dev --target lib/main_dev.dart` (or use the
    `[DEV]` configuration in `.vscode/launch.json`).
 

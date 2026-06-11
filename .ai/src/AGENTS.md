@@ -1,43 +1,45 @@
-# Project Agent
+# Project Agent — base_starter
 
-You are a senior software engineer working on this project. You write clean, correct, and maintainable code, and you match the conventions already in the codebase rather than imposing new ones.
+You are a senior Flutter engineer working on `base_starter`, a production-shaped
+Flutter starter template: feature-first Clean Architecture, BLoC, Pure DI, and a
+Pub Workspace of reusable packages. This is a *template* — code here is read and
+copied by adopters, so clarity and teachability outweigh cleverness. Deliberate
+deviations from textbook Clean Architecture are documented in `docs/STRUCTURE.md`
+and `README.md`; extend them, don't "fix" them.
 
-## How to work
+## Stack — reach for these, not the obvious defaults
 
-- **Scope** — Touch only what the task requires. Adjacent code stays as-is until asked. Three similar lines beat a premature abstraction.
-- **Match the codebase** — Read 5–10 nearby files before introducing a new pattern, naming style, or comment density. Imitate before innovating.
-- **Surface failures explicitly** — Raise the project's typed exceptions and let them propagate. Recover only when there is a real recovery path.
-- **Comments earn their place** — A comment captures a hidden constraint, workaround, or surprise. If the code already shows the meaning, leave the comment out.
-- **Ask when stakes are non-trivial** — A clarifying question costs less than a wrong implementation.
+- **Flutter 3.44.1 via fvm** (pinned in `.fvmrc`), Dart >= 3.12. Prefix commands with `fvm`.
+- **State**: `bloc` + `flutter_bloc` + `bloc_concurrency`. States/events are hand-written sealed hierarchies — no `freezed`, no codegen for BLoCs.
+- **Routing**: `yx_navigation` / `yx_navigation_flutter` — not `go_router`, not raw `Navigator`. `NavigationManager` owns route state and guards; navigation needs no `BuildContext`.
+- **DI**: hand-rolled Pure DI. Everything is built once in `CompositionRoot.compose()` and read via `context.dependencies` and feature scopes (`AuthScope`, `UserScope`, `SettingsScope`). `GetIt`/`riverpod`/`getx` are intentionally absent.
+- **HTTP**: `dio` hidden behind `RestClientBase` in `packages/rest_client`. Datasources depend on the wrapper, never on raw `Dio`.
+- **Persistence**: `drift` (queryable data), typed `PreferencesDao` subclasses over SharedPreferences (small flags), `flutter_secure_storage` (tokens/secrets only).
+- **Errors**: one sealed `AppException` family in `packages/core`; transport errors are mapped at the repository boundary.
+- **Logging**: `ISpect.logger` exclusively; caught exceptions via `ISpect.logger.handle`.
+- **Config**: `envied` over `.env` (`lib/src/core/env/env.dart`); l10n via gen-l10n (en/ru/kk ARBs in `lib/src/core/l10n/translations/`).
+- **UI**: design tokens (`IColors`, `ITextStyles`) live in `packages/ui` as `ThemeExtension`s; widgets read them from the theme, not literals.
 
 ## Approach
 
-1. **Understand** — Read existing code before changing anything. Identify patterns and constraints. When intent is ambiguous, ask.
-2. **Plan** — Break work into concrete steps. Note what to test and which architectural boundaries the change crosses.
-3. **Implement** — Match established patterns. Handle errors explicitly with the project's error type.
-4. **Verify** — Run the project's lint, test, and type-check commands for changed areas. Self-review the diff before presenting it.
-
-## Principles
-
-- **Change only what's needed** — Match the task scope. Leave unrelated code untouched; a bug fix stays a bug fix.
-- **Explicit over implicit** — Visible error handling, named intents, fail loudly at boundaries.
-- **Defaults, not menus** — Pick one approach for the task at hand; mention alternatives briefly only when they're load-bearing.
-- **Test what matters** — Business logic and error paths. Skip framework internals and trivial getters.
-- **Security at boundaries** — Validate user input and external API responses. Trust internal calls. Keep secrets out of source; keep PII out of logs.
-
-## Discipline
-
-- Reach for an existing dependency before adding a new one — check the manifest first.
-- Raise the project's typed exceptions; surface failures with structure rather than raw strings or silent catches.
-- Use three similar lines instead of a one-off abstraction; let real duplication drive helpers.
-- Resolve hook or test failures at the source. Keep `--no-verify`, force-push, and `rm -rf` for cases the user has authorized explicitly.
+1. **Understand** — Read the neighboring feature (`auth` and `settings` are the reference implementations) before adding anything. `docs/STRUCTURE.md` is the architecture map.
+2. **Plan** — Note which layer the change touches and which container/scope wiring it needs.
+3. **Implement** — Match the existing patterns exactly; the template's value is consistency.
+4. **Verify** — `fvm dart format .`, `fvm dart analyze`, `fvm flutter test` — the same gates CI runs (`.github/workflows/code-analysis.yml`).
 
 ## Commands
 
-<!-- Replace placeholders with the project's actual commands. Remove rows that don't apply. -->
+- Install: `fvm flutter pub get` (or `task flutter:get`)
+- Codegen (Drift, envied, assets): `fvm dart run build_runner build --delete-conflicting-outputs` (or `task dart:gen`)
+- Run dev: `fvm flutter run --flavor dev --target lib/main_dev.dart`
+- L10n regen: `fvm flutter gen-l10n`
+- Gates: `fvm dart format .` && `fvm dart analyze` && `fvm flutter test`
 
-- Install: `<install command>`
-- Dev: `<dev command>`
-- Build: `<build command>`
-- Lint: `<lint command>`
-- Test: `<test command>`
+## Boundaries
+
+- Dependency direction is strict: `presentation → (domain) → data`; workspace packages (`core`, `database`, `rest_client`, `ui`) never import app code.
+- Tokens and secrets go only through `SecureStorage`/`SecureTokenStorage`; keep them out of SharedPreferences, logs, and source.
+- Navigation happens only via `NavigationManager`/guards reacting to BLoC state — the data layer and BLoCs stay navigation-free.
+- Transport types (`RestClientException`, `Dio*`) stay inside `packages/rest_client`; repositories translate them to `AppException` before they cross the boundary.
+- Keep `.env` out of commits; mirror new keys in `.env.example`.
+- Edit AI config in `.ai/src/` only; `.claude/` and friends are `agentsync sync` output.

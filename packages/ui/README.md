@@ -27,12 +27,14 @@ extensions; widgets in this package (and in features) only ever read them.
 | `OutlinedTextfield` | Standard text input |
 | `AppDialogs` | Dialog presenters (confirmations, pickers) |
 | `Toaster` | Toast notifications |
-| `BottomSheetBody` / `DragHandle` | Modal bottom-sheet building blocks |
-| `Shimmer` / `ShimmerBox` | Loading placeholders |
+| `AppBottomSheet` / `DragHandle` | Modal bottom-sheet building blocks |
 | `AppLoadingIndicator` | Progress indicator |
 | `ColumnBuilder` / `RowBuilder` / `WrapBuilder` | Index-based flex/wrap builders |
 | `RestartWrapper` | Rebuilds the subtree with a new key (app restart, e.g. on environment switch) |
-| `nil` / `Nil` | True no-op widget — cheaper than `SizedBox.shrink()` when nothing should render |
+
+`Shimmer`/`ShimmerBox` (loading placeholders) and `Nil` (a true no-op widget)
+live in `src/widgets/` but are not exported from the `ui.dart` barrel — add an
+export when a feature first needs them.
 
 ## Usage
 

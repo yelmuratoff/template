@@ -37,8 +37,8 @@ Throwing code preserves the original stack trace with
 ### `FileService`
 
 A small platform abstraction over `path_provider` for resolving and working
-with app directories, behind a `BaseService` interface so it can be faked in
-tests.
+with app directories, behind the `BaseFileService` interface so it can be
+faked in tests.
 
 ## Usage
 

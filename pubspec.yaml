@@ -20,6 +20,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
 
   # BLoC
   flutter_bloc: ^9.1.0

@@ -8,6 +8,12 @@ This project routes with `yx_navigation` + `yx_navigation_flutter` — not `go_r
 - `AppRouterSchema` (`lib/src/app/router/app_router_schema.dart`) maps each route to its widget, including the `indexedStack(root)` with tab outlets.
 - `NavigationManager` (`lib/src/app/router/navigation_manager.dart`) owns the root `RouteNodeStateManager` and the guard pipeline, and exposes intent methods (`openRoot()`, `openAuth()`, `openSettings()`). New navigation flows get a named method here.
 
+## Web URLs
+
+- The router serializes state into the URL *path* (`PrettyUriStateSerialization(strategy: UriStrategy.path)` in `MaterialContext`), not the default fragment — OAuth providers and messengers strip everything after `#` in a redirect URL.
+- `AppRunner` calls `usePathUrlStrategy()` (a no-op off the web) so the engine does not prepend its own `#` on top of that, which produced `/#/app/...`.
+- Path-based URLs require the host to rewrite unknown paths to `index.html`; without that SPA rewrite a refresh or a shared deep link returns 404.
+
 ## Guards
 
 - Guards live in `lib/src/app/router/guards/` as pure-Dart `RouteNodeGuard` classes; pass state in as closures (`isAuthenticated: () => ...`) so each guard stays unit-testable without Flutter.

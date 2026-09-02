@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:ispect/ispect.dart';
 import 'package:ui/ui.dart';
-import 'package:yx_navigation/yx_navigation.dart';
 import 'package:yx_navigation_flutter/yx_navigation_flutter.dart';
 import 'package:yx_navigation_flutter/yx_navigation_flutter_compatibility.dart';
 
@@ -37,8 +36,7 @@ class _MaterialContextState extends State<MaterialContext> {
         ),
       ),
       routerConfiguration: const RouterConfiguration(
-        // OAuth redirects drop everything after `#`, taking the route with it.
-        serialization: PrettyUriStateSerialization(strategy: UriStrategy.path),
+        serialization: AppRouterSchema.serialization,
       ),
     );
   }

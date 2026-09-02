@@ -10,8 +10,9 @@ This project routes with `yx_navigation` + `yx_navigation_flutter` — not `go_r
 
 ## Web URLs
 
-- The router serializes state into the URL *path* (`PrettyUriStateSerialization(strategy: UriStrategy.path)` in `MaterialContext`), not the default fragment — OAuth providers and messengers strip everything after `#` in a redirect URL.
+- The router serializes state into the URL *path* (`AppRouterSchema.serialization`, a `PrettyUriStateSerialization` with `UriStrategy.path`), not the default fragment — OAuth providers and messengers strip everything after `#` in a redirect URL.
 - `AppRunner` calls `usePathUrlStrategy()` (a no-op off the web) so the engine does not prepend its own `#` on top of that, which produced `/#/app/...`.
+- Keep `mergeQueryParams: true` on that serialization. Route arguments are encoded as `route$?key=value` inside the path, the web engine decodes the `?`, and a browser reload hands the arguments back as a real query string that the path parser drops; the merge folds them into the deepest node again. Without it every route with arguments loses them on reload (`test/app/router/route_serialization_test.dart` pins this).
 - Path-based URLs require the host to rewrite unknown paths to `index.html`; without that SPA rewrite a refresh or a shared deep link returns 404.
 
 ## Guards
@@ -19,6 +20,7 @@ This project routes with `yx_navigation` + `yx_navigation_flutter` — not `go_r
 - Guards live in `lib/src/app/router/guards/` as pure-Dart `RouteNodeGuard` classes; pass state in as closures (`isAuthenticated: () => ...`) so each guard stays unit-testable without Flutter.
 - Declaration-level guards in the schema are ignored when a state manager is injected — register guards in `NavigationManager`, not on route declarations.
 - Auth redirects flow through `AuthGuard`; re-evaluation on login/revoke is driven by `NavigationManager` subscribing to `AuthBloc.stream`.
+- A route that reads `node.arguments` gets a guard that validates them and redirects to a safe parent when they are missing or malformed. A restored URL or a hand-edited deep link can arrive without the argument, and a widget builder that throws on `node.arguments[...]!` paints Flutter's release-mode error box with no way back.
 
 ## Discipline
 

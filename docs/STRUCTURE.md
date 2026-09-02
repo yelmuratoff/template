@@ -157,6 +157,13 @@ so navigation runs without a `BuildContext`.
 `ISpectNavigatorObserver`. `NavigatorCompatibilityOverrides` is layered over
 `MaterialApp.router` so imperative `showDialog`/picker `push`/`pop` pairs work.
 
+On the web the tree is written into the URL *path* through
+`AppRouterSchema.serialization` (`/app/.root/..profile-tab/...settings`), so
+OAuth and messenger redirects that strip `#` keep the route. Arguments travel
+as `route$?key=value`; the engine decodes the `?`, a reload returns them as a
+real query string, and `mergeQueryParams: true` merges them back into the
+deepest node — drop it and every route with arguments blanks out on reload.
+
 ---
 
 ## ⚠️ Exception scheme

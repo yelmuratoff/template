@@ -19,6 +19,18 @@ import 'package:yx_navigation_flutter/yx_navigation_flutter.dart';
 base class AppRouterSchema extends RouterSchema {
   AppRouterSchema();
 
+  /// How the route tree is written to and read from the browser URL.
+  ///
+  /// The path strategy survives OAuth and messenger redirects, which drop
+  /// everything after `#`. Route arguments are encoded as `route$?key=value`
+  /// inside the path, and the web engine decodes that `?`, so a reload hands
+  /// the arguments back as a real query string; `mergeQueryParams` folds them
+  /// into the deepest node again.
+  static const serialization = PrettyUriStateSerialization(
+    strategy: UriStrategy.path,
+    mergeQueryParams: true,
+  );
+
   @override
   List<RouteDeclaration> get declarations => [
     RouteDeclaration.routeBuilder(

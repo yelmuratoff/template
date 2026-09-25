@@ -4,16 +4,11 @@ import 'package:base_starter/src/core/database/src/preferences/app_config_manage
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
-import 'package:database/database.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rest_client/rest_client.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final class DependenciesContainer {
   const DependenciesContainer({
-    required this.sharedPreferences,
-    required this.secureStorage,
-    required this.tokenStorage,
     required this.appConfig,
     required this.appDatabase,
     required this.packageInfo,
@@ -25,9 +20,6 @@ final class DependenciesContainer {
   });
 
   // <--- External dependencies --->
-  final SharedPreferences sharedPreferences;
-  final SecureStorage secureStorage;
-  final TokenStorage tokenStorage;
   final AppConfigManager appConfig;
   final AppDatabase appDatabase;
   final PackageInfo packageInfo;
@@ -44,8 +36,6 @@ final class DependenciesContainer {
   @override
   String toString() =>
       '''DependenciesContainer(
-      sharedPreferences:$sharedPreferences,
-      secureStorage: $secureStorage,
       appConfig: $appConfig,
       appDatabase: $appDatabase,
       packageInfo: $packageInfo,

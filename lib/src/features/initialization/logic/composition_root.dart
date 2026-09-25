@@ -88,9 +88,6 @@ final class CompositionRoot {
 
     final dependencies = DependenciesContainer(
       packageInfo: packageInfo,
-      sharedPreferences: sharedPreferences,
-      secureStorage: secureStorage,
-      tokenStorage: network.tokenStorage,
       appConfig: appConfig,
       appDatabase: appDatabase,
       restClient: network.restClient,

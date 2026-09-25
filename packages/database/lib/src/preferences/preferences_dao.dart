@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Class that provides seamless access to the shared preferences.
@@ -45,6 +46,8 @@ abstract base class PreferencesEntry<T extends Object> {
   String get key;
 
   /// Obtain the value of the entry from the preferences.
+  ///
+  /// Throws [CacheException] if the stored value is not a [T].
   T? read();
 
   /// Set the value of the entry in the preferences.
@@ -74,7 +77,7 @@ final class _PreferencesEntry<T extends Object> extends PreferencesEntry<T> {
 
     if (value is T) return value;
 
-    throw Exception('The value of $key is not of type ${T.runtimeType}');
+    throw CacheException(message: 'The value of $key is not of type $T');
   }
 
   @override

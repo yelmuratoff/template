@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:core/core.dart';
 import 'package:database/database.dart';
+import 'package:ispect/ispect.dart';
 
 /// [ILocaleDataSource] is an entry point to the locale data layer.
 /// This is used to set and get locale.
@@ -24,9 +26,24 @@ final class LocaleDataSourceLocal extends PreferencesDao
     await _locale.set(locale.languageCode);
   }
 
+  /// Returns the persisted locale, or `null` when none is stored.
+  ///
+  /// A corrupt entry is reset and reported as `null`, so it cannot fail
+  /// startup.
   @override
   Future<Locale?> getLocale() async {
-    final languageCode = _locale.read();
+    final String? languageCode;
+    try {
+      languageCode = _locale.read();
+    } on CacheException catch (e, st) {
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Stored locale is corrupt, resetting',
+      );
+      await _locale.remove();
+      return null;
+    }
 
     if (languageCode == null) return null;
 

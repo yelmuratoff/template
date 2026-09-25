@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:base_starter/src/app/model/app_theme.dart';
 import 'package:database/database.dart';
 import 'package:flutter/material.dart' show Color, ThemeMode;
+import 'package:ispect/ispect.dart';
 
 /// `ThemeDataSource` is a data source that provides theme data.
 /// This is used to set and get theme.
@@ -35,14 +36,29 @@ final class ThemeDataSourceLocal extends PreferencesDao
     await _themeMode.setIfNullRemove(codec.encode(theme.mode));
   }
 
+  /// Returns the persisted theme, or `null` when none is stored.
+  ///
+  /// A corrupt entry is reset and reported as `null`, so it cannot fail
+  /// startup.
   @override
   Future<AppTheme?> getTheme() async {
-    final seedColor = _seedColor.read();
+    try {
+      final seedColor = _seedColor.read();
 
-    final type = _themeMode.read();
+      final type = _themeMode.read();
 
-    if (type == null || seedColor == null) return null;
+      if (type == null || seedColor == null) return null;
 
-    return AppTheme(seed: Color(seedColor), mode: codec.decode(type));
+      return AppTheme(seed: Color(seedColor), mode: codec.decode(type));
+    } on Exception catch (e, st) {
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Stored theme is corrupt, resetting',
+      );
+      await _seedColor.remove();
+      await _themeMode.remove();
+      return null;
+    }
   }
 }

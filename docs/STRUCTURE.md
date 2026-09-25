@@ -148,7 +148,8 @@ so navigation runs without a `BuildContext`.
   `AuthBloc.stream`:
   - `Authenticated` → `openRoot()` (unless the shell is already open, so a
     web reload keeps the restored tab) + dispatch `FetchUserEvent`.
-  - `Unauthenticated` → `openAuth()`.
+  - `Unauthenticated` → `openAuth()` + dispatch `ClearUserEvent`, so the
+    signed-out user's cached profile never greets the next account.
   - `openSettings()` pushes settings onto the profile tab.
 - `auth_guard.dart` — redirects unauthenticated users to `auth` and keeps
   authenticated users off `auth`; `isAuthenticated` is a closure over

@@ -14,8 +14,8 @@ import 'package:yx_navigation/yx_navigation.dart';
 /// tab sync, tab seeding), so the schema only needs to map routes to widgets.
 /// A subscription to [AuthBloc] drives the top-level transitions: login lands
 /// on [AppRoutes.root] and triggers the user fetch, while logout or a revoked
-/// session lands on [AppRoutes.auth] — closing the revoke loop without a
-/// `BuildContext`.
+/// session lands on [AppRoutes.auth] and drops the cached user — closing the
+/// revoke loop without a `BuildContext`.
 final class NavigationManager {
   NavigationManager({required AuthBloc authBloc, required this._userBloc})
     : _authBloc = authBloc,
@@ -89,6 +89,7 @@ final class NavigationManager {
         _userBloc.add(const FetchUserEvent());
       case UnauthenticatedAuthState():
         openAuth();
+        _userBloc.add(const ClearUserEvent());
       case InitialAuthState():
       case LoadingAuthState():
       case ErrorAuthState():

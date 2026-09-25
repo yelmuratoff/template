@@ -133,6 +133,18 @@ void main() {
       check(topOf(manager)).equals(AppRoutes.auth);
     });
 
+    test(
+      'unauthenticated state drops the cached user of the ended session',
+      () async {
+        when(() => authBloc.state).thenReturn(const UnauthenticatedAuthState());
+
+        states.add(const UnauthenticatedAuthState());
+        await _settle();
+
+        verify(() => userBloc.add(const ClearUserEvent())).called(1);
+      },
+    );
+
     test('openSettings pushes settings onto the profile tab', () async {
       when(() => authBloc.state).thenReturn(const AuthenticatedAuthState());
       states.add(const AuthenticatedAuthState());

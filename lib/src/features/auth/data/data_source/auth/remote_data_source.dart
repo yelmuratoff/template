@@ -1,5 +1,4 @@
 import 'package:base_starter/src/features/auth/data/data_source/interface/auth/auth_data_source.dart';
-import 'package:base_starter/src/features/auth/data/models/user.dart';
 import 'package:core/core.dart';
 import 'package:rest_client/rest_client.dart';
 
@@ -8,20 +7,7 @@ final class AuthRemoteDataSource implements IAuthDataSource {
   final RestClientBase restClient;
 
   @override
-  Future<UserDTO> getCurrentUser() async {
-    final response = await restClient.get('api/v1/auth/profile');
-    try {
-      return UserDTO.fromMap(response);
-    } on Object catch (e, st) {
-      Error.throwWithStackTrace(
-        ParseException(message: 'Failed to parse user profile.', cause: e),
-        st,
-      );
-    }
-  }
-
-  @override
-  Future<TokenPair?> login({
+  Future<TokenPair> login({
     required String email,
     required String password,
   }) async {

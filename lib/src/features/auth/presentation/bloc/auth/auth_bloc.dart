@@ -44,10 +44,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: event.email,
           password: event.password,
         );
-        if (tokenPair == null) {
-          emit(const UnauthenticatedAuthState());
-          return;
-        }
         await _tokenStorage.save(tokenPair);
         emit(const AuthenticatedAuthState());
       });

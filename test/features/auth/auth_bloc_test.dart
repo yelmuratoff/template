@@ -206,7 +206,7 @@ void main() {
     test(
       'drops a second login while the first is in flight (droppable)',
       () async {
-        final completer = Completer<TokenPair?>();
+        final completer = Completer<TokenPair>();
         when(
           () => repository.login(
             email: any(named: 'email'),

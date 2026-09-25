@@ -311,36 +311,38 @@ dart_code_metrics:
     - prefer-single-widget-per-file:
         ignore-private-widgets: true
 
-plugins:
-  pyramid_lint:
-    version: ^3.0.0
-    diagnostics:
-      always_put_doc_comments_before_annotations: true
-      always_specify_parameter_names: true
-      avoid_empty_blocks: true
-      avoid_positional_fields_in_records: true
-      avoid_unused_parameters: true
-      no_duplicate_imports: true
-      no_self_comparisons: true
-      prefer_async_await: true
-      prefer_iterable_any: true
-      prefer_iterable_every: true
-      prefer_iterable_first: true
-      prefer_iterable_last: true
-      prefer_library_prefixes: true
-      prefer_underscore_for_unused_callback_parameters: true
-      unnecessary_nullable_return_type: true
-      avoid_public_members_in_states: true
-      dispose_controllers: true
-      prefer_async_callback: true
-      prefer_border_from_border_side: true
-      prefer_border_radius_all: true
-      prefer_dedicated_media_query_functions: true
-      prefer_text_rich: true
-      prefer_void_callback: true
-      proper_edge_insets_constructors: true
-      proper_expanded_and_flexible: true
-      proper_from_environment: true
-      proper_super_dispose: true
-      proper_super_init_state: true
-      use_spacer: true
+# Disabled: the plugin isolate resolves `analysis_server_plugin` from pub.dev on
+# every analyzer start and hangs `dart analyze` when that fetch fails.
+# plugins:
+#   pyramid_lint:
+#     version: ^3.0.0
+#     diagnostics:
+#       always_put_doc_comments_before_annotations: true
+#       always_specify_parameter_names: true
+#       avoid_empty_blocks: true
+#       avoid_positional_fields_in_records: true
+#       avoid_unused_parameters: true
+#       no_duplicate_imports: true
+#       no_self_comparisons: true
+#       prefer_async_await: true
+#       prefer_iterable_any: true
+#       prefer_iterable_every: true
+#       prefer_iterable_first: true
+#       prefer_iterable_last: true
+#       prefer_library_prefixes: true
+#       prefer_underscore_for_unused_callback_parameters: true
+#       unnecessary_nullable_return_type: true
+#       avoid_public_members_in_states: true
+#       dispose_controllers: true
+#       prefer_async_callback: true
+#       prefer_border_from_border_side: true
+#       prefer_border_radius_all: true
+#       prefer_dedicated_media_query_functions: true
+#       prefer_text_rich: true
+#       prefer_void_callback: true
+#       proper_edge_insets_constructors: true
+#       proper_expanded_and_flexible: true
+#       proper_from_environment: true
+#       proper_super_dispose: true
+#       proper_super_init_state: true
+#       use_spacer: true

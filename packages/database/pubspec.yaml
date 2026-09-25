@@ -14,7 +14,6 @@ dependencies:
   core:
     path: ../core
   drift: ^2.19.1
-  sqlite3_flutter_libs: ^0.6.0+eol
   shared_preferences: ^2.3.2
   flutter_secure_storage: ^10.0.0
   path: ^1.9.0

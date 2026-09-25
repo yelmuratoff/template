@@ -1,10 +1,11 @@
 import 'dart:async';
-import 'dart:ui' show PlatformDispatcher;
 
+import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/logic/app_runner.dart';
 import 'package:base_starter/src/features/initialization/logic/composition_root.dart';
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:base_starter/src/features/initialization/presentation/widget/initialization_failed_app.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -96,6 +97,7 @@ void _onErrorFactory(
     InitializationFailedApp(
       error: failure,
       stackTrace: stackTrace,
+      showErrorDetails: F.isDev || !kReleaseMode,
       retryInitialization: () => AppRunner().initializeAndRun(hook),
     ),
   );

@@ -24,8 +24,12 @@ class InitializationFailedApp extends StatefulWidget {
     required this.error,
     required this.stackTrace,
     this.retryInitialization,
+    this.showErrorDetails = false,
     super.key,
   });
+
+  /// Whether the raw error and stack trace are rendered.
+  final bool showErrorDetails;
 
   /// The error that caused the initialization to fail.
   final Object error;
@@ -51,8 +55,7 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
   SettingsState? _settingsState;
   ILocaleRepository? _localeRepository;
   IThemeRepository? _themeRepository;
-
-  bool _isInitialized = false;
+  SettingsBloc? _settingsBloc;
 
   @override
   void initState() {
@@ -79,14 +82,21 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
     final theme = await _themeRepository?.getTheme();
     final locale = await localeFuture;
 
-    _settingsState = IdleSettingsState(appTheme: theme, locale: locale);
+    if (!mounted) return;
+    final settingsState = IdleSettingsState(appTheme: theme, locale: locale);
     setState(() {
-      _isInitialized = true;
+      _settingsState = settingsState;
+      _settingsBloc = SettingsBloc(
+        localeRepository: _localeRepository!,
+        themeRepository: _themeRepository!,
+        initialState: settingsState,
+      );
     });
   }
 
   @override
   void dispose() {
+    _settingsBloc?.close();
     _inProgress.dispose();
     super.dispose();
   }
@@ -98,49 +108,45 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
   }
 
   @override
-  Widget build(BuildContext context) => _isInitialized
-      ? SettingsScope(
-          settingsBloc: SettingsBloc(
-            localeRepository: _localeRepository!,
-            themeRepository: _themeRepository!,
-            initialState: _settingsState!,
+  Widget build(BuildContext context) => switch (_settingsBloc) {
+    final settingsBloc? => SettingsScope(
+      settingsBloc: settingsBloc,
+      child: MaterialApp(
+        theme: _settingsState?.appTheme?.lightTheme,
+        darkTheme: _settingsState?.appTheme?.darkTheme,
+        themeMode: _settingsState?.appTheme?.mode,
+        locale: _settingsState?.locale,
+        localizationsDelegates: [
+          ...L10n.delegates,
+          ...ISpectLocalizations.delegate(),
+        ],
+        supportedLocales: L10n.supportedLocales,
+        builder: (context, child) => ISpectBuilder.wrap(
+          isISpectEnabled: F.isDev,
+          options: ISpectOptions(
+            locale: _settingsState?.locale ?? const Locale('en'),
           ),
-          child: MaterialApp(
-            theme: _settingsState?.appTheme?.lightTheme,
-            darkTheme: _settingsState?.appTheme?.darkTheme,
-            themeMode: _settingsState?.appTheme?.mode,
-            locale: _settingsState?.locale,
-            localizationsDelegates: [
-              ...L10n.delegates,
-              ...ISpectLocalizations.delegate(),
-            ],
-            supportedLocales: L10n.supportedLocales,
-            builder: (context, child) => ISpectBuilder.wrap(
-              isISpectEnabled: F.isDev,
-              options: ISpectOptions(
-                locale: _settingsState?.locale ?? const Locale('en'),
-              ),
-              child: child!,
-            ),
-            home: _View(
-              error: widget.error,
-              retryInitialization: widget.retryInitialization != null
-                  ? _retryInitialization
-                  : null,
-              stackTrace: widget.stackTrace,
-              themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
-              lightTheme:
-                  _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
-              darkTheme:
-                  _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
-            ),
-          ),
-        )
-      : MaterialApp(
-          home: Scaffold(
-            body: Center(child: Image.asset(Assets.images.splash.path)),
-          ),
-        );
+          child: child!,
+        ),
+        home: _View(
+          error: widget.error,
+          retryInitialization: widget.retryInitialization != null
+              ? _retryInitialization
+              : null,
+          stackTrace: widget.stackTrace,
+          showErrorDetails: widget.showErrorDetails,
+          themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,
+          lightTheme: _settingsState?.appTheme?.lightTheme ?? ThemeData.light(),
+          darkTheme: _settingsState?.appTheme?.darkTheme ?? ThemeData.dark(),
+        ),
+      ),
+    ),
+    null => MaterialApp(
+      home: Scaffold(
+        body: Center(child: Image.asset(Assets.images.splash.path)),
+      ),
+    ),
+  };
 }
 
 class _View extends StatelessWidget {
@@ -150,11 +156,13 @@ class _View extends StatelessWidget {
     required this.themeMode,
     required this.lightTheme,
     required this.darkTheme,
+    required this.showErrorDetails,
     this.retryInitialization,
   });
   final Object error;
   final AsyncCallback? retryInitialization;
   final StackTrace stackTrace;
+  final bool showErrorDetails;
   final ThemeMode themeMode;
   final ThemeData lightTheme;
   final ThemeData darkTheme;
@@ -172,13 +180,14 @@ class _View extends StatelessWidget {
     body: SingleChildScrollView(
       child: Column(
         children: [
-          Text(
-            '${L10n.current.errorType}: $error',
-            style: context.textStyles.s16w500.copyWith(
-              color: context.theme.colorScheme.error,
-              fontWeight: FontWeight.w500,
+          if (showErrorDetails)
+            Text(
+              '${L10n.current.errorType}: $error',
+              style: context.textStyles.s16w500.copyWith(
+                color: context.theme.colorScheme.error,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
           const Gap(16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -207,28 +216,29 @@ class _View extends StatelessWidget {
             ],
           ),
           const Gap(16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.fromBorderSide(
-                  BorderSide(color: context.theme.colorScheme.error),
+          if (showErrorDetails)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.fromBorderSide(
+                    BorderSide(color: context.theme.colorScheme.error),
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
                 ),
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  'StackTrace: \n$stackTrace',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 50,
-                  style: context.textStyles.s14w400.copyWith(
-                    color: context.theme.colorScheme.error,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    'StackTrace: \n$stackTrace',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 50,
+                    style: context.textStyles.s14w400.copyWith(
+                      color: context.theme.colorScheme.error,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     ),

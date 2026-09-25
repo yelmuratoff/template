@@ -10,6 +10,7 @@
                 "dev",
                 "-t",
                 "lib/main_dev.dart",
+                "--dart-define-from-file=env/config_dev.json",
                 "--dart-define=ISPECT_ENABLED=true",
             ],
         },
@@ -23,6 +24,7 @@
                 "dev",
                 "-t",
                 "lib/main_dev.dart",
+                "--dart-define-from-file=env/config_dev.json",
                 "--dart-define=ISPECT_ENABLED=true",
             ],
         },
@@ -35,6 +37,7 @@
                 "prod",
                 "-t",
                 "lib/main.dart",
+                "--dart-define-from-file=env/config_prod.json",
             ]
         },
         {
@@ -47,6 +50,7 @@
                 "prod",
                 "-t",
                 "lib/main.dart",
+                "--dart-define-from-file=env/config_prod.json",
             ]
         },
         {
@@ -56,6 +60,7 @@
             "args": [
                 "-t",
                 "lib/main_dev.dart",
+                "--dart-define-from-file=env/config_dev.json",
                 "--dart-define=ISPECT_ENABLED=true",
             ],
         },
@@ -66,6 +71,7 @@
             "args": [
                 "-t",
                 "lib/main.dart",
+                "--dart-define-from-file=env/config_prod.json",
             ],
         },
     ]

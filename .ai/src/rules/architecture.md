@@ -22,6 +22,6 @@
 
 ## Conventions
 
-- Models and BLoCs are hand-written; reserve `build_runner` codegen for Drift, `envied`, and assets. DTOs use Dart Data Class Generator-style `fromMap`/`toMap`.
+- Models and BLoCs are hand-written; reserve `build_runner` codegen for Drift and assets. DTOs use Dart Data Class Generator-style `fromMap`/`toMap`.
 - Constructors may bind private fields via named parameters (Dart 3.10+): `AuthBloc({required this.repository, required this._tokenStorage})`.
 - User-visible strings come from gen-l10n (`L10n` / generated localizations), with keys present in all three ARBs (en/ru/kk).

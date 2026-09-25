@@ -17,7 +17,7 @@ and `README.md`; extend them, don't "fix" them.
 - **Persistence**: `drift` (queryable data), typed `PreferencesDao` subclasses over SharedPreferences (small flags), `flutter_secure_storage` (tokens/secrets only).
 - **Errors**: one sealed `AppException` family in `packages/core`; transport errors are mapped at the repository boundary.
 - **Logging**: `ISpect.logger` exclusively; caught exceptions via `ISpect.logger.handle`.
-- **Config**: `envied` over `.env` (`lib/src/core/env/env.dart`); l10n via gen-l10n (en/ru/kk ARBs in `lib/src/core/l10n/translations/`).
+- **Config**: `String.fromEnvironment` in `lib/src/core/env/env.dart`, fed by `--dart-define-from-file=env/config_<flavor>.json`; l10n via gen-l10n (en/ru/kk ARBs in `lib/src/core/l10n/translations/`).
 - **UI**: design tokens (`IColors`, `ITextStyles`) live in `packages/ui` as `ThemeExtension`s; widgets read them from the theme, not literals.
 
 ## Approach
@@ -30,8 +30,8 @@ and `README.md`; extend them, don't "fix" them.
 ## Commands
 
 - Install: `fvm flutter pub get` (or `task flutter:get`)
-- Codegen (Drift, envied, assets): `fvm dart run build_runner build --delete-conflicting-outputs` (or `task dart:gen`)
-- Run dev: `fvm flutter run --flavor dev --target lib/main_dev.dart`
+- Codegen (Drift, assets): `fvm dart run build_runner build --delete-conflicting-outputs` (or `task dart:gen`)
+- Run dev: `fvm flutter run --flavor dev --target lib/main_dev.dart --dart-define-from-file=env/config_dev.json`
 - L10n regen: `fvm flutter gen-l10n`
 - Gates: `fvm dart format .` && `fvm dart analyze` && `fvm flutter test`
 
@@ -41,5 +41,5 @@ and `README.md`; extend them, don't "fix" them.
 - Tokens and secrets go only through `SecureStorage`/`SecureTokenStorage`; keep them out of SharedPreferences, logs, and source.
 - Navigation happens only via `NavigationManager`/guards reacting to BLoC state — the data layer and BLoCs stay navigation-free.
 - Transport types (`RestClientException`, `Dio*`) stay inside `packages/rest_client`; repositories translate them to `AppException` before they cross the boundary.
-- Keep `.env` out of commits; mirror new keys in `.env.example`.
+- Keep `env/config_*.json` out of commits; mirror new keys in `env/config.example.json`.
 - Edit AI config in `.ai/src/` only; `.claude/` and friends are `agentsync sync` output.

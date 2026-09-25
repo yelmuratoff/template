@@ -99,10 +99,11 @@ independent test cycle, or wants separate ownership — not by default.
 
 1. Click **"Use this template"** and clone your repository.
 2. `fvm install` — installs the pinned Flutter SDK.
-3. `cp .env.example .env` — fill in `API_URL` (see [.env config](#env-config)).
+3. `cp env/config.example.json env/config_dev.json` (and `config_prod.json`) —
+   fill in `API_URL` (see [Environment config](#environment-config)).
 4. `fvm flutter pub get`
 5. `fvm dart run build_runner build --delete-conflicting-outputs` — generates
-   Drift, envied, and asset code.
+   Drift and asset code.
 6. Rebrand the template — one command rewrites the display name,
    application/bundle id, and Dart package name everywhere (Android, iOS, web,
    l10n, docs, `MainActivity` package path):
@@ -115,8 +116,9 @@ independent test cycle, or wants separate ownership — not by default.
    Optional flags: `--package my_app` (defaults to the snake_cased name) and
    `--dry-run`. Firebase configs (`firebase/`, `ios/Runner/{dev,prod}/`) are
    bound to the bundle id — regenerate them for the new id afterwards.
-7. `fvm flutter run --flavor dev --target lib/main_dev.dart` (or use the
-   `[DEV]` configuration in `.vscode/launch.json`).
+7. `fvm flutter run --flavor dev --target lib/main_dev.dart
+   --dart-define-from-file=env/config_dev.json` (or use the `[DEV]`
+   configuration in `.vscode/launch.json`).
 
 Entry points: `lib/main.dart` (prod flavor) and `lib/main_dev.dart` (dev
 flavor).
@@ -165,23 +167,35 @@ Strings are generated with **gen-l10n** (configured in `l10n.yaml`):
 
 ## How to guides
 
-### .env config
+### Environment config
 
-1. Keep `.env` in `.gitignore`; commit only `.env.example`.
-2. Put the API url and other secrets into `.env`, mirror the keys in
-   `.env.example`.
-3. Declare each field in `lib/src/core/env/env.dart`:
+Configuration is compiled in with `--dart-define-from-file`, one JSON file per
+flavor — no codegen and nothing bundled as an asset.
+
+1. `env/config_dev.json` and `env/config_prod.json` are gitignored; commit only
+   `env/config.example.json`.
+2. Add the key to every config file and mirror it in the example:
+
+   ```json
+   { "API_URL": "https://api.example.com" }
+   ```
+
+3. Declare it in `lib/src/core/env/env.dart` and read it as `Env.apiUrl`:
 
    ```dart
-   @Envied(path: '.env')
-   final class Env {
-     @EnviedField(varName: 'API_URL', useConstantCase: true)
-     static const String apiUrl = _Env.apiUrl;
+   abstract final class Env {
+     static const String apiUrl = String.fromEnvironment('API_URL');
    }
    ```
 
-4. Regenerate with `fvm dart run build_runner build --delete-conflicting-outputs`
-   and read it as `Env.apiUrl`.
+4. Pass the file on every run and build:
+   `--dart-define-from-file=env/config_<flavor>.json` (already wired into
+   `.vscode/launch.json` and `automation/`). In CI, write the file from
+   secrets before building.
+
+A missing key reads as an empty string; startup fails fast when `API_URL` is
+empty. Dart defines ship inside the binary, so they are configuration, not
+secrets — keep real secrets on the backend.
 
 ### How to add a new app-wide dependency
 

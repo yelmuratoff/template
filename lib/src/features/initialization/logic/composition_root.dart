@@ -39,7 +39,15 @@ final class CompositionRoot {
   const CompositionRoot();
 
   /// Builds the dependency graph and reports how long it took.
+  ///
+  /// Throws a [StateError] when `API_URL` was not compiled in.
   Future<CompositionResult> compose() async {
+    if (AppConstants.baseUrl.isEmpty) {
+      throw StateError(
+        'API_URL is empty: run with '
+        '--dart-define-from-file=env/config_<flavor>.json',
+      );
+    }
     final stopwatch = clock.stopwatch()..start();
     ISpect.logger.info('🌀 Initializing dependencies...');
 
@@ -127,6 +135,7 @@ final class CompositionRoot {
 
     final plainDio = Dio(
       BaseOptions(
+        // ignore: avoid_redundant_argument_values
         baseUrl: AppConstants.baseUrl,
         connectTimeout: RestClientTimeouts.connect,
         sendTimeout: RestClientTimeouts.send,

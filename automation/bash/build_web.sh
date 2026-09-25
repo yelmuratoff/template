@@ -1,1 +1,1 @@
-flutter build web --wasm
+flutter build web --wasm --dart-define-from-file=env/config_prod.json

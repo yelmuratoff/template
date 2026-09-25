@@ -69,7 +69,7 @@ core/                        app-specific platform glue
   assets/                    flutter_gen output
   database/                  concrete AppDatabase + TodosTable + AppConfigManager
                              (generic infra lives in the `database` package)
-  env/                       envied-generated environment config
+  env/                       Env: --dart-define-from-file build config
   l10n/                      gen-l10n setup + ARB (en/ru/kk)
 
 features/<feature>/          presentation / (domain) / data per feature

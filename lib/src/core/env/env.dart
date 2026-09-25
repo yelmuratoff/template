@@ -1,9 +1,8 @@
-// lib/env/env.dart
-import 'package:envied/envied.dart';
-part 'env.g.dart';
-
-@Envied(path: '.env')
-final class Env {
-  @EnviedField(varName: 'API_URL', useConstantCase: true)
-  static const String apiUrl = _Env.apiUrl;
+/// Build-time configuration injected with `--dart-define-from-file`.
+///
+/// Values come from the gitignored `env/config_<flavor>.json`; mirror every
+/// new key in `env/config.example.json`. A key missing from the file reads as
+/// an empty string.
+abstract final class Env {
+  static const String apiUrl = String.fromEnvironment('API_URL');
 }

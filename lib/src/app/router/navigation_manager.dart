@@ -80,10 +80,12 @@ final class NavigationManager {
     return root;
   });
 
+  /// A shell that is already open is left as is: on web the router restores
+  /// the previous URL on reload, and resetting it would drop the user's tab.
   void _onAuthStateChanged(AuthState state) {
     switch (state) {
       case AuthenticatedAuthState():
-        openRoot();
+        if (_topLevelRoute != AppRoutes.root) openRoot();
         _userBloc.add(const FetchUserEvent());
       case UnauthenticatedAuthState():
         openAuth();
@@ -92,6 +94,11 @@ final class NavigationManager {
       case ErrorAuthState():
         break;
     }
+  }
+
+  YxRoute? get _topLevelRoute {
+    final children = stateManager.state.children;
+    return children.isEmpty ? null : children.last.route;
   }
 
   /// Releases the auth subscription and the state manager.

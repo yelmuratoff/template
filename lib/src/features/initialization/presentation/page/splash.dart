@@ -1,26 +1,14 @@
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
-import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
 
-/// Session-restore screen.
+/// Placeholder destination the navigation tree starts on.
 ///
-/// Dispatches [CheckStatusAuthEvent] once; `NavigationManager` reacts to the
-/// resulting auth state and routes away from the splash. The first-run secure
-/// storage wipe happens earlier, in the composition root.
-class SplashScreen extends StatefulWidget {
+/// The composition root resolves the session before the router mounts and
+/// `NavigationManager` routes off the resulting auth state, so this is replaced
+/// by the shell or the sign-in screen before the first frame.
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    context.dependencies.authBloc.add(const CheckStatusAuthEvent());
-  }
 
   @override
   Widget build(BuildContext context) => Scaffold(

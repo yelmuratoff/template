@@ -10,6 +10,7 @@ import 'package:base_starter/src/features/auth/data/data_source/user/local_data_
 import 'package:base_starter/src/features/auth/data/data_source/user/remote_data_source.dart';
 import 'package:base_starter/src/features/auth/data/repositories/auth/auth_repository.dart';
 import 'package:base_starter/src/features/auth/data/repositories/user/user_repository.dart';
+import 'package:base_starter/src/features/auth/logic/session_restore.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';
 import 'package:base_starter/src/features/initialization/models/dependencies.dart';
@@ -72,6 +73,12 @@ final class CompositionRoot {
       tokenStorage: network.tokenStorage,
     );
     final userBloc = UserBloc(userRepository: repositories.userRepository);
+    final navigationManager = NavigationManager(
+      authBloc: authBloc,
+      userBloc: userBloc,
+    );
+
+    await restoreSession(authBloc);
 
     final dependencies = DependenciesContainer(
       packageInfo: packageInfo,
@@ -84,10 +91,7 @@ final class CompositionRoot {
       authBloc: authBloc,
       userBloc: userBloc,
       settingsBloc: settingsBloc,
-      navigationManager: NavigationManager(
-        authBloc: authBloc,
-        userBloc: userBloc,
-      ),
+      navigationManager: navigationManager,
     );
 
     stopwatch.stop();

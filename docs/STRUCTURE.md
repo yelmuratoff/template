@@ -146,7 +146,8 @@ so navigation runs without a `BuildContext`.
   `RouteNodeStateManager` and its guards (`RedirectRouteNodeGuard` + `AuthGuard`
   + `NavigateToIndexedStackNodeGuard` + two `TabInitGuard`s). It subscribes to
   `AuthBloc.stream`:
-  - `Authenticated` → `openRoot()` + dispatch `FetchUserEvent`.
+  - `Authenticated` → `openRoot()` (unless the shell is already open, so a
+    web reload keeps the restored tab) + dispatch `FetchUserEvent`.
   - `Unauthenticated` → `openAuth()`.
   - `openSettings()` pushes settings onto the profile tab.
 - `auth_guard.dart` — redirects unauthenticated users to `auth` and keeps
@@ -163,6 +164,10 @@ OAuth and messenger redirects that strip `#` keep the route. Arguments travel
 as `route$?key=value`; the engine decodes the `?`, a reload returns them as a
 real query string, and `mergeQueryParams: true` merges them back into the
 deepest node — drop it and every route with arguments blanks out on reload.
+
+The composition root awaits `restoreSession(authBloc)` before the app is built:
+on a web reload the router restores the URL at mount, so `AuthGuard` must
+already see the resolved session or it sends a signed-in user to `auth`.
 
 ---
 
@@ -201,8 +206,8 @@ sealed AppException implements Exception
 
 > Session restore is the deliberate exception: `_onCheckStatus` does **not** go
 > through `guard`. An unreadable token store recovers to `Unauthenticated`
-> (logged) rather than an error state the splash router would ignore — so a
-> corrupt secure store never strands the user on the splash screen.
+> (logged) rather than an error state `restoreSession` never settles on — so a
+> corrupt secure store never hangs startup.
 
 ---
 

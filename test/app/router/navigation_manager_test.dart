@@ -76,6 +76,45 @@ void main() {
       check(rootNode!.children.last.route).equals(AppRoutes.homeTab);
     });
 
+    test(
+      'authenticated state keeps the active tab when the shell is already open',
+      () async {
+        when(() => authBloc.state).thenReturn(const AuthenticatedAuthState());
+        manager
+          ..openRoot()
+          ..openSettings();
+        manager.stateManager.mutate(
+          (root) => root
+            ..findByRoute(
+              AppRoutes.root,
+            )?.addOrMoveToEnd(AppRoutes.profileTab.toNode()),
+        );
+
+        states.add(const AuthenticatedAuthState());
+        await _settle();
+
+        final rootNode = manager.stateManager.state.findByRoute(AppRoutes.root);
+        check(rootNode).isNotNull();
+        check(rootNode!.children.last.route).equals(AppRoutes.profileTab);
+        check(
+          manager.stateManager.state.findByRoute(AppRoutes.settings),
+        ).isNotNull();
+      },
+    );
+
+    test(
+      'authenticated state fetches the user when the shell is already open',
+      () async {
+        when(() => authBloc.state).thenReturn(const AuthenticatedAuthState());
+        manager.openRoot();
+
+        states.add(const AuthenticatedAuthState());
+        await _settle();
+
+        verify(() => userBloc.add(const FetchUserEvent())).called(1);
+      },
+    );
+
     test('authenticated state triggers the user fetch', () async {
       when(() => authBloc.state).thenReturn(const AuthenticatedAuthState());
 

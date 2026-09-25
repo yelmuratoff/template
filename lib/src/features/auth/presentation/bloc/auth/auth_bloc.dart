@@ -66,8 +66,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   /// Resolves the restored session state.
   ///
   /// An unreadable token store recovers to [UnauthenticatedAuthState] rather
-  /// than an error state: the splash screen routes only off the authenticated/
-  /// unauthenticated split, so surfacing an error here would strand the user.
+  /// than an error state: startup waits in `restoreSession` for the
+  /// authenticated/unauthenticated split, so an error here would hang it.
   Future<AuthState> _readSession() async {
     try {
       final tokenPair = await _tokenStorage.read();

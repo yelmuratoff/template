@@ -1,6 +1,7 @@
 import 'app/router/auth_guard_test.dart' as auth_guard_test;
 import 'app/router/navigation_manager_test.dart' as navigation_manager_test;
 import 'app/router/root_view_test.dart' as root_view_test;
+import 'app/router/route_serialization_test.dart' as route_serialization_test;
 import 'core/rest_client/auth_interceptor_test.dart' as auth_interceptor_test;
 import 'core/rest_client/rest_client_base_test.dart' as rest_client_base_test;
 import 'core/rest_client/token_storage_test.dart' as token_storage_test;
@@ -9,6 +10,7 @@ import 'features/auth/auth_bloc_test.dart' as auth_bloc_test;
 import 'features/auth/auth_repository_test.dart' as auth_repository_test;
 import 'features/auth/auth_scope_test.dart' as auth_scope_test;
 import 'features/auth/auth_view_test.dart' as auth_view_test;
+import 'features/auth/session_restore_test.dart' as session_restore_test;
 import 'features/auth/user_bloc_test.dart' as user_bloc_test;
 import 'features/auth/user_dto_test.dart' as user_dto_test;
 import 'features/auth/user_local_data_source_test.dart'
@@ -22,6 +24,7 @@ void main() {
   auth_guard_test.main();
   navigation_manager_test.main();
   root_view_test.main();
+  route_serialization_test.main();
   rest_client_base_test.main();
   token_storage_test.main();
   auth_interceptor_test.main();
@@ -30,6 +33,7 @@ void main() {
   user_repository_test.main();
   user_local_data_source_test.main();
   auth_bloc_test.main();
+  session_restore_test.main();
   auth_scope_test.main();
   auth_view_test.main();
   user_bloc_test.main();

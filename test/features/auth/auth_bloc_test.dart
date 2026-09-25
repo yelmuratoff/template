@@ -113,6 +113,28 @@ void main() {
       },
     );
 
+    test('keeps the typed failure on the error state for the UI', () async {
+      const failure = NetworkException(message: 'offline');
+      when(
+        () => repository.login(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenThrow(failure);
+
+      final bloc = buildBloc();
+      final states = await recordStates(
+        bloc,
+        () =>
+            bloc.add(const LoginAuthEvent(email: 'a@b.c', password: 'secret')),
+      );
+
+      check(
+        states.last,
+      ).isA<ErrorAuthState>().has((s) => s.error, 'error').equals(failure);
+      await bloc.close();
+    });
+
     test(
       'login with a backend rejection emits Error without notifying observer',
       () async {

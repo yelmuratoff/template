@@ -1,3 +1,4 @@
+import 'package:base_starter/src/common/presentation/error_message.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/auth/presentation/auth_scope.dart';
@@ -20,7 +21,10 @@ class AuthScreen extends StatelessWidget {
         AppDialogs.dismiss();
       case ErrorAuthState():
         AppDialogs.dismiss();
-        Toaster.showErrorToast(context, title: state.message);
+        Toaster.showErrorToast(
+          context,
+          title: localizedErrorMessage(state.error),
+        );
     }
   }
 

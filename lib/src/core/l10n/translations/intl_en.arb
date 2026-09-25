@@ -41,5 +41,9 @@
    "retry": "Retry",
    "logout": "Log out",
    "home": "Home",
-   "profile": "Profile"
+   "profile": "Profile",
+   "errorNoConnection": "No internet connection. Check your network and try again.",
+   "errorTimeout": "The server is taking too long to respond. Try again.",
+   "errorSessionExpired": "Your session has expired. Please sign in again.",
+   "errorUnknown": "Something went wrong. Try again."
 }

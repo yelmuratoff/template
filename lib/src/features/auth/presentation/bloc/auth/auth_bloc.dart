@@ -30,8 +30,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final TokenStorage _tokenStorage;
   late final StreamSubscription<TokenPair?> _revocationSubscription;
 
-  static AuthState _error(Object _, String message, Object? cause, int? _) =>
-      ErrorAuthState(message: message, cause: cause);
+  static AuthState _error(
+    Object error,
+    String message,
+    Object? cause,
+    int? _,
+  ) => ErrorAuthState(error: error, message: message, cause: cause);
 
   Future<void> _onLogin(LoginAuthEvent event, Emitter<AuthState> emit) =>
       guard(emit: emit, errorState: _error, reportBug: onError, () async {

@@ -137,7 +137,7 @@ lib/src/core/assets/generated/
 lib/src/core/localization/generated/
 *untranslated_messages.txt
 
-pubspec.lock
+!pubspec.lock
 .metadata
 
 # FVM

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:checks/checks.dart';
 import 'package:core/core.dart';
 import 'package:database/database.dart';
@@ -9,6 +8,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:rest_client/rest_client.dart';
 
 class _MockSecureStorage extends Mock implements SecureStorage {}
+
+const _storageKey = 'tokenPair';
 
 void main() {
   group('SecureTokenStorage', () {
@@ -29,7 +30,7 @@ void main() {
 
     test('returns the stored pair when the persisted JSON is valid', () async {
       when(
-        () => secureStorage.read(key: Preferences.tokenPair),
+        () => secureStorage.read(key: _storageKey),
       ).thenAnswer((_) async => encodedPair);
 
       check(await storage.read()).equals(pair);
@@ -37,7 +38,7 @@ void main() {
 
     test('returns null when nothing is stored', () async {
       when(
-        () => secureStorage.read(key: Preferences.tokenPair),
+        () => secureStorage.read(key: _storageKey),
       ).thenAnswer((_) async => null);
 
       check(await storage.read()).isNull();
@@ -46,17 +47,17 @@ void main() {
     test('resets the entry and reports signed-out '
         'when the persisted value is corrupt', () async {
       when(
-        () => secureStorage.read(key: Preferences.tokenPair),
+        () => secureStorage.read(key: _storageKey),
       ).thenAnswer((_) async => 'not-json');
       when(
-        () => secureStorage.delete(key: Preferences.tokenPair),
+        () => secureStorage.delete(key: _storageKey),
       ).thenAnswer((_) async {});
 
       final emitted = <TokenPair?>[];
       final subscription = storage.changes.listen(emitted.add);
 
       check(await storage.read()).isNull();
-      verify(() => secureStorage.delete(key: Preferences.tokenPair)).called(1);
+      verify(() => secureStorage.delete(key: _storageKey)).called(1);
 
       await pumpEventQueue();
       check(emitted).deepEquals([null]);
@@ -65,8 +66,7 @@ void main() {
 
     test('persists the encoded pair and emits it on save', () async {
       when(
-        () =>
-            secureStorage.write(key: Preferences.tokenPair, value: encodedPair),
+        () => secureStorage.write(key: _storageKey, value: encodedPair),
       ).thenAnswer((_) async {});
 
       final emitted = <TokenPair?>[];
@@ -75,8 +75,7 @@ void main() {
       await storage.save(pair);
 
       verify(
-        () =>
-            secureStorage.write(key: Preferences.tokenPair, value: encodedPair),
+        () => secureStorage.write(key: _storageKey, value: encodedPair),
       ).called(1);
       await pumpEventQueue();
       check(emitted).deepEquals([pair]);
@@ -85,48 +84,45 @@ void main() {
 
     test('reads secure storage once across repeated reads', () async {
       when(
-        () => secureStorage.read(key: Preferences.tokenPair),
+        () => secureStorage.read(key: _storageKey),
       ).thenAnswer((_) async => encodedPair);
 
       await storage.read();
       check(await storage.read()).equals(pair);
 
-      verify(() => secureStorage.read(key: Preferences.tokenPair)).called(1);
+      verify(() => secureStorage.read(key: _storageKey)).called(1);
     });
 
     test('serves a saved pair without reading secure storage', () async {
       when(
-        () =>
-            secureStorage.write(key: Preferences.tokenPair, value: encodedPair),
+        () => secureStorage.write(key: _storageKey, value: encodedPair),
       ).thenAnswer((_) async {});
 
       await storage.save(pair);
 
       check(await storage.read()).equals(pair);
-      verifyNever(() => secureStorage.read(key: Preferences.tokenPair));
+      verifyNever(() => secureStorage.read(key: _storageKey));
     });
 
     test('reports signed-out after clear without reading secure '
         'storage', () async {
       when(
-        () => secureStorage.read(key: Preferences.tokenPair),
+        () => secureStorage.read(key: _storageKey),
       ).thenAnswer((_) async => encodedPair);
       when(
-        () => secureStorage.delete(key: Preferences.tokenPair),
+        () => secureStorage.delete(key: _storageKey),
       ).thenAnswer((_) async {});
       await storage.read();
 
       await storage.clear();
 
       check(await storage.read()).isNull();
-      verify(() => secureStorage.read(key: Preferences.tokenPair)).called(1);
+      verify(() => secureStorage.read(key: _storageKey)).called(1);
     });
 
     test('retries secure storage after a failed read', () async {
       var calls = 0;
-      when(() => secureStorage.read(key: Preferences.tokenPair)).thenAnswer((
-        _,
-      ) async {
+      when(() => secureStorage.read(key: _storageKey)).thenAnswer((_) async {
         if (calls++ == 0) throw const CacheException(message: 'locked');
         return encodedPair;
       });
@@ -138,7 +134,7 @@ void main() {
 
     test('deletes the entry and emits null on clear', () async {
       when(
-        () => secureStorage.delete(key: Preferences.tokenPair),
+        () => secureStorage.delete(key: _storageKey),
       ).thenAnswer((_) async {});
 
       final emitted = <TokenPair?>[];
@@ -146,7 +142,7 @@ void main() {
 
       await storage.clear();
 
-      verify(() => secureStorage.delete(key: Preferences.tokenPair)).called(1);
+      verify(() => secureStorage.delete(key: _storageKey)).called(1);
       await pumpEventQueue();
       check(emitted).deepEquals([null]);
       await subscription.cancel();

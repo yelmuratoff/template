@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:core/core.dart';
 import 'package:database/database.dart';
 import 'package:ispect/ispect.dart';
@@ -19,7 +20,7 @@ final class LocaleDataSourceLocal extends PreferencesDao
     implements ILocaleDataSource {
   const LocaleDataSourceLocal({required super.sharedPreferences});
 
-  PreferencesEntry<String> get _locale => stringEntry('settings.locale');
+  PreferencesEntry<String> get _locale => stringEntry(Preferences.locale);
 
   @override
   Future<void> setLocale(Locale locale) async {

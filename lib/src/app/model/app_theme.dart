@@ -30,17 +30,6 @@ final class AppTheme with Diagnosticable {
     seed: Colors.blue,
   );
 
-  /// The [ThemeData] for this [AppTheme].
-  /// This is computed based on the [mode].
-  ThemeData computeTheme() => switch (mode) {
-    ThemeMode.light => lightTheme,
-    ThemeMode.dark => darkTheme,
-    ThemeMode.system =>
-      PlatformDispatcher.instance.platformBrightness == Brightness.dark
-          ? darkTheme
-          : lightTheme,
-  };
-
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:base_starter/src/app/model/app_theme.dart';
+import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:database/database.dart';
 import 'package:flutter/material.dart' show Color, ThemeMode;
 import 'package:ispect/ispect.dart';
@@ -26,9 +27,9 @@ final class ThemeDataSourceLocal extends PreferencesDao
   /// Codec for [ThemeMode]
   final Codec<ThemeMode, String> codec;
 
-  PreferencesEntry<int> get _seedColor => intEntry('theme.seed_color');
+  PreferencesEntry<int> get _seedColor => intEntry(Preferences.themeSeedColor);
 
-  PreferencesEntry<String> get _themeMode => stringEntry('theme.mode');
+  PreferencesEntry<String> get _themeMode => stringEntry(Preferences.themeMode);
 
   @override
   Future<void> setTheme(AppTheme theme) async {

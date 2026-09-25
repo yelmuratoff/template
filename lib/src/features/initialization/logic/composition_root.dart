@@ -54,7 +54,9 @@ final class CompositionRoot {
 
     const secureStorage = FlutterSecureStorageWrapper(
       storage: FlutterSecureStorage(
-        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+        iOptions: IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock_this_device,
+        ),
       ),
     );
 

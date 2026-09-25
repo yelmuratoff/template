@@ -153,8 +153,10 @@ the same gates CI runs (`.github/workflows/code-analysis.yml`).
   flutter run --dart-define=ISPECT_ENABLED=true
   ```
 
-- **DEV mode in-app**: open Settings and tap the project version 10 times — a
-  toast appears with the DEV/PROD environment switch.
+- **DEV mode in-app** (builds with `ISPECT_ENABLED=true` only): open Settings
+  and tap the project version 10 times to switch the in-app flavor, which
+  toggles the ISpect panel and the DEV banner. The API URL stays the one
+  compiled in from `env/config_<flavor>.json`.
 
 ## Localization
 

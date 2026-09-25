@@ -1,7 +1,5 @@
-import 'package:base_starter/flavors.dart';
 import 'package:base_starter/src/app/router/navigation_manager.dart';
 import 'package:base_starter/src/common/constants/app_constants.dart';
-import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/core/database/database.dart';
 import 'package:base_starter/src/core/database/src/preferences/app_config_manager.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
@@ -60,7 +58,7 @@ final class CompositionRoot {
       ),
     );
 
-    final appConfig = await _createConfig(sharedPreferences);
+    final appConfig = AppConfigManager(sharedPreferences: sharedPreferences);
 
     if (appConfig.isFirstRun) {
       await secureStorage.deleteAll();
@@ -108,22 +106,6 @@ final class CompositionRoot {
       repositories: repositories,
       millisecondsSpent: stopwatch.elapsedMilliseconds,
     );
-  }
-
-  Future<AppConfigManager> _createConfig(
-    SharedPreferences sharedPreferences,
-  ) async {
-    final appConfig = AppConfigManager(sharedPreferences: sharedPreferences);
-
-    final environment = sharedPreferences.getString(Preferences.environment);
-    if (environment == null) {
-      await sharedPreferences.setString(
-        Preferences.environment,
-        Flavor.prod.name,
-      );
-    }
-
-    return appConfig;
   }
 
   /// Builds the networking stack exactly once: token storage, the bare

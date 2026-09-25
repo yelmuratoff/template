@@ -111,23 +111,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 _AppVersionBody(
-                  onTapAppVersion: () async {
-                    _tapNumber++;
+                  onTapAppVersion: !kISpectEnabled
+                      ? null
+                      : () async {
+                          _tapNumber++;
 
-                    if (_tapNumber > 5 && _tapNumber < 10) {
-                      await Toaster.showToast(
-                        title: L10n.current.environmentTapNumber(
-                          10 - _tapNumber,
-                        ),
-                        leadingImage: AssetImage(Assets.images.launcher.path),
-                      );
-                    } else if (_tapNumber == 10) {
-                      ISpect.logger.info('ℹ️ Environment change dialog opened');
-                      await ChangeEnvironmentDialog.show(context);
-                      ISpect.logger.info('🔙 Environment change dialog closed');
-                      _tapNumber = 0;
-                    }
-                  },
+                          if (_tapNumber > 5 && _tapNumber < 10) {
+                            await Toaster.showToast(
+                              title: L10n.current.environmentTapNumber(
+                                10 - _tapNumber,
+                              ),
+                              leadingImage: AssetImage(
+                                Assets.images.launcher.path,
+                              ),
+                            );
+                          } else if (_tapNumber == 10) {
+                            ISpect.logger.info(
+                              'ℹ️ Environment change dialog opened',
+                            );
+                            await ChangeEnvironmentDialog.show(context);
+                            ISpect.logger.info(
+                              '🔙 Environment change dialog closed',
+                            );
+                            _tapNumber = 0;
+                          }
+                        },
                   versionTextColor: versionTextColor,
                 ),
                 const Gap(24),

@@ -1,5 +1,4 @@
 import 'package:base_starter/flavors.dart';
-import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:flutter/material.dart';
@@ -49,10 +48,6 @@ final class ChangeEnvironmentDialog {
                     onTap: () {
                       try {
                         F.appFlavor = env;
-                        context.dependencies.sharedPreferences.setString(
-                          Preferences.environment,
-                          env.name,
-                        );
                         ISpect.logger.warning(
                           'Environment changed to ${env.name}',
                         );

@@ -35,17 +35,28 @@ abstract interface class TokenStorage {
 }
 
 /// [TokenStorage] on top of [SecureStorage].
+///
+/// Keeps the pair in memory after the first successful read, so only that
+/// read, [save] and [clear] reach the platform keystore.
 final class SecureTokenStorage implements TokenStorage {
   SecureTokenStorage({required this._storage});
 
   final SecureStorage _storage;
   final _changes = StreamController<TokenPair?>.broadcast();
+  ({TokenPair? pair})? _cached;
 
   @override
   Stream<TokenPair?> get changes => _changes.stream;
 
   @override
   Future<TokenPair?> read() async {
+    if (_cached case (:final pair)) return pair;
+    final pair = await _readStored();
+    _cached = (pair: pair);
+    return pair;
+  }
+
+  Future<TokenPair?> _readStored() async {
     final raw = await _storage.read(key: _tokenStorageKey);
     if (raw == null) return null;
     try {
@@ -69,12 +80,14 @@ final class SecureTokenStorage implements TokenStorage {
       key: _tokenStorageKey,
       value: json.encode(pair.toJson()),
     );
+    _cached = (pair: pair);
     _changes.add(pair);
   }
 
   @override
   Future<void> clear() async {
     await _storage.delete(key: _tokenStorageKey);
+    _cached = (pair: null);
     _changes.add(null);
   }
 

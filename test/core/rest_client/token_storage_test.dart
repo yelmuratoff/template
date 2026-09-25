@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:base_starter/src/common/constants/preferences.dart';
 import 'package:checks/checks.dart';
+import 'package:core/core.dart';
 import 'package:database/database.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -80,6 +81,59 @@ void main() {
       await pumpEventQueue();
       check(emitted).deepEquals([pair]);
       await subscription.cancel();
+    });
+
+    test('reads secure storage once across repeated reads', () async {
+      when(
+        () => secureStorage.read(key: Preferences.tokenPair),
+      ).thenAnswer((_) async => encodedPair);
+
+      await storage.read();
+      check(await storage.read()).equals(pair);
+
+      verify(() => secureStorage.read(key: Preferences.tokenPair)).called(1);
+    });
+
+    test('serves a saved pair without reading secure storage', () async {
+      when(
+        () =>
+            secureStorage.write(key: Preferences.tokenPair, value: encodedPair),
+      ).thenAnswer((_) async {});
+
+      await storage.save(pair);
+
+      check(await storage.read()).equals(pair);
+      verifyNever(() => secureStorage.read(key: Preferences.tokenPair));
+    });
+
+    test('reports signed-out after clear without reading secure '
+        'storage', () async {
+      when(
+        () => secureStorage.read(key: Preferences.tokenPair),
+      ).thenAnswer((_) async => encodedPair);
+      when(
+        () => secureStorage.delete(key: Preferences.tokenPair),
+      ).thenAnswer((_) async {});
+      await storage.read();
+
+      await storage.clear();
+
+      check(await storage.read()).isNull();
+      verify(() => secureStorage.read(key: Preferences.tokenPair)).called(1);
+    });
+
+    test('retries secure storage after a failed read', () async {
+      var calls = 0;
+      when(() => secureStorage.read(key: Preferences.tokenPair)).thenAnswer((
+        _,
+      ) async {
+        if (calls++ == 0) throw const CacheException(message: 'locked');
+        return encodedPair;
+      });
+
+      await check(storage.read()).throws<CacheException>();
+
+      check(await storage.read()).equals(pair);
     });
 
     test('deletes the entry and emits null on clear', () async {

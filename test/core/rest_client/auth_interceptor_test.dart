@@ -254,6 +254,54 @@ void main() {
       verify(() => handler.next(original)).called(1);
     });
 
+    test('forwards the original 401 without signing out '
+        'when the refresh response is malformed', () async {
+      when(() => tokenStorage.read()).thenAnswer((_) async => stale);
+      when(
+        () => plainDio.post<Map<String, dynamic>>(
+          '/auth/refresh',
+          data: any<Object?>(named: 'data'),
+        ),
+      ).thenAnswer(
+        (_) async => Response(
+          requestOptions: RequestOptions(path: '/auth/refresh'),
+          statusCode: 200,
+          data: {'data': fresh.toJson()},
+        ),
+      );
+      final original = unauthorized(requestWith(access: stale.access));
+      final handler = _MockErrorHandler();
+
+      await interceptor.onError(original, handler);
+
+      verifyNever(() => tokenStorage.clear());
+      final forwarded =
+          verify(() => handler.next(captureAny())).captured.single
+              as DioException;
+      check(forwarded.response?.statusCode).equals(401);
+    });
+
+    test('forwards the original 401 when persisting the refreshed pair '
+        'fails', () async {
+      when(() => tokenStorage.read()).thenAnswer((_) async => stale);
+      stubRefreshSuccess();
+      when(
+        () => tokenStorage.save(fresh),
+      ).thenThrow(const CacheException(message: 'keychain locked'));
+      final handler = _MockErrorHandler();
+
+      await interceptor.onError(
+        unauthorized(requestWith(access: stale.access)),
+        handler,
+      );
+
+      final forwarded =
+          verify(() => handler.next(captureAny())).captured.single
+              as DioException;
+      check(forwarded.error).isA<CacheException>();
+      verifyNever(() => plainDio.fetch<Object?>(any()));
+    });
+
     test('forwards non-401 errors untouched', () async {
       final options = requestWith(access: stale.access);
       final error = DioException(

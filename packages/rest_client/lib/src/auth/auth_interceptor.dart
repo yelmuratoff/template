@@ -65,6 +65,14 @@ final class AuthInterceptor extends QueuedInterceptor {
       return handler.next(_withCause(err, e));
     } on DioException {
       return handler.next(err);
+    } on Object catch (e, st) {
+      // Dio settles only sync throws; an async one would stall the queue.
+      ISpect.logger.handle(
+        exception: e,
+        stackTrace: st,
+        message: 'Token refresh failed, keeping the session',
+      );
+      return handler.next(_withCause(err, e));
     }
 
     try {

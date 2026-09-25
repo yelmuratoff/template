@@ -269,10 +269,10 @@ packages:
     dependency: transitive
     description:
       name: draggable_panel
-      sha256: cab3149119df1fa88c0c498146537429cefec1347922983d96cc60d14c1356a7
+      sha256: "3d763524a2990df2d6ba529e602f5b6c6aede52fa01903f2602fc753b53c8218"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "4.1.0"
   drift:
     dependency: "direct main"
     description:
@@ -585,42 +585,42 @@ packages:
     dependency: "direct main"
     description:
       name: ispect
-      sha256: b5d3c4a97692cb5861a1f86d3738dbf5938bbb7d409570265fb1485780313cec
+      sha256: adec6df0e61d6612b0e6cfc98213a9fdba2943b3e08847c0de0e4721e5095c91
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0-dev.19"
+    version: "7.0.0"
   ispect_layout:
     dependency: transitive
     description:
       name: ispect_layout
-      sha256: "2b0e73ef880b39f8fbb0b756f65cec8de1d36fc62d916d4efbf4844d74b5632b"
+      sha256: f92b2445fd6003b5826685ad9b160bedc2986ff155a283e7cb4f897cd6525eeb
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0-dev.19"
+    version: "7.0.0"
   ispectify:
     dependency: transitive
     description:
       name: ispectify
-      sha256: b3defdb6f127413db848a64068e0467f7173133dcf1d9b76b4917f5d1a60d8e8
+      sha256: d838b6bcc6e0404afab1714e9a7d2e9c6cbec899393fd049da22efa5fef06461
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0-dev.19"
+    version: "7.0.0"
   ispectify_bloc:
     dependency: "direct main"
     description:
       name: ispectify_bloc
-      sha256: "94c4714c8a544cb236dedf253abc81bea22f8908aa63ae7381fb1c8dddd10842"
+      sha256: a0e25c7358aa4c5f091ebf7c6046e66cea787a3df5643db08d4dfc1d624c5c2d
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0-dev.19"
+    version: "7.0.0"
   ispectify_dio:
     dependency: transitive
     description:
       name: ispectify_dio
-      sha256: "6a470a6af424c5c866812b3c2f576ddedb970a832ecca50acb90eaf0aa97a2c7"
+      sha256: "1e6cbdf722f938116d33fec6177118a8458dbf4860eb579c2573615690ab7409"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0-dev.19"
+    version: "7.0.0"
   jni:
     dependency: transitive
     description:

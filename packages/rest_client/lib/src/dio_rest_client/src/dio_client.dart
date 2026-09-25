@@ -31,11 +31,7 @@ class DioClient {
       ...interceptors,
       ISpectDioInterceptor(
         logger: ISpect.logger,
-        settings: const ISpectDioInterceptorSettings(
-          printRequestHeaders: true,
-          printResponseHeaders: true,
-          printResponseData: false,
-        ),
+        settings: const ISpectDioInterceptorSettings(printResponseData: false),
       ),
     ]);
   }

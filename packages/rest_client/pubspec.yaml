@@ -16,8 +16,8 @@ dependencies:
   database:
     path: ../database
   dio: ^5.6.0
-  ispect: 5.2.0-dev.19
-  ispectify_dio: 5.2.0-dev.19
+  ispect: 7.0.0
+  ispectify_dio: 7.0.0
   meta: ^1.16.0
   equatable: ^2.0.5
 

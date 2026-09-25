@@ -37,8 +37,8 @@ dependencies:
   flutter_secure_storage: ^10.0.0
 
   # Logging
-  ispect: 5.2.0-dev.19
-  ispectify_bloc: 5.2.0-dev.19
+  ispect: 7.0.0
+  ispectify_bloc: 7.0.0
 
   # Utils
   meta: ^1.16.0

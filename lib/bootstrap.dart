@@ -34,7 +34,11 @@ Future<void> bootstrap() async {
   // only when ISpect is compiled in; these fallbacks keep failures observable
   // in builds where it is tree-shaken out (and a crash reporter plugs in here).
   _installRootErrorHandlers();
-  Bloc.observer = ISpectBlocObserver(logger: iSpectify);
+  // ispectify_bloc defaults to full payloads, incl. LoginAuthEvent passwords.
+  Bloc.observer = ISpectBlocObserver(
+    logger: iSpectify,
+    settings: ISpectBlocSettings.compact,
+  );
   // The web engine asserts when the URL strategy is set a second time.
   usePathUrlStrategy();
 

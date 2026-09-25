@@ -141,9 +141,10 @@ the same gates CI runs (`.github/workflows/code-analysis.yml`).
 
 - **Logging** goes exclusively through `ISpect.logger`; caught exceptions are
   reported via `ISpect.logger.handle(exception, stackTrace, message)`.
-- Root error handlers (`FlutterError.onError`, `PlatformDispatcher.onError`,
-  `runZonedGuarded`) are installed in `bootstrap.dart` and funnel to the same
-  logger — nothing uncaught is lost.
+- Root error handlers (`FlutterError.onError`, `PlatformDispatcher.onError`)
+  and the `Bloc.observer` are installed in `bootstrap.dart` in every build and
+  funnel to the same logger. No crash reporter ships with the template — plug
+  one into those handlers before release.
 - **ISpect panel** (inspector, BLoC/Dio/route logs, feedback builder, cache
   manager, device info) is compiled out of the binary by default. Enable it
   with a build flag (already wired into the `[DEV]` launch configurations):

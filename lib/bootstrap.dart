@@ -32,13 +32,11 @@ Future<void> bootstrap() async {
   // only when ISpect is compiled in; these fallbacks keep failures observable
   // in builds where it is tree-shaken out (and a crash reporter plugs in here).
   _installRootErrorHandlers();
+  Bloc.observer = ISpectBlocObserver(logger: iSpectify);
 
   ISpect.run(
     () => AppRunner().initializeAndRun(hook!),
     logger: iSpectify,
-    onInit: () {
-      Bloc.observer = ISpectBlocObserver(logger: iSpectify);
-    },
     onZonedError: (error, stackTrace) {
       ISpect.logger.handle(
         exception: error,

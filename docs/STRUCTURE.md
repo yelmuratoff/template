@@ -35,9 +35,11 @@ main.dart / main_dev.dart
                                           └─ MaterialContext  MaterialApp.router
 ```
 
-Root error handlers (`FlutterError.onError`, `PlatformDispatcher.onError`,
-`runZonedGuarded`) all funnel to `ISpect.logger.handle`, so nothing uncaught is
-lost — even in a release build where ISpect itself is compiled out.
+Root error handlers (`FlutterError.onError`, `PlatformDispatcher.onError`) and
+the `Bloc.observer` are installed in `bootstrap.dart` in every build and funnel
+to `ISpect.logger.handle`. `ISpect.run` adds its guarded zone only when ISpect
+is compiled in (`ISPECT_ENABLED=true`). The template ships no crash reporter:
+wire one into these handlers before release, or prod failures stay on-device.
 
 ---
 

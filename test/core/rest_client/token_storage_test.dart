@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:checks/checks.dart';
@@ -118,6 +119,28 @@ void main() {
 
       check(await storage.read()).isNull();
       verify(() => secureStorage.read(key: _storageKey)).called(1);
+    });
+
+    test('a pair saved during the first read is not overwritten by the '
+        'stale stored value', () async {
+      const fresh = TokenPair(access: 'a2', refresh: 'r2');
+      final stored = Completer<String?>();
+      when(
+        () => secureStorage.read(key: _storageKey),
+      ).thenAnswer((_) => stored.future);
+      when(
+        () => secureStorage.write(
+          key: _storageKey,
+          value: json.encode(fresh.toJson()),
+        ),
+      ).thenAnswer((_) async {});
+
+      final firstRead = storage.read();
+      await storage.save(fresh);
+      stored.complete(encodedPair);
+      await firstRead;
+
+      check(await storage.read()).equals(fresh);
     });
 
     test('retries secure storage after a failed read', () async {

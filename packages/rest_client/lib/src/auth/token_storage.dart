@@ -51,9 +51,8 @@ final class SecureTokenStorage implements TokenStorage {
   @override
   Future<TokenPair?> read() async {
     if (_cached case (:final pair)) return pair;
-    final pair = await _readStored();
-    _cached = (pair: pair);
-    return pair;
+    final stored = await _readStored();
+    return (_cached ??= (pair: stored)).pair;
   }
 
   Future<TokenPair?> _readStored() async {

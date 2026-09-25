@@ -200,6 +200,21 @@ A missing key reads as an empty string; startup fails fast when `API_URL` is
 empty. Dart defines ship inside the binary, so they are configuration, not
 secrets — keep real secrets on the backend.
 
+### Android release signing
+
+Release builds are signed with the upload key from `android/key.properties`
+(gitignored, like `*.jks`):
+
+```properties
+storePassword=...
+keyPassword=...
+keyAlias=upload
+storeFile=/absolute/path/to/upload-keystore.jks
+```
+
+Without the file the release build falls back to the debug key and Gradle
+prints a warning — such a build cannot be published.
+
 ### How to add a new app-wide dependency
 
 1. Add a field for it to `DependenciesContainer` in

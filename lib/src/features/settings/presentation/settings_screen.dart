@@ -3,6 +3,7 @@ import 'package:base_starter/src/common/presentation/widgets/dialogs/change_envi
 import 'package:base_starter/src/common/utils/extensions/context_extension.dart';
 import 'package:base_starter/src/core/assets/generated/assets.gen.dart';
 import 'package:base_starter/src/core/l10n/localization.dart';
+import 'package:base_starter/src/features/auth/presentation/auth_scope.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
@@ -152,11 +153,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     }
                   },
                   child: AppButton(
-                    onPressed: () {
-                      context.dependencies.authBloc.add(
-                        const LogoutAuthEvent(),
-                      );
-                    },
+                    onPressed: () =>
+                        AuthScope.of(context, listen: false).logout(),
                     text: L10n.current.logout,
                   ),
                 ),

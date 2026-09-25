@@ -48,8 +48,6 @@ class InitializationFailedApp extends StatefulWidget {
 }
 
 class _InitializationFailedAppState extends State<InitializationFailedApp> {
-  /// Whether the initialization is in progress.
-  final _inProgress = ValueNotifier<bool>(false);
   late final SharedPreferences _sharedPreferences;
 
   SettingsState? _settingsState;
@@ -97,14 +95,7 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
   @override
   void dispose() {
     _settingsBloc?.close();
-    _inProgress.dispose();
     super.dispose();
-  }
-
-  Future<void> _retryInitialization() async {
-    _inProgress.value = true;
-    await widget.retryInitialization!();
-    _inProgress.value = false;
   }
 
   @override
@@ -130,9 +121,7 @@ class _InitializationFailedAppState extends State<InitializationFailedApp> {
         ),
         home: _View(
           error: widget.error,
-          retryInitialization: widget.retryInitialization != null
-              ? _retryInitialization
-              : null,
+          retryInitialization: widget.retryInitialization,
           stackTrace: widget.stackTrace,
           showErrorDetails: widget.showErrorDetails,
           themeMode: _settingsState?.appTheme?.mode ?? ThemeMode.system,

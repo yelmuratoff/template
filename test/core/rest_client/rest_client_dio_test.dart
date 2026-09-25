@@ -1,4 +1,5 @@
 import 'package:checks/checks.dart';
+import 'package:core/core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -29,6 +30,30 @@ void main() {
       ).thenThrow(StateError('bug'));
 
       await check(client.get('/orders')).throws<StateError>();
+    });
+
+    test('a revoked session surfaces as RevokedTokenException rather than '
+        'the 401 body', () async {
+      final options = RequestOptions(path: '/orders');
+      when(
+        () => dio.request<Object>(
+          any(),
+          data: any<Object?>(named: 'data'),
+          options: any(named: 'options'),
+        ),
+      ).thenThrow(
+        DioException(
+          requestOptions: options,
+          response: Response<Object?>(
+            requestOptions: options,
+            statusCode: 401,
+            data: {'message': 'Unauthorized'},
+          ),
+          error: const RevokedTokenException(cause: 'refresh rejected'),
+        ),
+      );
+
+      await check(client.get('/orders')).throws<RevokedTokenException>();
     });
   });
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
+import 'package:core/core.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:rest_client/src/dio_rest_client/rest_client.dart';
@@ -17,6 +18,9 @@ final class RestClientDio extends RestClientBase {
   final String baseUrl;
 
   /// Send [Dio] request
+  ///
+  /// Throws [RevokedTokenException] when the auth interceptor ended the
+  /// session; every other failure is a [RestClientException].
   @protected
   @visibleForTesting
   Future<Map<String, Object?>> sendRequest<T extends Object>({
@@ -60,6 +64,9 @@ final class RestClientDio extends RestClientBase {
     } on RestClientException {
       rethrow;
     } on DioException catch (e) {
+      if (e.error case final RevokedTokenException revoked) {
+        Error.throwWithStackTrace(revoked, e.stackTrace);
+      }
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.sendTimeout ||
           e.type == DioExceptionType.receiveTimeout) {

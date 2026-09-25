@@ -7,17 +7,17 @@ import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:ui/ui.dart';
 
 /// A class which is responsible for initialization and running the app.
 final class AppRunner {
-  /// Start the initialization and in case of success run application
+  /// Start the initialization and in case of success run application.
+  ///
+  /// A failure is reported to [InitializationHook.onError] only, so a retry
+  /// can call this again.
   Future<void> initializeAndRun(InitializationHook hook) async {
     final binding = WidgetsFlutterBinding.ensureInitialized()
       ..deferFirstFrame();
-
-    usePathUrlStrategy();
 
     // Preserve splash screen
     FlutterNativeSplash.preserve(widgetsBinding: binding);
@@ -33,9 +33,8 @@ final class AppRunner {
       FlutterNativeSplash.remove();
 
       runApp(RestartWrapper(child: App(result: result)));
-    } catch (e, st) {
+    } on Object catch (e, st) {
       hook.onError?.call(e, st);
-      rethrow;
     } finally {
       binding.allowFirstFrame();
     }

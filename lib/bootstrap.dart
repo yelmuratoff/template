@@ -8,6 +8,7 @@ import 'package:base_starter/src/features/initialization/presentation/widget/ini
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:ispect/ispect.dart';
 import 'package:ispectify_bloc/ispectify_bloc.dart';
 
@@ -33,6 +34,8 @@ Future<void> bootstrap() async {
   // in builds where it is tree-shaken out (and a crash reporter plugs in here).
   _installRootErrorHandlers();
   Bloc.observer = ISpectBlocObserver(logger: iSpectify);
+  // The web engine asserts when the URL strategy is set a second time.
+  usePathUrlStrategy();
 
   ISpect.run(
     () => AppRunner().initializeAndRun(hook!),
@@ -82,11 +85,16 @@ void _onErrorFactory(
   StackTrace stackTrace,
   InitializationHook hook,
 ) {
-  ISpect.logger.error('❗️ Initialization failed with error: $error');
+  final failure = error ?? Exception('Unknown error');
+  ISpect.logger.handle(
+    exception: failure,
+    stackTrace: stackTrace,
+    message: '❗️ Initialization failed',
+  );
   FlutterNativeSplash.remove();
   runApp(
     InitializationFailedApp(
-      error: error ?? Exception('Unknown error'),
+      error: failure,
       stackTrace: stackTrace,
       retryInitialization: () => AppRunner().initializeAndRun(hook),
     ),

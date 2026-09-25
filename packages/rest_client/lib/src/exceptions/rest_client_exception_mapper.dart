@@ -9,15 +9,16 @@ extension RestClientExceptionMapper on RestClientException {
   /// transport type leaks past the data layer. A backend rejection carrying a
   /// structured payload ([CustomBackendException]) becomes a [BackendException]
   /// that keeps the payload for the UI; a responseless client-side failure
-  /// ([ClientException] — cancelled, bad certificate, encode/decode error)
+  /// ([ClientException] — cancelled, bad certificate, encode error)
   /// becomes a [NetworkException].
   AppException toAppException() => switch (this) {
     ConnectionException(:final message, :final cause, :final statusCode) =>
       NetworkException(message: message, cause: cause, statusCode: statusCode),
     RequestTimeoutException(:final message, :final cause) =>
       TimeoutAppException(message: message, cause: cause),
-    WrongResponseTypeException(:final message) => ParseException(
+    WrongResponseTypeException(:final message, :final cause) => ParseException(
       message: message,
+      cause: cause,
     ),
     CustomBackendException(:final message, :final error, :final statusCode) =>
       BackendException(message: message, error: error, statusCode: statusCode),

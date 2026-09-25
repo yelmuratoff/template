@@ -107,8 +107,8 @@ abstract base class RestClientBase implements RestClient {
       rethrow;
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(
-        ClientException(
-          message: 'Error occured during decoding',
+        WrongResponseTypeException(
+          message: 'Response body is not a JSON object',
           statusCode: statusCode,
           cause: e,
         ),

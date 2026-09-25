@@ -74,17 +74,22 @@ final class CustomBackendException extends RestClientException {
 /// is not the expected one
 
 final class WrongResponseTypeException extends RestClientException {
-  const WrongResponseTypeException({required super.message, super.statusCode});
+  const WrongResponseTypeException({
+    required super.message,
+    super.statusCode,
+    super.cause,
+  });
 
   @override
   String toString() =>
       '''WrongResponseTypeException('
       'message: $message,'
       'statusCode: $statusCode,'
+      'cause: $cause'
       ')''';
 
   @override
-  List<Object?> get props => [message, statusCode];
+  List<Object?> get props => [message, statusCode, cause];
 }
 
 /// [RequestTimeoutException] is thrown when the request exceeded a

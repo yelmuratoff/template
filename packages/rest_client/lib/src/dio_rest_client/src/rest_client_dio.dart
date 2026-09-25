@@ -51,7 +51,8 @@ final class RestClientDio extends RestClientBase {
 
       if (resp == null) {
         throw WrongResponseTypeException(
-          message: 'Unexpected response body type: ${body.runtimeType}',
+          message:
+              'Unexpected response body type: ${response.data.runtimeType}',
           statusCode: response.statusCode,
         );
       }
@@ -102,7 +103,7 @@ final class RestClientDio extends RestClientBase {
         ),
         e.stackTrace,
       );
-    } on Object catch (e, stack) {
+    } on Exception catch (e, stack) {
       Error.throwWithStackTrace(
         ClientException(message: e.toString(), cause: e),
         stack,

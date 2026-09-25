@@ -83,6 +83,27 @@ void main() {
         expect(result, throwsA(isA<WrongResponseTypeException>()));
       });
 
+      test('Malformed JSON is a response-type failure, not a network one', () {
+        final restClient = _RestClientBase();
+        final result = restClient.decodeResponse('{"data": ');
+        expect(
+          result,
+          throwsA(
+            isA<WrongResponseTypeException>().having(
+              (e) => e.cause,
+              'cause',
+              isA<FormatException>(),
+            ),
+          ),
+        );
+      });
+
+      test('A JSON array body is a response-type failure', () {
+        final restClient = _RestClientBase();
+        final result = restClient.decodeResponse('[1, 2]');
+        expect(result, throwsA(isA<WrongResponseTypeException>()));
+      });
+
       test('Is not empty', () {
         final restClient = _RestClientBase();
         const response = {'test': 'test'};

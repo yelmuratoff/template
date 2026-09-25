@@ -31,3 +31,4 @@ post_sync:
 # .gitignore management.
 gitignore:
   update: true
+format: 2

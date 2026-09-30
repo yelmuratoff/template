@@ -5,8 +5,10 @@ import 'package:base_starter/src/features/initialization/logic/composition_root.
 import 'package:base_starter/src/features/initialization/models/initialization_hook.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:marionette_flutter/marionette_flutter.dart';
 import 'package:ui/ui.dart';
 
 /// A class which is responsible for initialization and running the app.
@@ -16,8 +18,7 @@ final class AppRunner {
   /// A failure is reported to [InitializationHook.onError] only, so a retry
   /// can call this again.
   Future<void> initializeAndRun(InitializationHook hook) async {
-    final binding = WidgetsFlutterBinding.ensureInitialized()
-      ..deferFirstFrame();
+    final binding = _ensureBinding()..deferFirstFrame();
 
     // Preserve splash screen
     FlutterNativeSplash.preserve(widgetsBinding: binding);
@@ -38,5 +39,13 @@ final class AppRunner {
     } finally {
       binding.allowFirstFrame();
     }
+  }
+
+  // Flutter asserts on a second binding, e.g. after a test's or a retry's.
+  WidgetsBinding _ensureBinding() {
+    if (kDebugMode && BindingBase.debugBindingType() == null) {
+      return MarionetteBinding.ensureInitialized();
+    }
+    return WidgetsFlutterBinding.ensureInitialized();
   }
 }

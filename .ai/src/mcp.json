@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "marionette": {"command":"marionette_mcp"}
+  }
+}

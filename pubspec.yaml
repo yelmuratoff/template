@@ -68,6 +68,7 @@ dependencies:
   # Others
   yx_navigation: ^1.0.0
   yx_navigation_flutter: ^1.0.0
+  marionette_flutter: ^0.6.0
 
 dev_dependencies:
   # Testing

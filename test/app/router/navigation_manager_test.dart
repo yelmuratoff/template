@@ -160,5 +160,23 @@ void main() {
         profileTab!.children.any((c) => c.route == AppRoutes.settings),
       ).isTrue();
     });
+
+    test('settings opened again return to the open page', () async {
+      when(() => authBloc.state).thenReturn(const AuthenticatedAuthState());
+      states.add(const AuthenticatedAuthState());
+      await _settle();
+
+      manager
+        ..openSettings()
+        ..openSettings();
+
+      check(
+        manager.stateManager.state
+            .findByRoute(AppRoutes.profileTab)!
+            .children
+            .map((node) => node.route)
+            .toList(),
+      ).deepEquals([AppRoutes.profile, AppRoutes.settings]);
+    });
   });
 }

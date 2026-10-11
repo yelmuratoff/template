@@ -12,7 +12,7 @@ final class LoadingUserState extends UserState {
   const LoadingUserState() : super._();
 }
 
-final class LoadedUserState extends UserState with EquatableMixin {
+final class LoadedUserState extends UserState with Equatable {
   const LoadedUserState({required this.user}) : super._();
   final UserDTO user;
 
@@ -20,7 +20,7 @@ final class LoadedUserState extends UserState with EquatableMixin {
   List<Object?> get props => [user];
 }
 
-final class ErrorUserState extends UserState with EquatableMixin {
+final class ErrorUserState extends UserState with Equatable {
   const ErrorUserState({required this.message, this.cause}) : super._();
   final String message;
   final Object? cause;

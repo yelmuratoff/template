@@ -34,8 +34,15 @@
       "Bash(agentsync sync*)"
     ],
     "deny": [
-      "Read(.env)",
-      "Read(./.env)",
+      "Edit(.env)",
+      "Edit(.env.local)",
+      "Edit(.env.*.local)",
+      "Edit(.env.dev*)",
+      "Edit(.env.prod*)",
+      "Edit(.env.stag*)",
+      "Edit(.env.test)",
+      "Edit(.env.secret*)",
+      "Edit(.env.private)",
       "Read(ios/Runner/dev/GoogleService-Info.plist)",
       "Read(ios/Runner/prod/GoogleService-Info.plist)",
       "Read(firebase/**)",

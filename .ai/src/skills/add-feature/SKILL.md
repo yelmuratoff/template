@@ -33,4 +33,4 @@ Scaffold a feature following the project's reference implementations: `lib/src/f
 - Provide blocs via scope widgets, not `BlocProvider` in feature UI; the bloc is created in `CompositionRoot` and passed into the scope at mount.
 - Declaration-level guards in `AppRouterSchema` are ignored because a state manager is injected — registering one there silently does nothing.
 - `guard` already logs each failure once; adding `ISpect.logger.handle` in the datasource/repository duplicates log entries.
-- State/event classes need `const` constructors and (when fields matter) `EquatableMixin` — without equality the scope's `updateShouldNotify` fires on every emit.
+- State/event classes need `const` constructors and (when fields matter) `with Equatable` — without equality the scope's `updateShouldNotify` fires on every emit.

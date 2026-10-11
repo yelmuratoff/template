@@ -4,7 +4,7 @@
 
 - One `<feature>_bloc.dart` with `part '<feature>_event.dart'` and `part '<feature>_state.dart'`; see `lib/src/features/auth/presentation/bloc/auth/` for the reference shape.
 - Events and states are hand-written sealed hierarchies with `const` constructors. Naming: `<Variant><Feature>State` / `<Variant><Feature>Event` (`LoadingAuthState`, `LoginAuthEvent`); internal events get a leading underscore (`_TokenRevokedAuthEvent`).
-- Use `EquatableMixin` only on types whose fields affect equality; switch over states exhaustively with Dart 3 `switch`.
+- Mix in `Equatable` (`with Equatable`) only on types whose fields affect equality; switch over states exhaustively with Dart 3 `switch`.
 
 ## Concurrency
 

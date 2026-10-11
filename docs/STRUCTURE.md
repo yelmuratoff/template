@@ -156,7 +156,11 @@ so navigation runs without a `BuildContext`.
     web reload keeps the restored tab) + dispatch `FetchUserEvent`.
   - `Unauthenticated` → `openAuth()` + dispatch `ClearUserEvent`, so the
     signed-out user's cached profile never greets the next account.
-  - `openSettings()` pushes settings onto the profile tab.
+  - `openSettings()` pushes settings onto the profile tab through `_push`,
+    which returns to a page the tab already shows. yx_navigation keys a page
+    by its route and arguments, so pushing the same page twice gives two pages
+    one key and Navigator asserts; route every new tab destination through
+    `_push`.
 - `auth_guard.dart` — redirects unauthenticated users to `auth` and keeps
   authenticated users off `auth`; `isAuthenticated` is a closure over
   `AuthBloc.state`, so the guard is a pure-Dart unit.

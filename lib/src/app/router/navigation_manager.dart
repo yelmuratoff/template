@@ -5,6 +5,7 @@ import 'package:base_starter/src/app/router/guards/tab_init_guard.dart';
 import 'package:base_starter/src/app/router/routes/app_routes.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:base_starter/src/features/auth/presentation/bloc/user/user_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:yx_navigation/yx_navigation.dart';
 
 /// Owns the root [RouteNodeStateManager] and translates auth-state changes into
@@ -76,9 +77,20 @@ final class NavigationManager {
 
   /// Pushes settings onto the profile tab stack.
   void openSettings() => stateManager.mutate((root) {
-    root.findByRoute(AppRoutes.profileTab)?.add(AppRoutes.settings.toNode());
+    _push(root.findByRoute(AppRoutes.profileTab), AppRoutes.settings.toNode());
     return root;
   });
+
+  // yx_navigation keys pages by route and args; Navigator rejects a repeat.
+  static void _push(MutableRouteNode? tab, RouteNode page) {
+    if (tab == null) return;
+    final shown = tab.children.indexWhere(
+      (node) =>
+          node.route == page.route && mapEquals(node.arguments, page.arguments),
+    );
+    if (shown != -1) tab.children.removeRange(shown, tab.children.length);
+    tab.add(page);
+  }
 
   /// A shell that is already open is left as is: on web the router restores
   /// the previous URL on reload, and resetting it would drop the user's tab.

@@ -20,7 +20,7 @@ final class UnauthenticatedAuthState extends AuthState {
   const UnauthenticatedAuthState() : super._();
 }
 
-final class ErrorAuthState extends AuthState with EquatableMixin {
+final class ErrorAuthState extends AuthState with Equatable {
   const ErrorAuthState({required this.error, required this.message, this.cause})
     : super._();
 

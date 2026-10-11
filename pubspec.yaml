@@ -45,7 +45,7 @@ dependencies:
   clock: ^1.1.1
   path: ^1.9.0
   path_provider: ^2.1.4
-  equatable: ^2.0.5
+  equatable: ^2.1.0
   package_info_plus: ^10.1.0
 
   # Local packages

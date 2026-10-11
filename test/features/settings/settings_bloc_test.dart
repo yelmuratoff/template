@@ -1,4 +1,5 @@
 import 'package:base_starter/src/app/model/app_theme.dart';
+import 'package:base_starter/src/core/l10n/localization.dart';
 import 'package:base_starter/src/features/settings/domain/locale/locale_repository.dart';
 import 'package:base_starter/src/features/settings/domain/theme/theme_repository.dart';
 import 'package:base_starter/src/features/settings/presentation/bloc/settings_bloc.dart';
@@ -41,7 +42,10 @@ void main() {
       );
     });
 
-    tearDown(() => bloc.close());
+    tearDown(() async {
+      await bloc.close();
+      L10n.load(initialLocale);
+    });
 
     Future<List<SettingsState>> recordStates(void Function() act) async {
       final states = <SettingsState>[];

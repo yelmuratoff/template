@@ -55,7 +55,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.text('Profile'));
+      await tester.tap(find.text(L10n.current.profile));
       await tester.pump();
 
       check(controller.tapped).deepEquals([AppRoutes.profileTab]);
